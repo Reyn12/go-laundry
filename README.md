@@ -102,6 +102,13 @@ Setiap anggota tim akan bekerja di branch masing-masing. Setelah selesai melakuk
    git checkout -b nama_branch
    ```
 
+   Klo udah selesai ngedit di branch masing masing 
+   ```bash
+   git add .
+   git commit -m "Deskripsi perubahan"
+   git push origin <nama-branch>
+   ```
+
 2. **Beralih ke Branch yang Ada**
    Jika Anda ingin beralih ke branch yang sudah ada, gunakan:
    ```bash
