@@ -7,60 +7,129 @@
 <a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
 </p>
 
-## About Laravel
+## Deskripsi
+Go-Laundry adalah sistem manajemen laundry yang memungkinkan pengguna untuk memesan layanan laundry dengan mudah. Proyek ini dibangun menggunakan Laravel sebagai framework backend.
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+## Prasyarat
+Sebelum menjalankan proyek ini, pastikan Anda memiliki hal-hal berikut:
+- PHP (versi 7.3 atau lebih tinggi)
+- Composer
+- MySQL atau MariaDB
+- Node.js dan npm (jika menggunakan frontend)
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+## Instalasi
+1. **Clone Repository**
+   ```bash
+   git clone https://github.com/username/go-laundry.git
+   cd go-laundry
+   ```
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+2. **Instal Dependensi**
+   Jalankan perintah berikut untuk menginstal dependensi PHP menggunakan Composer:
+   ```bash
+   composer install
+   ```
 
-## Learning Laravel
+   terus bikin database dlu nama nya "go-laundry"
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+3. **Konfigurasi .env**
+   Salin file `.env.example` menjadi `.env`:
+   ```bash
+   cp .env.example .env
+   ```
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+   Edit file `.env` dan sesuaikan pengaturan database:
+   ```plaintext
+   DB_CONNECTION=mysql
+   DB_HOST=127.0.0.1
+   DB_PORT=3306
+   DB_DATABASE=go-laundry
+   DB_USERNAME=root
+   DB_PASSWORD=
+   ```
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains over 2000 video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+4. **Generate Key Aplikasi**
+   Jalankan perintah berikut untuk menghasilkan aplikasi key:
+   ```bash
+   php artisan key:generate
+   ```
 
-## Laravel Sponsors
+## Migrasi dan Seeding Database
+1. **Migrasi Database**
+   Jalankan perintah berikut untuk menjalankan migrasi dan membuat tabel di database:
+   ```bash
+   php artisan migrate
+   ```
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the Laravel [Patreon page](https://patreon.com/taylorotwell).
+2. **Seeding Database**
+   Untuk mengisi database dengan data dummy, jalankan perintah berikut:
+   ```bash
+   php artisan db:seed
+   ```
 
-### Premium Partners
+   Jika Anda ingin menghapus semua tabel dan menjalankan migrasi serta seeder sekaligus, gunakan:
+   ```bash
+   php artisan migrate:fresh --seed
+   ```
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Cubet Techno Labs](https://cubettech.com)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[Many](https://www.many.co.uk)**
-- **[Webdock, Fast VPS Hosting](https://www.webdock.io/en)**
-- **[DevSquad](https://devsquad.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[OP.GG](https://op.gg)**
-- **[WebReinvent](https://webreinvent.com/?utm_source=laravel&utm_medium=github&utm_campaign=patreon-sponsors)**
-- **[Lendio](https://lendio.com)**
+## Menjalankan Aplikasi
+Setelah semua langkah di atas selesai, Anda dapat menjalankan server lokal dengan perintah:
+```bash
+php artisan serve
+```
 
-## Contributing
+Akses aplikasi di browser Anda melalui:
+```
+http://localhost:8000
+```
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+## Branching Strategy
+Proyek ini menggunakan strategi branching untuk kolaborasi. Berikut adalah struktur branch yang digunakan:
 
-## Code of Conduct
+- **Main**: Branch utama yang berisi kode yang sudah stabil dan siap untuk diproduksi.
+- **Develop**: Branch pengembangan yang berisi fitur-fitur terbaru dan perubahan yang sedang dalam proses.
+  - **Homepage**: Branch untuk pengembangan fitur homepage.
+  - **Admin**: Branch untuk pengembangan fitur admin.
+  - **Merchant**: Branch untuk pengembangan fitur merchant.
+  - **User**: Branch untuk pengembangan fitur user.
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+Setiap anggota tim akan bekerja di branch masing-masing. Setelah selesai melakukan perubahan, anggota tim harus mengirimkan perubahan mereka ke branch `develop` untuk direview.
 
-## Security Vulnerabilities
+## Langkah-Langkah Penggunaan Git
+1. **Membuat Branch Baru**
+   Untuk membuat branch baru, gunakan perintah:
+   ```bash
+   git checkout -b nama_branch
+   ```
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+2. **Beralih ke Branch yang Ada**
+   Jika Anda ingin beralih ke branch yang sudah ada, gunakan:
+   ```bash
+   git checkout nama_branch
+   ```
 
-## License
+3. **Melihat Daftar Branch**
+   Untuk melihat semua branch yang ada, gunakan:
+   ```bash
+   git branch
+   ```
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+4. **Request Merge Request ke Develop**
+   buka github cari merge request buat di review
+
+5. **Mengirim Perubahan ke Remote Repository**
+   klo udah di approve balik ke branch masing masing
+
+6. **Klo ada status approve di branch Develop**
+   semua anggota tim wajib pull dari branch Develop
+   ```bash
+   git checkout nama_branch_kau
+   git pull origin develop
+   ```
+
+## Catatan Tambahan
+- Pastikan untuk memeriksa file `.gitignore` untuk memastikan file sensitif tidak diunggah ke repository.
+- Jika ada pertanyaan atau masalah, silakan hubungi pengembang proyek.
+
+## Lisensi
+Proyek ini dilisensikan di bawah [Lisensi MIT](LICENSE).
