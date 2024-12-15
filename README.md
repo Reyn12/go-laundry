@@ -96,7 +96,7 @@ Proyek ini menggunakan strategi branching untuk kolaborasi. Berikut adalah struk
 Setiap anggota tim akan bekerja di branch masing-masing. Setelah selesai melakukan perubahan, anggota tim harus mengirimkan perubahan mereka ke branch `develop` untuk direview.
 
 ## Langkah-Langkah Penggunaan Git
-1. **Membuat Branch Baru**
+1. **Membuat Branch Baru (gak usah - krna udah ada branch nya)**
    Untuk membuat branch baru, gunakan perintah:
    ```bash
    git checkout -b nama_branch
