@@ -14,12 +14,16 @@
         .bg-primary {
         background-color: #0039C9;
         }
+
+        .text-primary {
+            color: #0039C9;
+        }
     </style>
 </head>
 <body class="flex justify-center items-center w-full h-screen">
 
     {{-- Images Login --}}
-    <div class="bg-red-500 w-1/2 h-full flex justify-center items-center relative">
+    <div class="bg-red-500 w-1/2 h-full flex justify-center items-center relative hidden sm:flex">
         <img src="{{ asset('images/bgLoginAdmin.png') }}" alt="gambarBgAdmin" class="w-full h-full object-cover">
 
         {{-- Bungkus Gambar nya --}}
@@ -33,20 +37,16 @@
     </div>
  
     {{-- Form Login --}}
-    <div class="bg-white w-1/2 h-full flex flex-col justify-center items-center">
+    <div class="bg-white w-2/3 lg:w-1/2 h-full flex flex-col justify-center items-center">
         <div class="flex flex-col items-center text-black">
             {{-- Logo --}}
             <img src="{{ asset('images/logoGoLaundry.png') }}" alt="logoLaundry" class="mb-4 w-32 h-32">
-
-
             <div class="text-3xl font-bold tracking-wide">Welcome, Admin</div>
             <div class="text-lg text-slate-400 font-bold tracking-wide mt-1">Nyuci Gampang, Waktu Lapang</div>
-
-            
         </div>
         
         {{-- Form --}}
-        <div class="fogm-login  w-1/2" >
+        <div class="fogm-login w-full lg:w-1/2" >
             <form method="POST" action="/admin/login" class="mt-4 w-full">
                 @csrf
                 <div class="mb-4 flex flex-col relative">
@@ -54,13 +54,13 @@
                     </label>
                     <input type="text" id="username" name="username" class="border border-blue-700 rounded-xl w-full py-2 px-3 bg-slate-50" placeholder="Masukkan username" required
                     >
-                    <img src="{{ asset('images/icons/iconAt.svg') }}" alt="iconAt" class="flex justify-end w-4 h-4 right-3 absolute top-1/2 mt-1">
+                    <img src="{{ asset('images/icons/iconAt.svg') }}" alt="iconAt" class="flex justify-end w-4 h-4 right-3 absolute top-1/2 mt-1 cursor-pointer">
                 </div>
 
                 <div class="flex flex-col relative">
                     <label for="password" class="block text-base">Password</label>
                     <input type="password" id="password" name="password" class="border border-blue-700 rounded-xl w-full py-2 px-3 bg-slate-50" placeholder="Masukkan password" required>
-                    <img src="{{ asset('images/icons/iconPassword.svg') }}" alt="iconPasssword" class="flex justify-end w-4 h-4 right-3 absolute top-1/2 mt-1">
+                    <img src="{{ asset('images/icons/iconPassword.svg') }}" alt="iconPasssword" class="flex justify-end w-4 h-4 right-3 absolute top-1/2 mt-1 cursor-pointer">
                 </div>
 
                 {{-- Ingat Saya --}}
@@ -89,7 +89,7 @@
             
         </div>
         <div class="belum-punya-akun flex justify-center bottom-0 mt-10">
-            <span>Belum Punya Akun ? <a href="#" class="text-blue-500 cursor-pointer">Daftar Sekarang</a></span>
+            <span>Belum Punya Akun ? <a href="#" class="text-primary cursor-pointer ml-4">Daftar Sekarang</a></span>
         </div>
     </div>
 </body>
