@@ -14,8 +14,8 @@ use App\Http\Controllers\AdminController\LoginController;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
+Route::get('/homepage', function () {
+    return view('homepage.index');
 });
 
 // Admin Routes
