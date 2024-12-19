@@ -16,7 +16,7 @@ use App\Http\Controllers\AdminController\DashboardAdminController;
 |
 */
 
-Route::get('/homepage', function () {
+Route::get('/', function () {
     return view('homepage.index');
 });
 
