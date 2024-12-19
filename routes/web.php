@@ -2,6 +2,8 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AdminController\LoginController;
+use App\Http\Controllers\AdminController\DashboardAdminController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -26,7 +28,5 @@ Route::prefix('admin')->group(function () {
     Route::post('/login', [LoginController::class, 'login']);
     
     // Dashboard route
-    Route::get('/dashboard', function () {
-        return view('admin.dashboard.index');
-    })->name('admin.dashboard');
+    Route::get('/dashboard', [DashboardAdminController::class, 'index'])->name('admin.dashboard');
 });
