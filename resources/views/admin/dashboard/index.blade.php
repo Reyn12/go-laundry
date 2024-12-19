@@ -23,16 +23,41 @@
 <body>
 
     {{-- container --}}
-    <div class="container bg-red-500 w-full h-screen flex">
+    <div class="container w-full h-screen flex">
         
         {{-- Include Sidebar Component --}}
         @include('admin.components.sidebar')
 
         {{-- Content --}}
-        <div class="content bg-red-500 flex-1 h-full p-4">
-            <h1 class="text-2xl font-bold text-white">Selamat Datang di Dashboard Admin</h1>
-            <p class="text-white mt-4">Ini adalah konten utama dari dashboard admin.</p>
-            <!-- Tambahkan lebih banyak konten di sini -->
+        <div class="content bg-gray-100 flex-1 h-full p-4 overflow-y-scroll w-full">
+            
+            {{-- Header --}}
+            <div class="sticky top-0 z-10 mb-4">
+                @include('admin.components.header')
+            </div>
+            
+            {{-- Main Content --}}
+            <div class="flex w-full gap-3">
+                {{-- Left Section (Tengah) --}}
+                <div class="w-3/4 flex flex-col gap-4">
+                    {{-- Card 3 Total --}}
+                    @include('admin.components.card3Total')
+
+                    {{-- Card Total Transaksi --}}
+                    @include('admin.components.cardTotalTransaksi')
+
+                    {{-- Card 10 Transaksi --}}
+                    @include('admin.components.card10Transaksi')
+                </div>
+
+                {{-- Right Section (Kanan) --}}
+                <div class="w-1/4">
+                    {{-- Card Berita dan Update --}}
+                    @include('admin.components.cardBeritaUpdate')
+                    {{-- Rating dan Ulasan --}}
+                    @include('admin.components.cardRatingUlasan')
+                </div>
+            </div>
         </div>
     </div>
 </body>
