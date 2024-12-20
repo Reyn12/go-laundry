@@ -10,7 +10,7 @@ class SaldoMerchant extends Model
 {
     use HasFactory;
 
-    protected $table = 'saldo_merchant';
+    protected $table = 'saldo_merchants';
 
     protected $fillable = [
         'id_merchant',

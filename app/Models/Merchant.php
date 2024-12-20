@@ -14,17 +14,17 @@ class Merchant extends Model
 {
     use HasFactory;
 
-    protected $table = 'merchant';
+    protected $table = 'merchants';
 
     protected $fillable = [
-        'id_user',
+        'user_id',
         'nama_laundry',
         'alamat_laundry',
         'deskripsi',
-        'jam_buka',
-        'jam_tutup',
-        'foto_laundry',
-        'status',
+        'no_hp',
+        'email',
+        'latitude',
+        'longitude',
         'created_at',
         'updated_at'
     ];
@@ -32,7 +32,7 @@ class Merchant extends Model
     // Relasi dengan User
     public function user()
     {
-        return $this->belongsTo(User::class, 'id_user');
+        return $this->belongsTo(User::class, 'user_id');
     }
 
     // Relasi dengan Pesanan
