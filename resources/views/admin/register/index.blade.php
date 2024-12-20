@@ -21,7 +21,7 @@
                 <!-- Illustrations -->
                 <div class="flex justify-center mb-8 space-x-4">
                     <div class="p-1 rounded-lg">
-                        <img src="{{ asset('images/laundryPicture.png') }}" alt="">
+                        <img src="{{ asset('images/washing-machine.png') }}" alt="">
                     </div>
                 </div>
                 <h2 class="text-2xl font-bold mb-2">Solusi Cerdas</h2>
