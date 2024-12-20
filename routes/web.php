@@ -33,3 +33,10 @@ Route::prefix('admin')->group(function () {
     //Admin register 
     Route::get('/register', [RegisterController::class, 'index'])->name('admin.register');
 });
+
+// Merchant Routes
+Route::prefix('merchant')->group(function () {
+    Route::get('/register', function () {
+        return view('merchant.register.index');
+    });
+});
