@@ -5,7 +5,7 @@
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7" />
             </svg>
         </div>
-        <h2 class="text-lg font-semibold mb-2">Permintaan pembuatan akun anda telah diajukan, silahkan hubungi perusahaan untuk aktivasi akun.</h2>
+        <h2 class="text-lg font-semibold mb-2">Akun kamu selesai dibuat, selamat mencuci^^.</h2>
         <div class="flex gap-2 mt-4">
             <button onclick="closePopup()" class="w-1/2 bg-gray-100 hover:bg-gray-200 text-gray-800 font-semibold p-3 rounded-xl">
                 Kembali
