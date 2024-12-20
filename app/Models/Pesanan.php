@@ -12,7 +12,7 @@ class Pesanan extends Model
 {
     use HasFactory;
 
-    protected $table = 'pesanan';
+    protected $table = 'pesanans';
 
     protected $fillable = [
         'id_user',

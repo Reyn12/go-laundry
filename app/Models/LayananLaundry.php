@@ -11,7 +11,7 @@ class LayananLaundry extends Model
 {
     use HasFactory;
 
-    protected $table = 'layanan_laundry';
+    protected $table = 'layanan_laundries';
 
     protected $fillable = [
         'id_merchant',
