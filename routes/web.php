@@ -4,6 +4,9 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AdminController\LoginController;
 use App\Http\Controllers\AdminController\DashboardAdminController;
 use App\Http\Controllers\AdminController\RegisterController;
+use App\Http\Controllers\UserController\LoginUserController;
+use App\Http\Controllers\UserController\DashboardUserController;
+use App\Http\Controllers\UserController\RegisterUserController;
 
 /*
 |--------------------------------------------------------------------------
@@ -39,4 +42,18 @@ Route::prefix('merchant')->group(function () {
     Route::get('/register', function () {
         return view('merchant.register.index');
     });
+});
+
+// User Routes
+Route::prefix('user')->group(function () {
+    Route::get('/login', function () {
+        return view('user.login.index');
+    });
+    Route::post('/login', [LoginUserController::class, 'login']);
+    
+    // Dashboard route
+    Route::get('/dashboard', [DashboardUserController::class, 'index'])->name('user.dashboard');
+    
+    //Admin register 
+    Route::get('/register', [RegisterUserController::class, 'index'])->name('user.register');
 });
