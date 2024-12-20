@@ -1,5 +1,5 @@
 {{-- Card Berita & Update --}}
-<div class="card bg-white p-6 rounded-xl w-full mb-4">
+<div class="card bg-white p-6 rounded-xl w-full mb-4 shadow-lg">
     <div class="flex items-center gap-2 mb-6">
         <img src="{{ asset('images/icons/iconNews.svg') }}" alt="iconBerita">
         <h2 class="text-xl font-semibold text-gray-800">Berita & Update</h2>

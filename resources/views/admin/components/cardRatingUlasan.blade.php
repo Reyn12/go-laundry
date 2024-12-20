@@ -1,5 +1,5 @@
 {{-- Card Rating & Ulasan --}}
-<div class="card bg-white p-6 rounded-xl w-full">
+<div class="card bg-white p-6 rounded-xl w-full shadow-lg">
     <div class="flex items-center gap-2 mb-6">
         <img src="{{ asset('images/icons/iconUlasan.svg') }}" alt="iconUlasan">
         <h2 class="text-xl font-semibold text-gray-800">Rating & Ulasan</h2>
@@ -13,13 +13,13 @@
         
         {{-- Review Card --}}
         <div class="mx-8">
-            <div class="p-4 bg-gray-50 rounded-xl">
+            <div class="p-4 bg-gray-50 rounded-xl border border-gray-500">
                 <div class="flex items-center gap-3 mb-2">
                     <div class="w-8 h-8 bg-gray-200 rounded-full overflow-hidden">
                         <img src="{{ asset('images/icons/iconProfile.svg') }}" alt="Profile" class="w-full h-full object-cover">
                     </div>
                     <div>
-                        <h3 class="font-medium">Agus Sedih</h3>
+                        <h3 class="font-medium text-sm">Agus Sedih</h3>
                         <div class="flex items-center">
                             <img src="{{ asset('images/icons/iconStar.svg') }}" alt="Star" class="">
                             <img src="{{ asset('images/icons/iconStar.svg') }}" alt="Empty Star" class="">
