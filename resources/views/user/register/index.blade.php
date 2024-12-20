@@ -19,24 +19,24 @@
             color: #0039C9;
         }
     </style>
-    {{-- Styles Untuk Register Admin --}}
-    @include('admin.components.registerAdminStyles')
+    {{-- Styles Untuk Register User --}}
+    @include('user.components.registerUserStyles')
 </head>
 <body>
     <div class="flex min-h-screen">
         <!-- Left Side - Enhanced Blue Section -->
-        @include('admin.components.leftSectionRegisterAdmin')
+        @include('user.components.leftSectionRegisterUser')
         <!-- Right Side - Form Section -->
-        @include('admin.components.rightSectionRegisterAdmin')
+        @include('user.components.rightSectionRegisterUser')
                 <!-- Form section -->
-                @include('admin.components.formRegister')
+                @include('user.components.formRegisterUser')
                 <!-- Popup Overlay -->
-                @include('admin.components.popupRegisterAdmin')
+                @include('user.components.popupRegisterUser')
             </div>
         </div>
     </div>
     {{-- Script Validasi dan Popup --}}
-    @include('admin.components.scriptPopupRegisterAdmin')
+    @include('user.components.scriptPopupRegisterUser')
     <script>
         lucide.createIcons();
     </script>
