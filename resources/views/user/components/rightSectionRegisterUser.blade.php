@@ -4,6 +4,6 @@
             <h1 class="text-3xl font-bold mb-2 text-gray-800">Buat Akun</h1>
             <p class="text-gray-600">
                 Sudah punya akun? 
-                <a href="#" class="text-blue-600 hover:text-blue-700 font-medium transition-colors">Log In</a>
+                <a href="/user/login" class="text-blue-600 hover:text-blue-700 font-medium transition-colors">Log In</a>
             </p>
         </div>

@@ -3,10 +3,40 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
+    <title>Laundry Merchant Signup</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/lucide/0.263.1/lucide.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Lato:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Lato', sans-serif;
+        }
+        .bg-primary {
+        background-color: #0039C9;
+        }
+
+        .text-primary {
+            color: #0039C9;
+        }
+    </style>
+    {{-- Styles Untuk Register merchant --}}
+    @include('merchant.components.registerMerchantStyles')
 </head>
 <body>
-    <h2>INI HALAMAN REGISTER MERCHANT</h2>
+    <div class="flex min-h-screen">
+        <!-- Left Side - Enhanced Blue Section -->
+        @include('merchant.components.leftSectionRegisterMerchant')
+                <!-- Form section -->
+                @include('merchant.components.formRegisterMerchant')
+                <!-- Popup Overlay -->
+                @include('merchant.components.popupRegisterMerchant')
+            </div>
+        </div>
+    </div>
+    {{-- Script Validasi dan Popup --}}
+    @include('merchant.components.scriptPopupRegisterMerchant')
+    <script>
+        lucide.createIcons();
+    </script>
 </body>
 </html>
