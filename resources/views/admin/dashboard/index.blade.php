@@ -23,13 +23,13 @@
 <body>
 
     {{-- container --}}
-    <div class="container w-full h-screen flex">
+    <div class="w-full h-screen flex bg-gray-100">
         
         {{-- Include Sidebar Component --}}
         @include('admin.components.sidebar')
 
         {{-- Content --}}
-        <div class="content bg-gray-100 flex-1 h-full p-4 overflow-y-scroll w-full">
+        <div class="content flex-1 h-full p-4 overflow-y-scroll">
             
             {{-- Header --}}
             <div class="sticky top-0 z-10 mb-4">
@@ -37,7 +37,7 @@
             </div>
             
             {{-- Main Content --}}
-            <div class="flex w-full gap-3">
+            <div class="flex gap-3">
                 {{-- Left Section (Tengah) --}}
                 <div class="w-3/4 flex flex-col gap-4">
                     {{-- Card 3 Total --}}
