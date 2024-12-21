@@ -2,6 +2,14 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AdminController\LoginController;
+use App\Http\Controllers\AdminController\DashboardAdminController;
+use App\Http\Controllers\AdminController\RegisterController;
+use App\Http\Controllers\UserController\LoginUserController;
+use App\Http\Controllers\UserController\DashboardUserController;
+use App\Http\Controllers\UserController\RegisterUserController;
+use App\Http\Controllers\MerchantController\RegisterMerchantController;
+use App\Http\Controllers\MerchantController\DashboardMerchantController;
+use App\Http\Controllers\MerchantController\LoginMerchantController;
 
 /*
 |--------------------------------------------------------------------------
@@ -18,8 +26,6 @@ Route::get('/', function () {
     return view('homepage.index');
 });
 
-Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
-
 // Admin Routes
 Route::prefix('admin')->group(function () {
     Route::get('/login', function () {
@@ -28,7 +34,36 @@ Route::prefix('admin')->group(function () {
     Route::post('/login', [LoginController::class, 'login']);
     
     // Dashboard route
-    Route::get('/dashboard', function () {
-        return view('admin.dashboard.index');
-    })->name('admin.dashboard');
+    Route::get('/dashboard', [DashboardAdminController::class, 'index'])->name('admin.dashboard');
+    
+    //Admin register 
+    Route::get('/register', [RegisterController::class, 'index'])->name('admin.register');
+});
+
+// User Routes
+Route::prefix('user')->group(function () {
+    Route::get('/login', function () {
+        return view('user.login.index');
+    });
+    Route::post('/login', [LoginUserController::class, 'login']);
+    
+    // Dashboard route
+    Route::get('/dashboard', [DashboardUserController::class, 'index'])->name('user.dashboard');
+    
+    //Admin register 
+    Route::get('/register', [RegisterUserController::class, 'index'])->name('user.register');
+});
+
+// Merchant Routes
+Route::prefix('merchant')->group(function () {
+    Route::get('/login', function () {
+        return view('merchant.login.index');
+    });
+    Route::post('/login', [LoginMerchantController::class, 'login']);
+    
+    // Dashboard route
+    Route::get('/dashboard', [DashboardMerchantController::class, 'index'])->name('merchant.dashboard');
+    
+    //Admin register 
+    Route::get('/register', [RegisterMerchantController::class, 'index'])->name('merchant.register');
 });

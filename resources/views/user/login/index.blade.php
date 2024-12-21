@@ -121,7 +121,7 @@
                             <label class="form-check-label" for="remember">Ingat Saya</label>
                         </div>
                         <div class="d-grid">
-                            <button type="button" class="btn btn-primary" onclick="window.location.href='dashboard';">Login</button>
+                            <button type="button" class="btn btn-primary" onclick="window.location.href='/user/dashboard';">Login</button>
                         </div>
                         <div class="text-center mt-3">
                             <a href="" class="text-decoration-none">Lupa Password</a>
