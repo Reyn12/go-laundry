@@ -64,7 +64,7 @@
 
     <button
         type="submit"
-        class="w-full bg-gradient-to-r from-yellow-100 to-yellow-200 hover:from-yellow-200 hover:to-yellow-300 text-gray-800 font-semibold p-4 rounded-xl transition duration-300 shadow-md hover:shadow-lg transform hover:-translate-y-0.5"
+        class="w-full bg-blue-700 hover:bg-blue-500 text-white font-semibold p-3 rounded-lg transition duration-200 shadow-lg h-20 text-2xl"
     >
         BUAT AKUN
     </button>
