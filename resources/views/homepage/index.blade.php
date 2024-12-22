@@ -15,22 +15,29 @@
 
     html {
         scroll-padding-top: 6rem;
-        /* Menambahkan ruang agar bagian yang dilompat tidak tertutup navbar */
+    }
+
+    /* Pastikan gambar tidak melebihi lebar layar */
+    img {
+        max-width: 100%;
     }
     </style>
 </head>
 
 <body>
     <nav class="sticky top-0 z-50 bg-white shadow-lg">
-        <div class="max-w-screen-xl flex items-center justify-between mx-auto py-6 px-4">
+        <div
+            class="max-w-screen-xl flex items-center justify-between mx-auto py-3 px-4 md:py-4 md:px-6 lg:py-4 lg:px-8">
             <!-- Logo -->
             <a href="" class="flex items-center">
-                <img src="{{ asset('images/LogoGoLaundry.png') }}" alt="logoLaundry" class="w-10 h-10">
+                <img src="{{ asset('images/LogoGoLaundry.png') }}" alt="logoLaundry"
+                    class="w-6 h-6 md:w-8 md:h-8 lg:w-12 lg:h-12 mr-2 lg:p-2">
+
             </a>
 
             <!-- Hamburger Menu (Mobile) -->
             <button id="menu-toggle" class="block md:hidden text-gray-900 focus:outline-none">
-                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                <svg class="w-5 h-5 md:w-6 md:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"
                     xmlns="http://www.w3.org/2000/svg">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7">
                     </path>
@@ -38,22 +45,34 @@
             </button>
 
             <!-- Navbar Links -->
-            <div id="menu" class="hidden md:flex flex-col md:flex-row items-center md:space-x-16">
-                <a href="" class="text-gray-900 hover:text-blue-700">BERANDA</a>
-                <a href="#" class="text-gray-900 hover:text-blue-700">CARI LAUNDRY</a>
-                <a href="#keunggulan" class="text-gray-900 hover:text-blue-700">KEUNGGULAN KAMI</a>
-                <a href="#tentangKami" class="text-gray-900 hover:text-blue-700">TENTANG KAMI</a>
-                <a href="#hubungiKami" class="text-gray-900 hover:text-blue-700">HUBUNGI KAMI</a>
+            <div id="menu"
+                class="hidden md:flex flex-col md:flex-row items-center space-y-2 md:space-y-0 lg:space-x-12">
+                <a href="" class="text-xs md:text-sm lg:text-base text-gray-900 hover:text-blue-700">BERANDA</a>
+                <a href="#"
+                    class="text-xs md:text-sm lg:text-base text-gray-900 hover:text-blue-700 leading-tight text-center">CARI
+                    LAUNDRY</a>
+                <a href="#keunggulan"
+                    class="text-xs md:text-sm lg:text-base text-gray-900 hover:text-blue-700 leading-tight text-center">
+                    KEUNGGULAN KAMI
+                </a>
+                <a href="#tentangKami"
+                    class="text-xs md:text-sm lg:text-base text-gray-900 hover:text-blue-700 leading-tight text-center">
+                    TENTANG KAMI
+                </a>
+                <a href="#hubungiKami"
+                    class="text-xs md:text-sm lg:text-base text-gray-900 hover:text-blue-700 leading-tight text-center">
+                    HUBUNGI KAMI
+                </a>
             </div>
 
             <!-- Buttons Section -->
-            <div class="hidden md:flex items-center space-x-2">
+            <div class="hidden md:flex items-center space-x-1 lg:space-x-4">
                 <a href="#"
-                    class="py-2 px-10 text-xs text-white bg-blue-700 rounded-full hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300">
+                    class="text-xs py-1 px-4 md:py-2 md:px-6 lg:py-2 lg:px-8 text-xs md:text-sm lg:text-base text-white bg-blue-700 rounded-full hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300">
                     DAFTAR
                 </a>
                 <a href="#"
-                    class="py-2 px-10 text-xs text-black border border-black rounded-full hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-gray-200">
+                    class="text-xs py-1 px-4 md:py-2 md:px-6 lg:py-2 lg:px-8 text-xs md:text-sm lg:text-base text-black border border-black rounded-full hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-gray-200">
                     MASUK
                 </a>
             </div>
@@ -68,11 +87,11 @@
             <a href="#hubungiKami" class="text-gray-900 hover:text-blue-700">HUBUNGI KAMI</a>
             <div class="flex items-center space-x-2">
                 <a href="#"
-                    class="py-2 px-10 text-xs text-white bg-blue-700 rounded-full hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300">
+                    class="py-2 px-6 text-xs text-white bg-blue-700 rounded-full hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300">
                     DAFTAR
                 </a>
                 <a href="#"
-                    class="py-2 px-10 text-xs text-black border border-black rounded-full hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-gray-200">
+                    class="py-2 px-6 text-xs text-black border border-black rounded-full hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-gray-200">
                     MASUK
                 </a>
             </div>
@@ -82,7 +101,7 @@
     <!-- Hero Section -->
 
 
-    <!-- Search Section -->
+    <!-- Keunggulan Section -->
     <section id="keunggulan" class="py-10 bg-gray-100">
         <div class="max-w-screen-xl mx-auto px-4">
             <h2 class="text-4xl text-center mb-10">KEUNGGULAN KAMI</h2>
@@ -249,7 +268,5 @@ menuLinks.forEach(link => {
     });
 });
 </script>
-
-
 
 </html>
