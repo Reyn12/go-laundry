@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>User-Manage</title>
+    <title>Merchant-Manage</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Lato:wght@400;700&display=swap" rel="stylesheet">
     <style>
@@ -12,21 +12,26 @@
             font-family: 'Lato', sans-serif;
         }
         .bg-primary {
-            background-color: #0039C9;
+        background-color: #0039C9;
         }
+
         .text-primary {
             color: #0039C9;
         }
     </style>
+
 </head>
 <body>
+    
     {{-- container --}}
     <div class="w-full h-screen flex bg-gray-100">
+        
         {{-- Include Sidebar Component --}}
         @include('admin.components.sidebar')
 
         {{-- Content --}}
         <div class="content flex-1 h-full p-4 overflow-y-scroll">
+            
             {{-- Header --}}
             <div class="sticky top-0 z-10 mb-4">
                 @include('admin.components.header')
@@ -34,27 +39,7 @@
             
             {{-- Main Content --}}
             <div class="flex gap-3">
-                {{-- Left Section (Tengah) --}}
-                <div class="w-3/4 flex flex-col gap-4">
-                    {{-- Card 3 Total --}}
-                    @include('admin.components.Card3UserManage', [
-                        'totalUsers' => $totalUsers,
-                        'activeUsers' => $activeUsers,
-                        'newUsers' => $newUsers,
-                        'activePercentage' => $activePercentage
-                    ])
-
-                    {{-- Card Tampilkan Data User --}}
-                    @include('admin.components.cardTampilDataUser')
-                </div>
-
-                {{-- Right Section (Kanan) --}}
-                <div class="w-1/4">
-                    {{-- Card Berita dan Update --}}
-                    @include('admin.components.cardBeritaUpdate')
-                    {{-- Rating dan Ulasan --}}
-                    @include('admin.components.cardRatingUlasan')
-                </div>
+                
             </div>
         </div>
     </div>

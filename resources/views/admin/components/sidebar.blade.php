@@ -38,7 +38,7 @@
 
         {{-- Merchant Manage --}}
         <li>
-            <a href="#" class="block">
+            <a href="{{ route('admin.dashboard.merchant-manage.index') }}" class="block">
                 <div class="menu-sidebar flex items-center px-4 py-2 rounded-lg mb-3 {{ request()->is('admin/dashboard/merchant-manage') ? 'bg-primary font-bold text-white' : 'hover:bg-blue-100' }}">
                     <span class="mr-4"><img src="{{ asset('images/icons/iconMerchantManage.svg') }}" alt=""></span>
                     <span>Merchant Manage</span>
