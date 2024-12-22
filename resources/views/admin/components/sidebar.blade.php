@@ -26,23 +26,23 @@
 
         {{-- User Manage --}}
         <li>
-            <div class="menu-sidebar flex items-center px-4 py-2 rounded-lg mb-3 {{ request()->is('admin/user-manage') ? 'bg-primary font-bold text-white' : 'hover:bg-blue-100' }}">
+            <div class="menu-sidebar flex items-center px-4 py-2 rounded-lg mb-3 {{ request()->is('admin/dashboard/user-manage') ? 'bg-primary font-bold text-white' : 'hover:bg-blue-100' }}">
                 <span class="mr-4"><img src="{{ asset('images/icons/iconUserManage.svg') }}" alt=""></span>
-                <a href="" class="">User Manage</a>
+                <a href="{{ route('admin.dashboard.user-manage.index') }}" class="">User Manage</a>
             </div>
         </li>
 
         {{-- Merchant Manage --}}
         <li>
-            <div class="menu-sidebar flex items-center px-4 py-2 rounded-lg mb-3 {{ request()->is('admin/merchant-manage') ? 'bg-primary font-bold text-white' : 'hover:bg-blue-100' }}">
-                <span class="mr-4"><img src="{{ asset('images/icons/iconMerchantManage.svg') }}" alt=""></span>
+            <div class="menu-sidebar flex items-center px-4 py-2 rounded-lg mb-3 {{ request()->is('admin/dashboard/merchant-manage') ? 'bg-primary font-bold text-white' : 'hover:bg-blue-100' }}">
+                <span class="mr-4"><img src="{{ asset('images/icons/iconMerchantManage.svg') }}" alt="">
                 <a href="#" class="">Merchant Manage</a>
             </div>
         </li>
 
         {{-- Laporan & Statistik --}}
         <li>
-            <div class="menu-sidebar flex items-center px-4 py-2 rounded-lg mb-3 {{ request()->is('admin/reports') ? 'bg-primary font-bold text-white' : 'hover:bg-blue-100' }}">
+            <div class="menu-sidebar flex items-center px-4 py-2 rounded-lg mb-3 {{ request()->is('admin/dashboard/reports') ? 'bg-primary font-bold text-white' : 'hover:bg-blue-100' }}">
                 <span class="mr-4"><img src="{{ asset('images/icons/iconLaporan.svg') }}" alt=""></span>
                 <a href="#" class="">Laporan & Statistik</a>
             </div>
@@ -51,8 +51,9 @@
 
         {{-- Pengaturan --}}
         <li>
-            <div class="menu-sidebar mt-4 flex items-center px-4 py-2 rounded-lg mb-3 {{ request()->is('admin/reports') ? 'bg-primary font-bold text-white' : 'hover:bg-blue-100' }}">
-                <span class="mr-4"><img src="{{ asset('images/icons/iconPengaturan.svg') }}" alt=""></span>
+            <div class="menu-sidebar mt-4 flex items-center px-4 py-2 rounded-lg mb-3 {{ request()->is('admin/dashboard/reports') ? 'bg-primary font-bold text-white' : 'hover:bg-blue-100' }}">
+                <span class="mr-4"><img src="{{ asset(
+                'images/icons/iconPengaturan.svg') }}" alt=""></span>
                 <a href="#" class="">Pengaturan</a>
             </div>
         </li>
