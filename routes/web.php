@@ -11,6 +11,8 @@ use App\Http\Controllers\MerchantController\RegisterMerchantController;
 use App\Http\Controllers\MerchantController\DashboardMerchantController;
 use App\Http\Controllers\MerchantController\LoginMerchantController;
 
+use App\Http\Controllers\AdminController\UserManageController;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -35,6 +37,9 @@ Route::prefix('admin')->group(function () {
     
     // Dashboard route
     Route::get('/dashboard', [DashboardAdminController::class, 'index'])->name('admin.dashboard');
+
+    // User Management route
+    Route::get('/dashboard/user-manage', [UserManageController::class, 'index'])->name('admin.dashboard.user-manage.index');
     
     //Admin register 
     Route::get('/register', [RegisterController::class, 'index'])->name('admin.register');

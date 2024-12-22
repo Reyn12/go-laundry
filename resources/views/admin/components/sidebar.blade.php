@@ -18,51 +18,63 @@
 
         {{-- Dashboard --}}
         <li>
-            <div class="menu-sidebar flex items-center px-4 py-2 rounded-lg mb-3 {{ request()->is('admin/dashboard') ? 'bg-primary font-bold text-white' : 'hover:bg-blue-100' }}">
-                <span class="mr-4"><img src="{{ asset('images/icons/iconDashboard.svg') }}" alt=""></span>
-                <a href="../dashboard" class="">Dashboard</a>
-            </div>
+            <a href="{{ route('admin.dashboard') }}" class="block">
+                <div class="menu-sidebar flex items-center px-4 py-2 rounded-lg mb-3 {{ request()->is('admin/dashboard') ? 'bg-primary font-bold text-white' : 'hover:bg-blue-100' }}">
+                    <span class="mr-4"><img src="{{ asset('images/icons/iconDashboard.svg') }}" alt=""></span>
+                    <span>Dashboard</span>
+                </div>
+            </a>
         </li>
 
         {{-- User Manage --}}
         <li>
-            <div class="menu-sidebar flex items-center px-4 py-2 rounded-lg mb-3 {{ request()->is('admin/user-manage') ? 'bg-primary font-bold text-white' : 'hover:bg-blue-100' }}">
-                <span class="mr-4"><img src="{{ asset('images/icons/iconUserManage.svg') }}" alt=""></span>
-                <a href="" class="">User Manage</a>
-            </div>
+            <a href="{{ route('admin.dashboard.user-manage.index') }}" class="block">
+                <div class="menu-sidebar flex items-center px-4 py-2 rounded-lg mb-3 {{ request()->is('admin/dashboard/user-manage') ? 'bg-primary font-bold text-white' : 'hover:bg-blue-100' }}">
+                    <span class="mr-4"><img src="{{ asset('images/icons/iconUserManage.svg') }}" alt=""></span>
+                    <span>User Manage</span>
+                </div>
+            </a>
         </li>
 
         {{-- Merchant Manage --}}
         <li>
-            <div class="menu-sidebar flex items-center px-4 py-2 rounded-lg mb-3 {{ request()->is('admin/merchant-manage') ? 'bg-primary font-bold text-white' : 'hover:bg-blue-100' }}">
-                <span class="mr-4"><img src="{{ asset('images/icons/iconMerchantManage.svg') }}" alt=""></span>
-                <a href="#" class="">Merchant Manage</a>
-            </div>
+            <a href="#" class="block">
+                <div class="menu-sidebar flex items-center px-4 py-2 rounded-lg mb-3 {{ request()->is('admin/dashboard/merchant-manage') ? 'bg-primary font-bold text-white' : 'hover:bg-blue-100' }}">
+                    <span class="mr-4"><img src="{{ asset('images/icons/iconMerchantManage.svg') }}" alt=""></span>
+                    <span>Merchant Manage</span>
+                </div>
+            </a>
         </li>
 
         {{-- Laporan & Statistik --}}
         <li>
-            <div class="menu-sidebar flex items-center px-4 py-2 rounded-lg mb-3 {{ request()->is('admin/reports') ? 'bg-primary font-bold text-white' : 'hover:bg-blue-100' }}">
-                <span class="mr-4"><img src="{{ asset('images/icons/iconLaporan.svg') }}" alt=""></span>
-                <a href="#" class="">Laporan & Statistik</a>
-            </div>
+            <a href="#" class="block">
+                <div class="menu-sidebar flex items-center px-4 py-2 rounded-lg mb-3 {{ request()->is('admin/dashboard/reports') ? 'bg-primary font-bold text-white' : 'hover:bg-blue-100' }}">
+                    <span class="mr-4"><img src="{{ asset('images/icons/iconLaporan.svg') }}" alt=""></span>
+                    <span>Laporan & Statistik</span>
+                </div>
+            </a>
         </li>
         <hr class="border-2 border-slate-200 mt-4">
 
         {{-- Pengaturan --}}
         <li>
-            <div class="menu-sidebar mt-4 flex items-center px-4 py-2 rounded-lg mb-3 {{ request()->is('admin/reports') ? 'bg-primary font-bold text-white' : 'hover:bg-blue-100' }}">
-                <span class="mr-4"><img src="{{ asset('images/icons/iconPengaturan.svg') }}" alt=""></span>
-                <a href="#" class="">Pengaturan</a>
-            </div>
+            <a href="#" class="block">
+                <div class="menu-sidebar mt-4 flex items-center px-4 py-2 rounded-lg mb-3 {{ request()->is('admin/dashboard/reports') ? 'bg-primary font-bold text-white' : 'hover:bg-blue-100' }}">
+                    <span class="mr-4"><img src="{{ asset('images/icons/iconPengaturan.svg') }}" alt=""></span>
+                    <span>Pengaturan</span>
+                </div>
+            </a>
         </li>
 
         {{-- Notifikasi --}}
         <li>
-            <div class="menu-sidebar flex items-center px-4 py-2 rounded-lg mb-3 {{ request()->is('admin/reports') ? 'bg-primary font-bold text-white' : 'hover:bg-blue-100' }}">
-                <span class="mr-4"><img src="{{ asset('images/icons/iconNotifikasi.svg') }}" alt=""></span>
-                <a href="#" class="">Notifikasi</a>
-            </div>
+            <a href="#" class="block">
+                <div class="menu-sidebar flex items-center px-4 py-2 rounded-lg mb-3 {{ request()->is('admin/reports') ? 'bg-primary font-bold text-white' : 'hover:bg-blue-100' }}">
+                    <span class="mr-4"><img src="{{ asset('images/icons/iconNotifikasi.svg') }}" alt=""></span>
+                    <span>Notifikasi</span>
+                </div>
+            </a>
         </li>
     </ul>
 
