@@ -83,10 +83,10 @@
                 <div class="absolute left-[160px] top-[70px] text-white">
                     <div class="flex items-center space-x-4">
                         <h1 class="text-2xl font-bold">{{ $user->name ?? 'User' }}</h1>
-                        <div class="flex items-center">
-                            <span class="text-yellow-500">★</span>
-                            <span class="text-yellow-500">★</span>
-                            <span class="text-yellow-500">★</span>
+                        <div class="bg-yellow-400 text-black rounded-full px-2 flex items-center">
+                            <span class="text-black-500">★</span>
+                            <span class="text-black-500">★</span>
+                            <span class="text-black-500">★</span>
                             <span class="text-gray-300">★</span>
                             <span class="text-gray-300">★</span>
                         </div>

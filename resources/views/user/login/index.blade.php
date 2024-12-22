@@ -18,84 +18,38 @@
         .login-card {
             background: white;
             border-radius: 15px;
-            padding: 18rem;
+            padding: 10rem;
+            margin: 0; 
             box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
-            min-width: 1175px;
-            width: 95%;
-            max-width: 2000px;
+            min-width: 320px; 
+            width: 100%; 
+            max-width: 1000px; 
         }
         .login-card h2 {
             font-size: 3.0rem;
             margin-bottom: 18rem;
-            
         }
         .login-card .form-control {
             padding: 0.8rem;
             font-size: 1.4rem;
         }
-        .login-card .btn {
-            padding: 0.8rem;
-            font-size: 1.1rem;
-        }
-        .laundry-image {
-            max-width: 100%;
-            height: 600px;
-            display: block;
-            margin: 10px;
-            animation: bounce 8s linear infinite;
-            transition: transform 0.3s ease;
-            position: 18rem;
-        }
-
         .laundry-image:hover {
             transform: scale(1.1);
         }
-
         .logo-text {
-            font-size: 6rem;
-            font-weight: 800;
-            color: #ffffff;
-            text-align: center;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
-            margin-bottom: 1.5rem;
-            animation: fadeIn 1.5s ease-out;
+            color: white;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+            font-size: 50px;
         }
-
-        @keyframes bounce {
-            0% {
-                transform: translate(0, 0);
-            }
-            25% {
-                transform: translate(50px, 50px);
-            }
-            50% {
-                transform: translate(0px, 100px);
-            }
-            75% {
-                transform: translate(-50px, 50px);
-            }
-            100% {
-                transform: translate(0, 0);
-            }
-        }
-
-        @keyframes fadeIn {
-            from {
-                opacity: 0;
-                transform: translateY(20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
+        .row {
+            padding-left: 2rem; 
+            padding-right: 1rem; 
         }
     </style>
 </head>
 <body>
-    <div class="container login-container">
-        <div class="row w-100">
+    <div class="container-fluid login-container"> 
+        <div class="row w-100 justify-content-between"> 
             <!-- Image Section -->
             <div class="col-md-6 d-flex align-items-center justify-content-center">
                 <div>
