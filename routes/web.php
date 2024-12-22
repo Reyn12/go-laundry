@@ -39,7 +39,7 @@ Route::prefix('admin')->group(function () {
     Route::get('/dashboard', [DashboardAdminController::class, 'index'])->name('admin.dashboard');
 
     // User Management route
-    Route::get('/dashboard/user-manage', [UserManageController::class, 'index'])->name('admin.dashboard.    user-manage.index');
+    Route::get('/dashboard/user-manage', [UserManageController::class, 'index'])->name('admin.dashboard.user-manage.index');
     
     //Admin register 
     Route::get('/register', [RegisterController::class, 'index'])->name('admin.register');

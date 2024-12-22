@@ -11,7 +11,10 @@ class UserManageController extends Controller
     public function index()
     {
         $users = User::all();
-        return view('admin.dashboard.user-manage.index', compact('users'));
+        return view('admin.dashboard.user-manage.index', [
+            'users' => $users,
+            'title' => 'User Management'
+        ]);
     }
 
     public function create()
