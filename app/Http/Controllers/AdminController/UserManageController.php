@@ -8,12 +8,32 @@ use App\Models\User;
 
 class UserManageController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $users = User::all();
+        $query = User::query();
+        
+        // Filter berdasarkan role jika ada
+        if ($request->role && $request->role !== 'all') {
+            $query->where('role', $request->role);
+        }
+        
+        $totalUsers = User::count();
+        $activeUsers = User::where('status', 'aktif')->count();
+        $newUsers = User::whereDate('created_at', '>=', now()->subWeek())->count();
+        
+        $activePercentage = $totalUsers > 0 ? round(($activeUsers / $totalUsers) * 100) : 0;
+        
+        // Get users with pagination
+        $users = $query->orderBy('created_at', 'desc')->paginate(10)->withQueryString();
+        
         return view('admin.dashboard.user-manage.index', [
             'users' => $users,
-            'title' => 'User Management'
+            'totalUsers' => $totalUsers,
+            'activeUsers' => $activeUsers,
+            'newUsers' => $newUsers,
+            'activePercentage' => $activePercentage,
+            'title' => 'User Management',
+            'selectedRole' => $request->role ?? 'all'
         ]);
     }
 

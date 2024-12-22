@@ -1,37 +1,44 @@
-<div class="tengah flex w-full h-full flex-col gap-4">
-    {{-- Statistics Cards --}}
-    <div class="stats grid grid-cols-3 gap-10">
-
-        {{-- Total Transaksi Card --}}
-        <div class="card bg-primary p-6 rounded-xl text-white shadow-lg cursor-pointer">
-            <div class="flex items-center gap-2 mb-4">
-                <img src="{{ asset('images/icons/iconLaporan.svg') }}" alt="iconLaporan">
-                <span class="font-semibold">Total Transaksi</span>
+{{-- Card 3 Total Component --}}
+<div class="grid grid-cols-3 gap-4">
+    {{-- Total Transaksi Card --}}
+    <div class="bg-gradient-to-br from-blue-600 to-blue-800 p-6 rounded-xl shadow-lg hover:shadow-xl transition-shadow duration-300">
+        <div class="flex items-center justify-between">
+            <div>
+                <p class="text-white text-sm">Total Transaksi</p>
+                <h3 class="text-white text-2xl font-bold mt-2">10,227</h3>
             </div>
-            <div class="text-4xl font-bold mb-2">10,227</div>
-            <div class="text-sm">Total Transaksi</div>
-        </div>
-
-        {{-- Total Users Card --}}
-        <div class="card bg-white p-6 rounded-xl shadow-lg cursor-pointer">
-            <div class="flex items-center gap-2 mb-4">
-                <img src="{{ asset('images/icons/iconUserManage.svg') }}" alt="iconProfile">
-                <span class="font-semibold">Total Users</span>
+            <div class="bg-blue-500/30 p-3 rounded-full">
+                <img src="{{ asset('images/icons/iconLaporan.svg') }}" alt="Transaksi" class="w-6 h-6">
             </div>
-            <div class="text-4xl font-bold mb-2">8,514</div>
-            <div class="text-sm">Total Pelanggan dan Merchant</div>
         </div>
+        <p class="text-blue-200 text-xs mt-4">Total Transaksi</p>
+    </div>
 
-        {{-- Total Merchant Card --}}
-        <div class="card bg-white p-6 rounded-xl shadow-lg cursor-pointer">
-            <div class="flex items-center gap-2 mb-4">
-                <img src="{{ asset('images/icons/iconMerchantManage.svg') }}" alt="iconMerchant">
-                <span class="font-semibold">Total Merchant</span>
+    {{-- Total Users Card --}}
+    <div class="bg-gradient-to-br from-indigo-600 to-indigo-800 p-6 rounded-xl shadow-lg hover:shadow-xl transition-shadow duration-300">
+        <div class="flex items-center justify-between">
+            <div>
+                <p class="text-white text-sm">Total Users</p>
+                <h3 class="text-white text-2xl font-bold mt-2">8,514</h3>
             </div>
-            <div class="text-4xl font-bold mb-2">235</div>
-            <div class="text-sm">Total Laundry Aktif</div>
+            <div class="bg-indigo-500/30 p-3 rounded-full">
+                <img src="{{ asset('images/icons/iconUserManage.svg') }}" alt="Users" class="w-6 h-6">
+            </div>
         </div>
+        <p class="text-indigo-200 text-xs mt-4">Total Pelanggan dan Merchant</p>
+    </div>
 
-        
+    {{-- Total Merchant Card --}}
+    <div class="bg-gradient-to-br from-cyan-600 to-cyan-800 p-6 rounded-xl shadow-lg hover:shadow-xl transition-shadow duration-300">
+        <div class="flex items-center justify-between">
+            <div>
+                <p class="text-white text-sm">Total Merchant</p>
+                <h3 class="text-white text-2xl font-bold mt-2">235</h3>
+            </div>
+            <div class="bg-cyan-500/30 p-3 rounded-full">
+                <img src="{{ asset('images/icons/iconMerchantManage.svg') }}" alt="Merchant" class="w-6 h-6">
+            </div>
+        </div>
+        <p class="text-cyan-200 text-xs mt-4">Total Laundry Aktif</p>
     </div>
 </div>

@@ -42,13 +42,11 @@
                 {{-- Left Section (Tengah) --}}
                 <div class="w-3/4 flex flex-col gap-4">
                     {{-- Card 3 Total --}}
-                    @include('admin.components.card3Total')
+                    @include('admin.components.card3UserManage')
 
-                    {{-- Card Total Transaksi --}}
-                    @include('admin.components.cardTotalTransaksi')
+                    {{-- Card Tampilkan Data User --}}
+                    @include('admin.components.cardTampilDataUser')
 
-                    {{-- Card 10 Transaksi --}}
-                    @include('admin.components.card10Transaksi')
                 </div>
 
                 {{-- Right Section (Kanan) --}}
