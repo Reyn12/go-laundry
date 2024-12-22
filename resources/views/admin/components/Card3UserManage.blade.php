@@ -5,7 +5,7 @@
         <div class="flex items-center justify-between">
             <div>
                 <p class="text-white text-sm">Total User</p>
-                <h3 class="text-white text-2xl font-bold mt-2">{{ number_format($totalUsers) }}</h3>
+                <h3 class="text-white text-2xl font-bold mt-2">{{ number_format($totalUsers ?? 0) }}</h3>
             </div>
             <div class="bg-blue-500/30 p-3 rounded-full">
                 <img src="{{ asset('images/icons/iconUserManage.svg') }}" alt="Users" class="w-6 h-6">
@@ -19,13 +19,13 @@
         <div class="flex items-center justify-between">
             <div>
                 <p class="text-white text-sm">Active Users</p>
-                <h3 class="text-white text-2xl font-bold mt-2">{{ number_format($activeUsers) }}</h3>
+                <h3 class="text-white text-2xl font-bold mt-2">{{ number_format($activeUsers ?? 0) }}</h3>
             </div>
             <div class="bg-indigo-500/30 p-3 rounded-full">
                 <img src="{{ asset('images/icons/iconUserManage.svg') }}" alt="Active Users" class="w-6 h-6">
             </div>
         </div>
-        <p class="text-indigo-200 text-xs mt-4">{{ $activePercentage }}% dari total users</p>
+        <p class="text-indigo-200 text-xs mt-4">{{ $activePercentage ?? 0 }}% dari total users</p>
     </div>
 
     {{-- New Users Card --}}
@@ -33,7 +33,7 @@
         <div class="flex items-center justify-between">
             <div>
                 <p class="text-white text-sm">New Users</p>
-                <h3 class="text-white text-2xl font-bold mt-2">{{ number_format($newUsers) }}</h3>
+                <h3 class="text-white text-2xl font-bold mt-2">{{ number_format($newUsers ?? 0) }}</h3>
             </div>
             <div class="bg-cyan-500/30 p-3 rounded-full">
                 <img src="{{ asset('images/icons/iconUserManage.svg') }}" alt="New Users" class="w-6 h-6">

@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>User-Manage</title>
+    <title>Merchant-Manage</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Lato:wght@400;700&display=swap" rel="stylesheet">
     <style>
@@ -14,6 +14,7 @@
         .bg-primary {
             background-color: #0039C9;
         }
+
         .text-primary {
             color: #0039C9;
         }
@@ -33,27 +34,19 @@
             </div>
             
             {{-- Main Content --}}
-            <div class="flex gap-3">
-                {{-- Left Section (Tengah) --}}
-                <div class="w-3/4 flex flex-col gap-4">
-                    {{-- Card 3 Total --}}
-                    @include('admin.components.Card3UserManage', [
-                        'totalUsers' => $totalUsers,
-                        'activeUsers' => $activeUsers,
-                        'newUsers' => $newUsers,
-                        'activePercentage' => $activePercentage
-                    ])
+            <div class="flex flex-col bg-white rounded-lg shadow-lg"> 
+                {{-- Navigation Tabs --}}
+                @include('admin.components.nav-MerchantManage')
 
-                    {{-- Card Tampilkan Data User --}}
-                    @include('admin.components.cardTampilDataUser')
-                </div>
+                {{-- Sort dan Filter Merchant--}}
+                @include('admin.components.sortDanFilterMerchant')
 
-                {{-- Right Section (Kanan) --}}
-                <div class="w-1/4">
-                    {{-- Card Berita dan Update --}}
-                    @include('admin.components.cardBeritaUpdate')
-                    {{-- Rating dan Ulasan --}}
-                    @include('admin.components.cardRatingUlasan')
+                {{-- Card All Merchant --}}
+                @include('admin.components.cardAllMerchant')
+
+                {{-- Content Area (kosong dulu) --}}
+                <div class="p-6">
+                    <!-- Content akan ditambahkan nanti -->
                 </div>
             </div>
         </div>
