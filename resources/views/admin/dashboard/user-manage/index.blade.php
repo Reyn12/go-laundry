@@ -37,7 +37,7 @@
                 {{-- Left Section (Tengah) --}}
                 <div class="w-3/4 flex flex-col gap-4">
                     {{-- Card 3 Total --}}
-                    @include('admin.components.Card3UserManage', [
+                    @include('admin.components.card3UserManage', [
                         'totalUsers' => $totalUsers,
                         'activeUsers' => $activeUsers,
                         'newUsers' => $newUsers,

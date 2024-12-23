@@ -43,7 +43,14 @@ Route::prefix('admin')->group(function () {
     Route::get('/dashboard/user-manage', [UserManageController::class, 'index'])->name('admin.dashboard.user-manage.index');
     
     // Merchant Management route
-    Route::get('/dashboard/merchant-manage', [MerchantManageController::class, 'index'])->name('admin.dashboard.merchant-manage.index');
+    // Route::get('/dashboard/merchant-manage', [MerchantManageController::class, 'index'])->name('admin.dashboard.merchant-manage.index');
+
+    // Merchant Management routes
+    Route::prefix('dashboard/merchant-manage')->group(function () {
+        Route::get('/', [MerchantManageController::class, 'index'])->name('admin.dashboard.merchant-manage.index');
+        Route::get('/all', [MerchantManageController::class, 'all'])->name('admin.dashboard.merchant-manage.all');
+        Route::get('/pending', [MerchantManageController::class, 'pending'])->name('admin.dashboard.merchant-manage.pending');
+    });
 
     //Admin register 
     Route::get('/register', [RegisterController::class, 'index'])->name('admin.register');

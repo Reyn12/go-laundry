@@ -11,10 +11,10 @@ class MerchantManageController extends Controller
 {
     public function index()
     {
-        $merchants = Merchant::with('user')->get();
         return view('admin.dashboard.merchant-manage.index', [
-            'merchants' => $merchants,
-            'title' => 'Merchant Management'
+            'mainTitle' => 'Merchant Management',
+            'subTitle' => 'All Merchant',
+            'title' => 'Merchant Management'  // untuk kompatibilitas
         ]);
     }
 
@@ -50,4 +50,23 @@ class MerchantManageController extends Controller
         $merchant->delete();
         return redirect()->route('admin.merchant.index')->with('success', 'Merchant deleted successfully');
     }
+
+    public function all()
+    {
+        return view('admin.dashboard.merchant-manage.index', [
+            'mainTitle' => 'Merchant Management',
+            'subTitle' => 'All Merchant',
+            'title' => 'Merchant Management'  // untuk kompatibilitas
+        ]);
+    }
+
+    public function pending()
+    {
+        return view('admin.dashboard.merchant-manage.index', [
+            'mainTitle' => 'Merchant Management',
+            'subTitle' => 'Pending Verification',
+            'title' => 'Merchant Management'  // untuk kompatibilitas
+        ]);
+    }
+
 }
