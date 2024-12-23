@@ -21,23 +21,48 @@
                     </div>
                 </div>
                 <ul class="space-y-2 mt-4">
-                    <li class="px-6 py-2 hover:bg-gray-100 cursor-pointer">Dashboard</li>
-                    <li class="px-6 py-2 hover:bg-blue-100 cursor-pointer bg-blue-100">Profile Merchant</li>
-                    <li class="px-6 py-2 hover:bg-gray-100 cursor-pointer">Kelola Layanan</li>
-                    <li class="px-6 py-2 hover:bg-gray-100 cursor-pointer">Manajemen Pesanan</li>
-                    <li class="px-6 py-2 hover:bg-gray-100 cursor-pointer">Penarikan Saldo</li>
+                    <li class="px-6 py-2 hover:bg-gray-100 cursor-pointer flex items-center">
+                        <img src="{{ asset('images/icons/iconDashboard.svg') }}" alt="Icon Dashboard" class="w-5 h-5 mr-2">
+                    </i> Dashboard
+                    </li>
+                    <li class="px-6 py-2 hover:bg-gray-100 cursor-pointer flex items-center">
+                        <img src="{{ asset('images/icons/iconUserManage.svg') }}" alt="Icon Profile Merchant" class="w-5 h-5 mr-2">
+                    </i> Profile Merchant
+                    </li>
+                    <li class="px-6 py-2 hover:bg-gray-100 cursor-pointer flex items-center">
+                        <img src="{{ asset('images/icons/iconKelolaMerchant.svg') }}" alt="Icon Kelola Layanan" class="w-5 h-5 mr-2">
+                    </i> Kelola Layanan
+                    </li>
+                    <li class="px-6 py-2 hover:bg-gray-100 cursor-pointer flex items-center">
+                        <img src="{{ asset('images/icons/iconMerchantManage.svg') }}" alt="Icon Manajemen Pemesanan" class="w-5 h-5 mr-2">
+                    </i> Manajemen Pesanan
+                    </li>
+                    <li class="px-6 py-2 hover:bg-gray-100 cursor-pointer flex items-center">
+                        <img src="{{ asset('images/icons/iconLaporan.svg') }}" alt="Icon Ulasan & Pendapatan" class="w-5 h-5 mr-2">
+                    </i> Ulasan & Pendapatan
+                    </li>
+                    <li class="px-6 py-2 hover:bg-gray-100 cursor-pointer flex items-center">
+                        <img src="{{ asset('images/icons/iconCashout.svg') }}" alt="Icon Penarikan Saldo" class="w-5 h-5 mr-2">
+                        Penarikan Saldo
+                    </li>
+                    
                 </ul>
-                <hr class="my-4 border-gray-200">
+                <hr class="my-4 border-1 border-black">
                 <ul class="space-y-2">
-                    <li class="px-6 py-2 hover:bg-gray-100 cursor-pointer">Settings</li>
-                    <li class="px-6 py-2 hover:bg-gray-100 cursor-pointer">Notifikasi</li>
+                    <li class="px-6 py-2 hover:bg-gray-100 cursor-pointer flex items-center">
+                        <img src="{{ asset('images/icons/iconPengaturan.svg') }}" alt="Icon Pengaturan" class="w-5 h-5 mr-2">
+                        Settings
+                    </li>
+                    <li class="px-6 py-2 hover:bg-gray-100 cursor-pointer flex items-center">
+                        <img src="{{ asset('images/icons/iconNotifikasi.svg') }}" alt="Icon Notifikasi" class="w-5 h-5 mr-2">
+                        Notifikasi
+                    </li>
                 </ul>
             </div>
             <div class="px-6 py-4">
                 <button class="w-full bg-red-600 text-white py-2 rounded-md">Log Out</button>
             </div>
         </div>
-
         <!-- Main Content -->
         <div class="flex-1 p-6 overflow-auto">
             <header class="flex items-center justify-between mb-6">
@@ -61,14 +86,17 @@
                     </div>
                     <p class="mb-2"><strong>About:</strong></p>
                     <p class="text-gray-600 mb-4">081081081081<br>laundrygood@lalalala.com</p>
+                    <hr class="my-4 border-1 border-black">
                     <p class="mb-2"><strong>Jam Operasional:</strong></p>
                     <p class="text-gray-600 mb-4">09.00 - 20.00</p>
+                    <hr class="my-4 border-1 border-black">
                     <p class="mb-2"><strong>Address:</strong></p>
                     <p class="text-gray-600 mb-4">JL Kesana Kesini</p>
                     <iframe
                         src="https://maps.google.com/maps?q=Monas%20Jakarta&t=&z=13&ie=UTF8&iwloc=&output=embed"
                         class="w-full h-48 rounded-md" frameborder="0">
                     </iframe>
+                    <hr class="my-4 border-1 border-black">
                     <div class="flex justify-end mt-4">
                         <button class="bg-blue-500 text-white px-4 py-2 rounded-md mr-2">Edit</button>
                         <button class="bg-green-500 text-white px-4 py-2 rounded-md">Simpan</button>

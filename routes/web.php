@@ -11,6 +11,7 @@ use App\Http\Controllers\MerchantController\RegisterMerchantController;
 use App\Http\Controllers\MerchantController\DashboardMerchantController;
 use App\Http\Controllers\MerchantController\LoginMerchantController;
 use App\Http\Controllers\MerchantController\ProfileMerchantController;
+use App\Http\Controllers\MerchantController\KelolaLayananMerchantController;
 
 use App\Http\Controllers\AdminController\UserManageController;
 use App\Http\Controllers\AdminController\MerchantManageController;
@@ -91,4 +92,7 @@ Route::prefix('merchant')->group(function () {
 
     //Profile Route
     Route::get('/profile', [ProfileMerchantController::class, 'index'])->name('merchant.profile');
+
+     //KelolaLayanan Route
+     Route::get('/kelolalayanan', [KelolaLayananMerchantController::class, 'index'])->name('merchant.kelolalayanan');
 });
