@@ -7,10 +7,10 @@ use App\Http\Controllers\AdminController\RegisterController;
 use App\Http\Controllers\UserController\LoginUserController;
 use App\Http\Controllers\UserController\DashboardUserController;
 use App\Http\Controllers\UserController\RegisterUserController;
+use App\Http\Controllers\UserController\UserPencarianController;
 use App\Http\Controllers\MerchantController\RegisterMerchantController;
 use App\Http\Controllers\MerchantController\DashboardMerchantController;
 use App\Http\Controllers\MerchantController\LoginMerchantController;
-
 use App\Http\Controllers\AdminController\UserManageController;
 
 /*
@@ -57,10 +57,13 @@ Route::prefix('user')->group(function () {
     
     //Admin register 
     Route::get('/register', [RegisterUserController::class, 'index'])->name('user.register');
+
+     //User Search Route
+     Route::get('/pencarian', [UserPencarianController::class, 'index'])->name('user.pencarian');
 });
 
-// Merchant Routes
-Route::prefix('merchant')->group(function () {
+    // Merchant Routes
+    Route::prefix('merchant')->group(function () {
     Route::get('/login', function () {
         return view('merchant.login.index');
     });
@@ -71,4 +74,7 @@ Route::prefix('merchant')->group(function () {
     
     //Admin register 
     Route::get('/register', [RegisterMerchantController::class, 'index'])->name('merchant.register');
-});
+    });
+
+
+

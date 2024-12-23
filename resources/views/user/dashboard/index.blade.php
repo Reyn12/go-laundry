@@ -1,47 +1,53 @@
-@extends('layouts.main')
+@extends('user.components.main')
 
 @section('container')
 <div class="flex">
     <!-- Sidebar -->
     <div class="fixed left-0 top-0 w-20 bg-white shadow-lg h-screen flex flex-col items-center py-5 space-y-8">
+
         <!-- Logo -->
         <div class="mb-8">
             <img src="{{ asset('images/logoGolaundry.png') }}" alt="Logo" class="w-12 h-12">
         </div>
 
         <!-- Navigation Items -->
-        <nav class="flex flex-col items-center space-y-6">
-            <!-- Home -->
-            <a href="#" class="p-2 hover:bg-gray-100 rounded-lg">
-                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path>
-                </svg>
-            </a>
+    <nav class="flex flex-col items-center space-y-6">
 
-            <!-- Search -->
-            <a href="#" class="p-2 hover:bg-gray-100 rounded-lg">
-                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
-                </svg>
-            </a>
+    <!-- Home -->
+    <a href="/user/dashboard" class="p-2 hover:bg-gray-100 rounded-lg">
+        <button class="flex items-center">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path>
+            </svg>
+        </button>
+    </a>
 
-            <!-- Menu -->
-            <a href="#" class="p-2 hover:bg-gray-100 rounded-lg">
-                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+     <!-- Search -->
+     <a href="/user/pencarian" class="p-2 hover:bg-gray-100 rounded-lg">
+        <button class="flex items-center">
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+            </svg>
+        </button>
+    </a>
+    <!-- Menu -->
+    <a href="#" class="p-2 hover:bg-gray-100 rounded-lg">
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
-                </svg>
-            </a>
+        </svg>
+    </a>
 
-            <!-- History -->
-            <a href="#" class="p-2 hover:bg-gray-100 rounded-lg">
-                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-                </svg>
-            </a>
+    <!-- History -->
+    <a href="#" class="p-2 hover:bg-gray-100 rounded-lg">
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+        </svg>
+    </a>
         </nav>
 
         <!-- Bottom Icons -->
         <div class="mt-auto flex flex-col items-center space-y-6">
+
             <!-- Settings -->
             <a href="#" class="p-2 hover:bg-gray-100 rounded-lg">
                 <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -85,8 +91,8 @@
                         <h1 class="text-2xl font-bold">{{ $user->name ?? 'User' }}</h1>
                         <div class="bg-yellow-400 text-black rounded-full px-2 flex items-center">
                             <span class="text-black-500">★</span>
-                            <span class="text-black-500">★</span>
-                            <span class="text-black-500">★</span>
+                            <span class="text-yellow-500">★</span>
+                            <span class="text-yellow-500">★</span>
                             <span class="text-gray-300">★</span>
                             <span class="text-gray-300">★</span>
                         </div>
