@@ -22,13 +22,14 @@
                     </div>
                 </div>
                 <ul class="space-y-2 mt-4">
-                    <li class="px-6 py-2 hover:bg-gray-100 cursor-pointer bg-blue-100">Dashboard</li>
+                    <li class="px-6 py-2 hover:bg-blue-100 cursor-pointer bg-blue-100">Dashboard</li>
                     <li class="px-6 py-2 hover:bg-gray-100 cursor-pointer">Profile Merchant</li>
                     <li class="px-6 py-2 hover:bg-gray-100 cursor-pointer">Kelola Layanan</li>
                     <li class="px-6 py-2 hover:bg-gray-100 cursor-pointer">Manajemen Pesanan</li>
+                    <li class="px-6 py-2 hover:bg-gray-100 cursor-pointer">Ulasan & Pendapatan</li>
                     <li class="px-6 py-2 hover:bg-gray-100 cursor-pointer">Penarikan Saldo</li>
                 </ul>
-                <hr class="my-4 border-gray-200">
+                <hr class="my-4 border-1 border-black">
                 <ul class="space-y-2">
                     <li class="px-6 py-2 hover:bg-gray-100 cursor-pointer">Settings</li>
                     <li class="px-6 py-2 hover:bg-gray-100 cursor-pointer">Notifikasi</li>

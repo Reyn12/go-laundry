@@ -25,9 +25,10 @@
                     <li class="px-6 py-2 hover:bg-blue-100 cursor-pointer bg-blue-100">Profile Merchant</li>
                     <li class="px-6 py-2 hover:bg-gray-100 cursor-pointer">Kelola Layanan</li>
                     <li class="px-6 py-2 hover:bg-gray-100 cursor-pointer">Manajemen Pesanan</li>
+                    <li class="px-6 py-2 hover:bg-gray-100 cursor-pointer">Ulasan & Pesanan</li>
                     <li class="px-6 py-2 hover:bg-gray-100 cursor-pointer">Penarikan Saldo</li>
                 </ul>
-                <hr class="my-4 border-gray-200">
+                <hr class="my-4 border-1 border-black">
                 <ul class="space-y-2">
                     <li class="px-6 py-2 hover:bg-gray-100 cursor-pointer">Settings</li>
                     <li class="px-6 py-2 hover:bg-gray-100 cursor-pointer">Notifikasi</li>
@@ -61,14 +62,17 @@
                     </div>
                     <p class="mb-2"><strong>About:</strong></p>
                     <p class="text-gray-600 mb-4">081081081081<br>laundrygood@lalalala.com</p>
+                    <hr class="my-4 border-1 border-black">
                     <p class="mb-2"><strong>Jam Operasional:</strong></p>
                     <p class="text-gray-600 mb-4">09.00 - 20.00</p>
+                    <hr class="my-4 border-1 border-black">
                     <p class="mb-2"><strong>Address:</strong></p>
                     <p class="text-gray-600 mb-4">JL Kesana Kesini</p>
                     <iframe
                         src="https://maps.google.com/maps?q=Monas%20Jakarta&t=&z=13&ie=UTF8&iwloc=&output=embed"
                         class="w-full h-48 rounded-md" frameborder="0">
                     </iframe>
+                    <hr class="my-4 border-1 border-black">
                     <div class="flex justify-end mt-4">
                         <button class="bg-blue-500 text-white px-4 py-2 rounded-md mr-2">Edit</button>
                         <button class="bg-green-500 text-white px-4 py-2 rounded-md">Simpan</button>
