@@ -10,6 +10,7 @@ use App\Http\Controllers\UserController\RegisterUserController;
 use App\Http\Controllers\MerchantController\RegisterMerchantController;
 use App\Http\Controllers\MerchantController\DashboardMerchantController;
 use App\Http\Controllers\MerchantController\LoginMerchantController;
+use App\Http\Controllers\MerchantController\ProfileMerchantController;
 
 use App\Http\Controllers\AdminController\UserManageController;
 use App\Http\Controllers\AdminController\MerchantManageController;
@@ -88,6 +89,9 @@ Route::prefix('merchant')->group(function () {
     // Dashboard route
     Route::get('/dashboard', [DashboardMerchantController::class, 'index'])->name('merchant.dashboard');
     
-    //Admin register 
+    //Merchant register 
     Route::get('/register', [RegisterMerchantController::class, 'index'])->name('merchant.register');
+
+    //Profile Route
+    Route::get('/profile', [ProfileMerchantController::class, 'index'])->name('merchant.profile');
 });
