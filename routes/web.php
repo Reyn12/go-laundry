@@ -25,10 +25,18 @@ use App\Http\Controllers\AdminController\MerchantManageController;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
-
+// Homepage Routes
 Route::get('/', function () {
     return view('homepage.index');
 });
+Route::get('/daftar', function () {
+    return view('homepage.daftar.index');
+});
+Route::get('/masuk', function () {
+    return view('homepage.masuk.index');
+});
+
+
 
 // Admin Routes
 Route::prefix('admin')->group(function () {
