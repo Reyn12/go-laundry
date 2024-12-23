@@ -67,11 +67,11 @@
 
             <!-- Buttons Section -->
             <div class="hidden md:flex items-center space-x-1 lg:space-x-4">
-                <a href="#"
+                <a href="{{ url('/daftar') }}"
                     class="text-xs py-1 px-4 md:py-2 md:px-6 lg:py-2 lg:px-8 text-xs md:text-sm lg:text-base text-white bg-blue-700 rounded-full hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300">
                     DAFTAR
                 </a>
-                <a href="#"
+                <a href="{{ url('/masuk') }}"
                     class="text-xs py-1 px-4 md:py-2 md:px-6 lg:py-2 lg:px-8 text-xs md:text-sm lg:text-base text-black border border-black rounded-full hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-gray-200">
                     MASUK
                 </a>
@@ -86,11 +86,11 @@
             <a href="#tentangKami" class="text-gray-900 hover:text-blue-700">TENTANG KAMI</a>
             <a href="#hubungiKami" class="text-gray-900 hover:text-blue-700">HUBUNGI KAMI</a>
             <div class="flex items-center space-x-2">
-                <a href="#"
+                <a href="{{ url('/daftar') }}"
                     class="py-2 px-6 text-xs text-white bg-blue-700 rounded-full hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300">
                     DAFTAR
                 </a>
-                <a href="#"
+                <a href="{{ url('/masuk') }}"
                     class="py-2 px-6 text-xs text-black border border-black rounded-full hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-gray-200">
                     MASUK
                 </a>

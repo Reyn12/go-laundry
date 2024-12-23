@@ -11,12 +11,24 @@ use App\Http\Controllers\UserController\UserPencarianController;
 use App\Http\Controllers\MerchantController\RegisterMerchantController;
 use App\Http\Controllers\MerchantController\DashboardMerchantController;
 use App\Http\Controllers\MerchantController\LoginMerchantController;
-use App\Http\Controllers\AdminController\UserManageController;
 
-// Homepage route
+use App\Http\Controllers\AdminController\UserManageController;
+use App\Http\Controllers\AdminController\MerchantManageController;
+
+/*
+|--------------------------------------------------------------------------
+| Web Routes
+|--------------------------------------------------------------------------
+|
+| Here is where you can register web routes for your application. These
+| routes are loaded by the RouteServiceProvider and all of them will
+| be assigned to the "web" middleware group. Make something great!
+|
+*/
+
 Route::get('/', function () {
     return view('homepage.index');
-})->name('homepage');
+});
 
 // Admin Routes
 Route::prefix('admin')->group(function () {
@@ -27,6 +39,8 @@ Route::prefix('admin')->group(function () {
 
     Route::get('/dashboard', [DashboardAdminController::class, 'index'])->name('admin.dashboard');
     Route::get('/dashboard/user-manage', [UserManageController::class, 'index'])->name('admin.dashboard.user-manage.index');
+    
+    //Admin register 
     Route::get('/register', [RegisterController::class, 'index'])->name('admin.register');
 });
 
@@ -50,5 +64,10 @@ Route::prefix('merchant')->group(function () {
     Route::post('/login', [LoginMerchantController::class, 'login']);
 
     Route::get('/dashboard', [DashboardMerchantController::class, 'index'])->name('merchant.dashboard');
+    
+    //Admin register 
     Route::get('/register', [RegisterMerchantController::class, 'index'])->name('merchant.register');
+
+    //Profile Route
+    Route::get('/profile', [ProfileMerchantController::class, 'index'])->name('merchant.profile');
 });

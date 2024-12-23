@@ -2,7 +2,12 @@
 <div class="header w-full h-16 flex bg-white justify-between items-center px-6 rounded-lg shadow-lg">
     {{-- Left Side - Title and Date --}}
     <div class="left">
-        <h1 class="text-lg font-semibold">{{ $title ?? 'Dashboard' }}</h1>
+        <h1 class="text-lg font-semibold">
+            {{ $mainTitle ?? $title ?? 'Dashboard' }}
+            @if(isset($subTitle))
+                <span class="text-slate-500 text-sm">/{{ $subTitle }}</span>
+            @endif
+        </h1>
         <p class="text-xs text-gray-500">{{ date('d F Y') }}</p>
     </div>
 
