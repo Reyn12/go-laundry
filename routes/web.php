@@ -50,10 +50,7 @@ Route::prefix('admin')->group(function () {
 
     // User Management route
     Route::get('/dashboard/user-manage', [UserManageController::class, 'index'])->name('admin.dashboard.user-manage.index');
-    
-    // Merchant Management route
-    // Route::get('/dashboard/merchant-manage', [MerchantManageController::class, 'index'])->name('admin.dashboard.merchant-manage.index');
-
+   
     // Merchant Management routes
     Route::prefix('dashboard/merchant-manage')->group(function () {
         Route::get('/', [MerchantManageController::class, 'index'])->name('admin.dashboard.merchant-manage.index');
