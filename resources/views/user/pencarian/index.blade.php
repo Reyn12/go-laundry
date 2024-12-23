@@ -2,21 +2,9 @@
 
 @section('container')
 
-<!-- Menambahkan style CSS di sini -->
-<style>
-    .shadow-btn {
-        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1), 0 1px 3px rgba(0, 0, 0, 0.08);
-        transition: box-shadow 0.3s ease-in-out;
-    }
-
-    .shadow-btn:hover {
-        box-shadow: 0 8px 12px rgba(0, 0, 0, 0.15), 0 2px 6px rgba(0, 0, 0, 0.1);
-    }
-</style>
-
 <div class="flex">
     <div class="container-fluid login-container">
-        <div class="row w-100 justify-content-between">
+        <div class="flex w-full">
             <!-- Sidebar -->
             <div class="fixed left-0 top-0 w-20 bg-white shadow-lg h-screen flex flex-col items-center py-5 space-y-8">
                 <!-- Logo -->
@@ -43,6 +31,7 @@
                             </svg>
                         </button>
                     </a>
+
                     <!-- Menu -->
                     <a href="#" class="p-2 hover:bg-gray-100 rounded-lg">
                         <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -83,6 +72,7 @@
                     </a>
                 </div>
             </div>
+
             <!-- Main Content Container (Konten utama dan peta) -->
             <div class="flex flex-col md:flex-row w-full ml-0">
                 <!-- Konten Pencarian (Sidebar Kanan) -->
@@ -91,18 +81,18 @@
                         <h5 class="text-center mb-4">248 Ready in Bandung</h5>
                         <form action="{{ route('user.pencarian') }}" method="GET">
                             <!-- Search Form Content -->
-                            <div class="d-flex justify-content-between mb-3">
-                                <div class="flex-grow-1">
-                                    <label for="location" class="form-label">Location</label>
-                                    <select id="location" name="location" class="form-select">
+                            <div class="flex justify-between mb-3">
+                                <div class="flex-grow">
+                                    <label for="location" class="block text-sm font-medium">Location</label>
+                                    <select id="location" name="location" class="w-full mt-1 p-2 border rounded-md">
                                         <option selected>Padjajaran, Bandung</option>
                                         <option value="1">Location 1</option>
                                         <option value="2">Location 2</option>
                                     </select>
                                 </div>
-                                <div class="flex-grow-1 ms-3">
-                                    <label for="price" class="form-label">Price</label>
-                                    <select id="price" name="price" class="form-select">
+                                <div class="flex-grow ml-3">
+                                    <label for="price" class="block text-sm font-medium">Price</label>
+                                    <select id="price" name="price" class="w-full mt-1 p-2 border rounded-md">
                                         <option selected>Price</option>
                                         <option value="low">Low to High</option>
                                         <option value="high">High to Low</option>
@@ -110,29 +100,29 @@
                                 </div>
                             </div>
 
-                            <div class="mb-3 d-flex justify-content-between align-items-center">
-                                <input type="text" name="query" class="form-control" placeholder="Search or type command...">
+                            <div class="mb-3 flex justify-between items-center">
+                                <input type="text" name="query" class="w-full p-2 border rounded-md" placeholder="Search or type command...">
                             </div>
 
                             <!-- Sort & Filter Buttons -->
-                            <div class="search-container mt-3">
-                                <div class="d-flex justify-content-between align-items-center mb-3">
+                            <div class="mt-3">
+                                <div class="flex justify-between mb-3">
                                     <div>
-                                        <button class="btn btn-outline-secondary">Sort by Date</button>
-                                        <button class="btn btn-outline-secondary">Sort by Price</button>
+                                        <button class="px-4 py-2 border rounded-md text-sm text-gray-700">Sort by Date</button>
+                                        <button class="px-4 py-2 border rounded-md text-sm text-gray-700 ml-2">Sort by Price</button>
                                     </div>
                                     <div>
-                                        <button class="btn btn-outline-secondary">List</button>
+                                        <button class="px-4 py-2 border rounded-md text-sm text-gray-700">List</button>
                                     </div>
                                 </div>
 
                                 <!-- Results -->
                                 <div class="search-results">
                                     @foreach ($results as $result)
-                                    <div class="result-item mb-3">
-                                        <img src="{{ $result['image'] }}" alt="Laundry Image">
-                                        <div class="result-details">
-                                            <h5>{{ $result['name'] ?? 'Nama tidak tersedia' }}</h5>
+                                    <div class="result-item mb-3 flex">
+                                        <img src="{{ $result['image'] }}" alt="Laundry Image" class="w-1/4 h-24 object-cover rounded-lg">
+                                        <div class="ml-4">
+                                            <h5 class="text-lg">{{ $result['name'] ?? 'Nama tidak tersedia' }}</h5>
                                             <p>{{ $result['description'] }}</p>
                                             <p class="mb-1">{{ $result['address'] ?? 'Alamat tidak tersedia' }}</p>
                                             <p class="text-warning mb-0">
@@ -151,17 +141,18 @@
 
                 <!-- Konten Utama dan Peta -->
                 <div class="w-full md:w-1/2 p-4">
-                    <div class="d-flex flex-row">
+                    <div class="flex flex-row">
                         <!-- Konten Lain di Kiri -->
                         <div class="w-1/2 mt-20">
-                            <div class="login-card w-full">
-                                <button type="button" class="btn btn-secondary shadow-btn">More Filter</button>
-                                <div class="d-flex ms-0 mt-2">
-                                    <button type="reset" class="btn btn-secondary shadow-btn">Clear</button>
-                                    <button type="submit" class="btn btn-primary ms-2 shadow-btn">Search</button>
+                            <div class="w-full">
+                                <button type="button" class="px-4 py-2 border rounded-md bg-gray-300 hover:bg-gray-400">More Filter</button>
+                                <div class="mt-2 flex">
+                                    <button type="reset" class="px-4 py-2 border rounded-md bg-gray-300 hover:bg-gray-400">Clear</button>
+                                    <button type="submit" class="px-4 py-2 border rounded-md bg-blue-500 text-white ml-2">Search</button>
                                 </div>
                             </div>
                         </div>
+
                         <!-- Google Maps di Sebelah Kanan -->
                         <div class="w-1/2">
                             <div id="map" style="height: 500px;"></div>
