@@ -76,8 +76,8 @@ Route::prefix('user')->group(function () {
     //Admin register 
     Route::get('/register', [RegisterUserController::class, 'index'])->name('user.register');
 
-     //user Route
-     Route::get('/pencarian', [UserPencarianController::class, 'index'])->name('user.pencarian');
+    //User Route
+    Route::get('/pencarian', [UserPencarianController::class, 'index'])->name('user.pencarian');
 
 });
 
