@@ -11,7 +11,7 @@ use App\Http\Controllers\MerchantController\RegisterMerchantController;
 use App\Http\Controllers\MerchantController\DashboardMerchantController;
 use App\Http\Controllers\MerchantController\LoginMerchantController;
 use App\Http\Controllers\MerchantController\ProfileMerchantController;
-
+use App\Http\Controllers\UserController\UserPencarianController;
 use App\Http\Controllers\AdminController\UserManageController;
 use App\Http\Controllers\AdminController\MerchantManageController;
 
@@ -74,6 +74,10 @@ Route::prefix('user')->group(function () {
     
     //Admin register 
     Route::get('/register', [RegisterUserController::class, 'index'])->name('user.register');
+
+    //Pencarian Route
+    Route::get('/pencarian', [UserPencarianController::class, 'index'])->name('user.pencarian');
+
 });
 
 // Merchant Routes
