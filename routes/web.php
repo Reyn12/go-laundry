@@ -8,6 +8,7 @@ use App\Http\Controllers\UserController\LoginUserController;
 use App\Http\Controllers\UserController\DashboardUserController;
 use App\Http\Controllers\UserController\RegisterUserController;
 use App\Http\Controllers\UserController\UserPencarianController;
+use App\Http\Controllers\UserController\UserRiwayatController;
 use App\Http\Controllers\MerchantController\RegisterMerchantController;
 use App\Http\Controllers\MerchantController\DashboardMerchantController;
 use App\Http\Controllers\MerchantController\LoginMerchantController;
@@ -76,8 +77,15 @@ Route::prefix('user')->group(function () {
     //Admin register 
     Route::get('/register', [RegisterUserController::class, 'index'])->name('user.register');
 
-    //User Route
+    //Pencarian Route
     Route::get('/pencarian', [UserPencarianController::class, 'index'])->name('user.pencarian');
+
+    //Riwayat Route
+    Route::get('/riwayat', [UserRiwayatController::class, 'index'])->name('user.riwayat');
+
+    //Reorder Route
+    Route::get('/riwayat/reorder', [UserRiwayatController::class, 'reorder'])->name('riwayat.reorder');
+
 
 });
 

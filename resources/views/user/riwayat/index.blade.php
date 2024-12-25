@@ -1,124 +1,65 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Riwayat Pesanan - Go Laundry</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <style>
-        .status-selesai {
-            color: #28a745;
-            background-color: #d4edda;
-            border-radius: 15px;
-            padding: 5px 10px;
-            font-size: 0.9em;
-        }
-        .status-dilaundry {
-            color: #dc3545;
-            background-color: #f8d7da;
-            border-radius: 15px;
-            padding: 5px 10px;
-            font-size: 0.9em;
-        }
-        .reorder-btn {
-            background-color: #f8f9fa;
-            border: 1px solid #dee2e6;
-            border-radius: 5px;
-            padding: 5px 10px;
-        }
-    </style>
-</head>
-<body class="bg-light">
-    <div class="container mt-4">
-        <div class="card">
-            <div class="card-body">
-                <h4 class="mb-3">Riwayat Pesanan</h4>
-                
-                <div class="date-filter mb-4">
-                    <select class="form-select w-auto">
-                        <option>Apr 1 - Apr 30 2024</option>
-                    </select>
-                </div>
+@extends('user.components.main')
 
-                <div class="table-responsive">
-                    <table class="table">
-                        <thead>
-                            <tr>
-                                <th>No</th>
-                                <th>Nama</th>
-                                <th>Amount</th>
-                                <th>Date</th>
-                                <th>Status</th>
-                                <th>Total Price</th>
-                                <th>Reorder</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>1</td>
-                                <td>Baju</td>
-                                <td>3 Pcs</td>
-                                <td>02 Apr</td>
-                                <td><span class="status-selesai">Selesai</span></td>
-                                <td>30.000</td>
-                                <td><button class="reorder-btn">↻</button></td>
-                            </tr>
-                            <tr>
-                                <td>2</td>
-                                <td>Celana</td>
-                                <td>5 Pcs</td>
-                                <td>05 Apr</td>
-                                <td><span class="status-dilaundry">Dilaundry</span></td>
-                                <td>23.679</td>
-                                <td><button class="reorder-btn">↻</button></td>
-                            </tr>
-                            <tr>
-                                <td>3</td>
-                                <td>Handuk</td>
-                                <td>1 Pcs</td>
-                                <td>07 Apr</td>
-                                <td><span class="status-selesai">Selesai</span></td>
-                                <td>30.000</td>
-                                <td><button class="reorder-btn">↻</button></td>
-                            </tr>
-                            <tr>
-                                <td>4</td>
-                                <td>Baju</td>
-                                <td>5 Pcs</td>
-                                <td>10 Apr</td>
-                                <td><span class="status-selesai">Selesai</span></td>
-                                <td>15.000</td>
-                                <td><button class="reorder-btn">↻</button></td>
-                            </tr>
-                            <tr>
-                                <td>5</td>
-                                <td>Celana</td>
-                                <td>3 Pcs</td>
-                                <td>15 Apr</td>
-                                <td><span class="status-dilaundry">Dilaundry</span></td>
-                                <td>25.000</td>
-                                <td><button class="reorder-btn">↻</button></td>
-                            </tr>
-                            <tr>
-                                <td>6</td>
-                                <td>Handuk</td>
-                                <td>5 Pcs</td>
-                                <td>20 Apr</td>
-                                <td><span class="status-dilaundry">Dilaundry</span></td>
-                                <td>10.456</td>
-                                <td><button class="reorder-btn">↻</button></td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
+@section('Content')
+<div class="container mx-auto mt-4">
+    <div class="bg-white shadow rounded-lg">
+        <div class="p-4">
+            <h4 class="text-lg font-semibold mb-3">Riwayat Pesanan</h4>
 
-                <div class="text-center mt-3">
-                    <button class="btn btn-link">View All</button>
-                </div>
+            <div class="mb-4">
+                <select class="border border-gray-300 rounded-lg p-2">
+                    <option>Apr 1 - Apr 30 2024</option>
+                </select>
+            </div>
+
+            <div class="overflow-x-auto">
+                <table class="w-full border-collapse border border-gray-300">
+                    <thead class="bg-gray-100">
+                        <tr>
+                            <th class="border border-gray-300 px-4 py-2">No</th>
+                            <th class="border border-gray-300 px-4 py-2">Nama</th>
+                            <th class="border border-gray-300 px-4 py-2">Amount</th>
+                            <th class="border border-gray-300 px-4 py-2">Date</th>
+                            <th class="border border-gray-300 px-4 py-2">Status</th>
+                            <th class="border border-gray-300 px-4 py-2">Total Price</th>
+                            <th class="border border-gray-300 px-4 py-2">Reorder</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @forelse ($riwayatPesanan as $pesanan)
+                        <tr class="text-center">
+                            <td class="border border-gray-300 px-4 py-2">{{ $loop->iteration }}</td>
+                            <td class="border border-gray-300 px-4 py-2">{{ $pesanan['nama'] }}</td>
+                            <td class="border border-gray-300 px-4 py-2">{{ $pesanan['amount'] }}</td>
+                            <td class="border border-gray-300 px-4 py-2">{{ $pesanan['date'] }}</td>
+                            <td class="border border-gray-300 px-4 py-2">
+                                @if ($pesanan['status'] == 'Selesai')
+                                    <span class="px-2 py-1 bg-green-100 text-green-700 rounded-lg">{{ $pesanan['status'] }}</span>
+                                @else
+                                    <span class="px-2 py-1 bg-yellow-100 text-yellow-700 rounded-lg">{{ $pesanan['status'] }}</span>
+                                @endif
+                            </td>
+                            <td class="border border-gray-300 px-4 py-2">{{ number_format($pesanan['total_price'], 0, ',', '.') }}</td>
+                            <td class="border border-gray-300 px-4 py-2">
+                                <form action="{{ route('riwayat.reorder', $pesanan['id']) }}" method="POST">
+                                    @csrf
+                                    <button class="px-3 py-1 bg-blue-500 text-white rounded-lg" type="submit">↻ Reorder</button>
+                                </form>
+                            </td>
+                        </tr>
+                        @empty
+                        <tr>
+                            <td colspan="7" class="text-center border border-gray-300 px-4 py-2">Tidak ada riwayat pesanan.</td>
+                        </tr>
+                        @endforelse
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="text-center mt-4">
+                <a href="#" class="text-blue-500 hover:underline">View All</a>
             </div>
         </div>
     </div>
-
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-</body>
-</html>
+</div>
+@endsection

@@ -40,7 +40,7 @@
                     </a>
 
                     <!-- History -->
-                    <a href="#" class="p-2 hover:bg-gray-100 rounded-lg">
+                    <a href="/user/riwayat" class="p-2 hover:bg-gray-100 rounded-lg">
                         <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
                         </svg>
@@ -107,10 +107,10 @@
                             <!-- Sort & Filter Buttons -->
                             <div class="mt-3">
                                 <div class="flex justify-between mb-3">
-                                    <div>
-                                        <button class="px-4 py-2 border rounded-md text-sm text-gray-700">Sort by Date</button>
-                                        <button class="px-4 py-2 border rounded-md text-sm text-gray-700 ml-2">Sort by Price</button>
-                                    </div>
+                                <div style="display: flex; gap: 0.5rem;">
+                                <button class="px-2 py-2 border rounded-md text-sm text-gray-700">Sort by Date</button>
+                                 <button class="px-2 py-2 border rounded-md text-sm text-gray-700">Sort by Price</button>
+                                </div>
                                     <div>
                                         <button class="px-4 py-2 border rounded-md text-sm text-gray-700">List</button>
                                     </div>
