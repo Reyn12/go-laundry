@@ -28,10 +28,12 @@
                     Daftarkan dan dapatkan kemudahan mencari laundry terdekat sesuai dengan kebutuhan anda
                 </p>
                 <div class="mt-auto">
-                    <button
-                        class="w-64 h-12 rounded-3xl bg-[#0039c9] text-xs text-white hover:bg-[#002fa3] transition-colors">
-                        DAFTAR SEBAGAI PELANGGAN
-                    </button>
+                    <a href="{{ url('user/register/') }}">
+                        <button
+                            class="w-64 h-12 rounded-3xl bg-[#0039c9] text-xs text-white hover:bg-[#002fa3] transition-colors">
+                            DAFTAR SEBAGAI PELANGGAN
+                        </button>
+                    </a>
                 </div>
             </div>
             <!-- Kemitraan Card -->
@@ -42,10 +44,12 @@
                     Daftarkan usaha laundry anda sehingga para pelanggan menemukan usaha anda
                 </p>
                 <div class="mt-auto">
-                    <button
-                        class="w-64 h-12 px-2 rounded-3xl bg-[#0039c9] text-xs text-white hover:bg-[#002fa3] transition-colors">
-                        DAFTAR SEBAGAI KEMITRAAN
-                    </button>
+                    <a href="{{ url('merchant/register/') }}">
+                        <button
+                            class="w-64 h-12 px-2 rounded-3xl bg-[#0039c9] text-xs text-white hover:bg-[#002fa3] transition-colors">
+                            DAFTAR SEBAGAI KEMITRAAN
+                        </button>
+                    </a>
                 </div>
             </div>
             <!-- Admin Card -->
@@ -56,10 +60,12 @@
                     Kelola aplikasi laundry dengan mudah sebagai penghubung terpercaya antara pelanggan dan mitra.
                 </p>
                 <div class="mt-auto">
-                    <button
-                        class="w-64 h-12 px-2 rounded-3xl bg-[#0039c9] text-xs text-white hover:bg-[#002fa3] transition-colors">
-                        DAFTAR SEBAGAI ADMIN
-                    </button>
+                    <a href="{{ url('admin/register/') }}">
+                        <button
+                            class="w-64 h-12 px-2 rounded-3xl bg-[#0039c9] text-xs text-white hover:bg-[#002fa3] transition-colors">
+                            DAFTAR SEBAGAI ADMIN
+                        </button>
+                    </a>
                 </div>
             </div>
         </div>
