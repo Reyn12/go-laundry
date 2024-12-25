@@ -43,7 +43,7 @@
                             </button>
                         </div>
                         <div class="text-center mt-3">
-                            <small>Belum punya akun? <a href="#" class="text-blue-600 hover:underline">Daftar Sekarang!</a></small>
+                            <small>Belum punya akun? <a href="/user/register" class="text-blue-600 hover:underline">Daftar Sekarang!</a></small>
                         </div>
                     </form>
                 </div>

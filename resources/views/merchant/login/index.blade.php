@@ -66,7 +66,7 @@
                     </button>
                 </div>
                 <p class="text-center text-sm text-gray-600 mt-6">
-                    Belum punya akun? <a href="/register" class="text-blue-600 hover:underline">Daftar Sekarang</a>
+                    Belum punya akun? <a href="/merchant/register" class="text-blue-600 hover:underline">Daftar Sekarang</a>
                 </p>
             </div>
         </div>
