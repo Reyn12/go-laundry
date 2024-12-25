@@ -90,7 +90,7 @@
         {{-- Belum Punya Akun --}}
         </div>
         <div class="belum-punya-akun flex justify-center bottom-0 mt-10">
-            <span>Belum Punya Akun ? <a href="#" class="text-primary cursor-pointer ml-4">Daftar Sekarang</a></span>
+            <span>Belum Punya Akun ? <a href="/admin/register" class="text-primary cursor-pointer ml-4">Daftar Sekarang</a></span>
         </div>
     </div>
 </body>
