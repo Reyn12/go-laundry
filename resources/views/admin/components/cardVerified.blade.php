@@ -43,7 +43,7 @@
         @endfor
     </div>
 
-    {{-- Pagination --}}
+    {{-- Pagination inii--}}
     <div class="flex justify-center items-center gap-2 py-6">
         <button class="w-9 h-9 rounded-lg border border-gray-300 flex items-center justify-center hover:bg-gray-50">
             <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
