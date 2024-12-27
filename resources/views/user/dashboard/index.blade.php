@@ -95,20 +95,18 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach ([['1', 'Cuci Kering', '3 Kg', '21 Dec 2024', 'bg-red-100 text-red-600', 'Diproses'], ['2', 'Cuci Setrika', '5 Kg', '20 Dec 2024', 'bg-yellow-100 text-yellow-600', 'Disetrika'], ['3', 'Express', '2 Kg', '20 Dec 2024', 'bg-green-100 text-green-600', 'Selesai'], ['4', 'Regular', '4 Kg', '19 Dec 2024', 'bg-green-100 text-green-600', 'Selesai']] as $row)
-                            <tr class="border-t hover:bg-gray-50">
-                                @foreach ($row as $cell)
-                                    @if ($loop->last)
-                                        <td class="py-3 px-4">
-                                            <span class="px-2 py-1 rounded-full {{ $cell }} text-sm">{{ $row[5] }}</span>
-                                        </td>
-                                    @else
-                                        <td class="py-3 px-4">{{ $cell }}</td>
-                                    @endif
-                                @endforeach
-                            </tr>
-                        @endforeach
-                    </tbody>
+                @foreach ([['1', 'Cuci Kering', '3 Kg', '21 Dec 2024', 'bg-red-100 text-red-600', 'Dibatalkan'], ['2', 'Cuci Setrika', '5 Kg', '20 Dec 2024', 'bg-green-100 text-green-600', 'Selesai'], ['3', 'Express', '2 Kg', '20 Dec 2024', 'bg-green-100 text-green-600', 'Selesai'], ['4', 'Regular', '4 Kg', '19 Dec 2024', 'bg-red-100 text-red-600', 'Dibatalkan']] as $row)
+                 <tr class="border-t hover:bg-gray-50">
+                  <td class="py-3 px-4">{{ $row[0] }}</td>
+                  <td class="py-3 px-4">{{ $row[1] }}</td>
+                  <td class="py-3 px-4">{{ $row[2] }}</td>
+                  <td class="py-3 px-4">{{ $row[3] }}</td>
+                  <td class="py-3 px-4">
+                      <span class="px-2 py-1 rounded-full {{ $row[4] }} text-sm">{{ $row[5] }}</span>
+                  </td>
+                 </tr>
+                 @endforeach
+             </tbody>
                 </table>
             </div>
         </div>

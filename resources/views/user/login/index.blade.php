@@ -19,21 +19,34 @@
                 <div class="w-full max-w-md">
                     <h2 class="text-3xl font-bold text-center mb-8">Welcome Back!</h2>
                     <form action="" method="POST" class="space-y-4">
-                        <div>
-                            <label for="username" class="block text-sm font-medium text-gray-700">Username</label>
-                            <input type="text" id="username" class="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500" placeholder="Masukkan Username" required>
-                        </div>
-                        <div>
-                            <label for="password" class="block text-sm font-medium text-gray-700">Password</label>
-                            <input type="password" id="password" class="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500" placeholder="Masukkan Password" required>
-                        </div>
-                        <div class="flex items-center">
-                            <input type="checkbox" id="remember" class="h-4 w-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500">
-                            <label for="remember" class="ml-2 block text-sm text-gray-700">Ingat Saya</label>
-                        </div>
-                        <div>
-                            <button type="button" class="w-full bg-blue-600 text-white font-bold py-2 px-4 rounded hover:bg-blue-700 transition-colors" onclick="window.location.href='/user/dashboard';">Login</button>
-                        </div>
+                    <div>
+                    <label for="username" class="block text-sm font-medium text-gray-700">Username</label>
+                     <input type="text" id="username" class="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500" placeholder="Masukkan Username" required>
+                    </div>
+                    <div>
+                    <label for="password" class="block text-sm font-medium text-gray-700">Password</label>
+                    <input type="password" id="password" class="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500" placeholder="Masukkan Password" required>
+                    </div>
+                    <div class="flex items-center">
+                    <input type="checkbox" id="remember" class="h-4 w-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500">
+                    <label for="remember" class="ml-2 block text-sm text-gray-700">Ingat Saya</label>
+                    </div>
+                    <div>
+                     <button type="button" class="w-full bg-blue-600 text-white font-bold py-2 px-4 rounded hover:bg-blue-700 transition-colors" onclick="validateLogin()">Login</button>
+
+<script>
+    function validateLogin() {
+        const username = document.getElementById('username').value.trim();
+        const password = document.getElementById('password').value.trim();
+
+        if (!username || !password) {
+            alert('Username dan Password harus diisi!');
+        } else {
+            window.location.href = '/user/dashboard';
+        }
+    }
+</script>
+
                         <div class="text-center mt-3">
                             <a href="#" class="text-blue-600 hover:underline">Lupa Password</a>
                         </div>
