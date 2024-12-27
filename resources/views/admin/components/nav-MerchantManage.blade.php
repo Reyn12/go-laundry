@@ -8,7 +8,8 @@
            class="border-b-2 {{ request()->routeIs('admin.dashboard.merchant-manage.pending') ? 'border-blue-500 text-blue-600' : 'border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700' }} py-4 px-1 text-sm font-medium">
             Pending Verification
         </a>
-        <a href="#" class="border-b-2 border-transparent py-4 px-1 text-sm font-medium text-gray-500 hover:border-gray-300 hover:text-gray-700">
+        <a href=" {{ route('admin.dashboard.merchant-manage.verified') }} " 
+        class="border-b-2 {{ request()->routeIs('admin.dashboard.merchant-manage.verified') ? 'border-blue-500 text-blue-600' : 'border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700' }} py-4 px-1 text-sm font-medium">
             Verified
         </a>
         <a href="#" class="border-b-2 border-transparent py-4 px-1 text-sm font-medium text-gray-500 hover:border-gray-300 hover:text-gray-700">
