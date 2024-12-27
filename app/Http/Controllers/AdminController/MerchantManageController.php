@@ -69,4 +69,13 @@ class MerchantManageController extends Controller
         ]);
     }
 
+    public function verified()
+    {
+        return view('admin.dashboard.merchant-manage.index', [
+            'mainTitle' => 'Merchant Management',
+            'subTitle' => 'Verified',
+            'title' => 'Merchant Management'  // untuk kompatibilitas
+        ]);
+    }
+
 }

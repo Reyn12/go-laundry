@@ -42,13 +42,15 @@
                 @include('admin.components.sortDanFilterMerchant')
 
                 {{-- Conditional Content --}}
-                {{-- Conditional Content --}}
                 @if(request()->routeIs('admin.dashboard.merchant-manage.index') || request()->routeIs('admin.dashboard.merchant-manage.all'))
                     {{-- Card All Merchant --}}
                     @include('admin.components.cardAllMerchant')
                 @elseif(request()->routeIs('admin.dashboard.merchant-manage.pending'))
                     {{-- Card Pending Verifikasi --}}
                     @include('admin.components.cardPendingVerifikasi')
+                @elseif(request()->routeIs('admin.dashboard.merchant-manage.verified'))
+                    {{-- Card Verified --}}
+                    @include('admin.components.cardVerified')
                 @endif
 
                 {{-- Content Area (kosong dulu) --}}

@@ -55,9 +55,10 @@ Route::prefix('admin')->group(function () {
    
     // Merchant Management routes
     Route::prefix('dashboard/merchant-manage')->group(function () {
-        Route::get('/', [MerchantManageController::class, 'index'])->name('admin.dashboard.merchant-manage.index');
+        Route::get('/', [MerchantManageController::class, 'index'])->name('admin.dashboard.merchant-manage.index'); 
         Route::get('/all', [MerchantManageController::class, 'all'])->name('admin.dashboard.merchant-manage.all');
         Route::get('/pending', [MerchantManageController::class, 'pending'])->name('admin.dashboard.merchant-manage.pending');
+        Route::get('/verified', [MerchantManageController::class, 'verified'])->name('admin.dashboard.merchant-manage.verified');
     });
 
     //Admin register 
@@ -72,6 +73,7 @@ Route::prefix('user')->group(function () {
     Route::post('/login', [LoginUserController::class, 'login']);
     
     // Dashboard route
+    
     Route::get('/dashboard', [DashboardUserController::class, 'index'])->name('user.dashboard');
     
     //Admin register 
