@@ -101,6 +101,44 @@
     <!-- Hero Section -->
 
 
+
+
+    <!-- Hasil Pencarian-->
+    <div class="flex flex-col items-center gap-2 px-6 pt-6 pb-6">
+        <div class="flex flex-col items-center w-full max-w-[720px] gap-6 p-6 rounded-[36px] border border-black">
+            <div class="flex items-center gap-2 p-2">
+                <p class="text-xl text-black">Hasil Pencarian :</p>
+                <div class="inline-flex items-center gap-2 px-8 py-2 rounded-3xl border border-black">
+                    <p class="text-xs text-black">Cuci Reguler</p>
+                    <img src="{{ asset('images/icons/iconCross.svg') }}" alt="">
+                </div>
+            </div>
+            <!-- Card Merchant -->
+            <div class="flex flex-wrap justify-center gap-4">
+                <div class="flex flex-col items-center p-6 rounded-3xl bg-[#0039c9] w-[240px] h-[260px]">
+                    <div class="flex flex-col items-start gap-1.5 py-4">
+                        <div class="flex items-start gap-1.5 pb-2">
+                            <p class="text-xl text-white">1.</p>
+                            <p class="text-xl text-white">Laundry Atlas</p>
+                        </div>
+                        <p class="text-xl text-white pb-2">4 KM</p>
+                        <div class="flex items-center gap-2.5">
+                            <img src="{{ asset('images/icons/iconLocationInformation.svg') }}" alt="">
+                            <p class="text-xs font-medium text-white">Jl Sekeloa Utara</p>
+                        </div>
+                        <p class="text-xs text-white">Service :</p>
+                        <p class="text-xs text-white">Cuci Reguler, Cuci Sepatu</p>
+                    </div>
+                    <div class="flex items-center gap-1.5 rounded-full bg-[#efefef] py-2">
+                        <p class="text-xs text-black px-4">Pesan Sekarang</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
     <!-- Keunggulan Section -->
     <section id="keunggulan" class="py-10 bg-gray-100">
         <div class="max-w-screen-xl mx-auto px-4">
