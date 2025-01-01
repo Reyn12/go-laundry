@@ -32,7 +32,7 @@
                     <a href="/" class="text-xl font-bold text-blue-600">Go Laundry</a>
                 </div>
                 <div class="flex items-center">
-                    <a href="#" class="text-gray-600 hover:text-blue-600 px-3 py-2">Home</a>
+                    <a href="/user/dashboard" class="text-gray-600 hover:text-blue-600 px-3 py-2">Home</a>
                     <a href="#" class="text-gray-600 hover:text-blue-600 px-3 py-2">Services</a>
                     <a href="#" class="text-gray-600 hover:text-blue-600 px-3 py-2">Contact</a>
                 </div>
