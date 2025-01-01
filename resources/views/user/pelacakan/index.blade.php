@@ -116,6 +116,7 @@
                 <button class="mt-4 px-4 py-2 text-sm font-semibold text-white bg-blue-500 hover:bg-blue-600 rounded-md">Chat seller</button>
             </div>
         </div>
+        @endforeach
     </div>
 </div>
 @endsection
