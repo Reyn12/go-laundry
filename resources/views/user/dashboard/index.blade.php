@@ -108,21 +108,32 @@
 
         <!-- Status Pencucian Section -->
         <div class="p-4 px-8">
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-                @foreach ([['Celana', $washCount, 'red-500', 'images/jeans.png'], ['Tshirt', $ironCount, 'orange-400', 'images/tshirt.png']] as $status)
-                    <div class="status-card {{ $status[1] > 0 ? 'bg-' . $status[2] : 'bg-gray-300' }} p-4 rounded-lg text-white">
-                        <div class="icon mb-2">
-                            <img src="{{ asset($status[3]) }}" alt="{{ $status[0] }}" class="w-35 h-50">
-                        </div>
-                        <div class="text-sm">{{ $status[0] }}</div>
-                        <div class="font-bold text-xl">{{ $status[1] }}</div>
-                        @if($status[1] > 0)
-                            <a href="#" class="text-white text-sm hover:underline">View Details</a>
-                        @endif
-                    </div>
-                @endforeach
+    <div class="grid grid-cols-1 md:grid-cols-5 lg:grid-cols-10 gap-4">
+        @foreach ([ 
+            ['Tirai', $curtainCount ?? 5, 'red-500', 'images/tirai.jpeg'], 
+            ['Seprei', $bedSheetCount ?? 2, 'green-500', 'images/seprei.jpeg'], 
+            ['Handuk', $towelCount ?? 1, 'green-500', 'images/handuk.jpeg'], 
+            ['Karpet', $carpetCount ?? 1, 'green-500', 'images/karpet.jpeg'], 
+            ['Gorden', $drapesCount ?? 8, 'green-500', 'images/gorden.jpeg'], 
+            ['Pakaian', $clothesCount ?? 2, 'green-400', 'images/pakaian.jpeg'], 
+            ['Bantal', $pillowCount ?? 2, 'green-500', 'images/bantal.jpeg'], 
+            ['Selimut', $blanketCount ?? 1, 'green-400', 'images/selimut.jpeg'], 
+            ['Jas', $suitCount ?? 5, 'green-500', 'images/jas.jpeg'], 
+            ['Topi', $hatCount ?? 1, 'green-500', 'images/topi.jpeg'] 
+        ] as $item)
+            <div class="status-card {{ $item[1] > 0 ? 'bg-' . $item[2] : 'bg-gray-300' }} p-4 rounded-lg text-white transition-transform transform hover:scale-105 hover:shadow-lg">
+                <div class="icon mb-2">
+                    <img src="{{ asset($item[3]) }}" alt="{{ $item[0] }}" class="w-35 h-50">
+                </div>
+                <div class="text-sm">{{ $item[0] }}</div>
+                <div class="font-bold text-xl">{{ $item[1] }}</div>
+                @if($item[1] > 0)
+                    <a href="#" class="text-white text-sm hover:underline">View Details</a>
+                @endif
             </div>
-        </div>
+        @endforeach
+    </div>
+</div>
 
         <!-- Pesanan Terbaru Section -->
         <div class="p-4 px-8">
