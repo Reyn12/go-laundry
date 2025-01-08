@@ -43,27 +43,32 @@ Route::get('/masuk', function () {
 
 // Admin Routes
 Route::prefix('admin')->group(function () {
+    // Public routes (tidak perlu login)
     Route::get('/login', function () {
         return view('admin.login.index');
-    });
+    })->name('admin.login');
     Route::post('/login', [LoginController::class, 'login']);
-    
-    // Dashboard route
-    Route::get('/dashboard', [DashboardAdminController::class, 'index'])->name('admin.dashboard');
-
-    // User Management route
-    Route::get('/dashboard/user-manage', [UserManageController::class, 'index'])->name('admin.dashboard.user-manage.index');
-   
-    // Merchant Management routes
-    Route::prefix('dashboard/merchant-manage')->group(function () {
-        Route::get('/', [MerchantManageController::class, 'index'])->name('admin.dashboard.merchant-manage.index'); 
-        Route::get('/all', [MerchantManageController::class, 'all'])->name('admin.dashboard.merchant-manage.all');
-        Route::get('/pending', [MerchantManageController::class, 'pending'])->name('admin.dashboard.merchant-manage.pending');
-        Route::get('/verified', [MerchantManageController::class, 'verified'])->name('admin.dashboard.merchant-manage.verified');
-    });
-
-    //Admin register 
     Route::get('/register', [RegisterController::class, 'index'])->name('admin.register');
+    
+    // Protected routes (perlu login dan role admin)
+    Route::middleware(['auth', 'admin'])->group(function () {
+        // Logout route
+        Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
+        
+        // Dashboard route
+        Route::get('/dashboard', [DashboardAdminController::class, 'index'])->name('admin.dashboard');
+
+        // User Management route
+        Route::get('/dashboard/user-manage', [UserManageController::class, 'index'])->name('admin.dashboard.user-manage.index');
+    
+        // Merchant Management routes
+        Route::prefix('dashboard/merchant-manage')->group(function () {
+            Route::get('/', [MerchantManageController::class, 'index'])->name('admin.dashboard.merchant-manage.index'); 
+            Route::get('/all', [MerchantManageController::class, 'all'])->name('admin.dashboard.merchant-manage.all');
+            Route::get('/pending', [MerchantManageController::class, 'pending'])->name('admin.dashboard.merchant-manage.pending');
+            Route::get('/verified', [MerchantManageController::class, 'verified'])->name('admin.dashboard.merchant-manage.verified');
+        });
+    });
 });
 
 // User Routes

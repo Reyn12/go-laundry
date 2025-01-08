@@ -2,33 +2,33 @@
 <div class="flex flex-col">
     <div class="grid grid-cols-3 gap-8 p-6 mx-8">
         @for($i = 0; $i < 6; $i++)
-        <div class="bg-white rounded-[20px] shadow-[0_8px_30px_rgb(0,0,0,0.12)] p-6 hover:-translate-y-1 transition-all duration-300">
+        <div class="bg-white dark:bg-gray-800 rounded-[20px] shadow-[0_8px_30px_rgb(0,0,0,0.12)] p-6 hover:-translate-y-1 transition-all duration-300">
             <div class="flex items-start justify-between mb-4">
                 <div class="flex gap-3">
-                    <div class="w-12 h-12 bg-blue-100 rounded-2xl flex items-center justify-center">
-                        <img src="{{ asset('images/icons/iconMerchantLogo.svg') }}" alt="Merchant" class="w-8 h-8">
+                    <div class="w-12 h-12 bg-blue-100 dark:bg-blue-900 rounded-2xl flex items-center justify-center">
+                        <img src="{{ asset('images/icons/iconMerchantLogo.svg') }}" alt="Merchant" class="w-8 h-8 dark:invert">
                     </div>
                     <div>
-                        <h3 class="font-semibold text-gray-800">Reyy Laundry</h3>
-                        <div class="flex items-center gap-1 text-gray-500 text-sm">
-                            <img src="{{ asset('images/icons/iconLokasi.svg') }}" alt="location" class="w-4 h-4">
+                        <h3 class="font-semibold text-gray-800 dark:text-white">Reyy Laundry</h3>
+                        <div class="flex items-center gap-1 text-gray-500 dark:text-gray-400 text-sm">
+                            <img src="{{ asset('images/icons/iconLokasi.svg') }}" alt="location" class="w-4 h-4 dark:invert">
                             <span>Jl Sekeloa Utara</span>
                         </div>
                     </div>
                 </div>
-                <div class="px-3 py-1 bg-green-100 text-green-800 rounded-full text-sm">
+                <div class="px-3 py-1 bg-green-100 dark:bg-green-900 text-green-800 dark:text-green-200 rounded-full text-sm">
                     Verified
                 </div>
             </div>
             
             <div class="flex items-center gap-2 mb-2">
-                <img src="{{ asset('images/icons/iconBox.svg') }}" alt="box" class="w-5 h-5">
-                <span class="text-gray-600 text-sm">5 Layanan Tersedia</span>
+                <img src="{{ asset('images/icons/iconBox.svg') }}" alt="box" class="w-5 h-5 dark:invert">
+                <span class="text-gray-600 dark:text-gray-300 text-sm">5 Layanan Tersedia</span>
             </div>
 
             <div class="flex items-center gap-2 mb-4">
-                <img src="{{ asset('images/icons/iconPrice.svg') }}" alt="price" class="w-5 h-5">
-                <span class="text-gray-600 text-sm">Rp. 6.000 - Rp. 10.000</span>
+                <img src="{{ asset('images/icons/iconPrice.svg') }}" alt="price" class="w-5 h-5 dark:invert">
+                <span class="text-gray-600 dark:text-gray-300 text-sm">Rp. 6.000 - Rp. 10.000</span>
             </div>
 
             <div class="flex gap-2">
@@ -43,19 +43,31 @@
         @endfor
     </div>
 
-    {{-- Pagination inii--}}
+    {{-- Pagination --}}
     <div class="flex justify-center items-center gap-2 py-6">
-        <button class="w-9 h-9 rounded-lg border border-gray-300 flex items-center justify-center hover:bg-gray-50">
+        <button class="w-9 h-9 rounded-lg border border-gray-300 dark:border-gray-600 flex items-center justify-center hover:bg-gray-50 dark:hover:bg-gray-700">
             <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
-                <path d="M10 12L6 8L10 4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                <path d="M10 12L6 8L10 4" stroke="currentColor" class="text-gray-600 dark:text-gray-400" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
             </svg>
         </button>
-        <button class="w-9 h-9 rounded-lg bg-blue-600 text-white flex items-center justify-center">1</button>
-        <button class="w-9 h-9 rounded-lg border border-gray-300 flex items-center justify-center hover:bg-gray-50">2</button>
-        <button class="w-9 h-9 rounded-lg border border-gray-300 flex items-center justify-center hover:bg-gray-50">3</button>
-        <button class="w-9 h-9 rounded-lg border border-gray-300 flex items-center justify-center hover:bg-gray-50">
+        
+        <button class="w-9 h-9 rounded-lg bg-[#0051FF] text-white flex items-center justify-center">
+            1
+        </button>
+        <button class="w-9 h-9 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700 text-gray-600 dark:text-gray-400 flex items-center justify-center">
+            2
+        </button>
+        <button class="w-9 h-9 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700 text-gray-600 dark:text-gray-400 flex items-center justify-center">
+            3
+        </button>
+        <span class="text-gray-600 dark:text-gray-400">...</span>
+        <button class="w-9 h-9 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700 text-gray-600 dark:text-gray-400 flex items-center justify-center">
+            8
+        </button>
+        
+        <button class="w-9 h-9 rounded-lg border border-gray-300 dark:border-gray-600 flex items-center justify-center hover:bg-gray-50 dark:hover:bg-gray-700">
             <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
-                <path d="M6 12L10 8L6 4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                <path d="M6 12L10 8L6 4" stroke="currentColor" class="text-gray-600 dark:text-gray-400" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
             </svg>
         </button>
     </div>
