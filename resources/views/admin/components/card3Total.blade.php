@@ -1,5 +1,5 @@
 {{-- Card 3 Total Component --}}
-<div class="grid grid-cols-3 gap-4">
+<div class="grid grid-cols-1 md:grid-cols-3 gap-4">
     {{-- Total Transaksi Card --}}
     <div class="bg-gradient-to-br from-blue-600 to-blue-800 p-6 rounded-xl shadow-lg hover:shadow-xl transition-shadow duration-300">
         <div class="flex items-center justify-between">
