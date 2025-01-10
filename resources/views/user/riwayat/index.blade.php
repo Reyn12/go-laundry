@@ -1,6 +1,6 @@
 @extends('user.components.main')
 
-@section('Content')
+@section('container')
 <div class="flex">
     <div class="container-fluid login-container">
         <div class="flex w-full">
