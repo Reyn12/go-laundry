@@ -25,6 +25,36 @@ class UserRiwayatController extends Controller
                 'date' => '2024-04-15',
                 'status' => 'Di Laundry',
                 'total_price' => 25000,
+            ],[
+                'id' => 3,
+                'nama' => 'Samsudin',
+                'amount' => 2,
+                'date' => '2024-04-01',
+                'status' => 'Selesai',
+                'total_price' => 50000,
+            ],
+            [
+                'id' => 4,
+                'nama' => 'Agus Buntung',
+                'amount' => 1,
+                'date' => '2024-04-15',
+                'status' => 'Di Laundry',
+                'total_price' => 25000,
+            ],[
+                'id' => 5,
+                'nama' => 'Alexander',
+                'amount' => 2,
+                'date' => '2024-04-01',
+                'status' => 'Selesai',
+                'total_price' => 50000,
+            ],
+            [
+                'id' => 6,
+                'nama' => 'ipal',
+                'amount' => 1,
+                'date' => '2024-04-15',
+                'status' => 'Di Laundry',
+                'total_price' => 25000,
             ],
         ];
 

@@ -21,7 +21,7 @@ class UserPelacakanController extends Controller
             'seller' => 'Subur Makmur',
             'items' => [
                 [
-                    'name' => 'Tshirt',
+                    'name' => 'jaket',
                     'quantity' => 5,
                     'price_per_item' => 2000,
                     'color' => 'black',
@@ -29,7 +29,7 @@ class UserPelacakanController extends Controller
                     'note' => 'Sedang Diantarkan ke Jl. Seti...',
                 ],
                 [
-                    'name' => 'Jeans',
+                    'name' => 'kaos',
                     'quantity' => 1,
                     'price_per_item' => 2000,
                     'color' => 'red',
@@ -37,7 +37,31 @@ class UserPelacakanController extends Controller
                     'note' => 'Estimate 15 menit lagi',
                 ],
                 [
-                    'name' => 'Shoes',
+                    'name' => 'gaun',
+                    'quantity' => 1,
+                    'price_per_item' => 2000,
+                    'color' => 'black',
+                    'status' => 'Sending',
+                    'note' => '',
+                ],
+                [
+                    'name' => 'gorden',
+                    'quantity' => 5,
+                    'price_per_item' => 2000,
+                    'color' => 'black',
+                    'status' => 'Selesai',
+                    'note' => 'Sedang Diantarkan ke Jl. Seti...',
+                ],
+                [
+                    'name' => 'seragam',
+                    'quantity' => 1,
+                    'price_per_item' => 2000,
+                    'color' => 'red',
+                    'status' => 'Waiting',
+                    'note' => 'Estimate 15 menit lagi',
+                ],
+                [
+                    'name' => 'topi',
                     'quantity' => 1,
                     'price_per_item' => 2000,
                     'color' => 'black',
