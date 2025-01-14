@@ -21,8 +21,15 @@
             </svg>
         </a>
 
-        <!-- Menu -->
-        <a href="/user/pelacakan" id="menu" class="menu-sidebar p-2 hover:bg-gray-100 rounded-lg">
+        <!--Ulasan -->
+        <a href="/user/ulasan" id="ulasan" class="menu-sidebar p-2 hover:bg-gray-100 rounded-lg">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l2.302 7.073a1 1 0 00.95.69h7.427c.969 0 1.371 1.24.588 1.81l-6.018 4.366a1 1 0 00-.364 1.118l2.302 7.073c.3.921-.755 1.688-1.54 1.118l-6.018-4.366a1 1 0 00-1.176 0l-6.018 4.366c-.784.57-1.839-.197-1.54-1.118l2.302-7.073a1 1 0 00-.364-1.118L2.116 12.5c-.783-.57-.38-1.81.588-1.81h7.427a1 1 0 00.95-.69l2.302-7.073z"></path>
+            </svg>
+        </a>
+
+        <!-- Pelacakan -->
+        <a href="/user/pelacakan" id="pelacakan" class="menu-sidebar p-2 hover:bg-gray-100 rounded-lg">
             <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
             </svg>
