@@ -29,7 +29,7 @@
         <div
             class="max-w-screen-xl flex items-center justify-between mx-auto py-3 px-4 md:py-4 md:px-6 lg:py-4 lg:px-8">
             <!-- Logo -->
-            <a href="" class="flex items-center">
+            <a href="#hero" class="flex items-center">
                 <img src="{{ asset('images/LogoGoLaundry.png') }}" alt="logoLaundry"
                     class="w-6 h-6 md:w-8 md:h-8 lg:w-12 lg:h-12 mr-2 lg:p-2">
 
@@ -47,8 +47,8 @@
             <!-- Navbar Links -->
             <div id="menu"
                 class="hidden md:flex flex-col md:flex-row items-center space-y-2 md:space-y-0 lg:space-x-12">
-                <a href="" class="text-xs md:text-sm lg:text-base text-gray-900 hover:text-blue-700">BERANDA</a>
-                <a href="#"
+                <a href="#hero" class="text-xs md:text-sm lg:text-base text-gray-900 hover:text-blue-700">BERANDA</a>
+                <a href="#Pencarian"
                     class="text-xs md:text-sm lg:text-base text-gray-900 hover:text-blue-700 leading-tight text-center">CARI
                     LAUNDRY</a>
                 <a href="#keunggulan"
@@ -80,8 +80,8 @@
 
         <!-- Mobile Menu -->
         <div id="mobile-menu" class="hidden bg-gray-100 flex flex-col items-center space-y-4 py-4 md:hidden">
-            <a href="#" class="text-gray-900 hover:text-blue-700">BERANDA</a>
-            <a href="#" class="text-gray-900 hover:text-blue-700">CARI LAUNDRY</a>
+            <a href="#hero" class="text-gray-900 hover:text-blue-700">BERANDA</a>
+            <a href="#Pencarian" class="text-gray-900 hover:text-blue-700">CARI LAUNDRY</a>
             <a href="#keunggulan" class="text-gray-900 hover:text-blue-700">KEUNGGULAN KAMI</a>
             <a href="#tentangKami" class="text-gray-900 hover:text-blue-700">TENTANG KAMI</a>
             <a href="#hubungiKami" class="text-gray-900 hover:text-blue-700">HUBUNGI KAMI</a>
@@ -101,9 +101,9 @@
     <!-- Hero Section -->
 
 
-    @include('homepage.sections.hero-coba')
+    @include('homepage.sections.hero-section')
     <!-- Hasil Pencarian -->
-    <div class="flex flex-col items-center gap-2 px-6 pt-6 pb-6">
+    <div class="flex flex-col items-center gap-2 px-6 pt-6 pb-6" id="Pencarian">
         <div class="flex flex-col items-center w-full gap-6 p-6 rounded-[36px] border border-black">
             <div class="flex flex-wrap items-center gap-2">
                 <p class="text-xl text-black">Hasil Pencarian :</p>
