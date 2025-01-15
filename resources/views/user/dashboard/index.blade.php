@@ -51,38 +51,37 @@
         <div id="slider" class="overflow-x-auto scroll-smooth custom-scrollbar h-60">
             <div class="flex space-x-4 snap-x snap-mandatory">
             @foreach ([ 
-            ['Tirai', $curtainCount ?? 2, 'red-500', 'images/tirai.jpeg'], 
-            ['Seprei', $bedSheetCount ?? 2, 'red-500', 'images/seprei.jpeg'], 
-            ['Handuk', $towelCount ?? 1, 'green-500', 'images/handuk.jpeg'], 
-            ['Karpet', $carpetCount ?? 1, 'green-500', 'images/karpet.jpeg'], 
-            ['Gorden', $drapesCount ?? 8, 'green-500', 'images/gorden.jpeg'], 
-            ['Pakaian', $clothesCount ?? 2, 'red-500', 'images/pakaian.jpeg'], 
-            ['Bantal', $pillowCount ?? 2, 'green-500', 'images/bantal.jpeg'], 
-            ['Selimut', $blanketCount ?? 1, 'red-500', 'images/selimut.jpeg'], 
-            ['Jas', $suitCount ?? 5, 'red-500', 'images/jas.jpeg'], 
-            ['Topi', $hatCount ?? 1, 'green-500', 'images/topi.jpeg'], 
-            ['Sarung', $sarongCount ?? 3, 'red-500', 'images/sarung.jpeg'], 
-            ['Kaos', $tshirtCount ?? 4, 'red-500', 'images/kaos.jpeg'], 
-            ['Jeans', $jeansCount ?? 2, 'red-500', 'images/jeans.jpeg'], 
-            ['Kemeja', $shirtCount ?? 6, 'green-500', 'images/kemeja.jpeg'], 
-            ['Rok', $skirtCount ?? 2, 'red-500', 'images/rok.jpeg'], 
-            ['Gaun', $dressCount ?? 3, 'red-500', 'images/gaun.jpeg'], 
-            ['Jaket', $jacketCount ?? 4, 'green-500', 'images/jaket.jpeg'], 
-            ['Sweater', $sweaterCount ?? 5, 'green-500', 'images/sweater.jpeg'], 
-            ['Seragam', $uniformCount ?? 7, 'green-500', 'images/seragam.jpeg'], 
-            ['Tas', $bagCount ?? 1, 'red-500', 'images/tas.jpeg'], 
-            ['Sepatu', $shoesCount ?? 1, 'green-500', 'images/sepatu.jpeg']
+            ['Tirai', $curtainCount ?? 2, '#00008B', 'images/tirai.jpg'], 
+            ['Seprei', $bedSheetCount ?? 2, '#00008B', 'images/seprei.jpg'], 
+            ['Handuk', $towelCount ?? 1, '#00008B', 'images/handuk.jpg'], 
+            ['Karpet', $carpetCount ?? 1, '#00008B', 'images/karpet.jpg'], 
+            ['Gorden', $drapesCount ?? 8, '#00008B', 'images/gorden.jpg'], 
+            ['Bantal', $pillowCount ?? 2, '#00008B', 'images/bantal.jpg'], 
+            ['Selimut', $blanketCount ?? 1, '#00008B', 'images/selimut.jpg'], 
+            ['Jas', $suitCount ?? 5, '#00008B', 'images/jas.jpg'], 
+            ['Topi', $hatCount ?? 1, '#00008B', 'images/topi.jpg'], 
+            ['Sarung', $sarongCount ?? 3, '#00008B', 'images/sarung.jpg'], 
+            ['Kaos', $tshirtCount ?? 4, '#00008B', 'images/kaos.jpg'], 
+            ['Jeans', $jeansCount ?? 2, '#00008B', 'images/jeans.jpg'], 
+            ['Kemeja', $shirtCount ?? 6, '#00008B', 'images/kemeja.jpg'], 
+            ['Rok', $skirtCount ?? 2, '#00008B', 'images/rok.jpg'], 
+            ['Gaun', $dressCount ?? 3, '#00008B', 'images/gaun.jpg'], 
+            ['Jaket', $jacketCount ?? 4, '#00008B', 'images/jaket.jpg'], 
+            ['Sweater', $sweaterCount ?? 5, '#00008B', 'images/sweater.jpg'], 
+            ['Seragam', $uniformCount ?? 7, '#00008B', 'images/seragam.jpg'], 
+            ['Tas', $bagCount ?? 1, '#00008B', 'images/tas.jpg'], 
+            ['Sepatu', $shoesCount ?? 1, '#00008B', 'images/sepatu.jpg']
             ] as $item)
 
-                    <div class="status-card {{ $item[1] > 0 ? 'bg-' . $item[2] : 'bg-gray-300' }} p-6 rounded-md text-white transition-transform transform hover:scale-105 hover:shadow-lg flex flex-col items-center justify-center h-48 w-48 snap-center">
-                        <div class="icon mb-4 flex items-center justify-center">
+                    <div class="status-card {{ $item[1] > 0 ? 'bg-' . $item[2] : 'bg-gray-300' }} p-6 rounded-md text-black bold transition-transform transform hover:scale-105 hover:shadow-lg flex flex-col items-center justify-center h-48 w-48 snap-center">
+                        <div class="icon mb-4 w-24 h-24 flex items-center justify-center">
                             <img src="{{ asset($item[3]) }}" alt="{{ $item[0] }}" class="w-24 h-24 object-cover rounded-lg">
                         </div>
                         <div class="text-center">
                             <div class="text-sm">{{ $item[0] }}</div>
                             <div class="font-bold text-xl">{{ $item[1] }}</div>
                             @if($item[1] > 0)
-                                <a href="#" class="text-white text-sm hover:underline">View Details</a>
+                                <a href="#" class="text-black regular text-sm hover:underline">View Details</a>
                             @endif
                         </div>
                     </div>
@@ -133,85 +132,5 @@
         background: #555; /* Warna hover scrollbar */
     }
 </style>
-
-        <!-- Pesanan Terbaru Section -->
-        <div class="p-4 px-8">
-            <div class="flex justify-between items-center mb-4">
-                <h3 class="text-lg font-semibold">Pesanan Terbaru</h3>
-            </div>
-            <div class="overflow-x-auto">
-                <table class="min-w-full">
-                    <thead>
-                        <tr class="text-left bg-gray-50">
-                            @foreach (['No', 'Jenis Paket', 'Berat', 'Tanggal Masuk', 'Status'] as $header)
-                                <th class="py-2 px-4">{{ $header }}</th>
-                            @endforeach
-                        </tr>
-                    </thead>
-                    <tbody>
-                    
-                    @php
-$laundryItems = [
-    ['Tirai', $curtainCount ?? 2, 'red-500', 'Dibatalkan'],
-    ['Seprei', $bedSheetCount ?? 2, 'red-500', 'Dibatalkan'],
-    ['Handuk', $towelCount ?? 1, 'green-500', 'Selesai'],
-    ['Karpet', $carpetCount ?? 1, 'green-500', 'Selesai'],
-    ['Gorden', $drapesCount ?? 8, 'green-500', 'Selesai'],
-    ['Pakaian', $clothesCount ?? 2, 'red-500', 'Dibatalkan'],
-    ['Bantal', $pillowCount ?? 2, 'green-500', 'Selesai'],
-    ['Selimut', $blanketCount ?? 1, 'red-500', 'Dibatalkan'],
-    ['Jas', $suitCount ?? 5, 'red-500', 'Dibatalkan'],
-    ['Topi', $hatCount ?? 1, 'green-500', 'Selesai'],
-    ['Sarung', $sarongCount ?? 3, 'red-500', 'Dibatalkan'],
-    ['Kaos', $tshirtCount ?? 4, 'red-500', 'Dibatalkan'],
-    ['Jeans', $jeansCount ?? 2, 'red-500', 'Dibatalkan'],
-    ['Kemeja', $shirtCount ?? 6, 'green-500', 'Selesai'],
-    ['Rok', $skirtCount ?? 2, 'red-500', 'Dibatalkan'],
-    ['Gaun', $dressCount ?? 3, 'red-500', 'Dibatalkan'],
-    ['Jaket', $jacketCount ?? 4, 'green-500', 'Selesai'],
-    ['Sweater', $sweaterCount ?? 5, 'green-500', 'Selesai'],
-    ['Seragam', $uniformCount ?? 7, 'green-500', 'Selesai'],
-    ['Tas', $bagCount ?? 1, 'red-500', 'Dibatalkan'],
-    ['Sepatu', $shoesCount ?? 1, 'green-500', 'Selesai']
-];
-@endphp
-
-<table class="table-auto w-full border-collapse border border-gray-200">
-    <tbody id="laundryTable">
-        @foreach ($laundryItems as $index => $item)
-        <tr class="border-t hover:bg-gray-50 {{ $index >= 10 ? 'hidden' : '' }}">
-            <td class="py-3 px-4">{{ $index + 1 }}</td>
-            <td class="py-3 px-4">{{ $item[0] }}</td>
-            <td class="py-3 px-4">{{ $item[1] }} item(s)</td>
-            <td class="py-3 px-4">{{ now()->format('d M Y') }}</td>
-            <td class="py-3 px-4">
-                <span class="px-2 py-1 rounded-full {{ $item[2] === 'red-500' ? 'bg-red-100 text-red-600' : 'bg-green-100 text-green-600' }} text-sm">
-                    {{ $item[3] }}
-                </span>
-            </td>
-        </tr>
-        @endforeach
-    </tbody>
-</table>
-
-<div class="text-center mt-4">
-    <button id="viewAllButton" class="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600">
-        View All
-    </button>
-</div>
-
-<script>
-    document.getElementById('viewAllButton').addEventListener('click', function () {
-        const rows = document.querySelectorAll('#laundryTable tr');
-        rows.forEach(row => row.classList.remove('hidden'));
-        this.style.display = 'none'; // Hide the "View All" button after showing all rows
-    });
-</script>
-
-             </tbody>
-                </table>
-            </div>
-        </div>
-    </div>
-</div>
+@include('user.components.pesananterbaru')
 @endsection

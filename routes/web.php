@@ -10,6 +10,7 @@ use App\Http\Controllers\UserController\RegisterUserController;
 use App\Http\Controllers\UserController\UserPencarianController;
 use App\Http\Controllers\UserController\UserRiwayatController;
 use App\Http\Controllers\UserController\UserPelacakanController;
+use App\Http\Controllers\UserController\UserUlasanController;
 use App\Http\Controllers\MerchantController\RegisterMerchantController;
 use App\Http\Controllers\MerchantController\DashboardMerchantController;
 use App\Http\Controllers\MerchantController\LoginMerchantController;
@@ -96,6 +97,17 @@ Route::prefix('user')->group(function () {
 
     //pelacakan Route
     Route::get('/pelacakan/{id?}', [UserPelacakanController::class, 'show'])->name('user.pelacakan');
+
+    //Ulasan Route
+    Route::get('/ulasan', function () {
+        return view('user.ulasan.index');
+    });
+
+    //Reviews Route
+    Route::get('/reviews', [UserUlasanController::class, 'getReviews'])->name('user.reviews');
+
+    
+    
 });
 
 // Merchant Routes
