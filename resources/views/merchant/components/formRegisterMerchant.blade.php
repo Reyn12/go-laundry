@@ -17,24 +17,35 @@
                 </p>
             </div>
             <form id="signupForm" class="space-y-5 w-full text-center text-gray-800">
-                <!-- Nama Depan dan Belakang -->
-                <div class="flex gap-4">
-                    <div class="w-1/2">
-                        <input
-                            type="text"
-                            placeholder="Nama depan"
-                            name="firstName"
-                            class="w-full p-3 rounded-lg border border-gray-300 bg-gray-100 text-gray-900 outline-none focus:ring-2 focus:ring-blue-500"
-                        />
-                    </div>
-                    <div class="w-1/2">
-                        <input
-                            type="text"
-                            placeholder="Nama belakang"
-                            name="lastName"
-                            class="w-full p-3 rounded-lg border border-gray-300 bg-gray-100 text-gray-900 outline-none focus:ring-2 focus:ring-blue-500"
-                        />
-                    </div>
+                
+                <!-- Nama Laundry -->
+                <div class="relative">
+                    <input
+                        type="text"
+                        placeholder="Nama Laundry"
+                        name="laundryName"
+                        class="w-full p-3 rounded-lg border border-gray-300 bg-gray-100 text-gray-900 outline-none focus:ring-2 focus:ring-blue-500"
+                    />
+                </div>
+
+                <!-- Alamat Laundry -->
+                <div>
+                    <input
+                        type="text"
+                        placeholder="Alamat Laundry"
+                        name="laundryAddress"
+                        class="w-full p-3 rounded-lg border border-gray-300 bg-gray-100 text-gray-900 outline-none focus:ring-2 focus:ring-blue-500"
+                    />
+                </div>
+
+                <!-- Nomor Telepon -->
+                <div>
+                    <input
+                        type="text"
+                        placeholder="Nomor Telepon"
+                        name="phone"
+                        class="w-full p-3 rounded-lg border border-gray-300 bg-gray-100 text-gray-900 outline-none focus:ring-2 focus:ring-blue-500"
+                    />
                 </div>
 
                 <!-- Email -->
@@ -63,26 +74,6 @@
                         type="password"
                         placeholder="Konfirmasi Password"
                         name="confirmPassword"
-                        class="w-full p-3 rounded-lg border border-gray-300 bg-gray-100 text-gray-900 outline-none focus:ring-2 focus:ring-blue-500"
-                    />
-                </div>
-
-                <!-- Nama Laundry -->
-                <div>
-                    <input
-                        type="text"
-                        placeholder="Nama Laundry"
-                        name="laundryName"
-                        class="w-full p-3 rounded-lg border border-gray-300 bg-gray-100 text-gray-900 outline-none focus:ring-2 focus:ring-blue-500"
-                    />
-                </div>
-
-                <!-- Alamat Laundry -->
-                <div>
-                    <input
-                        type="text"
-                        placeholder="Alamat Laundry"
-                        name="laundryAddress"
                         class="w-full p-3 rounded-lg border border-gray-300 bg-gray-100 text-gray-900 outline-none focus:ring-2 focus:ring-blue-500"
                     />
                 </div>
