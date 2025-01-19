@@ -10,7 +10,7 @@
         <button class="absolute left-0 top-1/2 -translate-y-1/2 bg-white dark:bg-gray-700 shadow-md rounded-full p-2">
             <img src="{{ asset('images/icons/iconKiri.svg') }}" alt="Previous" class="w-6 h-6 ">
         </button>
-        
+
         {{-- Review Card --}}
         <div class="mx-8">
             <div class="p-4 bg-gray-50 dark:bg-gray-700 rounded-xl border border-gray-500 dark:border-gray-600">
@@ -19,7 +19,7 @@
                         <img src="{{ asset('images/icons/iconProfile.svg') }}" alt="Profile" class="w-full h-full object-cover ">
                     </div>
                     <div>
-                        <h3 class="font-medium text-sm dark:text-white">Agus Sedih</h3>
+                        <h3 class="font-medium text-sm dark:text-white">Krisna</h3>
                         <div class="flex items-center">
                             <img src="{{ asset('images/icons/iconStar.svg') }}" alt="Star" class="">
                             <img src="{{ asset('images/icons/iconStar.svg') }}" alt="Empty Star" class="">
@@ -29,7 +29,7 @@
                         </div>
                     </div>
                 </div>
-                <p class="text-sm text-gray-600 dark:text-gray-300">Baikan duit gw..!! ga sudi gw itu duit gw goblog</p>
+                <p class="text-sm text-gray-600 dark:text-gray-300">Laundry nya wangi</p>
                 <p class="text-xs text-gray-400 dark:text-gray-500 mt-2">04 Desember 2024</p>
             </div>
         </div>

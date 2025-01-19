@@ -41,7 +41,7 @@
     </nav>
 
     <!-- Main Content -->
-    <main class="container mx-auto py-4">
+    <main class="container-fluid mx-auto py-4">
         @yield('container')
     </main>
 

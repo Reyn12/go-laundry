@@ -50,21 +50,21 @@ Route::prefix('admin')->group(function () {
     })->name('admin.login');
     Route::post('/login', [LoginController::class, 'login']);
     Route::get('/register', [RegisterController::class, 'index'])->name('admin.register');
-    
+
     // Protected routes (perlu login dan role admin)
     Route::middleware(['auth', 'admin'])->group(function () {
         // Logout route
         Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
-        
+
         // Dashboard route
         Route::get('/dashboard', [DashboardAdminController::class, 'index'])->name('admin.dashboard');
 
         // User Management route
         Route::get('/dashboard/user-manage', [UserManageController::class, 'index'])->name('admin.dashboard.user-manage.index');
-    
+
         // Merchant Management routes
         Route::prefix('dashboard/merchant-manage')->group(function () {
-            Route::get('/', [MerchantManageController::class, 'index'])->name('admin.dashboard.merchant-manage.index'); 
+            Route::get('/', [MerchantManageController::class, 'index'])->name('admin.dashboard.merchant-manage.index');
             Route::get('/all', [MerchantManageController::class, 'all'])->name('admin.dashboard.merchant-manage.all');
             Route::get('/pending', [MerchantManageController::class, 'pending'])->name('admin.dashboard.merchant-manage.pending');
             Route::get('/verified', [MerchantManageController::class, 'verified'])->name('admin.dashboard.merchant-manage.verified');
@@ -78,11 +78,11 @@ Route::prefix('user')->group(function () {
         return view('user.login.index');
     });
     Route::post('/login', [LoginUserController::class, 'login']);
-    
+
     // Dashboard route
-    
+
     Route::get('/dashboard', [DashboardUserController::class, 'index'])->name('user.dashboard');
-    
+
     //Admin register 
     Route::get('/register', [RegisterUserController::class, 'index'])->name('user.register');
 
@@ -105,9 +105,6 @@ Route::prefix('user')->group(function () {
 
     //Reviews Route
     Route::get('/reviews', [UserUlasanController::class, 'getReviews'])->name('user.reviews');
-
-    
-    
 });
 
 // Merchant Routes
@@ -116,16 +113,16 @@ Route::prefix('merchant')->group(function () {
         return view('merchant.login.index');
     });
     Route::post('/login', [LoginMerchantController::class, 'login']);
-    
+
     // Dashboard route
     Route::get('/dashboard', [DashboardMerchantController::class, 'index'])->name('merchant.dashboard');
-    
+
     //Merchant register 
     Route::get('/register', [RegisterMerchantController::class, 'index'])->name('merchant.register');
 
     //Profile Route
     Route::get('/profile', [ProfileMerchantController::class, 'index'])->name('merchant.profile');
 
-     //KelolaLayanan Route
-     Route::get('/kelolalayanan', [KelolaLayananMerchantController::class, 'index'])->name('merchant.kelolalayanan');
+    //KelolaLayanan Route
+    Route::get('/kelolalayanan', [KelolaLayananMerchantController::class, 'index'])->name('merchant.kelolalayanan');
 });
