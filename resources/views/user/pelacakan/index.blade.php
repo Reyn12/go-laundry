@@ -1,6 +1,8 @@
 @extends('user.components.main')
-@include('user.components.sidebar')
 @section('container')
+<div class="lg:w-1/4 hidden lg:block">
+      @include('user.components.sidebar')
+</div>
 <!-- Main Content -->
 <div class="max-w-full mx-auto bg-white shadow-lg rounded-lg overflow-hidden">
     <!-- Header -->

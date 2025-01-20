@@ -5,14 +5,41 @@ namespace App\Http\Controllers\UserController;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\Storage;
 
 class DashboardUserController extends Controller
 {
+    public function updateProfileImage(Request $request)
+    {
+        // Validasi file gambar
+        $request->validate([
+            'profile_image' => 'image|mimes:jpg,png,jpeg,gif|max:2048',
+        ]);
+
+        // Pastikan pengguna login
+        $user = auth()->user();
+        if (!$user) {
+            return redirect()->back()->withErrors(['error' => 'Pengguna belum login.']);
+        }
+
+        // Jika file gambar diunggah
+        if ($request->hasFile('profile_image')) {
+            // Menyimpan gambar dan mendapatkan path
+            $imagePath = $request->file('profile_image')->store('profile_images', 'public');
+
+            // Perbarui data pengguna
+            $user->profile_image = $imagePath;
+            $user->save();
+        }
+
+        return redirect()->back()->with('success', 'Foto profil berhasil diperbarui.');
+    }
+
     public function index()
     {
         // Create dummy user
         $user = (object)[
-            'name' => 'John Doe',
+            'name' => 'HAMIDUN',
             'profile_image' => null,
             'created_at' => now()
         ];

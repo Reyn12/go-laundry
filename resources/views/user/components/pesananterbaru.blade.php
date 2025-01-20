@@ -1,13 +1,13 @@
 <!-- Pesanan Terbaru Section -->
-<div class="p-4 px-8">
-            <div class="flex justify-between items-center mb-4">
+<div class="p-4 px-8 shadow-lg">
+            <div class="flex justify-between items-center mb-4 ">
                 <h3 class="text-lg font-semibold">Pesanan Terbaru</h3>
             </div>
             <div class="overflow-x-auto">
                 <table class="min-w-full">
                     <thead>
                         <tr class="text-left bg-gray-50">
-                            @foreach (['No', 'Jenis Paket', 'Berat', 'Tanggal Masuk', 'Status'] as $header)
+                            @foreach (['No', 'Jenis Paket', 'Banyak', 'Tanggal Masuk', 'Status'] as $header)
                                 <th class="py-2 px-4">{{ $header }}</th>
                             @endforeach
                         </tr>

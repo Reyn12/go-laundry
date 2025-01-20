@@ -1,8 +1,11 @@
 @extends('user.components.main')
-@include('user.components.sidebar')
-@section('container')
+@section('container') 
+<div class="lg:w-1/4 hidden lg:block">
+      @include('user.components.sidebar')
+</div>
+<body class="bg-white">
     <!-- Main Content -->
-    <div class="flex-1 ml-20">
+    <div class="flex-1 m-auto">
         <div class="relative">
             <div class="bg-[#1e3a8a] h-[120px] w-full relative overflow-hidden">
                 <div class="absolute top-0 right-0">
@@ -10,6 +13,7 @@
                         <div class="{{ $circle[1] }} rounded-full absolute {{ $circle[0] }}"></div>
                     @endforeach
                 </div>
+                
                 <div class="absolute left-[160px] top-[70px] text-white">
                     <div class="flex items-center space-x-4">
                         <h1 class="text-2xl font-bold">{{ $user->name ?? 'User' }}</h1>
@@ -34,103 +38,90 @@
                 <h3 class="text-xl font-semibold">Status Pencucian</h3>
             </div>
         </div>
+    </div>
 
       <!-- Status Pencucian Section -->
 <div class="p-4 relative">
-    <!-- Tombol Navigasi -->
-    <button id="scroll-left" class="absolute left-0 top-1/2 transform -translate-y-1/2 bg-gray-800 text-white p-2 rounded-full shadow-md hover:bg-gray-700 z-10">
-        &#9664;
-    </button>
-    <button id="scroll-right" class="absolute right-0 top-1/2 transform -translate-y-1/2 bg-gray-800 text-white p-2 rounded-full shadow-md hover:bg-gray-700 z-10">
-        &#9654;
-    </button>
-
-    <!-- Wrapper untuk Scrollbar -->
+    <!-- Wrapper for Horizontal Scroll -->
     <div class="relative">
         <!-- Container Slider -->
-        <div id="slider" class="overflow-x-auto scroll-smooth custom-scrollbar h-60">
-            <div class="flex space-x-4 snap-x snap-mandatory">
-            @foreach ([ 
-            ['Tirai', $curtainCount ?? 2, '#00008B', 'images/tirai.jpg'], 
-            ['Seprei', $bedSheetCount ?? 2, '#00008B', 'images/seprei.jpg'], 
-            ['Handuk', $towelCount ?? 1, '#00008B', 'images/handuk.jpg'], 
-            ['Karpet', $carpetCount ?? 1, '#00008B', 'images/karpet.jpg'], 
-            ['Gorden', $drapesCount ?? 8, '#00008B', 'images/gorden.jpg'], 
-            ['Bantal', $pillowCount ?? 2, '#00008B', 'images/bantal.jpg'], 
-            ['Selimut', $blanketCount ?? 1, '#00008B', 'images/selimut.jpg'], 
-            ['Jas', $suitCount ?? 5, '#00008B', 'images/jas.jpg'], 
-            ['Topi', $hatCount ?? 1, '#00008B', 'images/topi.jpg'], 
-            ['Sarung', $sarongCount ?? 3, '#00008B', 'images/sarung.jpg'], 
-            ['Kaos', $tshirtCount ?? 4, '#00008B', 'images/kaos.jpg'], 
-            ['Jeans', $jeansCount ?? 2, '#00008B', 'images/jeans.jpg'], 
-            ['Kemeja', $shirtCount ?? 6, '#00008B', 'images/kemeja.jpg'], 
-            ['Rok', $skirtCount ?? 2, '#00008B', 'images/rok.jpg'], 
-            ['Gaun', $dressCount ?? 3, '#00008B', 'images/gaun.jpg'], 
-            ['Jaket', $jacketCount ?? 4, '#00008B', 'images/jaket.jpg'], 
-            ['Sweater', $sweaterCount ?? 5, '#00008B', 'images/sweater.jpg'], 
-            ['Seragam', $uniformCount ?? 7, '#00008B', 'images/seragam.jpg'], 
-            ['Tas', $bagCount ?? 1, '#00008B', 'images/tas.jpg'], 
-            ['Sepatu', $shoesCount ?? 1, '#00008B', 'images/sepatu.jpg']
-            ] as $item)
+        <div id="slider" class="overflow-x-auto scroll-smooth custom-scrollbar h-64 flex space-x-4 snap-x snap-mandatory">
+        <!-- Individual Status Cards -->
+            <div class="status-card bg-red-500 text-white p-6 rounded-md text-center flex flex-col items-center justify-between h-48 w-48 snap-center transform transition-transform duration-300 hover:scale-105 hover:translate-y-7">
+                 <div class="icon mb-4 flex items-center justify-center w-full h-20 overflow-hidden">
+                  <img src="images/iconwash.png" alt="Wash" class="w-auto h-full object-contain">
+                 </div>
+                <div class="font-bold text-xl">Wash</div>
+                <div class="text-sm">One Day Ago</div>
+                <button class="mt-4 px-4 py-2 bg-blue-600 hover:bg-gray-400 text-white text-sm rounded">View</button>
+            </div>
 
-                    <div class="status-card {{ $item[1] > 0 ? 'bg-' . $item[2] : 'bg-gray-300' }} p-6 rounded-md text-black bold transition-transform transform hover:scale-105 hover:shadow-lg flex flex-col items-center justify-center h-48 w-48 snap-center">
-                        <div class="icon mb-4 w-24 h-24 flex items-center justify-center">
-                            <img src="{{ asset($item[3]) }}" alt="{{ $item[0] }}" class="w-24 h-24 object-cover rounded-lg">
-                        </div>
-                        <div class="text-center">
-                            <div class="text-sm">{{ $item[0] }}</div>
-                            <div class="font-bold text-xl">{{ $item[1] }}</div>
-                            @if($item[1] > 0)
-                                <a href="#" class="text-black regular text-sm hover:underline">View Details</a>
-                            @endif
-                        </div>
-                    </div>
-                @endforeach
+            <div class="status-card bg-gray-200 text-gray-700 p-6 rounded-md text-center flex flex-col items-center justify-center h-48 w-48 snap-center transform transition-transform duration-300 hover:scale-105 hover:translate-y-7">
+                <div class="icon mb-4 flex items-center justify-center w-full h-20 overflow-hidden">
+                    <img src="images/iron-icon.png" alt="Iron" class="w-16 h-16">
+                </div>
+                <div class="font-bold text-xl">Iron</div>
+                <div class="text-sm">Two Day Ago</div>
+                <button class="mt-4 px-4 py-2 bg-blue-600 hover:bg-gray-400 text-white text-sm rounded">View</button>
+            </div>
+
+            <div class="status-card bg-gray-200 text-gray-700 p-6 rounded-md text-center flex flex-col items-center justify-center h-48 w-48 snap-center transform transition-transform duration-300 hover:scale-105 hover:translate-y-7">
+                <div class="icon mb-4 flex items-center justify-center w-full h-20 overflow-hidden">
+                    <img src="images/iron-icon.png" alt="Iron" class="w-16 h-16">
+                </div>
+                <div class="font-bold text-xl">Iron</div>
+                <div class="text-sm">Two Day Ago</div>
+                <button class="mt-4 px-4 py-2 bg-blue-600 hover:bg-gray-400 text-white text-sm rounded">View</button>
+            </div>
+
+            <div class="status-card bg-gray-200 text-gray-700 p-6 rounded-md text-center flex flex-col items-center justify-center h-48 w-48 snap-center transform transition-transform duration-300 hover:scale-105 hover:translate-y-7">
+                <div class="icon mb-4 flex items-center justify-center w-full h-20 overflow-hidden">
+                    <img src="images/iron-icon.png" alt="Iron" class="w-16 h-16">
+                </div>
+                <div class="font-bold text-xl">Iron</div>
+                <div class="text-sm">Two Day Ago</div>
+                <button class="mt-4 px-4 py-2 bg-blue-600 hover:bg-gray-400 text-white text-sm rounded">View</button>
             </div>
         </div>
     </div>
 </div>
 
-<!-- JavaScript untuk Scroll -->
+<!-- Scroll JavaScript -->
 <script>
     const slider = document.getElementById('slider');
     const scrollLeftButton = document.getElementById('scroll-left');
     const scrollRightButton = document.getElementById('scroll-right');
 
-    // Scroll ke kiri
-    scrollLeftButton.addEventListener('click', () => {
+    scrollLeftButton?.addEventListener('click', () => {
         slider.scrollBy({
-            left: -300, // Geser ke kiri sejauh 300px
+            left: -300,
             behavior: 'smooth'
         });
     });
 
-    // Scroll ke kanan
-    scrollRightButton.addEventListener('click', () => {
+    scrollRightButton?.addEventListener('click', () => {
         slider.scrollBy({
-            left: 300, // Geser ke kanan sejauh 300px
+            left: 300,
             behavior: 'smooth'
         });
     });
 </script>
 
-<!-- Tambahkan CSS untuk scrollbar -->
+<!-- Scrollbar Styling -->
 <style>
-    .custom-scrollbar {
-        overflow-y: auto; /* Tambahkan scrollbar vertikal */
+    .custom-scrollbar::-webkit-scrollbar {
+        height: 8px;
     }
 
-    /* Scrollbar gaya khusus */
-    .custom-scrollbar::-webkit-scrollbar {
-        width: 8px;
-    }
     .custom-scrollbar::-webkit-scrollbar-thumb {
-        background: #888; /* Warna scrollbar */
+        background: #888;
         border-radius: 4px;
     }
+
     .custom-scrollbar::-webkit-scrollbar-thumb:hover {
-        background: #555; /* Warna hover scrollbar */
+        background: #555;
     }
 </style>
+
 @include('user.components.pesananterbaru')
 @endsection

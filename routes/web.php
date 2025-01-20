@@ -106,8 +106,10 @@ Route::prefix('user')->group(function () {
     //Reviews Route
     Route::get('/reviews', [UserUlasanController::class, 'getReviews'])->name('user.reviews');
 
-    
-    
+    Route::post('/user/profile', [DashboardUserController::class, 'updateProfileImage'])->name('user.profile.update');
+
+    Route::post('/update-profile-image', [DashboardUserController::class, 'updateProfileImage'])->middleware('auth');
+   
 });
 
 // Merchant Routes
