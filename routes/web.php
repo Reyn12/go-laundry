@@ -106,8 +106,11 @@ Route::prefix('user')->group(function () {
     //Reviews Route
     Route::get('/reviews', [UserUlasanController::class, 'getReviews'])->name('user.reviews');
 
-    
-    
+    //Pesanan Layanan Route
+    Route::get('/pesananlayanan',function(){
+        return view('user.pesananlayanan.index');
+    });
+
 });
 
 // Merchant Routes

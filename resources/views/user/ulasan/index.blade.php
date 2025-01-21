@@ -1,62 +1,107 @@
 @extends('user.components.main')
 @section('container')
-@include('user.components.sidebar')
-      <!-- Header Section -->
-      <div class="flex justify-between items-center mb-4">
-        <div class="flex gap-2">
-          <select class="border rounded-md p-2 bg-white shadow-sm">
-            <option>Padjajaran, Bandung</option>
-            <option>Jakarta</option>
-            <option>Surabaya</option>
-          </select>
-          <select class="border rounded-md p-2 bg-white shadow-sm">
-            <option>Date</option>
-            <option>Name</option>
-            <option>Rating</option>
-          </select>
-        </div>
-        <button class="border rounded-md p-2 bg-white shadow-sm flex items-center gap-1">
-          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 5.75h16.5M3.75 12h16.5m-7.5 6.25h7.5" />
-          </svg>
-          More filter
-        </button>
-      </div>
-
-      <!-- Search Section -->
-      <div class="flex gap-2 mb-4">
-        <input type="text" placeholder="Search or type command..." class="flex-grow border rounded-md p-2 shadow-sm">
-        <button class="border rounded-md p-2 bg-gray-200 shadow-sm">Clear</button>
-        <button class="border rounded-md p-2 bg-blue-600 text-white shadow-sm">Search</button>
-      </div>
-
-      <!-- Review List -->
-      <div class="space-y-4">
-        <!-- Single Review -->
-        <div class="bg-white p-4 rounded-md shadow">
-          <div class="flex gap-4">
-            <img src="https://via.placeholder.com/50" alt="User" class="w-12 h-12 rounded-full">
-            <div class="flex-grow">
-              <div class="flex justify-between">
-                <div class="flex items-center gap-1">
-                  <span class="font-semibold">Laundry</span>
-                  <span class="text-gray-500">by jjdhwoighiwe</span>
-                </div>
-                <span class="text-gray-400 text-sm">22, April 2025 pukul 11:25 WIB</span>
-              </div>
-              <div class="flex items-center text-yellow-400 mb-2">
-                @for ($i = 0; $i < 5; $i++)
-                  <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24" class="w-5 h-5">
-                    <path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z" />
-                  </svg>
-                @endfor
-              </div>
-              <p class="text-gray-600">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse euismod, nulla et fermentum pharetra, massa ex vulputate velit.</p>
-            </div>
-          </div>
-        </div>
-      </div>
-    @endsection
+<div class="lg:flex lg:gap-2">
+  <!-- Sidebar -->
+  <div class="hidden lg:block">
+    @include('user.components.sidebar')
   </div>
-</body>
-</html>
+
+  <!-- Main Content -->
+  <div class="lg:w-full">
+    <!DOCTYPE html>
+    <html lang="en">
+    <!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rating Page</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+  </head>
+  <body class="bg-gray-100 py-10">
+    <div class="container-fluid mx-auto">
+      <!-- History Rating Section -->
+      <div class="bg-white rounded-lg shadow-lg p-6 mb-10">
+        <h2 class="text-center text-2xl font-bold mb-6">HISTORY RATING</h2>
+        <div class="grid grid-cols-3 gap-6 items-center">
+          <!-- Rating Breakdown -->
+          <div class="space-y-4">
+            <!-- 5 Star -->
+            <div class="flex items-center">
+              <span class="text-black-500 text-lg font-bold mr-2">5</span>
+              <div class="w-full bg-gray-200 h-2 rounded-full mr-2">
+                <div class="bg-yellow-500 h-2 rounded-full" style="width: 100%;"></div>
+              </div>
+              <span class="text-gray-600 text-sm font-medium">100%</span>
+            </div>
+            <!-- 4 Star -->
+            <div class="flex items-center">
+              <span class="text-black-500 text-lg font-bold mr-2">4</span>
+              <div class="w-full bg-gray-200 h-2 rounded-full mr-2">
+                <div class="bg-yellow-500 h-2 rounded-full" style="width: 80%;"></div>
+              </div>
+              <span class="text-gray-600 text-sm font-medium">80%</span>
+            </div>
+
+            <!-- 3 Star -->
+            <div class="flex items-center">
+              <span class="text-black-500 text-lg font-bold mr-2">3</span>
+              <div class="w-full bg-gray-200 h-2 rounded-full mr-2">
+                <div class="bg-yellow-500 h-2 rounded-full" style="width: 60%;"></div>
+              </div>
+              <span class="text-gray-600 text-sm font-medium">60%</span>
+            </div>
+
+            <!-- 2 Star -->
+            <div class="flex items-center">
+              <span class="text-black-500 text-lg font-bold mr-2">2</span>
+              <div class="w-full bg-gray-200 h-2 rounded-full mr-2">
+                <div class="bg-yellow-500 h-2 rounded-full" style="width: 40%;"></div>
+              </div>
+              <span class="text-gray-600 text-sm font-medium">40%</span>
+            </div>
+
+            <!-- 1 Star -->
+            <div class="flex items-center">
+              <span class="text-black-500 text-lg font-bold mr-2">1</span>
+              <div class="w-full bg-gray-200 h-2 rounded-full mr-2">
+                <div class="bg-yellow-500 h-2 rounded-full" style="width: 30%;"></div>
+              </div>
+              <span class="text-gray-600 text-sm font-medium">30%</span>
+            </div>
+      </div>
+
+            <!-- Overall Rating -->
+            <div class="flex flex-col items-center">
+                  <p class="text-gray-600 font-medium text-sm mb-2">Overall</p>
+                  <h3 class="text-4xl font-bold mb-2">4.0</h3>
+            <div class="flex">
+              <span class="text-yellow-500 text-2xl">&#9733;</span>
+              <span class="text-yellow-500 text-2xl">&#9733;</span>
+              <span class="text-yellow-500 text-2xl">&#9733;</span>
+              <span class="text-yellow-500 text-2xl">&#9733;</span>
+              <span class="text-gray-300 text-2xl">&#9734;</span>
+            </div>
+            <p class="text-gray-500 text-sm mt-2">47 Ratings</p>
+      </div>
+
+            <!-- Last Month Rating -->
+            <div class="flex flex-col items-center">
+              <p class="text-gray-600 font-medium text-sm mb-2">Last Month</p>
+              <h3 class="text-4xl font-bold mb-2">3.0</h3>
+              <div class="flex">
+                <span class="text-yellow-500 text-2xl">&#9733;</span>
+              <span class="text-yellow-500 text-2xl">&#9733;</span>
+              <span class="text-yellow-500 text-2xl">&#9733;</span>
+              <span class="text-gray-300 text-2xl">&#9734;</span>
+              <span class="text-gray-300 text-2xl">&#9734;</span>
+            </div>
+      </div>
+</div>
+</div>
+@include('user.components.contentbawahrating')
+    </body>
+    </html>
+  </div>
+</div>
+@endsection

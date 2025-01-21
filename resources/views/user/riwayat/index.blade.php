@@ -1,14 +1,21 @@
 @extends('user.components.main')
-@include('user.components.sidebar')
 @section('container')
+<div class="lg:w-1/4 hidden lg:block">
+      @include('user.components.sidebar')
+</div>
+<!-- Search Box -->
+<div class="container-fluid mx-auto mt-4">
+            <div class="mb-4">
+                <input type="text" id="search-box" placeholder="Cari riwayat pesanan..." 
+                       class="border border-gray-300 rounded-lg p-2 w-full">
+            </div>
+        </div>
     <!--main content-->
     <div class="flex-grow ml-20">
-        <h1 class="text-2xl font-semibold mb-4">Riwayat Pesanan</h1>
-        <div class="container mx-auto mt-4">
+        <h1 class="text-2xl font-semibold ">Riwayat Pesanan</h1>
+        <div class="container-fluid mx-auto mt-4">
             <div class="bg-white shadow rounded-lg">
                 <div class="p-4">
-                    <h4 class="text-lg font-semibold mb-3">Riwayat Pesanan</h4>
-
                     <div class="mb-4">
                         <select class="border border-gray-300 rounded-lg p-2">
                             <option>Apr 1 - Apr 30 2024</option>
@@ -19,13 +26,13 @@
                         <table class="w-full border-collapse border border-gray-300">
                             <thead class="bg-gray-100">
                                 <tr>
-                                    <th class="border border-gray-300 px-4 py-2">No</th>
-                                    <th class="border border-gray-300 px-4 py-2">Nama</th>
-                                    <th class="border border-gray-300 px-4 py-2">Amount</th>
-                                    <th class="border border-gray-300 px-4 py-2">Date</th>
-                                    <th class="border border-gray-300 px-4 py-2">Status</th>
-                                    <th class="border border-gray-300 px-4 py-2">Total Price</th>
-                                    <th class="border border-gray-300 px-4 py-2">Reorder</th>
+                                    <th class="border border-gray-300 px-4 py-2 text-center align-middle">No</th>
+                                    <th class="border border-gray-300 px-4 py-2 text-center align-middle">Nama laundry</th>
+                                    <th class="border border-gray-300 px-4 py-2 text-center align-middle">Amount</th>
+                                    <th class="border border-gray-300 px-4 py-2 text-center align-middle">Date</th>
+                                    <th class="border border-gray-300 px-4 py-2 text-center align-middle">Status</th>
+                                    <th class="border border-gray-300 px-4 py-2 text-center align-middle">Total Price</th>
+                                    <th class="border border-gray-300 px-4 py-2 text-center align-middle">Reorder</th>
                                 </tr>
                             </thead>
                             <tbody id="order-history-container">
@@ -67,6 +74,18 @@
         </div>
 
         <script>
+            // Search functionality
+            document.getElementById('search-box').addEventListener('input', function() {
+                const searchValue = this.value.toLowerCase();
+                const rows = document.querySelectorAll('#order-history-container tr');
+                
+                rows.forEach(row => {
+                    const rowText = row.innerText.toLowerCase();
+                    row.style.display = rowText.includes(searchValue) ? '' : 'none';
+                });
+            });
+
+            // View More functionality
             document.getElementById('view-more-button').addEventListener('click', function() {
                 let hiddenRows = document.querySelectorAll('#order-history-container .hidden');
                 let count = 0;
