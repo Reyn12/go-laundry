@@ -1,23 +1,22 @@
 <form id="signupForm" class="space-y-5" novalidate>
-    <div class="flex gap-4">
-        <div class="w-1/2 relative">
+    <div class="relative">
             <input
                 type="text"
-                placeholder="Nama depan"
-                name="firstName"
+                placeholder="Nama Lengkap"
+                name="fullName"
                 class="w-full p-4 rounded-xl border-2 border-gray-100 bg-gray-50 focus:bg-white focus:border-blue-500 transition-all duration-200 outline-none text-gray-700"
             />
-            <span class="error-message">Nama depan harus diisi</span>
-        </div>
-        <div class="w-1/2 relative">
+            <span class="error-message">Nama Lengkap harus diisi</span>
+    </div>
+        
+    <div class="relative">
             <input
                 type="text"
-                placeholder="Nama belakang"
-                name="lastName"
+                placeholder="Username"
+                name="username"
                 class="w-full p-4 rounded-xl border-2 border-gray-100 bg-gray-50 focus:bg-white focus:border-blue-500 transition-all duration-200 outline-none text-gray-700"
             />
-            <span class="error-message">Nama belakang harus diisi</span>
-        </div>
+            <span class="error-message">Username harus diisi</span>
     </div>
     
     <div class="relative">
@@ -29,7 +28,28 @@
         />
         <span class="error-message">Email harus diisi dengan format yang benar</span>
     </div>
-    
+
+    <div class="relative">
+        <input
+            type="text"
+            placeholder="Nomor Telepon"
+            name="phone"
+            class="w-full p-4 rounded-xl border-2 border-gray-100 bg-gray-50 focus:bg-white focus:border-blue-500 transition-all duration-200 outline-none text-gray-700"
+        />
+        <span class="error-message">Nomor Telepon harus diisi</span>
+
+    </div>
+
+    <div class="relative">
+        <input
+            type="text"
+            placeholder="Alamat"
+            name="address"
+            class="w-full p-4 rounded-xl border-2 border-gray-100 bg-gray-50 focus:bg-white focus:border-blue-500 transition-all duration-200 outline-none text-gray-700"
+        />
+        <span class="error-message">Alamat harus diisi</span>
+    </div>
+
     <div class="relative">
         <input
             type="password"

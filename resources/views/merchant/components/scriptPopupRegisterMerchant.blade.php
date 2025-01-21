@@ -4,8 +4,7 @@
     // Fungsi validasi
     function validateForm() {
         const inputs = {
-            firstName: form.querySelector('input[name="firstName"]'),
-            lastName: form.querySelector('input[name="lastName"]'),
+            phone:form.querySelector('input[name="phone"]'),
             email: form.querySelector('input[name="email"]'),
             password: form.querySelector('input[name="password"]'),
             confirmPassword: form.querySelector('input[name="confirmPassword"]'),
@@ -35,8 +34,7 @@
         }
 
         // Validasi masing-masing field
-        if (!inputs.firstName.value.trim()) showError(inputs.firstName, 'Nama depan wajib diisi.');
-        if (!inputs.lastName.value.trim()) showError(inputs.lastName, 'Nama belakang wajib diisi.');
+        if (!inputs.phone.value.trim()) showError(inputs.phone, 'Nomor telepon wajib diisi.');
         if (!inputs.email.value.trim() || !inputs.email.value.includes('@')) showError(inputs.email, 'Masukkan email yang valid.');
         if (!inputs.password.value || inputs.password.value.length < 8) showError(inputs.password, 'Password harus minimal 8 karakter.');
         if (inputs.confirmPassword.value !== inputs.password.value) showError(inputs.confirmPassword, 'Konfirmasi password harus sama.');
