@@ -4,9 +4,11 @@
     // Fungsi untuk memeriksa validitas form
     function validateForm() {
         const inputs = {
-            firstName: form.querySelector('input[name="firstName"]'),
-            lastName: form.querySelector('input[name="lastName"]'),
+            fullname: form.querySelector('input[name="fullName"]'),
+            username: form.querySelector('input[name="username"]'),
             email: form.querySelector('input[name="email"]'),
+            phone: form.querySelector('input[name="phone"]'),
+            address: form.querySelector('input[name="address"]'),
             password: form.querySelector('input[name="password"]'),
             confirmPassword: form.querySelector('input[name="confirmPassword"]'),
             terms: form.querySelector('input[name="terms"]')
@@ -19,22 +21,22 @@
             msg.style.display = 'none';
         });
         
-        // Validasi nama depan
-        if (!inputs.firstName.value.trim()) {
+        // Validasi nama lengkap
+        if (!inputs.fullname.value.trim()) {
             isValid = false;
-            inputs.firstName.nextElementSibling.style.display = 'block';
-            inputs.firstName.classList.add('border-red-500');
+            inputs.fullname.nextElementSibling.style.display = 'block';
+            inputs.fullname.classList.add('border-red-500');
         } else {
-            inputs.firstName.classList.remove('border-red-500');
+            inputs.fullname.classList.remove('border-red-500');
         }
-        
-        // Validasi nama belakang
-        if (!inputs.lastName.value.trim()) {
+
+        // Validasi username
+        if (!inputs.username.value.trim()) {
             isValid = false;
-            inputs.lastName.nextElementSibling.style.display = 'block';
-            inputs.lastName.classList.add('border-red-500');
+            inputs.username.nextElementSibling.style.display = 'block';
+            inputs.username.classList.add('border-red-500');
         } else {
-            inputs.lastName.classList.remove('border-red-500');
+            inputs.username.classList.remove('border-red-500');
         }
         
         // Validasi email
@@ -44,6 +46,24 @@
             inputs.email.classList.add('border-red-500');
         } else {
             inputs.email.classList.remove('border-red-500');
+        }
+
+        // Validasi nomor telepon
+        if (!inputs.phone.value.trim()) {
+            isValid = false;
+            inputs.phone.nextElementSibling.style.display = 'block';
+            inputs.phone.classList.add('border-red-500');
+        } else {
+            inputs.phone.classList.remove('border-red-500');
+        }
+
+        // Validasi alamat
+        if (!inputs.address.value.trim()) {
+            isValid = false;
+            inputs.address.nextElementSibling.style.display = 'block';
+            inputs.address.classList.add('border-red-500');
+        } else {
+            inputs.address.classList.remove('border-red-500');
         }
         
         // Validasi password

@@ -99,11 +99,12 @@
     </nav>
 
     <!-- Hero Section -->
-
-
     @include('homepage.sections.hero-section')
+
+    <!-- Filter Pencarian Laundry -->
+    @include('homepage.components.filter-pencarian')
     <!-- Hasil Pencarian -->
-    <div class="flex flex-col items-center gap-2 px-6 pt-6 pb-6" id="Pencarian">
+    <div class="flex flex-col items-center gap-2 px-6 pt-6 pb-6">
         <div class="flex flex-col items-center w-full gap-6 p-6 rounded-[36px] border border-black">
             <div class="flex flex-wrap items-center gap-2">
                 <p class="text-xl text-black">Hasil Pencarian :</p>
