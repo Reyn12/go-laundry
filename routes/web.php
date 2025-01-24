@@ -18,6 +18,8 @@ use App\Http\Controllers\MerchantController\ProfileMerchantController;
 use App\Http\Controllers\MerchantController\KelolaLayananMerchantController;
 use App\Http\Controllers\AdminController\UserManageController;
 use App\Http\Controllers\AdminController\MerchantManageController;
+use App\Http\Controllers\HomepageController\PencarianHomepage;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -27,19 +29,21 @@ use App\Http\Controllers\AdminController\MerchantManageController;
 | Here is where you can register web routes for your application. These
 | routes are loaded by the RouteServiceProvider and all of them will
 | be assigned to the "web" middleware group. Make something great!
-|
+| 
 */
 // Homepage Routes
 Route::get('/', function () {
     return view('homepage.index');
 });
+Route::get('/', [PencarianHomepage::class, 'index']);
+
 Route::get('/daftar', function () {
     return view('homepage.daftar.index');
 });
 Route::get('/masuk', function () {
     return view('homepage.masuk.index');
 });
-
+Route::get('/search-laundry', [PencarianHomepage::class, 'search'])->name('search.laundry');
 
 
 // Admin Routes
@@ -82,7 +86,7 @@ Route::prefix('user')->group(function () {
     // Dashboard route
 
     Route::get('/dashboard', [DashboardUserController::class, 'index'])->name('user.dashboard');
-
+    
     //Admin register 
     Route::get('/register', [RegisterUserController::class, 'index'])->name('user.register');
 
@@ -116,7 +120,7 @@ Route::prefix('merchant')->group(function () {
 
     // Dashboard route
     Route::get('/dashboard', [DashboardMerchantController::class, 'index'])->name('merchant.dashboard');
-
+    
     //Merchant register 
     Route::get('/register', [RegisterMerchantController::class, 'index'])->name('merchant.register');
 
