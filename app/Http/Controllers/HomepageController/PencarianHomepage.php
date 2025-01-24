@@ -20,7 +20,7 @@ class PencarianHomepage extends Controller
         $layananLaundryList = LayananLaundry::all();
         Log::info('Menampilkan Layanan Laudries: ' . $layananLaundryList);
 
-        return view('homepage.index', compact('layananLaundryList'));
+        return view('homepage.index', ['layananLaundries' => $layananLaundryList]);
     }
 
     /**

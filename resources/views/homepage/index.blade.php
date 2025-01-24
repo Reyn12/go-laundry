@@ -158,13 +158,15 @@
                 <p class="text-xl text-black">Hasil Pencarian :</p>
                 <!-- Loop hasil pencarian -->
                 @foreach ($layananLaundries as $layanan)
-                @include('homepage.components.merchant-card', [
-                'no' => $loop->iteration,
-                'name' => $layanan->merchant->nama_laundry,
-                'distance' => 'TBD', // Hitung jarak jika diperlukan
-                'address' => $layanan->merchant->alamat_laundry,
-                'services' => $layanan->nama_layanan,
-                ])
+                    @if($layanan->merchant)
+                        @include('homepage.components.merchant-card', [
+                            'no' => $loop->iteration,
+                            'name' => $layanan->merchant->nama_laundry,
+                            'distance' => 'TBD',
+                            'address' => $layanan->merchant->alamat_laundry,
+                            'services' => $layanan->nama_layanan,
+                        ])
+                    @endif
                 @endforeach
             </div>
         </div>
