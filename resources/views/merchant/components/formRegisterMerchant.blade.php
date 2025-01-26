@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>Form Daftar Kemitraan</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
@@ -18,7 +19,7 @@
                     <a href="/merchant/login" class="text-blue-600 hover:text-blue-700 font-medium transition-colors">Log In</a>
                 </p>
             </div>
-            <form action="{{ route('merchant.register.store') }}" method="POST" id="signupForm" class="space-y-5 w-full text-center text-gray-800">
+            <form id="merchantForm" class="space-y-5 w-full text-center text-gray-800">
                 @csrf
                 <!-- Nama Laundry -->
                 <div class="relative">
@@ -47,7 +48,10 @@
                         placeholder="Nomor Telepon"
                         name="phone"
                         class="w-full p-3 rounded-lg border border-gray-300 bg-gray-100 text-gray-900 outline-none focus:ring-2 focus:ring-blue-500"
+                        oninput="this.value = this.value.replace(/[^0-9]/g, '')"
+                        maxlength="15"
                     />
+                    <span class="text-red-500 text-sm hidden" id="phoneError">Nomor telepon hanya boleh berisi angka</span>
                 </div>
 
                 <!-- Email -->
@@ -58,6 +62,7 @@
                         name="email"
                         class="w-full p-3 rounded-lg border border-gray-300 bg-gray-100 text-gray-900 outline-none focus:ring-2 focus:ring-blue-500"
                     />
+                    <span class="text-red-500 text-sm hidden" id="emailError">Email harus menggunakan domain @gmail.com</span>
                 </div>
 
                 <!-- Password -->
@@ -137,13 +142,14 @@
                             Cuci Baju Kerja
                         </label>
                     </div>
+                    <span class="text-red-500 text-sm hidden services-error">Pilih minimal satu paket laundry</span>
                 </div>
 
                 <!-- Upload Foto -->
                 <div class="text-left">
-                    <label class="block mb-2 text-gray-800 font-semibold">Upload Foto Laundry:</label>
+                    <label class="block mb-2 text-gray-800 font-semibold">Upload Foto Laundry (Opsional):</label>
                     <div class="w-full p-4 border-2 border-dashed border-gray-300 rounded-lg bg-gray-100 flex justify-center items-center">
-                        <input type="file" name="laundryPhoto" class="hidden" id="fileInput">
+                        <input type="file" name="laundryPhoto" class="hidden" id="fileInput" accept="image/*">
                         <label for="fileInput" class="cursor-pointer text-gray-600">
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" class="w-8 h-8 mx-auto">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 16s1-1 3-1 3 1 5 1 3-1 5-1 3 1 3 1m-3 4H6a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V18a2 2 0 01-2 2z"/>
@@ -159,6 +165,7 @@
                         <input type="checkbox" name="terms" class="mr-2">
                         Saya menyetujui <a href="#" class="text-blue-600 hover:underline">syarat & ketentuan</a>
                     </label>
+                    <span class="text-red-500 text-sm hidden terms-error">Anda harus menyetujui syarat dan ketentuan</span>
                 </div>
 
                 <!-- Tombol Submit -->
@@ -172,62 +179,6 @@
         </div>
     </div>
 
-    <script>
-        $(document).ready(function() {
-            $('#signupForm').on('submit', function(e) {
-                e.preventDefault();
-                
-                // Log form data
-                console.log('Form data:', $(this).serialize());
-                
-                $.ajax({
-                    url: "{{ route('merchant.register.store') }}",
-                    type: "POST",
-                    data: $(this).serialize(),
-                    success: function(response) {
-                        console.log('Success response:', response);
-                        if(response.success) {
-                            Swal.fire({
-                                icon: 'success',
-                                title: 'Berhasil!',
-                                text: 'Proses pengajuan pembukaan toko kamu sedang kami proses ya',
-                                showCancelButton: true,
-                                confirmButtonText: 'Login Sekarang',
-                                cancelButtonText: 'Kembali',
-                            }).then((result) => {
-                                if (result.isConfirmed) {
-                                    window.location.href = '/merchant/login';
-                                }
-                            });
-                        }
-                    },
-                    error: function(xhr, status, error) {
-                        console.log('Error response:', xhr.responseJSON);
-                        console.log('Status:', status);
-                        console.log('Error:', error);
-                        
-                        let errorMessage = '';
-                        
-                        if (xhr.responseJSON && xhr.responseJSON.errors) {
-                            let errors = xhr.responseJSON.errors;
-                            for(let key in errors) {
-                                errorMessage += errors[key][0] + '<br>';
-                            }
-                        } else if (xhr.responseJSON && xhr.responseJSON.message) {
-                            errorMessage = xhr.responseJSON.message;
-                        } else {
-                            errorMessage = 'Terjadi kesalahan saat registrasi. Silakan coba lagi.';
-                        }
-                        
-                        Swal.fire({
-                            icon: 'error',
-                            title: 'Oops...',
-                            html: errorMessage
-                        });
-                    }
-                });
-            });
-        });
-    </script>
+    @include('merchant.components.scriptPopupRegisterMerchant')
 </body>
 </html>
