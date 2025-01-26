@@ -77,10 +77,8 @@ Route::prefix('user')->group(function () {
     Route::get('/login', function () {
         return view('user.login.index');
     });
-    Route::post('/login', [LoginUserController::class, 'login']);
-    
+    Route::post('/login_proses', [LoginUserController::class, 'login_proses'])->name('login_proses');
     // Dashboard route
-    
     Route::get('/dashboard', [DashboardUserController::class, 'index'])->name('user.dashboard');
     
     //Admin register 
