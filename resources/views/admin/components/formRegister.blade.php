@@ -1,4 +1,5 @@
-<form id="signupForm" class="space-y-5" novalidate>
+<form id="signupForm" class="space-y-5" action="{{ route('admin.register.submit') }}" method="POST" novalidate>
+    @csrf
     <div class="relative">
             <input
                 type="text"
@@ -64,7 +65,7 @@
         <input
             type="password"
             placeholder="Konfirmasi Password"
-            name="confirmPassword"
+            name="password_confirmation"
             class="w-full p-4 rounded-xl border-2 border-gray-100 bg-gray-50 focus:bg-white focus:border-blue-500 transition-all duration-200 outline-none text-gray-700"
         />
         <span class="error-message">Password tidak cocok</span>

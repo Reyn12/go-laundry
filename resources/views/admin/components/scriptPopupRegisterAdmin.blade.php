@@ -1,103 +1,78 @@
 <script>
     const form = document.getElementById('signupForm');
-    
-    // Fungsi untuk memeriksa validitas form
-    function validateForm() {
-        const inputs = {
-            fullname: form.querySelector('input[name="fullName"]'),
-            username: form.querySelector('input[name="username"]'),
-            email: form.querySelector('input[name="email"]'),
-            phone: form.querySelector('input[name="phone"]'),
-            address: form.querySelector('input[name="address"]'),
-            password: form.querySelector('input[name="password"]'),
-            confirmPassword: form.querySelector('input[name="confirmPassword"]'),
-            terms: form.querySelector('input[name="terms"]')
-        };
-        
-        let isValid = true;
-        
-        // Reset semua pesan error
-        form.querySelectorAll('.error-message').forEach(msg => {
+    const errorMessages = form.querySelectorAll('.error-message');
+
+    // Reset error messages
+    function resetErrors() {
+        errorMessages.forEach(msg => {
             msg.style.display = 'none';
+            msg.textContent = '';
         });
-        
-        // Validasi nama lengkap
-        if (!inputs.fullname.value.trim()) {
-            isValid = false;
-            inputs.fullname.nextElementSibling.style.display = 'block';
-            inputs.fullname.classList.add('border-red-500');
-        } else {
-            inputs.fullname.classList.remove('border-red-500');
-        }
-
-        // Validasi username
-        if (!inputs.username.value.trim()) {
-            isValid = false;
-            inputs.username.nextElementSibling.style.display = 'block';
-            inputs.username.classList.add('border-red-500');
-        } else {
-            inputs.username.classList.remove('border-red-500');
-        }
-        
-        // Validasi email
-        if (!inputs.email.value.trim() || !inputs.email.value.includes('@')) {
-            isValid = false;
-            inputs.email.nextElementSibling.style.display = 'block';
-            inputs.email.classList.add('border-red-500');
-        } else {
-            inputs.email.classList.remove('border-red-500');
-        }
-
-        // Validasi nomor telepon
-        if (!inputs.phone.value.trim()) {
-            isValid = false;
-            inputs.phone.nextElementSibling.style.display = 'block';
-            inputs.phone.classList.add('border-red-500');
-        } else {
-            inputs.phone.classList.remove('border-red-500');
-        }
-
-        // Validasi alamat
-        if (!inputs.address.value.trim()) {
-            isValid = false;
-            inputs.address.nextElementSibling.style.display = 'block';
-            inputs.address.classList.add('border-red-500');
-        } else {
-            inputs.address.classList.remove('border-red-500');
-        }
-        
-        // Validasi password
-        if (!inputs.password.value || inputs.password.value.length < 8) {
-            isValid = false;
-            inputs.password.nextElementSibling.style.display = 'block';
-            inputs.password.classList.add('border-red-500');
-        } else {
-            inputs.password.classList.remove('border-red-500');
-        }
-        
-        // Validasi konfirmasi password
-        if (!inputs.confirmPassword.value || inputs.confirmPassword.value !== inputs.password.value) {
-            isValid = false;
-            inputs.confirmPassword.nextElementSibling.style.display = 'block';
-            inputs.confirmPassword.classList.add('border-red-500');
-        } else {
-            inputs.confirmPassword.classList.remove('border-red-500');
-        }
-        
-        // Validasi terms
-        if (!inputs.terms.checked) {
-            isValid = false;
-        }
-        
-        return isValid;
+        form.querySelectorAll('input').forEach(input => {
+            input.classList.remove('border-red-500');
+        });
     }
 
     // Event listener untuk form submission
-    form.addEventListener('submit', function(e) {
+    form.addEventListener('submit', async function(e) {
         e.preventDefault();
-        
-        if (validateForm()) {
-            document.getElementById('popupOverlay').style.display = 'block';
+        resetErrors();
+
+        try {
+            console.log('Form submission started');
+            
+            // Log form data (kecuali password)
+            const formData = new FormData(form);
+            const formDataLog = {};
+            formData.forEach((value, key) => {
+                if (!key.includes('password')) {
+                    formDataLog[key] = value;
+                }
+            });
+            console.log('Form data:', formDataLog);
+
+            // Kirim data form menggunakan AJAX
+            console.log('Sending request to:', form.action);
+            const response = await fetch(form.action, {
+                method: 'POST',
+                body: formData,
+                headers: {
+                    'X-CSRF-TOKEN': document.querySelector('input[name="_token"]').value
+                }
+            });
+
+            console.log('Response status:', response.status);
+            const data = await response.json();
+            console.log('Response data:', data);
+
+            if (data.success) {
+                console.log('Registration successful');
+                // Tampilkan popup sukses
+                document.getElementById('popupOverlay').style.display = 'block';
+            } else {
+                console.log('Registration failed:', data.errors || data.message);
+                // Handle validation errors
+                if (data.errors) {
+                    Object.entries(data.errors).forEach(([field, messages]) => {
+                        console.log(`Error for ${field}:`, messages);
+                        const input = form.querySelector(`[name="${field}"]`);
+                        if (input) {
+                            input.classList.add('border-red-500');
+                            const errorElement = input.nextElementSibling;
+                            if (errorElement && errorElement.classList.contains('error-message')) {
+                                errorElement.textContent = messages[0];
+                                errorElement.style.display = 'block';
+                            }
+                        }
+                    });
+                }
+            }
+        } catch (error) {
+            console.error('Error details:', {
+                message: error.message,
+                stack: error.stack
+            });
+            alert('Terjadi kesalahan saat mengirim data. Silakan coba lagi.');
         }
     });
 
