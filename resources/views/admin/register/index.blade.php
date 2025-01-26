@@ -21,6 +21,8 @@
     </style>
     {{-- Styles Untuk Register Admin --}}
     @include('admin.components.registerAdminStyles')
+    {{-- Di bagian head, tambahkan CDN SweetAlert2 --}}
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 <body>
     <div class="flex min-h-screen">

@@ -47,12 +47,31 @@
 
             if (data.success) {
                 console.log('Registration successful');
-                // Tampilkan popup sukses
-                document.getElementById('popupOverlay').style.display = 'block';
+                // Tampilkan popup sukses dengan SweetAlert2
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Berhasil!',
+                    text: 'Registrasi berhasil dilakukan',
+                    confirmButtonText: 'OK'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        window.location.href = '/admin/login';
+                    }
+                });
             } else {
                 console.log('Registration failed:', data.errors || data.message);
                 // Handle validation errors
                 if (data.errors) {
+                    // Jika ada error email duplikat
+                    if (data.errors.email) {
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Oops...',
+                            text: 'Email sudah terdaftar!',
+                            confirmButtonText: 'OK'
+                        });
+                    }
+                    
                     Object.entries(data.errors).forEach(([field, messages]) => {
                         console.log(`Error for ${field}:`, messages);
                         const input = form.querySelector(`[name="${field}"]`);
@@ -72,15 +91,12 @@
                 message: error.message,
                 stack: error.stack
             });
-            alert('Terjadi kesalahan saat mengirim data. Silakan coba lagi.');
+            Swal.fire({
+                icon: 'error',
+                title: 'Error!',
+                text: 'Terjadi kesalahan saat mengirim data. Silakan coba lagi.',
+                confirmButtonText: 'OK'
+            });
         }
     });
-
-    function closePopup() {
-        document.getElementById('popupOverlay').style.display = 'none';
-    }
-
-    function goToLogin() {
-        window.location.href = '/admin/login';
-    }
 </script>

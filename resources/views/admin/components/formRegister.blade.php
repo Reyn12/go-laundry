@@ -36,6 +36,8 @@
             placeholder="Nomor Telepon"
             name="phone"
             class="w-full p-4 rounded-xl border-2 border-gray-100 bg-gray-50 focus:bg-white focus:border-blue-500 transition-all duration-200 outline-none text-gray-700"
+            oninput="this.value = this.value.replace(/[^0-9]/g, '')"
+            maxlength="15"
         />
         <span class="error-message">Nomor Telepon harus diisi</span>
 

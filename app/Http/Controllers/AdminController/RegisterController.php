@@ -24,9 +24,11 @@ class RegisterController extends Controller
                 'fullName' => 'required|string|max:255',
                 'username' => 'required|string|max:255|unique:users',
                 'email' => 'required|string|email|max:255|unique:users',
-                'phone' => 'required|string|max:15',
+                'phone' => ['required', 'string', 'max:15', 'regex:/^[0-9]+$/'],
                 'address' => 'required|string|max:255',
                 'password' => 'required|string|min:8|confirmed',
+            ], [
+                'phone.regex' => 'Nomor telepon hanya boleh berisi angka'
             ]);
 
             Log::info('Validation passed, creating user');
