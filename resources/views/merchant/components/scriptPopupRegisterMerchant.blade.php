@@ -1,4 +1,4 @@
-<script>
+{{-- <script>
     const form = document.getElementById('signupForm');
 
     // Fungsi validasi
@@ -69,4 +69,4 @@
             showPopup();
         }
     });
-</script>
+</script> --}}

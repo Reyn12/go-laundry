@@ -128,6 +128,8 @@ Route::prefix('merchant')->group(function () {
     
     //Merchant register 
     Route::get('/register', [RegisterMerchantController::class, 'index'])->name('merchant.register');
+    Route::post('/register', [RegisterMerchantController::class, 'store'])->name('merchant.register.store');
+    
 
     //Profile Route
     Route::get('/profile', [ProfileMerchantController::class, 'index'])->name('merchant.profile');

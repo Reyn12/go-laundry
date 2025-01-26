@@ -5,6 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Form Daftar Kemitraan</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 <body class="bg-gray-300">
     <div class="w-full md:w-2/3 bg-gray-300 flex items-center justify-center">
@@ -16,8 +18,8 @@
                     <a href="/merchant/login" class="text-blue-600 hover:text-blue-700 font-medium transition-colors">Log In</a>
                 </p>
             </div>
-            <form id="signupForm" class="space-y-5 w-full text-center text-gray-800">
-                
+            <form action="{{ route('merchant.register.store') }}" method="POST" id="signupForm" class="space-y-5 w-full text-center text-gray-800">
+                @csrf
                 <!-- Nama Laundry -->
                 <div class="relative">
                     <input
@@ -73,7 +75,7 @@
                     <input
                         type="password"
                         placeholder="Konfirmasi Password"
-                        name="confirmPassword"
+                        name="password_confirmation"
                         class="w-full p-3 rounded-lg border border-gray-300 bg-gray-100 text-gray-900 outline-none focus:ring-2 focus:ring-blue-500"
                     />
                 </div>
@@ -162,12 +164,70 @@
                 <!-- Tombol Submit -->
                 <button
                     type="submit"
-                    class="w-full bg-blue-700 hover:bg-blue-500 text-white font-semibold p-3 rounded-lg transition duration-200 shadow-lg h-20 text-2xl"
+                    class="w-full bg-blue-600 text-white py-3 rounded-lg hover:bg-blue-700 transition-colors"
                 >
                     BUAT AKUN
                 </button>
             </form>
         </div>
     </div>
+
+    <script>
+        $(document).ready(function() {
+            $('#signupForm').on('submit', function(e) {
+                e.preventDefault();
+                
+                // Log form data
+                console.log('Form data:', $(this).serialize());
+                
+                $.ajax({
+                    url: "{{ route('merchant.register.store') }}",
+                    type: "POST",
+                    data: $(this).serialize(),
+                    success: function(response) {
+                        console.log('Success response:', response);
+                        if(response.success) {
+                            Swal.fire({
+                                icon: 'success',
+                                title: 'Berhasil!',
+                                text: 'Proses pengajuan pembukaan toko kamu sedang kami proses ya',
+                                showCancelButton: true,
+                                confirmButtonText: 'Login Sekarang',
+                                cancelButtonText: 'Kembali',
+                            }).then((result) => {
+                                if (result.isConfirmed) {
+                                    window.location.href = '/merchant/login';
+                                }
+                            });
+                        }
+                    },
+                    error: function(xhr, status, error) {
+                        console.log('Error response:', xhr.responseJSON);
+                        console.log('Status:', status);
+                        console.log('Error:', error);
+                        
+                        let errorMessage = '';
+                        
+                        if (xhr.responseJSON && xhr.responseJSON.errors) {
+                            let errors = xhr.responseJSON.errors;
+                            for(let key in errors) {
+                                errorMessage += errors[key][0] + '<br>';
+                            }
+                        } else if (xhr.responseJSON && xhr.responseJSON.message) {
+                            errorMessage = xhr.responseJSON.message;
+                        } else {
+                            errorMessage = 'Terjadi kesalahan saat registrasi. Silakan coba lagi.';
+                        }
+                        
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Oops...',
+                            html: errorMessage
+                        });
+                    }
+                });
+            });
+        });
+    </script>
 </body>
 </html>
