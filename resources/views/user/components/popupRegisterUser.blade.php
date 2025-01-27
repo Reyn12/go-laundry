@@ -1,3 +1,5 @@
+{{-- Popup bawaan di-comment dulu karena pake SweetAlert --}}
+{{-- 
 <div id="popupOverlay" class="popup-overlay">
     <div class="popup-content">
         <div class="success-icon">
@@ -16,3 +18,4 @@
         </div>
     </div>
 </div>
+--}}

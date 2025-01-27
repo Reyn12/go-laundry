@@ -126,7 +126,7 @@
             Swal.fire({
                 icon: 'error',
                 title: 'Oops...',
-                text: 'Please accept the terms & conditions'
+                text: 'Kamu harus menyetujui syarat & ketentuan'
             });
         }
         
@@ -165,6 +165,12 @@
         phoneInput.value = numbersOnly;
     });
 
+    // Event listener untuk link syarat & ketentuan
+    document.querySelector('[data-bs-toggle="modal"]').addEventListener('click', function(e) {
+        e.preventDefault();
+        $('#syaratKetentuanModal').modal('show');
+    });
+
     // Event listener untuk form submission
     form.addEventListener('submit', function(e) {
         e.preventDefault();
@@ -187,9 +193,9 @@
                     if (response.success) {
                         Swal.fire({
                             icon: 'success',
-                            title: 'Success!',
-                            text: 'Registration successful! Please login.',
-                            confirmButtonText: 'Login Now'
+                            title: 'Berhasil!',
+                            text: 'Akun kamu berhasil dibuat, silakan login.',
+                            confirmButtonText: 'Login Sekarang'
                         }).then((result) => {
                             if (result.isConfirmed) {
                                 window.location.href = '/user/login';
@@ -200,7 +206,7 @@
                         Swal.fire({
                             icon: 'error',
                             title: 'Oops...',
-                            text: response.message || 'Registration failed'
+                            text: response.message || 'Registrasi gagal'
                         });
                     }
                 },
@@ -233,7 +239,7 @@
                             const firstErrorField = Object.keys(xhr.responseJSON.errors)[0];
                             const input = form.querySelector(`input[name="${firstErrorField}"]`);
                             if (input) {
-                                showTooltip(input, 'Please fill out this field');
+                                showTooltip(input, xhr.responseJSON.errors[firstErrorField][0]);
                                 input.focus();
                             }
                         }
@@ -241,7 +247,7 @@
                         Swal.fire({
                             icon: 'error',
                             title: 'Oops...',
-                            text: 'Registration failed'
+                            text: 'Registrasi gagal'
                         });
                     }
                 }
@@ -251,6 +257,7 @@
 
     function closePopup() {
         document.getElementById('popupOverlay').style.display = 'none';
+        form.reset();
     }
 
     function goToLogin() {
@@ -294,3 +301,62 @@
         }
     }
 </style>
+
+<!-- Modal Syarat dan Ketentuan User -->
+<div class="modal fade" id="syaratKetentuanModal" tabindex="-1" aria-labelledby="syaratKetentuanModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title font-bold text-xl" id="syaratKetentuanModalLabel">Syarat dan Ketentuan Pengguna</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body space-y-6">
+                <div>
+                    <h6 class="font-bold text-lg mb-3 text-blue-600">1. Layanan</h6>
+                    <ul class="list-disc pl-5 space-y-2 text-gray-700">
+                        <li>Kami menyediakan layanan laundry dengan standar profesional</li>
+                        <li>Estimasi waktu pengerjaan 2-3 hari kerja</li>
+                        <li>Pengambilan dan pengantaran sesuai dengan jadwal yang disepakati</li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h6 class="font-bold text-lg mb-3 text-blue-600">2. Tanggung Jawab</h6>
+                    <ul class="list-disc pl-5 space-y-2 text-gray-700">
+                        <li>Kami bertanggung jawab atas kehilangan atau kerusakan pakaian selama proses laundry</li>
+                        <li>Ganti rugi maksimal 5x biaya laundry untuk kerusakan yang terbukti kesalahan kami</li>
+                        <li>Mohon periksa barang sebelum meninggalkan outlet</li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h6 class="font-bold text-lg mb-3 text-blue-600">3. Pembayaran</h6>
+                    <ul class="list-disc pl-5 space-y-2 text-gray-700">
+                        <li>Pembayaran dilakukan setelah proses laundry selesai</li>
+                        <li>Kami menerima pembayaran tunai dan transfer bank</li>
+                        <li>Harga sesuai dengan berat dan jenis layanan yang dipilih</li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h6 class="font-bold text-lg mb-3 text-blue-600">4. Privasi</h6>
+                    <ul class="list-disc pl-5 space-y-2 text-gray-700">
+                        <li>Data pribadi Anda akan dijaga kerahasiaannya</li>
+                        <li>Kami tidak akan menyebarkan informasi Anda ke pihak ketiga</li>
+                        <li>Anda setuju menerima notifikasi terkait layanan kami</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="px-4 py-2 bg-gray-200 text-gray-700 rounded-lg hover:bg-gray-300 transition-colors" data-bs-dismiss="modal">Tutup</button>
+                <button type="button" class="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors" data-bs-dismiss="modal" onclick="setujuSyarat()">Setuju</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    function setujuSyarat() {
+        document.getElementById('checkboxSyarat').checked = true;
+    }
+</script>
