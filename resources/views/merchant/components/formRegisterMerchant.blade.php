@@ -161,11 +161,132 @@
 
                 <!-- Syarat dan Ketentuan -->
                 <div class="text-left">
-                    <label class="flex items-center">
-                        <input type="checkbox" name="terms" class="mr-2">
-                        Saya menyetujui <a href="#" class="text-blue-600 hover:underline">syarat & ketentuan</a>
-                    </label>
+                    <div class="form-check mb-3">
+                        <input class="form-check-input" type="checkbox" id="agreement" name="agreement" required>
+                        <label class="form-check-label" for="agreement">
+                            Saya menyetujui <a href="#" class="text-primary" data-modal-trigger>syarat & ketentuan</a>
+                        </label>
+                    </div>
                     <span class="text-red-500 text-sm hidden terms-error">Anda harus menyetujui syarat dan ketentuan</span>
+                </div>
+
+                <!-- Modal backdrop -->
+                <div id="modal-backdrop" class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity hidden"></div>
+
+                <!-- Modal -->
+                <div id="termsModal" class="fixed z-10 inset-0 overflow-y-auto hidden" aria-labelledby="modal-title" role="dialog" aria-modal="true">
+                    <div class="flex items-end sm:items-center justify-center min-h-full p-4 text-center sm:p-0">
+                        <div class="relative bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:max-w-lg sm:w-full">
+                            <div class="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
+                                <div class="sm:flex sm:items-start">
+                                    <div class="mt-3 text-center sm:mt-0 sm:text-left w-full">
+                                        <h3 class="text-lg leading-6 font-bold text-gray-900" id="modal-title">
+                                            Syarat dan Ketentuan Merchant
+                                        </h3>
+                                        <div class="mt-4 max-h-[60vh] overflow-y-auto">
+                                            <div class="space-y-4">
+                                                <div>
+                                                    <h4 class="text-blue-600 font-semibold">1. Identitas dan Legalitas</h4>
+                                                    <ul class="mt-2 space-y-2 text-gray-600">
+                                                        <li class="flex items-start">
+                                                            <span class="text-blue-600 mr-2">•</span>
+                                                            <span>Merchant wajib memberikan data yang valid dan benar</span>
+                                                        </li>
+                                                        <li class="flex items-start">
+                                                            <span class="text-blue-600 mr-2">•</span>
+                                                            <span>Memiliki KTP yang masih berlaku</span>
+                                                        </li>
+                                                        <li class="flex items-start">
+                                                            <span class="text-blue-600 mr-2">•</span>
+                                                            <span>Memiliki tempat usaha yang tetap</span>
+                                                        </li>
+                                                        <li class="flex items-start">
+                                                            <span class="text-blue-600 mr-2">•</span>
+                                                            <span>Bersedia diverifikasi oleh tim kami</span>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                                
+                                                <div>
+                                                    <h4 class="text-blue-600 font-semibold">2. Operasional</h4>
+                                                    <ul class="mt-2 space-y-2 text-gray-600">
+                                                        <li class="flex items-start">
+                                                            <span class="text-blue-600 mr-2">•</span>
+                                                            <span>Berkomitmen memberikan layanan berkualitas sesuai standar</span>
+                                                        </li>
+                                                        <li class="flex items-start">
+                                                            <span class="text-blue-600 mr-2">•</span>
+                                                            <span>Mengikuti standar kebersihan dan kehigienisan dalam proses laundry</span>
+                                                        </li>
+                                                        <li class="flex items-start">
+                                                            <span class="text-blue-600 mr-2">•</span>
+                                                            <span>Menjaga ketepatan waktu pengerjaan sesuai estimasi yang diberikan</span>
+                                                        </li>
+                                                        <li class="flex items-start">
+                                                            <span class="text-blue-600 mr-2">•</span>
+                                                            <span>Bertanggung jawab atas kerusakan/kehilangan barang pelanggan</span>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+
+                                                <div>
+                                                    <h4 class="text-blue-600 font-semibold">3. Keuangan</h4>
+                                                    <ul class="mt-2 space-y-2 text-gray-600">
+                                                        <li class="flex items-start">
+                                                            <span class="text-blue-600 mr-2">•</span>
+                                                            <span>Menyetujui sistem pembagian komisi yang berlaku di platform</span>
+                                                        </li>
+                                                        <li class="flex items-start">
+                                                            <span class="text-blue-600 mr-2">•</span>
+                                                            <span>Tidak membebankan biaya tambahan di luar ketentuan platform</span>
+                                                        </li>
+                                                        <li class="flex items-start">
+                                                            <span class="text-blue-600 mr-2">•</span>
+                                                            <span>Menerima pembayaran sesuai sistem yang disediakan platform</span>
+                                                        </li>
+                                                        <li class="flex items-start">
+                                                            <span class="text-blue-600 mr-2">•</span>
+                                                            <span>Bersedia memberikan ganti rugi sesuai kebijakan yang berlaku</span>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+
+                                                <div>
+                                                    <h4 class="text-blue-600 font-semibold">4. Penggunaan Platform</h4>
+                                                    <ul class="mt-2 space-y-2 text-gray-600">
+                                                        <li class="flex items-start">
+                                                            <span class="text-blue-600 mr-2">•</span>
+                                                            <span>Menjaga kerahasiaan akun dan data pelanggan</span>
+                                                        </li>
+                                                        <li class="flex items-start">
+                                                            <span class="text-blue-600 mr-2">•</span>
+                                                            <span>Tidak menyalahgunakan platform untuk hal-hal yang melanggar hukum</span>
+                                                        </li>
+                                                        <li class="flex items-start">
+                                                            <span class="text-blue-600 mr-2">•</span>
+                                                            <span>Mengikuti panduan penggunaan aplikasi yang ditetapkan</span>
+                                                        </li>
+                                                        <li class="flex items-start">
+                                                            <span class="text-blue-600 mr-2">•</span>
+                                                            <span>Bersedia menerima dan menanggapi pesanan sesuai jam operasional</span>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
+                                <button type="button" id="agreeButton" class="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-blue-600 text-base font-medium text-white hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 sm:ml-3 sm:w-auto sm:text-sm">
+                                    Setuju
+                                </button>
+                                <button type="button" id="closeModal" class="mt-3 w-full inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm">
+                                    Tutup
+                                </button>
+                            </div>
+                        </div>
+                    </div>
                 </div>
 
                 <!-- Tombol Submit -->

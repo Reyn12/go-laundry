@@ -72,4 +72,40 @@
     $('input[name="phone"]').on('input', function() {
         this.value = this.value.replace(/[^0-9]/g, '');
     });
+
+    // Event untuk membuka modal syarat dan ketentuan
+    $('#showTerms').on('click', function(e) {
+        e.preventDefault();
+        $('#termsModal').modal('show');
+    });
+
+    // Event untuk menutup modal syarat dan ketentuan
+    // Show modal
+    document.querySelector('[data-modal-trigger]').addEventListener('click', function(e) {
+                        e.preventDefault();
+                        document.getElementById('modal-backdrop').classList.remove('hidden');
+                        document.getElementById('termsModal').classList.remove('hidden');
+                    });
+
+                    // Hide modal
+                    function hideModal() {
+                        document.getElementById('modal-backdrop').classList.add('hidden');
+                        document.getElementById('termsModal').classList.add('hidden');
+                    }
+
+                    // Close button
+                    document.getElementById('closeModal').addEventListener('click', hideModal);
+
+                    // Agree button
+                    document.getElementById('agreeButton').addEventListener('click', function() {
+                        document.getElementById('agreement').checked = true;
+                        hideModal();
+                    });
+
+                    // Close when clicking outside
+                    document.getElementById('termsModal').addEventListener('click', function(e) {
+                        if (e.target === this) {
+                            hideModal();
+                        }
+                    });
 </script>
