@@ -1,209 +1,164 @@
 <script>
-    const form = document.getElementById('signupForm');
-    const errorMessages = form.querySelectorAll('.error-message');
-    const submitButton = form.querySelector('button[type="submit"]');
-
-    // Fungsi untuk menampilkan error message
-    function showError(input, message) {
-        const errorDiv = input.nextElementSibling;
-        if (errorDiv && errorDiv.classList.contains('error-message')) {
-            errorDiv.textContent = message;
-            errorDiv.style.display = 'block';
-            errorDiv.style.color = '#dc2626';
-            errorDiv.style.fontSize = '0.875rem';
-            input.classList.add('border-red-500');
+    // Setup CSRF token untuk semua request AJAX
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
         }
-    }
-
-    // Fungsi untuk menghapus error message
-    function clearError(input) {
-        const errorDiv = input.nextElementSibling;
-        if (errorDiv && errorDiv.classList.contains('error-message')) {
-            errorDiv.textContent = '';
-            errorDiv.style.display = 'none';
-            input.classList.remove('border-red-500');
-        }
-    }
-
-    // Reset semua error messages
-    function resetErrors() {
-        form.querySelectorAll('input').forEach(input => {
-            clearError(input);
-        });
-    }
-
-    // Fungsi untuk mengecek apakah form valid
-    function validateForm() {
-        let isValid = true;
-        
-        // Reset error messages
-        resetErrors();
-
-        // Cek apakah semua field required terisi
-        const requiredInputs = form.querySelectorAll('input[required]');
-        const allFieldsFilled = Array.from(requiredInputs).every(input => {
-            if (input.type === 'checkbox') return input.checked;
-            return input.value.trim() !== '';
-        });
-
-        // Validasi email format
-        const emailInput = form.querySelector('input[type="email"]');
-        if (emailInput && emailInput.value.trim()) {
-            const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-            if (!emailPattern.test(emailInput.value)) {
-                isValid = false;
-                showError(emailInput, 'Format email tidak valid');
-            }
-        }
-
-        // Validasi konfirmasi password
-        const passwordInput = form.querySelector('input[name="password"]');
-        const confirmPasswordInput = form.querySelector('input[name="password_confirmation"]');
-        if (confirmPasswordInput && confirmPasswordInput.value.trim() && 
-            passwordInput && passwordInput.value.trim()) {
-            if (confirmPasswordInput.value !== passwordInput.value) {
-                isValid = false;
-                showError(confirmPasswordInput, 'Password tidak cocok');
-            }
-        }
-
-        // Validasi checkbox terms
-        const termsCheckbox = form.querySelector('input[name="terms"]');
-        if (termsCheckbox && !termsCheckbox.checked) {
-            isValid = false;
-        }
-
-        // Aktifkan/nonaktifkan tombol submit
-        const formIsValid = isValid && allFieldsFilled;
-        submitButton.disabled = !formIsValid;
-        submitButton.style.opacity = formIsValid ? '1' : '0.5';
-        submitButton.style.cursor = formIsValid ? 'pointer' : 'not-allowed';
-        
-        return formIsValid;
-    }
-
-    // Event listener untuk semua input
-    form.querySelectorAll('input').forEach(input => {
-        ['input', 'change'].forEach(eventType => {
-            input.addEventListener(eventType, validateForm);
-        });
     });
 
-    // Event listener untuk input email
-    const emailInput = form.querySelector('input[type="email"]');
-    if (emailInput) {
-        emailInput.addEventListener('input', () => {
-            if (emailInput.value.trim()) {
-                const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-                if (!emailPattern.test(emailInput.value)) {
-                    showError(emailInput, 'Format email tidak valid');
-                } else {
-                    clearError(emailInput);
-                }
-            } else {
-                clearError(emailInput);
-            }
-            validateForm();
+    const form = document.getElementById('signupForm');
+    
+    // Fungsi untuk memeriksa validitas form
+    function validateForm() {
+        const inputs = {
+            fullname: form.querySelector('input[name="fullName"]'),
+            username: form.querySelector('input[name="username"]'),
+            email: form.querySelector('input[name="email"]'),
+            phone: form.querySelector('input[name="phone"]'),
+            address: form.querySelector('input[name="address"]'),
+            password: form.querySelector('input[name="password"]'),
+            confirmPassword: form.querySelector('input[name="password_confirmation"]'),
+            terms: form.querySelector('input[name="terms"]')
+        };
+        
+        let isValid = true;
+        
+        // Reset semua pesan error
+        form.querySelectorAll('.error-message').forEach(msg => {
+            msg.style.display = 'none';
         });
-    }
+        
+        // Validasi nama lengkap
+        if (!inputs.fullname.value.trim()) {
+            isValid = false;
+            inputs.fullname.nextElementSibling.style.display = 'block';
+            inputs.fullname.classList.add('border-red-500');
+        } else {
+            inputs.fullname.classList.remove('border-red-500');
+        }
 
-    // Event listener untuk konfirmasi password
-    const confirmPasswordInput = form.querySelector('input[name="password_confirmation"]');
-    const passwordInput = form.querySelector('input[name="password"]');
-    if (confirmPasswordInput && passwordInput) {
-        [confirmPasswordInput, passwordInput].forEach(input => {
-            input.addEventListener('input', () => {
-                if (confirmPasswordInput.value && passwordInput.value &&
-                    confirmPasswordInput.value !== passwordInput.value) {
-                    showError(confirmPasswordInput, 'Password tidak cocok');
-                } else {
-                    clearError(confirmPasswordInput);
-                }
-                validateForm();
+        // Validasi username
+        if (!inputs.username.value.trim()) {
+            isValid = false;
+            inputs.username.nextElementSibling.style.display = 'block';
+            inputs.username.classList.add('border-red-500');
+        } else {
+            inputs.username.classList.remove('border-red-500');
+        }
+        
+        // Validasi email
+        const emailRegex = /^[a-zA-Z0-9._%+-]+@gmail\.com$/i;
+        if (!inputs.email.value.trim() || !emailRegex.test(inputs.email.value)) {
+            isValid = false;
+            inputs.email.nextElementSibling.style.display = 'block';
+            inputs.email.nextElementSibling.textContent = 'Email harus menggunakan domain @gmail.com';
+            inputs.email.classList.add('border-red-500');
+        } else {
+            inputs.email.classList.remove('border-red-500');
+        }
+
+        // Validasi nomor telepon
+        if (!inputs.phone.value.trim()) {
+            isValid = false;
+            inputs.phone.nextElementSibling.style.display = 'block';
+            inputs.phone.classList.add('border-red-500');
+        } else {
+            inputs.phone.classList.remove('border-red-500');
+        }
+
+        // Validasi alamat
+        if (!inputs.address.value.trim()) {
+            isValid = false;
+            inputs.address.nextElementSibling.style.display = 'block';
+            inputs.address.classList.add('border-red-500');
+        } else {
+            inputs.address.classList.remove('border-red-500');
+        }
+        
+        // Validasi password
+        if (!inputs.password.value || inputs.password.value.length < 8) {
+            isValid = false;
+            inputs.password.nextElementSibling.style.display = 'block';
+            inputs.password.classList.add('border-red-500');
+        } else {
+            inputs.password.classList.remove('border-red-500');
+        }
+        
+        // Validasi konfirmasi password
+        if (!inputs.confirmPassword.value || inputs.confirmPassword.value !== inputs.password.value) {
+            isValid = false;
+            inputs.confirmPassword.nextElementSibling.style.display = 'block';
+            inputs.confirmPassword.classList.add('border-red-500');
+        } else {
+            inputs.confirmPassword.classList.remove('border-red-500');
+        }
+        
+        // Validasi terms
+        if (!inputs.terms.checked) {
+            isValid = false;
+            Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: 'Anda harus menyetujui syarat & ketentuan'
             });
-        });
+        }
+        
+        return isValid;
     }
 
     // Event listener untuk form submission
-    form.addEventListener('submit', async function(e) {
+    form.addEventListener('submit', function(e) {
         e.preventDefault();
         
-        if (!validateForm()) {
-            return;
-        }
-
-        try {
-            console.log('Form submission started');
+        if (validateForm()) {
+            // Disable tombol submit
+            const submitButton = form.querySelector('button[type="submit"]');
+            submitButton.disabled = true;
             
-            // Log form data (kecuali password)
+            // Kirim data ke server
             const formData = new FormData(form);
-            const formDataLog = {};
-            formData.forEach((value, key) => {
-                if (!key.includes('password')) {
-                    formDataLog[key] = value;
-                }
-            });
-            console.log('Form data:', formDataLog);
-
-            // Kirim data form menggunakan AJAX
-            console.log('Sending request to:', form.action);
-            const response = await fetch(form.action, {
-                method: 'POST',
-                body: formData,
-                headers: {
-                    'X-CSRF-TOKEN': document.querySelector('input[name="_token"]').value
-                }
-            });
-
-            console.log('Response status:', response.status);
-            const data = await response.json();
-            console.log('Response data:', data);
-
-            if (data.success) {
-                console.log('Registration successful');
-                // Tampilkan popup sukses dengan SweetAlert2
-                Swal.fire({
-                    icon: 'success',
-                    title: 'Berhasil!',
-                    text: 'Registrasi berhasil dilakukan',
-                    confirmButtonText: 'OK'
-                }).then((result) => {
-                    if (result.isConfirmed) {
-                        window.location.href = '/admin/login';
-                    }
-                });
-            } else {
-                console.log('Registration failed:', data.errors || data.message);
-                // Handle validation errors
-                if (data.errors) {
-                    // Jika ada error email duplikat
-                    if (data.errors.email) {
-                        showError(emailInput, 'Email sudah terdaftar');
+            
+            $.ajax({
+                url: '{{ route("admin.register.submit") }}',
+                type: 'POST',
+                data: formData,
+                processData: false,
+                contentType: false,
+                success: function(response) {
+                    if (response.success) {
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'Berhasil!',
+                            text: 'Registrasi berhasil! Silahkan hubungi super admin untuk aktivasi akun.',
+                            confirmButtonText: 'Login Sekarang'
+                        }).then((result) => {
+                            if (result.isConfirmed) {
+                                window.location.href = '/admin/login';
+                            }
+                        });
+                    } else {
+                        submitButton.disabled = false;
                         Swal.fire({
                             icon: 'error',
                             title: 'Oops...',
-                            text: 'Email sudah terdaftar!',
-                            confirmButtonText: 'OK'
+                            text: response.message || 'Terjadi kesalahan saat registrasi'
                         });
                     }
-
-                    // Jika ada error username duplikat
-                    if (data.errors.username) {
-                        const usernameInput = form.querySelector('input[name="username"]');
-                        showError(usernameInput, 'Username sudah digunakan');
+                },
+                error: function(xhr) {
+                    submitButton.disabled = false;
+                    let errorMessage = 'Terjadi kesalahan saat registrasi';
+                    
+                    if (xhr.responseJSON && xhr.responseJSON.errors) {
+                        errorMessage = Object.values(xhr.responseJSON.errors)[0][0];
                     }
+                    
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Oops...',
+                        text: errorMessage
+                    });
                 }
-            }
-        } catch (error) {
-            console.error('Error details:', {
-                message: error.message,
-                stack: error.stack
-            });
-            Swal.fire({
-                icon: 'error',
-                title: 'Error!',
-                text: 'Terjadi kesalahan saat mengirim data. Silakan coba lagi.',
-                confirmButtonText: 'OK'
             });
         }
     });

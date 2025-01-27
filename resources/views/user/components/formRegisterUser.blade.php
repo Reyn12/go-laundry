@@ -1,22 +1,21 @@
 <form id="signupForm" class="space-y-5" novalidate>
+    @csrf
     <div class="relative">
-            <input
-                type="text"
-                placeholder="Nama Lengkap"
-                name="fullName"
-                class="w-full p-4 rounded-xl border-2 border-gray-100 bg-gray-50 focus:bg-white focus:border-blue-500 transition-all duration-200 outline-none text-gray-700"
-            />
-            <span class="error-message">Nama Lengkap harus diisi</span>
+        <input
+            type="text"
+            placeholder="Nama Lengkap"
+            name="fullName"
+            class="w-full p-4 rounded-xl border-2 border-gray-100 bg-gray-50 focus:bg-white focus:border-blue-500 transition-all duration-200 outline-none text-gray-700"
+        />
     </div>
         
     <div class="relative">
-            <input
-                type="text"
-                placeholder="Username"
-                name="username"
-                class="w-full p-4 rounded-xl border-2 border-gray-100 bg-gray-50 focus:bg-white focus:border-blue-500 transition-all duration-200 outline-none text-gray-700"
-            />
-            <span class="error-message">Username harus diisi</span>
+        <input
+            type="text"
+            placeholder="Username"
+            name="username"
+            class="w-full p-4 rounded-xl border-2 border-gray-100 bg-gray-50 focus:bg-white focus:border-blue-500 transition-all duration-200 outline-none text-gray-700"
+        />
     </div>
     
     <div class="relative">
@@ -26,18 +25,16 @@
             name="email"
             class="w-full p-4 rounded-xl border-2 border-gray-100 bg-gray-50 focus:bg-white focus:border-blue-500 transition-all duration-200 outline-none text-gray-700"
         />
-        <span class="error-message">Email harus diisi dengan format yang benar</span>
     </div>
 
     <div class="relative">
         <input
-            type="text"
+            type="tel"
             placeholder="Nomor Telepon"
             name="phone"
+            pattern="[0-9]*"
             class="w-full p-4 rounded-xl border-2 border-gray-100 bg-gray-50 focus:bg-white focus:border-blue-500 transition-all duration-200 outline-none text-gray-700"
         />
-        <span class="error-message">Nomor Telepon harus diisi</span>
-
     </div>
 
     <div class="relative">
@@ -47,7 +44,6 @@
             name="address"
             class="w-full p-4 rounded-xl border-2 border-gray-100 bg-gray-50 focus:bg-white focus:border-blue-500 transition-all duration-200 outline-none text-gray-700"
         />
-        <span class="error-message">Alamat harus diisi</span>
     </div>
 
     <div class="relative">
@@ -57,17 +53,15 @@
             name="password"
             class="w-full p-4 rounded-xl border-2 border-gray-100 bg-gray-50 focus:bg-white focus:border-blue-500 transition-all duration-200 outline-none text-gray-700"
         />
-        <span class="error-message">Password minimal 8 karakter</span>
     </div>
     
     <div class="relative">
         <input
             type="password"
             placeholder="Konfirmasi Password"
-            name="confirmPassword"
+            name="password_confirmation"
             class="w-full p-4 rounded-xl border-2 border-gray-100 bg-gray-50 focus:bg-white focus:border-blue-500 transition-all duration-200 outline-none text-gray-700"
         />
-        <span class="error-message">Password tidak cocok</span>
     </div>
 
     <div class="flex items-center">

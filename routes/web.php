@@ -86,8 +86,9 @@ Route::prefix('user')->group(function () {
     
     Route::get('/dashboard', [DashboardUserController::class, 'index'])->name('user.dashboard');
     
-    //Admin register 
+    // User register routes
     Route::get('/register', [RegisterUserController::class, 'index'])->name('user.register');
+    Route::post('/register', [RegisterUserController::class, 'store'])->name('user.register.submit');
 
     //Pencarian Route
     Route::get('/pencarian', [UserPencarianController::class, 'index'])->name('user.pencarian');

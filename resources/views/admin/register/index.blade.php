@@ -3,8 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>Laundry Service Signup</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/lucide/0.263.1/lucide.min.js"></script>
     <link href="https://fonts.googleapis.com/css2?family=Lato:wght@400;700&display=swap" rel="stylesheet">
     <style>
@@ -12,7 +15,7 @@
             font-family: 'Lato', sans-serif;
         }
         .bg-primary {
-        background-color: #0039C9;
+            background-color: #0039C9;
         }
 
         .text-primary {
@@ -21,8 +24,6 @@
     </style>
     {{-- Styles Untuk Register Admin --}}
     @include('admin.components.registerAdminStyles')
-    {{-- Di bagian head, tambahkan CDN SweetAlert2 --}}
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 <body>
     <div class="flex min-h-screen">
@@ -37,6 +38,8 @@
             </div>
         </div>
     </div>
+
+    {{-- Load jQuery dan SweetAlert dulu sebelum script kita --}}
     {{-- Script Validasi dan Popup --}}
     @include('admin.components.scriptPopupRegisterAdmin')
     <script>

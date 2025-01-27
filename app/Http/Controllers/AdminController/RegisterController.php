@@ -23,12 +23,13 @@ class RegisterController extends Controller
             $validated = $request->validate([
                 'fullName' => 'required|string|max:255',
                 'username' => 'required|string|max:255|unique:users',
-                'email' => 'required|string|email|max:255|unique:users',
+                'email' => ['required', 'string', 'email', 'max:255', 'unique:users', 'regex:/^[a-zA-Z0-9._%+-]+@gmail\.com$/i'],
                 'phone' => ['required', 'string', 'max:15', 'regex:/^[0-9]+$/'],
                 'address' => 'required|string|max:255',
                 'password' => 'required|string|min:8|confirmed',
             ], [
-                'phone.regex' => 'Nomor telepon hanya boleh berisi angka'
+                'phone.regex' => 'Nomor telepon hanya boleh berisi angka',
+                'email.regex' => 'Email harus menggunakan domain @gmail.com'
             ]);
 
             Log::info('Validation passed, creating user');

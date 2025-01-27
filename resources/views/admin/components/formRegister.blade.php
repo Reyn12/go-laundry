@@ -1,4 +1,4 @@
-<form id="signupForm" class="space-y-5" action="{{ route('admin.register.submit') }}" method="POST" novalidate>
+<form id="signupForm" class="space-y-4">
     @csrf
     <div class="relative">
             <input
