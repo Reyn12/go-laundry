@@ -29,7 +29,7 @@
                 <!-- Form section -->
                 @include('merchant.components.formRegisterMerchant')
                 <!-- Popup Overlay -->
-                @include('merchant.components.popupRegisterMerchant')
+                {{-- @include('merchant.components.popupRegisterMerchant') --}}
             </div>
         </div>
     </div>
