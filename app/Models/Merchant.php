@@ -23,6 +23,7 @@ class Merchant extends Model
         'deskripsi',
         'no_hp',
         'email',
+        'jam_operasional',
         'latitude',
         'longitude',
         'created_at',

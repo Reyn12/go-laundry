@@ -49,8 +49,11 @@ Route::prefix('admin')->group(function () {
         return view('admin.login.index');
     })->name('admin.login');
     Route::post('/login', [LoginController::class, 'login']);
-    Route::get('/register', [RegisterController::class, 'index'])->name('admin.register');
 
+    // Admin Register
+    Route::get('/register', [RegisterController::class, 'index'])->name('admin.register');
+    Route::post('/register', [RegisterController::class, 'store'])->name('admin.register.submit');
+    
     // Protected routes (perlu login dan role admin)
     Route::middleware(['auth', 'admin'])->group(function () {
         // Logout route
@@ -82,9 +85,10 @@ Route::prefix('user')->group(function () {
     // Dashboard route
 
     Route::get('/dashboard', [DashboardUserController::class, 'index'])->name('user.dashboard');
-
+    
     //Admin register 
     Route::get('/register', [RegisterUserController::class, 'index'])->name('user.register');
+    Route::post('/register', [RegisterUserController::class, 'store'])->name('user.register.submit');
 
     //Pencarian Route
     Route::get('/pencarian', [UserPencarianController::class, 'index'])->name('user.pencarian');
@@ -113,16 +117,18 @@ Route::prefix('merchant')->group(function () {
         return view('merchant.login.index');
     });
     Route::post('/login', [LoginMerchantController::class, 'login']);
-
+    
     // Dashboard route
     Route::get('/dashboard', [DashboardMerchantController::class, 'index'])->name('merchant.dashboard');
-
+    
     //Merchant register 
     Route::get('/register', [RegisterMerchantController::class, 'index'])->name('merchant.register');
+    Route::post('/register', [RegisterMerchantController::class, 'store'])->name('merchant.register.submit');
+
 
     //Profile Route
-    Route::get('/profile', [ProfileMerchantController::class, 'index'])->name('merchant.profile');
+        Route::get('/profile', [ProfileMerchantController::class, 'index'])->name('merchant.profile');
 
-    //KelolaLayanan Route
-    Route::get('/kelolalayanan', [KelolaLayananMerchantController::class, 'index'])->name('merchant.kelolalayanan');
+     //KelolaLayanan Route
+     Route::get('/kelolalayanan', [KelolaLayananMerchantController::class, 'index'])->name('merchant.kelolalayanan');
 });
