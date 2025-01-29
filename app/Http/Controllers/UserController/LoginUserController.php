@@ -12,10 +12,6 @@ class LoginUserController extends Controller
 {
     public function login_proses(Request $request)
     {
-        Log::info(request()->all()); // Tambahkan ini untuk mencatat semua data yang diterima
-        // Log debug input request
-        Log::debug('Login proses dimulai', ['input' => $request->all()]);
-
         // Validasi input
         $credentials = $request->validate([
             'username' => 'required|string',
@@ -23,10 +19,16 @@ class LoginUserController extends Controller
         ]);
 
         Log::debug('Input tervalidasi', ['credentials' => $credentials]);
-
+        Log::debug('Mencoba login dengan kredensial', ['username' => $credentials['username'], 'password' => $credentials['password']]);
+        Log::debug('Login proses dimulai', ['input' => $request->all()]);
         if (Auth::attempt($credentials)) {
+            Log::info('Login berhasil', ['username' => $credentials['username']]);
+            Log::info(request()->all()); // Tambahkan ini untuk mencatat semua data yang diterima
+
             $user = Auth::user();
             Log::info('User berhasil login', ['user_id' => $user->id, 'role' => $user->role]);
+            Log::info('Data pengguna setelah login', ['user' => $user]);
+            Log::info('Nama pengguna setelah login', ['name' => $user->name]);
 
             if ($user->role === 'customer') {
                 $request->session()->regenerate();

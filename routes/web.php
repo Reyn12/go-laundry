@@ -109,6 +109,8 @@ Route::prefix('user')->group(function () {
         return view('user.pesananlayanan.index');
     });
 
+    // Logout route
+    Route::post('/logout', [LoginUserController::class, 'logout'])->name('logout');
 });
 
 // Merchant Routes
