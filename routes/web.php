@@ -11,6 +11,7 @@ use App\Http\Controllers\UserController\UserPencarianController;
 use App\Http\Controllers\UserController\UserRiwayatController;
 use App\Http\Controllers\UserController\UserPelacakanController;
 use App\Http\Controllers\UserController\UserUlasanController;
+use App\Http\Controllers\UserController\PelacakanController;
 use App\Http\Controllers\MerchantController\RegisterMerchantController;
 use App\Http\Controllers\MerchantController\DashboardMerchantController;
 use App\Http\Controllers\MerchantController\LoginMerchantController;
@@ -111,7 +112,11 @@ Route::prefix('user')->group(function () {
 
     // Logout route
     Route::post('/logout', [LoginUserController::class, 'logout'])->name('logout');
-});
+    });
+
+    Route::get('/pelacakan', [PelacakanController::class, 'index'])->name('user.pelacakan.index');
+
+    Route::get('/order/{id}', [OrderController::class, 'showOrder'])->name('order.show');
 
 // Merchant Routes
 Route::prefix('merchant')->group(function () {

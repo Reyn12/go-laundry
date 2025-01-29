@@ -47,7 +47,7 @@
             <img src="https://via.placeholder.com/150" alt="Laundry Basket" class="w-32 h-32 rounded-md object-cover">
             <div class="ml-6">
                 <p class="text-sm text-gray-500 font-semibold">Sukses maju terus</p>
-                <h2 class="text-lg font-bold text-gray-800">LaundryKlin Cihampelas (Laundry Antar Jemput Bandung)</h2>
+                <h2 class="text-lg font-bold text-gray-800">LaundryKlin Cihampelas (Laundry Antar Bandung)</h2>
                 <div class="flex items-center mt-2">
                     <span class="text-yellow-400 text-sm mr-1">★★★★★</span>
                     <span class="text-gray-600 text-sm">5.0</span>
@@ -60,7 +60,7 @@
                     <span>Dipatiukur, 29 Blok M</span>
                 </div>
                 <div class="mt-4">
-                    <button id="chatSellerBtn" class="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700">Chat Seller Laundry</button>
+                    <button class="chatSellerBtn px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700">Chat Seller Laundry</button>
                 </div>
             </div>
         </div>
@@ -82,7 +82,7 @@
                     <span>Dipatiukur, 29 Blok M</span>
                 </div>
                 <div class="mt-4">
-                    <button id="chatSellerBtn" class="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700">Chat Seller Laundry</button>
+                    <button class="chatSellerBtn px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700">Chat Seller Laundry</button>
                 </div>
             </div>
         </div>
@@ -104,7 +104,7 @@
                     <span>Dipatiukur, 29 Blok M</span>
                 </div>
                 <div class="mt-4">
-                    <button id="chatSellerBtn" class="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700">Chat Seller Laundry</button>
+                    <button class="chatSellerBtn px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700">Chat Seller Laundry</button>
                 </div>
             </div>
         </div>
@@ -126,7 +126,7 @@
                     <span>Dipatiukur, 29 Blok M</span>
                 </div>
                 <div class="mt-4">
-                    <button id="chatSellerBtn" class="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700">Chat Seller Laundry</button>
+                    <button class="chatSellerBtn px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700">Chat Seller Laundry</button>
                 </div>
             </div>
         </div>
@@ -182,16 +182,18 @@
 
 <script>
     // Handle the display of the form and blur effect on main content
-    const chatSellerBtn = document.getElementById('chatSellerBtn');
+    const chatSellerBtns = document.querySelectorAll('.chatSellerBtn');
+    chatSellerBtns.forEach(function(chatSellerBtn) {
+        chatSellerBtn.addEventListener('click', function() {
+            // Show the overlay and form, and apply blur to the main content
+            overlay.classList.remove('hidden');
+            mainContent.style.filter = 'blur(5px)';
+        });
+    });
+
     const overlay = document.getElementById('overlay');
     const closeFormBtn = document.getElementById('closeFormBtn');
     const mainContent = document.getElementById('mainContent');
-
-    chatSellerBtn.addEventListener('click', function() {
-        // Show the overlay and form, and apply blur to the main content
-        overlay.classList.remove('hidden');
-        mainContent.style.filter = 'blur(5px)';
-    });
 
     closeFormBtn.addEventListener('click', function() {
         // Close the form and remove the blur effect from main content
