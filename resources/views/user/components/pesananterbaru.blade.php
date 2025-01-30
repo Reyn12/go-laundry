@@ -1,14 +1,17 @@
 <!-- Pesanan Terbaru Section -->
-<div class="p-4 px-8 shadow-lg">
-            <div class="flex justify-between items-center mb-4 ">
-                <h3 class="text-lg font-semibold">Pesanan Terbaru</h3>
+        <div class="mt-1 px-3 bg-white">
+            <h3 class="text-xl font-semibold">Pesanan Terbaru</h3>
+            <div class="text-right mt-4">
+                <button id="viewAllButton" class="px-4 py-2 bg-transparent text-black underline rounded hover:bg-transparent transition-transform duration-300 hover:scale-105">
+                    View All
+                </button>
             </div>
             <div class="overflow-x-auto">
-                <table class="min-w-full">
+                <table class="min-w-full bg-white">
                     <thead>
-                        <tr class="text-left bg-gray-50">
+                        <tr class="text-left ">
                             @foreach (['No', 'Jenis Paket', 'Banyak', 'Tanggal Masuk', 'Status'] as $header)
-                                <th class="py-2 px-4">{{ $header }}</th>
+                                <th class="py-2 px-4 ">{{ $header }}</th>
                             @endforeach
                         </tr>
                     </thead>
@@ -38,7 +41,7 @@
                     ];      
                     @endphp
     
-    <table class="table-auto w-full border-collapse border border-gray-200">
+    <table class="table-auto w-full border-collapse bg-white ">
     <tbody id="laundryTable">
         @foreach ($laundryItems as $index => $item)
         <tr class="border-t hover:bg-gray-50 {{ $index >= 10 ? 'hidden' : '' }}">
@@ -55,13 +58,6 @@
         @endforeach
     </tbody>
 </table>
-
-<div class="text-center mt-4">
-    <button id="viewAllButton" class="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600">
-        View All
-    </button>
-</div>
-
 <script>
     document.getElementById('viewAllButton').addEventListener('click', function () {
         const rows = document.querySelectorAll('#laundryTable tr');
