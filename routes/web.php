@@ -114,16 +114,23 @@ Route::prefix('user')->group(function () {
     Route::post('/logout', [LoginUserController::class, 'logout'])->name('logout');
     });
 
+    // Pelacakan Route
     Route::get('/pelacakan', [PelacakanController::class, 'index'])->name('user.pelacakan.index');
 
+    // Order Route
     Route::get('/order/{id}', [OrderController::class, 'showOrder'])->name('order.show');
 
+    // Login Route
+    Route::get('/user/login', [LoginUserController::class, 'showLoginForm'])->name('user.login');
+    // Proses Login Route
+    Route::post('/user/login', [LoginUserController::class, 'login_proses'])->name('user.login.post');
+
 // Merchant Routes
-Route::prefix('merchant')->group(function () {
-    Route::get('/login', function () {
-        return view('merchant.login.index');
-    });
-    Route::post('/login', [LoginMerchantController::class, 'login']);
+    Route::prefix('merchant')->group(function () {
+        Route::get('/login', function () {
+            return view('merchant.login.index');
+        });
+        Route::post('/login', [LoginMerchantController::class, 'login']);
     
     // Dashboard route
     Route::get('/dashboard', [DashboardMerchantController::class, 'index'])->name('merchant.dashboard');

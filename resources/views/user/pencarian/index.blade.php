@@ -5,11 +5,10 @@
 </div>
 <div class="flex flex-col md:flex-row w-full" id="mainContent">
     <!-- Konten Pencarian (Sidebar Kiri) -->
-    <div class="w-full md:w-2/3 p-4">
+    <div class="w-full md:w-2/3 p-4 bg-white">
         <div class="search-sidebar">
             <h5 class="text-black font-bold text-lg mb-4">248 Ready in Bandung</h5>
             <form action="{{ route('user.pencarian') }}" method="GET">
-                <!-- Form Pencarian -->
                 <div class="flex justify-between mb-3 space-x-2">
                     <div class="flex gap-2">
                         <select id="location" name="location" class="px-3 py-2 border rounded-md">
@@ -25,7 +24,6 @@
                             <option value="high">High to Low</option>
                         </select>
                     </div>
-                    <!-- Filter Button -->
                     <button class="border rounded-md p-2 bg-white shadow-md flex items-center gap-1">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5">
                             <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 5.75h16.5M3.75 12h16.5m-7.5 6.25h7.5" />
@@ -33,112 +31,47 @@
                         More filter
                     </button>
                 </div>
-                <!-- Search Bar -->
                 <div class="mb-3 flex items-center space-x-2">
-                    <input type="text" name="query" class="flex-1 p-2 border rounded-md" placeholder="Search or type command...">
-                    <button type="reset" class="px-4 py-2 border rounded-md bg-red-500 hover:bg-gray-400 text-white shadow-md">Clear</button>
-                    <button type="submit" class="px-4 py-2 border rounded-md bg-blue-600 hover:bg-gray-400 text-white shadow-md">Search</button>
+                    <input type="text" id="search-box" placeholder="Cari riwayat pesanan..." 
+                           class="border border-gray-300 rounded-lg p-2 w-full" onkeyup="searchLaundry()">
+                    <button type="reset" class="px-4 py-2 border rounded-md bg-red-500 hover:bg-gray-400 text-white shadow-md" onclick="clearSearch()">Clear</button>
                 </div>
             </form>
         </div>
-
-        <!-- Card with 'Chat Seller Laundry' button -->
-        <div class="bg-white shadow rounded-lg flex items-start p-6">
-            <img src="https://via.placeholder.com/150" alt="Laundry Basket" class="w-32 h-32 rounded-md object-cover">
+        <div id="laundry-list">
+            @forelse ($results as $index => $result)
+            <div class="bg-white shadow rounded-lg flex items-start p-6 laundry-item mb-2">
+            <img src="{{ asset('images/logoGolaundry.png') }}" alt="Logo"
+                alt="Image Kosong" 
+                class="w-32 h-32 rounded-md object-cover">
             <div class="ml-6">
-                <p class="text-sm text-gray-500 font-semibold">Sukses maju terus</p>
-                <h2 class="text-lg font-bold text-gray-800">LaundryKlin Cihampelas (Laundry Antar Bandung)</h2>
-                <div class="flex items-center mt-2">
-                    <span class="text-yellow-400 text-sm mr-1">★★★★★</span>
-                    <span class="text-gray-600 text-sm">5.0</span>
-                    <span class="text-gray-400 text-sm ml-2">125 reviews</span>
-                </div>
-                <div class="flex items-center mt-4 text-sm text-gray-600">
-                    <span>laundry by ijdhwoighiwe</span>
-                </div>
-                <div class="flex items-center mt-1 text-sm text-gray-600">
-                    <span>Dipatiukur, 29 Blok M</span>
-                </div>
-                <div class="mt-4">
-                    <button class="chatSellerBtn px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700">Chat Seller Laundry</button>
+                    <h2 class="text-xl font-bold text-gray-800">{{ $results[$index]['title'] ?? $result['title'] }}</h2>
+                    <div class="flex items-center mt-2">
+                        <span class="text-yellow-400 text-xl mr-1">★★★★★</span>
+                        <span class="text-gray-600 text-sm">5.0</span>
+                        <span class="text-gray-400 text-sm ml-2">125 reviews</span>
+                    </div>
+                    <div class="flex items-center mt-1 text-sm text-gray-600">
+                        <span>laundry by {{ $results[$index]['title'] ?? $result['title'] }}</span>
+                    </div>
+                    <!-- Flex untuk lokasi & tombol -->
+                    <div class="flex items-center justify-between mt-1 text-sm text-gray-600 w-full">
+                        <span mb-2>{{ $results[$index]['location'] ?? $result['location'] }}</span>
+                    </div>
+                    <div>
+                    <button class="chatSellerBtn px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 right-4 ">Order Laundry</button>
+                    </div>
                 </div>
             </div>
+            @empty
+            <p class="text-gray-600">Tidak ada data ditemukan.</p>
+            @endforelse
         </div>
-
-        <div class="bg-white shadow rounded-lg flex items-start p-6">
-            <img src="https://via.placeholder.com/150" alt="Laundry Basket" class="w-32 h-32 rounded-md object-cover">
-            <div class="ml-6">
-                <p class="text-sm text-gray-500 font-semibold">Sukses maju terus</p>
-                <h2 class="text-lg font-bold text-gray-800">LaundryKlin Cihampelas (Laundry Antar Jemput Bandung)</h2>
-                <div class="flex items-center mt-2">
-                    <span class="text-yellow-400 text-sm mr-1">★★★★★</span>
-                    <span class="text-gray-600 text-sm">5.0</span>
-                    <span class="text-gray-400 text-sm ml-2">125 reviews</span>
-                </div>
-                <div class="flex items-center mt-4 text-sm text-gray-600">
-                    <span>laundry by ijdhwoighiwe</span>
-                </div>
-                <div class="flex items-center mt-1 text-sm text-gray-600">
-                    <span>Dipatiukur, 29 Blok M</span>
-                </div>
-                <div class="mt-4">
-                    <button class="chatSellerBtn px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700">Chat Seller Laundry</button>
-                </div>
-            </div>
-        </div>
-
-        <div class="bg-white shadow rounded-lg flex items-start p-6">
-            <img src="https://via.placeholder.com/150" alt="Laundry Basket" class="w-32 h-32 rounded-md object-cover">
-            <div class="ml-6">
-                <p class="text-sm text-gray-500 font-semibold">Sukses maju terus</p>
-                <h2 class="text-lg font-bold text-gray-800">LaundryKlin Cihampelas (Laundry Antar Jemput Bandung)</h2>
-                <div class="flex items-center mt-2">
-                    <span class="text-yellow-400 text-sm mr-1">★★★★★</span>
-                    <span class="text-gray-600 text-sm">5.0</span>
-                    <span class="text-gray-400 text-sm ml-2">125 reviews</span>
-                </div>
-                <div class="flex items-center mt-4 text-sm text-gray-600">
-                    <span>laundry by ijdhwoighiwe</span>
-                </div>
-                <div class="flex items-center mt-1 text-sm text-gray-600">
-                    <span>Dipatiukur, 29 Blok M</span>
-                </div>
-                <div class="mt-4">
-                    <button class="chatSellerBtn px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700">Chat Seller Laundry</button>
-                </div>
-            </div>
-        </div>
-
-        <div class="bg-white shadow rounded-lg flex items-start p-6">
-            <img src="https://via.placeholder.com/150" alt="Laundry Basket" class="w-32 h-32 rounded-md object-cover">
-            <div class="ml-6">
-                <p class="text-sm text-gray-500 font-semibold">Sukses maju terus</p>
-                <h2 class="text-lg font-bold text-gray-800">LaundryKlin Cihampelas (Laundry Antar Jemput Bandung)</h2>
-                <div class="flex items-center mt-2">
-                    <span class="text-yellow-400 text-sm mr-1">★★★★★</span>
-                    <span class="text-gray-600 text-sm">5.0</span>
-                    <span class="text-gray-400 text-sm ml-2">125 reviews</span>
-                </div>
-                <div class="flex items-center mt-4 text-sm text-gray-600">
-                    <span>laundry by ijdhwoighiwe</span>
-                </div>
-                <div class="flex items-center mt-1 text-sm text-gray-600">
-                    <span>Dipatiukur, 29 Blok M</span>
-                </div>
-                <div class="mt-4">
-                    <button class="chatSellerBtn px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700">Chat Seller Laundry</button>
-                </div>
-            </div>
-        </div>
-
     </div>
-
-    <!-- Peta (Sidebar Kanan) -->
-    <div class="flex-1 p-4">
+    <div class="flex-1 p-4 bg-white">
         <div id="map-container" class="h-screen w-full">
             <iframe src="https://maps.google.com/maps?q=Monas%20Jakarta&t=&z=13&ie=UTF8&iwloc=&output=embed"
-                class="w-full h-full rounded-md" frameborder="0">
-            </iframe>
+                class="w-full h-full rounded-md" frameborder="0"></iframe>
         </div>
     </div>
 </div>
@@ -190,25 +123,38 @@
             mainContent.style.filter = 'blur(5px)';
         });
     });
+    function searchLaundry() {
+        const searchValue = document.getElementById('search-box').value.toLowerCase();
+        const items = document.querySelectorAll('.laundry-item');
+        
+        items.forEach(item => {
+            const itemText = item.innerText.toLowerCase();
+            item.style.display = itemText.includes(searchValue) ? '' : 'none';
+        });
+    }
 
-    const overlay = document.getElementById('overlay');
-    const closeFormBtn = document.getElementById('closeFormBtn');
-    const mainContent = document.getElementById('mainContent');
-
-    closeFormBtn.addEventListener('click', function() {
-        // Close the form and remove the blur effect from main content
-        overlay.classList.add('hidden');
-        mainContent.style.filter = 'none';
+    function clearSearch() {
+        document.getElementById('search-box').value = '';
+        searchLaundry();
+    }
+    
+    document.querySelectorAll('.chatSellerBtn').forEach(button => {
+        button.addEventListener('click', () => {
+            document.getElementById('overlay').classList.remove('hidden');
+            document.getElementById('mainContent').style.filter = 'blur(5px)';
+        });
+    });
+    
+    document.getElementById('closeFormBtn').addEventListener('click', () => {
+        document.getElementById('overlay').classList.add('hidden');
+        document.getElementById('mainContent').style.filter = 'none';
     });
 
-    // Handle form submission (fake submission for now)
-    const form = document.getElementById('orderFormElement');
-    form.addEventListener('submit', function(event) {
+    document.getElementById('orderFormElement').addEventListener('submit', event => {
         event.preventDefault();
         alert('Pesanan berhasil dikonfirmasi!');
-        overlay.classList.add('hidden');
-        mainContent.style.filter = 'none';
+        document.getElementById('overlay').classList.add('hidden');
+        document.getElementById('mainContent').style.filter = 'none';
     });
 </script>
-
 @endsection
