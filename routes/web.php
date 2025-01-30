@@ -50,7 +50,10 @@ Route::prefix('admin')->group(function () {
         return view('admin.login.index');
     })->name('admin.login');
     Route::post('/login', [LoginController::class, 'login']);
+
+    // Admin Register
     Route::get('/register', [RegisterController::class, 'index'])->name('admin.register');
+    Route::post('/register', [RegisterController::class, 'store'])->name('admin.register.submit');
     
     // Protected routes (perlu login dan role admin)
     Route::middleware(['auth', 'admin'])->group(function () {
