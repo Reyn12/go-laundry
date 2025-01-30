@@ -38,10 +38,12 @@
                         More filter
                     </button>
                 </div>
-                <div class="mb-3 flex items-center space-x-2">
-                    <input type="text" id="search-box" placeholder="Cari riwayat pesanan..." 
-                           class="border border-gray-300 rounded-lg p-2 w-full" onkeyup="searchLaundry()">
-                    <button type="reset" class="px-4 py-2 border rounded-md bg-red-500 hover:bg-gray-400 text-white shadow-md" onclick="clearSearch()">Clear</button>
+                <!-- Search Box -->
+                <div class="container-fluid mx-auto mt-4">
+                    <div class="mb-4">
+                        <input type="text" id="search-box" placeholder="Cari riwayat pesanan..." 
+                               class="border border-gray-300 rounded-lg p-2 w-full">
+                    </div>
                 </div>
             </form>
         </div>
@@ -79,7 +81,7 @@
     </div>
     <div class="flex-1 p-4 bg-white">
         <div id="map-container" class="h-screen w-full">
-            <iframe src="https://maps.google.com/maps?q=Monas%20Jakarta&t=&z=13&ie=UTF8&iwloc=&output=embed"
+            <iframe src="https://maps.google.com/maps?q=AIzaSyDhJtqrVPguRHaas1QvCBK8WiRVpD36kKM&t=&z=13&ie=UTF8&iwloc=&output=embed"
                 class="w-full h-full rounded-md" frameborder="0"></iframe>
         </div>
     </div>
@@ -91,6 +93,7 @@
 
         @if(isset($layanan_laundries) && count($layanan_laundries) > 0)
             <div class="max-h-96 overflow-y-auto">
+            <tbody id="pencarian-container">
                 @foreach($layanan_laundries as $layanan)
                 <div class="border p-2 rounded-lg shadow-sm mb-4 bg-gray-50">
                     <div class="flex items-center justify-between border-b pb-3">
@@ -114,7 +117,7 @@
                 @endforeach
             </div>
         @else
-            <p class="text-center text-gray-500 text-lg">Tidak ada layanan tersedia.</p>
+            <p class="text-center text-gray-500 text-sm">Tidak ada layanan tersedia.</p>
         @endif
         
         <div class="mt-5 border-t pt-4 text-center">
@@ -122,8 +125,8 @@
         </div>
 
         <div class="flex justify-between mt-5">
-            <button id="closeOverlayBtn" class="w-1/2 bg-gray-500 text-white p-3 rounded-lg hover:bg-gray-600 mr-3 text-lg">Tutup</button>
-            <button class="w-1/2 bg-blue-600 text-white p-3 rounded-lg hover:bg-blue-700 text-lg">Order Laundry</button>
+            <button id="closeOverlayBtn" class="w-1/2 bg-gray-500 text-white p-3 rounded-lg hover:bg-gray-600 mr-3 text-sm">Tutup</button>
+            <button class="w-1/2 bg-blue-600 text-white p-3 rounded-lg hover:bg-blue-700 text-sm">Order Laundry</button>
         </div>
     </div>
 </div>
@@ -132,23 +135,41 @@
 
 <script>
     document.addEventListener("DOMContentLoaded", function () {
+        const searchBox = document.getElementById('search-box');
+        const laundryList = document.getElementById('laundry-list');
+        const laundryItems = laundryList.querySelectorAll('.laundry-item');
+
+        searchBox.addEventListener('keyup', function () {
+            const searchValue = this.value.toLowerCase().trim();
+            
+            laundryItems.forEach(item => {
+                const title = item.querySelector('h2').innerText.toLowerCase();
+                const description = item.querySelector('.text-sm').innerText.toLowerCase();
+
+                if (title.includes(searchValue) || description.includes(searchValue)) {
+                    item.style.display = 'flex';
+                } else {
+                    item.style.display = 'none';
+                }
+            });
+        });
+
+        // Order button functionality
         const overlay = document.getElementById("orderOverlay");
         const mainContent = document.getElementById("mainContent");
         const orderButtons = document.querySelectorAll(".chatSellerBtn");
         const closeOverlayBtn = document.getElementById("closeOverlayBtn");
 
-        // Event listener untuk setiap tombol "Order Laundry"
         orderButtons.forEach(button => {
             button.addEventListener("click", () => {
                 overlay.classList.remove("hidden");
-                mainContent.classList.add("blurred"); // Tambahkan efek blur
+                mainContent.classList.add("blurred");
             });
         });
 
-        // Event listener untuk tombol "Tutup"
         closeOverlayBtn.addEventListener("click", () => {
             overlay.classList.add("hidden");
-            mainContent.classList.remove("blurred"); // Hapus efek blur
+            mainContent.classList.remove("blurred");
         });
     });
 </script>
