@@ -42,7 +42,6 @@ Route::get('/masuk', function () {
 });
 
 
-
 // Admin Routes
 Route::prefix('admin')->group(function () {
     // Public routes (tidak perlu login)
