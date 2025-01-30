@@ -103,6 +103,9 @@
         margin-top: 0.25rem;
         display: none;
     }
+    .error-message.show {
+        display: block;
+    }
     input:invalid + .error-message {
         display: block;
     }
