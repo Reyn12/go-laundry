@@ -3,6 +3,13 @@
 <div class="lg:w-1/4 hidden lg:block">
     @include('user.components.sidebar')
 </div>
+<style>
+    #overlay {
+        filter: blur(5px);
+        pointer-events: none; /* Mencegah klik pada elemen di belakang overlay */
+    }
+</style>
+<div id="overlay" class="hidden"></div>
 <div class="flex flex-col md:flex-row w-full" id="mainContent">
     <!-- Konten Pencarian (Sidebar Kiri) -->
     <div class="w-full md:w-2/3 p-4 bg-white">
@@ -39,27 +46,27 @@
             </form>
         </div>
         <div id="laundry-list">
-            @forelse ($results as $index => $result)
+            @forelse ($results as $result)
             <div class="bg-white shadow rounded-lg flex items-start p-6 laundry-item mb-2">
-            <img src="{{ asset('images/logoGolaundry.png') }}" alt="Logo"
-                alt="Image Kosong" 
-                class="w-32 h-32 rounded-md object-cover">
-            <div class="ml-6">
-                    <h2 class="text-xl font-bold text-gray-800">{{ $results[$index]['title'] ?? $result['title'] }}</h2>
+                <img src="{{ $result->image }}" alt="{{ $result->title }}"
+                    class="w-32 h-32 rounded-md object-cover">
+                <div class="ml-6">
+                    <h2 class="text-xl font-bold text-gray-800">{{ $result->title }}</h2>
                     <div class="flex items-center mt-2">
                         <span class="text-yellow-400 text-xl mr-1">★★★★★</span>
-                        <span class="text-gray-600 text-sm">5.0</span>
-                        <span class="text-gray-400 text-sm ml-2">125 reviews</span>
+                        <span class="text-gray-600 text-sm">{{ $result->rating }}</span>
+                        <span class="text-gray-400 text-sm ml-2">{{ $result->reviews }} reviews</span>
                     </div>
                     <div class="flex items-center mt-1 text-sm text-gray-600">
-                        <span>laundry by {{ $results[$index]['title'] ?? $result['title'] }}</span>
+                        <span>{{ $result->description }}</span>
                     </div>
-                    <!-- Flex untuk lokasi & tombol -->
                     <div class="flex items-center justify-between mt-1 text-sm text-gray-600 w-full">
-                        <span mb-2>{{ $results[$index]['location'] ?? $result['location'] }}</span>
+                        <span>{{ $result->location }}</span>
                     </div>
                     <div>
-                    <button class="chatSellerBtn px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 right-4 ">Order Laundry</button>
+                        <button class="chatSellerBtn px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700">
+                            Order Laundry
+                        </button>
                     </div>
                 </div>
             </div>
@@ -67,6 +74,8 @@
             <p class="text-gray-600">Tidak ada data ditemukan.</p>
             @endforelse
         </div>
+
+
     </div>
     <div class="flex-1 p-4 bg-white">
         <div id="map-container" class="h-screen w-full">
@@ -75,86 +84,73 @@
         </div>
     </div>
 </div>
-
 <!-- Overlay for the form -->
-<div id="overlay" class="fixed top-0 left-0 w-full h-full bg-black bg-opacity-50 hidden z-10">
-    <div id="orderForm" class="bg-white w-full md:w-1/2 mx-auto p-6 rounded-lg shadow-lg mt-24">
-        <h1 class="text-2xl font-bold text-center text-blue-600">Form Pemesanan Laundry</h1>
-        
-        <form id="orderFormElement" class="mt-4">
-            <label class="block text-gray-700 font-medium">Pilih Jenis Layanan</label>
-            <select name="layanan" class="w-full p-2 border rounded-lg mt-1">
-                <option>Cuci Biasa</option>
-                <option>Setrika</option>
-                <option>Ekspres</option>
-            </select>
-            
-            <label class="block text-gray-700 font-medium mt-3">Jumlah Cucian (kg/item)</label>
-            <input type="number" name="jumlah" class="w-full p-2 border rounded-lg mt-1" placeholder="Masukkan berat/jumlah item">
-            
-            <label class="block text-gray-700 font-medium mt-3">Catatan Tambahan</label>
-            <input type="text" name="catatan" class="w-full p-2 border rounded-lg mt-1" placeholder="Misal: Jangan pakai pewangi">
-            
-            <div class="mt-4">
-                <h2 class="text-lg font-bold">Detail Harga + Ongkos Kirim</h2>
-                <p class="text-gray-600">Harga akan dihitung berdasarkan berat dan layanan yang dipilih.</p>
+<div id="orderOverlay" class="fixed inset-0 bg-black bg-opacity-50 hidden z-50 flex justify-center items-center">
+    <div id="orderFormContainer" class="p-8 bg-white rounded-lg shadow-xl w-[100%] max-w-lg">
+        <h2 class="text-2xl font-bold mb-2 text-center">Keranjang Belanja</h2>
+
+        @if(isset($layanan_laundries) && count($layanan_laundries) > 0)
+            <div class="max-h-96 overflow-y-auto">
+                @foreach($layanan_laundries as $layanan)
+                <div class="border p-2 rounded-lg shadow-sm mb-4 bg-gray-50">
+                    <div class="flex items-center justify-between border-b pb-3">
+                        <div class="flex items-center">
+                            <input type="checkbox" class="mr-3">
+                            <span class="font-medium text-gray-700 text-sm">Layanan Laundry</span>
+                        </div>
+                    </div>
+                    <div class="flex items-center mt-3">
+                        <img src="laundry.jpg" alt="Layanan Laundry" class="w-20 h-20 mr-5 rounded-md object-cover">
+                        <div class="flex-1">
+                            <p class="text-gray-800 font-semibold text-lg">{{ $layanan->kategori_layanan }} - {{ $layanan->nama_layanan }}</p>
+                            <span class="text-gray-500 text-sm">Waktu Pengerjaan: {{ $layanan->waktu_pengerjaan }}</span>
+                        </div>
+                        <div class="text-right">
+                            <span class="line-through text-gray-400 text-sm">Rp{{ number_format($layanan->harga_per_unit * 1.5, 0, ',', '.') }}</span>
+                            <p class="text-red-500 font-bold text-xl">Rp{{ number_format($layanan->harga_per_unit, 0, ',', '.') }}</p>
+                        </div>
+                    </div>
+                </div>
+                @endforeach
             </div>
-            
-            <label class="block text-gray-700 font-medium mt-3">Metode Pembayaran</label>
-            <select name="pembayaran" class="w-full p-2 border rounded-lg mt-1">
-                <option>QRIS</option>
-                <option>COD (Cash on Delivery)</option>
-            </select>
-            
-            <button type="submit" class="w-full bg-blue-600 text-white p-2 rounded-lg mt-4 hover:bg-blue-700">Confirm Pesanan</button>
-        </form>
+        @else
+            <p class="text-center text-gray-500 text-lg">Tidak ada layanan tersedia.</p>
+        @endif
         
-        <button id="closeFormBtn" class="mt-4 w-full text-center bg-red-500 text-white p-2 rounded-lg hover:bg-red-600">Close</button>
+        <div class="mt-5 border-t pt-4 text-center">
+            <h2 class="text-xl font-bold text-gray-800">Total: Rp{{ isset($layanan_laundries) ? number_format($layanan_laundries->sum('harga_per_unit'), 0, ',', '.') : '0' }}</h2>
+        </div>
+
+        <div class="flex justify-between mt-5">
+            <button id="closeOverlayBtn" class="w-1/2 bg-gray-500 text-white p-3 rounded-lg hover:bg-gray-600 mr-3 text-lg">Tutup</button>
+            <button class="w-1/2 bg-blue-600 text-white p-3 rounded-lg hover:bg-blue-700 text-lg">Order Laundry</button>
+        </div>
     </div>
 </div>
 
+
+
 <script>
-    // Handle the display of the form and blur effect on main content
-    const chatSellerBtns = document.querySelectorAll('.chatSellerBtn');
-    chatSellerBtns.forEach(function(chatSellerBtn) {
-        chatSellerBtn.addEventListener('click', function() {
-            // Show the overlay and form, and apply blur to the main content
-            overlay.classList.remove('hidden');
-            mainContent.style.filter = 'blur(5px)';
-        });
-    });
-    function searchLaundry() {
-        const searchValue = document.getElementById('search-box').value.toLowerCase();
-        const items = document.querySelectorAll('.laundry-item');
-        
-        items.forEach(item => {
-            const itemText = item.innerText.toLowerCase();
-            item.style.display = itemText.includes(searchValue) ? '' : 'none';
-        });
-    }
+    document.addEventListener("DOMContentLoaded", function () {
+        const overlay = document.getElementById("orderOverlay");
+        const mainContent = document.getElementById("mainContent");
+        const orderButtons = document.querySelectorAll(".chatSellerBtn");
+        const closeOverlayBtn = document.getElementById("closeOverlayBtn");
 
-    function clearSearch() {
-        document.getElementById('search-box').value = '';
-        searchLaundry();
-    }
-    
-    document.querySelectorAll('.chatSellerBtn').forEach(button => {
-        button.addEventListener('click', () => {
-            document.getElementById('overlay').classList.remove('hidden');
-            document.getElementById('mainContent').style.filter = 'blur(5px)';
+        // Event listener untuk setiap tombol "Order Laundry"
+        orderButtons.forEach(button => {
+            button.addEventListener("click", () => {
+                overlay.classList.remove("hidden");
+                mainContent.classList.add("blurred"); // Tambahkan efek blur
+            });
         });
-    });
-    
-    document.getElementById('closeFormBtn').addEventListener('click', () => {
-        document.getElementById('overlay').classList.add('hidden');
-        document.getElementById('mainContent').style.filter = 'none';
-    });
 
-    document.getElementById('orderFormElement').addEventListener('submit', event => {
-        event.preventDefault();
-        alert('Pesanan berhasil dikonfirmasi!');
-        document.getElementById('overlay').classList.add('hidden');
-        document.getElementById('mainContent').style.filter = 'none';
+        // Event listener untuk tombol "Tutup"
+        closeOverlayBtn.addEventListener("click", () => {
+            overlay.classList.add("hidden");
+            mainContent.classList.remove("blurred"); // Hapus efek blur
+        });
     });
 </script>
+
 @endsection

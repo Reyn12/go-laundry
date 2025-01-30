@@ -1,64 +1,90 @@
 @extends('user.components.main')
 @section('container')
+
 <div class="lg:w-1/4 hidden lg:block">
-      @include('user.components.sidebar')
+    @include('user.components.sidebar')
 </div>
+
 <!-- Main Content -->
-<div class="max-w-full mx-auto bg-white shadow-lg rounded-lg overflow-hidden">
-    <!-- Header -->
-    <div class="p-10 border-b border-gray-200">
-        <h1 class="text-2xl font-bold">Order ID: {{ $order['id'] }}</h1>
-        <div class="flex items-center justify-between mt-2">
-            <p class="text-gray-600">{{ $order['date'] }} at {{ $order['time'] }} from {{ $order['seller'] }}</p>
-            <span class="px-4 py-1 text-sm font-semibold text-white bg-green-500 rounded-full">{{ $order['status'] }}</span>
-        </div>
-    </div>
+<div class="mb-3 flex items-center space-x-2">
+    <input type="text" id="search-box" placeholder="Cari riwayat pesanan..." 
+           class="border border-gray-300 rounded-lg p-2 w-full" onkeyup="searchLaundry()">
+    <button type="reset" class="px-4 py-2 border rounded-md bg-red-500 hover:bg-gray-400 text-white shadow-md" onclick="clearSearch()">Clear</button>
+</div>
 
-    <!-- Order Items -->
-    <div id="order-items-container">
-        @foreach ($order['items'] as $index => $item)
-        <div class="flex flex-col md:flex-row items-start p-6 border-b last:border-none {{ $index >= 3 ? 'hidden' : '' }}" data-item-index="{{ $index }}">
-            <!-- Image Placeholder -->
-            <div class="w-20 h-20 bg-gray-200 rounded-md flex items-center justify-center">
-                <img src="{{ file_exists(public_path('images/' . strtolower($item['name']) . '.jpg')) 
-                    ? asset('images/' . strtolower($item['name']) . '.jpg') 
-                    : asset('images/logoGolaundry.png') }}" 
-                    alt="{{ $item['name'] }}" 
-                    class="object-cover rounded-md" />
-            </div>
-                <!-- Item Details -->
-                <div class="flex-1 ml-4">
-                    <h2 class="text-lg font-bold">{{ $item['name'] }}</h2>
-                    <p class="text-gray-600">{{ $item['quantity'] }} Pcs - <span class="text-black">{{ $item['color'] }}</span></p>
-                    @if ($item['note'])
-                    <p class="text-sm text-gray-500 mt-2">{{ $item['note'] }}</p>
-                    @endif
-                </div>
-
-                <!-- Pricing and Action -->
-                <div class="text-right">
-                    <!-- Status dipindahkan ke atas price -->
-                    <span class="inline-block px-3 py-1 text-xs font-semibold {{ $item['status'] === 'Selesai' ? 'bg-green-200 text-green-800' : ($item['status'] === 'Waiting' ? 'bg-yellow-200 text-yellow-800' : 'bg-blue-200 text-blue-800') }} rounded-full mb-2">{{ $item['status'] }}</span>
-                    <p class="font-semibold text-gray-800">{{ $item['quantity'] }} x Rp.{{ number_format($item['price_per_item'], 0, ',', '.') }}</p>
-                    <p class="font-bold text-gray-900">Rp.{{ number_format($item['quantity'] * $item['price_per_item'], 0, ',', '.') }}</p>
-                    <button class="mt-4 px-4 py-2 text-sm font-semibold text-white bg-red-500 hover:bg-blue-600 rounded-md">Chat seller</button>
+<div class="max-w-full mx-auto bg-white shadow-lg rounded-lg overflow-hidden p-6">
+    @if ($orders->isNotEmpty())
+        @foreach ($orders as $order)
+            <div class="border-b border-gray-200 pb-6 mb-6">
+                <h1 class="text-2xl font-bold">Order ID: {{ $order->id }}</h1>
+                <div class="flex items-center justify-between mt-2">
+                    <p class="text-gray-600 text-sm">{{ $order->created_at }} - Layanan ID: {{ $order->layanan_id }}</p>
+                    <span class="px-4 py-1 text-sm font-semibold text-white 
+                        {{ $order->status === 'dibayar' ? 'bg-green-500' : 'bg-yellow-500' }} rounded-full">
+                        {{ ucfirst($order->status) }}
+                    </span>
                 </div>
             </div>
+            
+            <!-- Order Items -->
+            <div id="order-items-container">
+                @if (!empty($order->items))
+                    @foreach ($order->items as $index => $item)
+                        <div class="bg-white p-6 border rounded-lg shadow-sm mb-4">
+                            <div class="flex items-start">
+                                <!-- Image -->
+                                <div class="w-20 h-20 flex-shrink-0">
+                                    <img src="{{ asset('images/logoGolaundry.png') }}" alt="{{ $item->id }}" class="w-full h-full object-cover rounded-md" />
+                                </div>
+                                
+                                <!-- Item Details -->
+                                <div class="ml-4 flex-1">
+                                    <h2 class="text-lg font-bold">{{ ucfirst($item->nama) }}</h2>
+                                    <p class="text-gray-600 text-sm">{{ $item->deskripsi }}</p>
+                                    <p class="text-sm text-gray-500 mt-2">{{ $item->alamat_pengambilan }}</p>
+                                    <p class="text-sm text-gray-500 mt-2">{{ $item->alamat_pengiriman }}</p>
+                                </div>
+                                
+                                <!-- Pricing & Status -->
+                                <div class="text-right">
+                                    <span class="inline-block px-3 py-1 text-xs font-semibold 
+                                        {{ $item->status === 'selesai' ? 'bg-green-200 text-green-800' : ($item->status === 'waiting' ? 'bg-yellow-200 text-yellow-800' : 'bg-blue-200 text-blue-800') }} 
+                                        rounded-full mb-2">
+                                        {{ ucfirst($item->status) }}
+                                    </span>
+                                    <p class="font-bold text-gray-900">Rp.{{ number_format($item->total_harga, 0, ',', '.') }}</p>
+                                    <button class="mt-4 px-4 py-2 text-sm font-semibold text-white bg-blue-500 hover:bg-blue-600 rounded-md">Chat seller</button>
+                                </div>
+                            </div>
+                        </div>
+                    @endforeach
+                @endif
+            </div>
+                <!-- Additional Item Layout Based on Image -->
+                <div class="bg-white rounded-lg shadow-sm border p-4">
+                    <h3 class="font-bold">Order Item</h3>
+                    <div class="flex items-center p-4">
+                        <img src="{{ asset('images/tshirt.png') }}" alt="Tshirt" class="w-16 h-16 object-cover rounded-md" />
+                        <div class="ml-4">
+                            <h4 class="font-bold">Tshirt</h4>
+                            <p class="text-sm">5 Pcs</p>
+                            <p class="text-sm text-gray-600">Lengan Panjang <span class="text-black">black &#9632;</span></p>
+                        </div>
+                        <div class="ml-auto text-right">
+                            <span class="px-2 py-1 text-xs font-semibold bg-green-200 text-green-800 rounded-full">Selesai</span>
+                            <p class="text-sm">5 x Rp. 2000</p>
+                            <p class="font-bold">Rp. 10.000</p>
+                        </div>
+                    </div>
+                    <div class="bg-gray-100 p-4 rounded-b-lg flex justify-between items-center">
+                        <p class="text-sm text-gray-600">Sedang Diantarkan ke Jl. Seti...</p>
+                        <button class="px-3 py-1 text-sm font-semibold text-white bg-blue-500 hover:bg-blue-600 rounded-md">Chat seller</button>
+                    </div>
+                </div>
         @endforeach
-        <div class="d-flex justify-content-center bottom-0 w-100 mb-5">
-        <button id="view-all-button" class="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600">View All</button>
-        </div>
-    </div>
-    
-   
-    <script>
-    document.getElementById('view-all-button').addEventListener('click', function() {
-        document.querySelectorAll('#order-items-container [data-item-index]').forEach(function(item) {
-            item.classList.remove('hidden');
-        });
-        this.style.display = 'none';
-    });
-</script>
+    @else
+        <p class="text-center text-gray-600">Tidak ada pesanan.</p>
+    @endif
+</div>
+
 @endsection
-
-
