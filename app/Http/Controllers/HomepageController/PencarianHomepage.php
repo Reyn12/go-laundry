@@ -18,14 +18,7 @@ class PencarianHomepage extends Controller
      */
     public function index()
     {
-        // Mengambil semua layanan laundry dan memuat relasi merchant
-        $layananLaundryList = LayananLaundry::with('merchant')->get();
-
-        // Logging informasi untuk debugging
-        Log::info('Menampilkan Layanan Laundries: ' . $layananLaundryList);
-
-        // Mengirim data layanan laundry ke view homepage.index
-        return view('homepage.index', ['layananLaundries' => $layananLaundryList]);
+        return view('homepage.index');
     }
 
     /**

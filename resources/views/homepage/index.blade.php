@@ -151,27 +151,11 @@
         </form>
     </div>
     <!-- search_results.blade.php -->
-    <div class="flex flex-col items-center gap-2 px-6 pt-6 pb-6">
-        <div class="flex flex-col items-center w-full gap-6 p-6 rounded-[36px] border border-black">
-            <div class="flex flex-wrap items-center gap-2">
-                <p class="text-xl text-black">Hasil Pencarian :</p>
-                <!-- Loop hasil pencarian -->
-                @foreach ($layananLaundries as $layanan)
-                @if($layanan->merchant)
-                @include('homepage.components.merchant-card', [
-                'no' => $loop->iteration,
-                'name' => $layanan->merchant->nama_laundry,
-                'distance' => 'TBD',
-                'address' => $layanan->merchant->alamat_laundry,
-                'services' => $layanan->nama_layanan,
-
-                ])
-                @endif
-                @endforeach
-            </div>
-        </div>
-    </div>
-
+    <!-- Hasil Pencarian -->
+    <!-- Hasil Pencarian -->
+    @if(isset($layananLaundries) && count($layananLaundries) > 0)
+    @include('homepage.components.merchant-card', ['layananLaundries' => $layananLaundries])
+    @endif
 
     <!-- Keunggulan Section -->
     @include('homepage.sections.keunggulan-section')

@@ -1,19 +1,24 @@
-<!-- filepath: resources/views/homepage/components/merchant-card.blade.php -->
-<div class="flex flex-col items-center p-6 rounded-3xl bg-[#0039c9] w-[240px] h-[260px] ">
-    <div class="flex flex-col items-start gap-1.5 py-4">
-        <div class="flex items-start gap-1.5 pb-2">
-            <p class="text-xl text-white">{{ $no }}.</p>
-            <p class="text-xl text-white">{{ $name }}</p>
+<!-- resources/views/homepage/components/merchant-card.blade.php -->
+<div class="flex flex-col items-center gap-2 px-6 pt-6 pb-6">
+    <div class="flex flex-col items-center w-full gap-6 p-6 rounded-[36px] border border-black">
+        <div class="flex flex-wrap items-center gap-2">
+            <p class="text-xl text-black">Hasil Pencarian :</p>
+            <!-- Loop hasil pencarian -->
+            @foreach ($layananLaundries as $layanan)
+            @if($layanan->merchant)
+            <div class="flex flex-col items-center p-6 rounded-3xl bg-[#0039c9] w-[240px] h-[260px]">
+                <div class="flex flex-col items-start gap-1.5 py-4">
+                    <div class="flex items-start gap-1.5 pb-2">
+                        <p class="text-xl text-white">{{ $loop->iteration }}.</p>
+                        <p class="text-xl text-white">{{ $layanan->merchant->nama_laundry }}</p>
+                    </div>
+                    <p class="text-base text-white">Jarak: TBD</p>
+                    <p class="text-base text-white">{{ $layanan->merchant->alamat_laundry }}</p>
+                    <p class="text-base text-white">{{ $layanan->nama_layanan }}</p>
+                </div>
+            </div>
+            @endif
+            @endforeach
         </div>
-        <p class="text-xl text-white pb-2">{{ $distance }} KM</p>
-        <div class="flex items-center gap-2.5">
-            <img src="{{ asset('images/icons/iconLocationInformation.svg') }}" alt="">
-            <p class="text-xs font-medium text-white">{{ $address }}</p>
-        </div>
-        <p class="text-xs text-white">Service :</p>
-        <p class="text-xs text-white">{{ $services }}</p>
-    </div>
-    <div class="flex items-center gap-1.5 rounded-full bg-[#efefef] py-2">
-        <p class="text-xs text-black px-4">Pesan Sekarang</p>
     </div>
 </div>
