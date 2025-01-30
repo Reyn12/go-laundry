@@ -54,4 +54,15 @@ class LoginUserController extends Controller
             ->with('failed', 'Username atau password salah!')
             ->withInput($request->only('username'));
     }
+
+    // Metode untuk logout
+    public function logout(Request $request)
+    {
+    Auth::logout();
+    $request->session()->invalidate();
+    $request->session()->regenerateToken();
+    return redirect('/user/login');
 }
+}
+
+
