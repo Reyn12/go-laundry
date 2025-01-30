@@ -103,10 +103,9 @@
 
     <!-- Filter Pencarian Laundry -->
     <!-- homepage/components/filter-pencarian.blade.php -->
-
-    <div class="flex flex-col justify-start items-center w-full py-12 relative" id="Pencarian">
-        <form action="{{ url('/search-laundry') }}" method="GET" class="w-full">
-            <div class="flex flex-col justify-start items-center w-full max-w-[900px] bg-white rounded-[56px] shadow-lg p-6"
+    <div class="flex flex-col items-center justify-center min-h-screen w-full py-12" id="Pencarian">
+        <form action="{{ url('/search-laundry') }}" method="GET" class="w-full flex justify-center">
+            <div class="flex flex-col items-center w-full max-w-[900px] bg-white rounded-[56px] shadow-lg p-6"
                 style="box-shadow: 0px 4px 24px 4px rgba(0, 0, 0, 0.5);">
                 <h2 class="text-2xl lg:text-4xl text-center text-black mb-6">PENCARIAN LAUNDRY TERDEKAT</h2>
 
@@ -158,15 +157,16 @@
                 <p class="text-xl text-black">Hasil Pencarian :</p>
                 <!-- Loop hasil pencarian -->
                 @foreach ($layananLaundries as $layanan)
-                    @if($layanan->merchant)
-                        @include('homepage.components.merchant-card', [
-                            'no' => $loop->iteration,
-                            'name' => $layanan->merchant->nama_laundry,
-                            'distance' => 'TBD',
-                            'address' => $layanan->merchant->alamat_laundry,
-                            'services' => $layanan->nama_layanan,
-                        ])
-                    @endif
+                @if($layanan->merchant)
+                @include('homepage.components.merchant-card', [
+                'no' => $loop->iteration,
+                'name' => $layanan->merchant->nama_laundry,
+                'distance' => 'TBD',
+                'address' => $layanan->merchant->alamat_laundry,
+                'services' => $layanan->nama_layanan,
+
+                ])
+                @endif
                 @endforeach
             </div>
         </div>

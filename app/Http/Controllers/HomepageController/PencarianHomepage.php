@@ -1,9 +1,11 @@
 <?php
 
+// app/Http/Controllers/HomepageController/PencarianHomepage.php
+
 namespace App\Http\Controllers\HomepageController;
 
 use App\Http\Controllers\Controller;
-use App\Models\LayananLaundry;
+use App\Models\LayananLaundry;  // Menggunakan model LayananLaundry
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 
@@ -16,43 +18,63 @@ class PencarianHomepage extends Controller
      */
     public function index()
     {
-        // Mengambil semua layanan laundry untuk ditampilkan di filter (bisa disesuaikan)
-        $layananLaundryList = LayananLaundry::all();
-        Log::info('Menampilkan Layanan Laudries: ' . $layananLaundryList);
+        // Mengambil semua layanan laundry dan memuat relasi merchant
+        $layananLaundryList = LayananLaundry::with('merchant')->get();
 
+        // Logging informasi untuk debugging
+        Log::info('Menampilkan Layanan Laundries: ' . $layananLaundryList);
+
+        // Mengirim data layanan laundry ke view homepage.index
         return view('homepage.index', ['layananLaundries' => $layananLaundryList]);
     }
 
     /**
-     * Menangani pencarian berdasarkan filter yang diterapkan.
+     * Menangani pencarian berdasarkan filter yang diterima.
      *
      * @param \Illuminate\Http\Request $request
      * @return \Illuminate\View\View
      */
     public function search(Request $request)
     {
-        // Ambil layanan yang dicentang dari request
-        $services = $request->input('', []);
+        // Ambil data filter dari form
+        $services = $request->input('services', []);
         $durations = $request->input('durations', []);
 
-        // Query untuk LayananLaundry
-        $query = LayananLaundry::query();
-
-        // Filter berdasarkan layanan laundry yang dicentang
+        // Query dasar
+        $query = LayananLaundry::join('merchants', 'layanan_laundries.merchant_id', '=', 'merchants.id')
+            ->with(['merchant' => function($query) {
+                $query->select('merchants.*');
+            }]);
+        // Filter berdasarkan kategori layanan yang dipilih
         if (!empty($services)) {
-            $query->whereIn('nama_layanan', $services);
+            $query->where(function($q) use ($services) {
+                foreach ($services as $service) {
+                    $q->orWhere('kategori_layanan', 'like', "%{$service}%");
+                }
+            });
         }
 
-        // Filter berdasarkan durasi pengerjaan yang dicentang
+        // Filter berdasarkan nama layanan (durasi) yang dipilih
         if (!empty($durations)) {
-            $query->whereIn('estimasi', $durations);
+            $query->where(function($q) use ($durations) {
+                foreach ($durations as $duration) {
+                    $q->orWhere('nama_layanan', 'like', "%{$duration}%");
+                }
+            });
         }
 
-        // Ambil data layanan laundry yang sudah difilter
-        $layananLaundries = $query->get();
+        // Eksekusi query
+        $layananLaundryList = $query->get();
 
-        // Kirim data layanan laundry yang ditemukan dan layanan yang dipilih ke tampilan
-        return view('homepage.search_results', compact('layananLaundries', 'services', 'durations'));
+        // Log untuk debugging
+        Log::info('Filter Services: ' . json_encode($services));
+        Log::info('Filter Durations: ' . json_encode($durations));
+        Log::info('Hasil Pencarian: ' . $layananLaundryList);
+        // Sebelum return view, kita load dulu merchant untuk setiap layanan
+        foreach ($layananLaundryList as $layanan) {
+            $layanan->load('merchant');  // ini bakal load merchant berdasarkan relasi yang udah ada
+        }
+
+        return view('homepage.index', ['layananLaundries' => $layananLaundryList]);
     }
-
 }

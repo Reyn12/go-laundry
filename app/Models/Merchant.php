@@ -44,7 +44,7 @@ class Merchant extends Model
     // Relasi dengan LayananLaundry
     public function layananLaundry()
     {
-        return $this->hasMany(LayananLaundry::class, 'id_merchant');
+        return $this->hasMany(LayananLaundry::class, 'merchant_id');
     }
 
     // Relasi dengan Review
