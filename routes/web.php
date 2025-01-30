@@ -86,8 +86,9 @@ Route::prefix('user')->group(function () {
     // Dashboard route
     Route::get('/dashboard', [DashboardUserController::class, 'index'])->name('user.dashboard');
     
-    //Admin register 
+    //User register 
     Route::get('/register', [RegisterUserController::class, 'index'])->name('user.register');
+    Route::post('/register', [RegisterUserController::class, 'store'])->name('user.register.submit');
 
     //Pencarian Route
     Route::get('/pencarian', [UserPencarianController::class, 'index'])->name('user.pencarian');
@@ -141,6 +142,7 @@ Route::prefix('user')->group(function () {
     
     //Merchant register 
     Route::get('/register', [RegisterMerchantController::class, 'index'])->name('merchant.register');
+    Route::post('/register', [RegisterMerchantController::class, 'store'])->name('merchant.register.submit');
 
     //Profile Route
     Route::get('/profile', [ProfileMerchantController::class, 'index'])->name('merchant.profile');
