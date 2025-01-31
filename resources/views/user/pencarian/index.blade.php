@@ -1,178 +1,160 @@
 @extends('user.components.main')
-
 @section('container')
-
-<div class="flex">
-    <div class="container-fluid login-container">
-        <div class="flex w-full">
-            <!-- Sidebar -->
-            <div class="fixed left-0 top-0 w-20 bg-white shadow-lg h-screen flex flex-col items-center py-5 space-y-8">
-                <!-- Logo -->
-                <div class="mb-8">
-                    <img src="{{ asset('images/logoGolaundry.png') }}" alt="Logo" class="w-12 h-12">
-                </div>
-
-                <!-- Navigation Items -->
-                <nav class="flex flex-col items-center space-y-6">
-                    <!-- Home -->
-                    <a href="/user/dashboard" class="p-2 hover:bg-gray-100 rounded-lg">
-                        <button class="flex items-center">
-                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path>
-                            </svg>
-                        </button>
-                    </a>
-
-                    <!-- Search -->
-                    <a href="/user/pencarian" class="p-2 hover:bg-gray-100 rounded-lg">
-                        <button class="flex items-center">
-                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
-                            </svg>
-                        </button>
-                    </a>
-
-                    <!-- Menu -->
-                    <a href="#" class="p-2 hover:bg-gray-100 rounded-lg">
-                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
-                        </svg>
-                    </a>
-
-                    <!-- History -->
-                    <a href="#" class="p-2 hover:bg-gray-100 rounded-lg">
-                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-                        </svg>
-                    </a>
-                </nav>
-
-                <!-- Bottom Icons -->
-                <div class="mt-auto flex flex-col items-center space-y-6">
-                    <!-- Settings -->
-                    <a href="#" class="p-2 hover:bg-gray-100 rounded-lg">
-                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"></path>
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
-                        </svg>
-                    </a>
-
-                    <!-- Notifications -->
-                    <a href="#" class="p-2 hover:bg-gray-100 rounded-lg">
-                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"></path>
-                        </svg>
-                    </a>
-
-                    <!-- Logout -->
-                    <a href="#" class="p-2 hover:bg-gray-100 rounded-lg mb-4">
-                        <svg class="w-6 h-6 text-red-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"></path>
-                        </svg>
-                    </a>
-                </div>
-            </div>
-
-            <!-- Main Content Container (Konten utama dan peta) -->
-            <div class="flex flex-col md:flex-row w-full ml-0">
-                <!-- Konten Pencarian (Sidebar Kanan) -->
-                <div class="w-full md:w-1/2 p-4">
-                    <div class="search-sidebar">
-                        <h5 class="text-center mb-4">248 Ready in Bandung</h5>
-                        <form action="{{ route('user.pencarian') }}" method="GET">
-                            <!-- Search Form Content -->
-                            <div class="flex justify-between mb-3">
-                                <div class="flex-grow">
-                                    <label for="location" class="block text-sm font-medium">Location</label>
-                                    <select id="location" name="location" class="w-full mt-1 p-2 border rounded-md">
-                                        <option selected>Padjajaran, Bandung</option>
-                                        <option value="1">Location 1</option>
-                                        <option value="2">Location 2</option>
-                                    </select>
-                                </div>
-                                <div class="flex-grow ml-3">
-                                    <label for="price" class="block text-sm font-medium">Price</label>
-                                    <select id="price" name="price" class="w-full mt-1 p-2 border rounded-md">
-                                        <option selected>Price</option>
-                                        <option value="low">Low to High</option>
-                                        <option value="high">High to Low</option>
-                                    </select>
-                                </div>
-                            </div>
-
-                            <div class="mb-3 flex justify-between items-center">
-                                <input type="text" name="query" class="w-full p-2 border rounded-md" placeholder="Search or type command...">
-                            </div>
-
-                            <!-- Sort & Filter Buttons -->
-                            <div class="mt-3">
-                                <div class="flex justify-between mb-3">
-                                    <div>
-                                        <button class="px-4 py-2 border rounded-md text-sm text-gray-700">Sort by Date</button>
-                                        <button class="px-4 py-2 border rounded-md text-sm text-gray-700 ml-2">Sort by Price</button>
-                                    </div>
-                                    <div>
-                                        <button class="px-4 py-2 border rounded-md text-sm text-gray-700">List</button>
-                                    </div>
-                                </div>
-
-                                <!-- Results -->
-                                <div class="search-results">
-                                    @foreach ($results as $result)
-                                    <div class="result-item mb-3 flex">
-                                        <img src="{{ $result['image'] }}" alt="Laundry Image" class="w-1/4 h-24 object-cover rounded-lg">
-                                        <div class="ml-4">
-                                            <h5 class="text-lg">{{ $result['name'] ?? 'Nama tidak tersedia' }}</h5>
-                                            <p>{{ $result['description'] }}</p>
-                                            <p class="mb-1">{{ $result['address'] ?? 'Alamat tidak tersedia' }}</p>
-                                            <p class="text-warning mb-0">
-                                                &#9733; {{ str_repeat('&#9733;', $result['rating']) }}
-                                                <span class="text-muted">({{ $result['reviews'] }} reviews)</span>
-                                            </p>
-                                        </div>
-                                    </div>
-                                    @endforeach
-                                </div>
-                            </div>
-
-                        </form>
+<div class="lg:w-1/4 hidden lg:block">
+    @include('user.components.sidebar')
+</div>
+<div class="flex flex-col md:flex-row w-full" id="mainContent">
+    <!-- Konten Pencarian (Sidebar Kiri) -->
+    <div class="w-full md:w-2/3 p-4 bg-white">
+        <div class="search-sidebar">
+            <h5 class="text-black font-bold text-lg mb-4">248 Ready in Bandung</h5>
+            <form action="{{ route('user.pencarian') }}" method="GET">
+                <div class="flex justify-between mb-3 space-x-2">
+                    <div class="flex gap-2">
+                        <select id="location" name="location" class="px-3 py-2 border rounded-md">
+                            <option selected>Padjajaran, Bandung</option>
+                            <option value="1">Location 1</option>
+                            <option value="2">Location 2</option>
+                        </select>
                     </div>
+                    <div class="flex-grow">
+                        <select id="price" name="price" class="px-3 py-2 border rounded-md">
+                            <option selected>Price</option>
+                            <option value="low">Low to High</option>
+                            <option value="high">High to Low</option>
+                        </select>
+                    </div>
+                    <button class="border rounded-md p-2 bg-white shadow-md flex items-center gap-1">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 5.75h16.5M3.75 12h16.5m-7.5 6.25h7.5" />
+                        </svg>
+                        More filter
+                    </button>
                 </div>
-
-                <!-- Konten Utama dan Peta -->
-                <div class="w-full md:w-1/2 p-4">
-                    <div class="flex flex-row">
-                        <!-- Konten Lain di Kiri -->
-                        <div class="w-1/2 mt-20">
-                            <div class="w-full">
-                                <button type="button" class="px-4 py-2 border rounded-md bg-gray-300 hover:bg-gray-400">More Filter</button>
-                                <div class="mt-2 flex">
-                                    <button type="reset" class="px-4 py-2 border rounded-md bg-gray-300 hover:bg-gray-400">Clear</button>
-                                    <button type="submit" class="px-4 py-2 border rounded-md bg-blue-500 text-white ml-2">Search</button>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Google Maps di Sebelah Kanan -->
-                        <div class="w-1/2">
-                            <div id="map" style="height: 500px;"></div>
-                        </div>
+                <div class="mb-3 flex items-center space-x-2">
+                    <input type="text" id="search-box" placeholder="Cari riwayat pesanan..." 
+                           class="border border-gray-300 rounded-lg p-2 w-full" onkeyup="searchLaundry()">
+                    <button type="reset" class="px-4 py-2 border rounded-md bg-red-500 hover:bg-gray-400 text-white shadow-md" onclick="clearSearch()">Clear</button>
+                </div>
+            </form>
+        </div>
+        <div id="laundry-list">
+            @forelse ($results as $index => $result)
+            <div class="bg-white shadow rounded-lg flex items-start p-6 laundry-item mb-2">
+            <img src="{{ asset('images/logoGolaundry.png') }}" alt="Logo"
+                alt="Image Kosong" 
+                class="w-32 h-32 rounded-md object-cover">
+            <div class="ml-6">
+                    <h2 class="text-xl font-bold text-gray-800">{{ $results[$index]['title'] ?? $result['title'] }}</h2>
+                    <div class="flex items-center mt-2">
+                        <span class="text-yellow-400 text-xl mr-1">★★★★★</span>
+                        <span class="text-gray-600 text-sm">5.0</span>
+                        <span class="text-gray-400 text-sm ml-2">125 reviews</span>
+                    </div>
+                    <div class="flex items-center mt-1 text-sm text-gray-600">
+                        <span>laundry by {{ $results[$index]['title'] ?? $result['title'] }}</span>
+                    </div>
+                    <!-- Flex untuk lokasi & tombol -->
+                    <div class="flex items-center justify-between mt-1 text-sm text-gray-600 w-full">
+                        <span mb-2>{{ $results[$index]['location'] ?? $result['location'] }}</span>
+                    </div>
+                    <div>
+                    <button class="chatSellerBtn px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 right-4 ">Order Laundry</button>
                     </div>
                 </div>
             </div>
+            @empty
+            <p class="text-gray-600">Tidak ada data ditemukan.</p>
+            @endforelse
         </div>
     </div>
+    <div class="flex-1 p-4 bg-white">
+        <div id="map-container" class="h-screen w-full">
+            <iframe src="https://maps.google.com/maps?q=Monas%20Jakarta&t=&z=13&ie=UTF8&iwloc=&output=embed"
+                class="w-full h-full rounded-md" frameborder="0"></iframe>
+        </div>
+    </div>
+</div>
 
-    <!-- Tambahkan script untuk Google Maps -->
-    <script>
-    function initMap() {
-        var mapOptions = {
-            center: {lat: -34.397, lng: 150.644},
-            zoom: 8
-        };
-        var map = new google.maps.Map(document.getElementById("map"), mapOptions);
+<!-- Overlay for the form -->
+<div id="overlay" class="fixed top-0 left-0 w-full h-full bg-black bg-opacity-50 hidden z-10">
+    <div id="orderForm" class="bg-white w-full md:w-1/2 mx-auto p-6 rounded-lg shadow-lg mt-24">
+        <h1 class="text-2xl font-bold text-center text-blue-600">Form Pemesanan Laundry</h1>
+        
+        <form id="orderFormElement" class="mt-4">
+            <label class="block text-gray-700 font-medium">Pilih Jenis Layanan</label>
+            <select name="layanan" class="w-full p-2 border rounded-lg mt-1">
+                <option>Cuci Biasa</option>
+                <option>Setrika</option>
+                <option>Ekspres</option>
+            </select>
+            
+            <label class="block text-gray-700 font-medium mt-3">Jumlah Cucian (kg/item)</label>
+            <input type="number" name="jumlah" class="w-full p-2 border rounded-lg mt-1" placeholder="Masukkan berat/jumlah item">
+            
+            <label class="block text-gray-700 font-medium mt-3">Catatan Tambahan</label>
+            <input type="text" name="catatan" class="w-full p-2 border rounded-lg mt-1" placeholder="Misal: Jangan pakai pewangi">
+            
+            <div class="mt-4">
+                <h2 class="text-lg font-bold">Detail Harga + Ongkos Kirim</h2>
+                <p class="text-gray-600">Harga akan dihitung berdasarkan berat dan layanan yang dipilih.</p>
+            </div>
+            
+            <label class="block text-gray-700 font-medium mt-3">Metode Pembayaran</label>
+            <select name="pembayaran" class="w-full p-2 border rounded-lg mt-1">
+                <option>QRIS</option>
+                <option>COD (Cash on Delivery)</option>
+            </select>
+            
+            <button type="submit" class="w-full bg-blue-600 text-white p-2 rounded-lg mt-4 hover:bg-blue-700">Confirm Pesanan</button>
+        </form>
+        
+        <button id="closeFormBtn" class="mt-4 w-full text-center bg-red-500 text-white p-2 rounded-lg hover:bg-red-600">Close</button>
+    </div>
+</div>
+
+<script>
+    // Handle the display of the form and blur effect on main content
+    const chatSellerBtns = document.querySelectorAll('.chatSellerBtn');
+    chatSellerBtns.forEach(function(chatSellerBtn) {
+        chatSellerBtn.addEventListener('click', function() {
+            // Show the overlay and form, and apply blur to the main content
+            overlay.classList.remove('hidden');
+            mainContent.style.filter = 'blur(5px)';
+        });
+    });
+    function searchLaundry() {
+        const searchValue = document.getElementById('search-box').value.toLowerCase();
+        const items = document.querySelectorAll('.laundry-item');
+        
+        items.forEach(item => {
+            const itemText = item.innerText.toLowerCase();
+            item.style.display = itemText.includes(searchValue) ? '' : 'none';
+        });
     }
-    </script>
-    <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_GOOGLE_MAPS_API_KEY&callback=initMap" async defer></script>
 
+    function clearSearch() {
+        document.getElementById('search-box').value = '';
+        searchLaundry();
+    }
+    
+    document.querySelectorAll('.chatSellerBtn').forEach(button => {
+        button.addEventListener('click', () => {
+            document.getElementById('overlay').classList.remove('hidden');
+            document.getElementById('mainContent').style.filter = 'blur(5px)';
+        });
+    });
+    
+    document.getElementById('closeFormBtn').addEventListener('click', () => {
+        document.getElementById('overlay').classList.add('hidden');
+        document.getElementById('mainContent').style.filter = 'none';
+    });
+
+    document.getElementById('orderFormElement').addEventListener('submit', event => {
+        event.preventDefault();
+        alert('Pesanan berhasil dikonfirmasi!');
+        document.getElementById('overlay').classList.add('hidden');
+        document.getElementById('mainContent').style.filter = 'none';
+    });
+</script>
 @endsection

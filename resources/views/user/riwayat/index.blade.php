@@ -1,124 +1,104 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Riwayat Pesanan - Go Laundry</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <style>
-        .status-selesai {
-            color: #28a745;
-            background-color: #d4edda;
-            border-radius: 15px;
-            padding: 5px 10px;
-            font-size: 0.9em;
-        }
-        .status-dilaundry {
-            color: #dc3545;
-            background-color: #f8d7da;
-            border-radius: 15px;
-            padding: 5px 10px;
-            font-size: 0.9em;
-        }
-        .reorder-btn {
-            background-color: #f8f9fa;
-            border: 1px solid #dee2e6;
-            border-radius: 5px;
-            padding: 5px 10px;
-        }
-    </style>
-</head>
-<body class="bg-light">
-    <div class="container mt-4">
-        <div class="card">
-            <div class="card-body">
-                <h4 class="mb-3">Riwayat Pesanan</h4>
-                
-                <div class="date-filter mb-4">
-                    <select class="form-select w-auto">
-                        <option>Apr 1 - Apr 30 2024</option>
-                    </select>
-                </div>
 
-                <div class="table-responsive">
-                    <table class="table">
-                        <thead>
-                            <tr>
-                                <th>No</th>
-                                <th>Nama</th>
-                                <th>Amount</th>
-                                <th>Date</th>
-                                <th>Status</th>
-                                <th>Total Price</th>
-                                <th>Reorder</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>1</td>
-                                <td>Baju</td>
-                                <td>3 Pcs</td>
-                                <td>02 Apr</td>
-                                <td><span class="status-selesai">Selesai</span></td>
-                                <td>30.000</td>
-                                <td><button class="reorder-btn">↻</button></td>
-                            </tr>
-                            <tr>
-                                <td>2</td>
-                                <td>Celana</td>
-                                <td>5 Pcs</td>
-                                <td>05 Apr</td>
-                                <td><span class="status-dilaundry">Dilaundry</span></td>
-                                <td>23.679</td>
-                                <td><button class="reorder-btn">↻</button></td>
-                            </tr>
-                            <tr>
-                                <td>3</td>
-                                <td>Handuk</td>
-                                <td>1 Pcs</td>
-                                <td>07 Apr</td>
-                                <td><span class="status-selesai">Selesai</span></td>
-                                <td>30.000</td>
-                                <td><button class="reorder-btn">↻</button></td>
-                            </tr>
-                            <tr>
-                                <td>4</td>
-                                <td>Baju</td>
-                                <td>5 Pcs</td>
-                                <td>10 Apr</td>
-                                <td><span class="status-selesai">Selesai</span></td>
-                                <td>15.000</td>
-                                <td><button class="reorder-btn">↻</button></td>
-                            </tr>
-                            <tr>
-                                <td>5</td>
-                                <td>Celana</td>
-                                <td>3 Pcs</td>
-                                <td>15 Apr</td>
-                                <td><span class="status-dilaundry">Dilaundry</span></td>
-                                <td>25.000</td>
-                                <td><button class="reorder-btn">↻</button></td>
-                            </tr>
-                            <tr>
-                                <td>6</td>
-                                <td>Handuk</td>
-                                <td>5 Pcs</td>
-                                <td>20 Apr</td>
-                                <td><span class="status-dilaundry">Dilaundry</span></td>
-                                <td>10.456</td>
-                                <td><button class="reorder-btn">↻</button></td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
+@extends('user.components.main')
+@section('container')
+@include('user.components.sidebar')
+<!-- Search Box -->
+<div class="container-fluid mx-auto mt-4">
+            <div class="mb-4">
+                <input type="text" id="search-box" placeholder="Cari riwayat pesanan..." 
+                       class="border border-gray-300 rounded-lg p-2 w-full">
+            </div>
+            </div>
+    <!--main content-->
+    <div class="flex-grow ml-15">
+        <h1 class="text-2xl font-semibold ">Riwayat Pesanan</h1>
+        <div class="container-fluid mx-auto mt-4">
+            <div class="bg-white shadow rounded-lg">
+                <div class="p-4">
+                    <div class="mb-4">
+                        <select class="border border-gray-300 rounded-lg p-2">
+                            <option>Apr 1 - Apr 30 2024</option>
+                        </select>
+                    </div>
+                    <div class="overflow-x-auto">
+                        <table class="w-full border-collapse border border-gray-300">
+                            <thead class="bg-gray-100">
+                                <tr>
+                                    <th class="border border-gray-300 px-4 py-2 text-center align-middle">No</th>
+                                    <th class="border border-gray-300 px-4 py-2 text-center align-middle">Nama laundry</th>
+                                    <th class="border border-gray-300 px-4 py-2 text-center align-middle">Amount</th>
+                                    <th class="border border-gray-300 px-4 py-2 text-center align-middle">Date</th>
+                                    <th class="border border-gray-300 px-4 py-2 text-center align-middle">Status</th>
+                                    <th class="border border-gray-300 px-4 py-2 text-center align-middle">Total Price</th>
+                                    <th class="border border-gray-300 px-4 py-2 text-center align-middle">Reorder</th>
+                                </tr>
+                            </thead>
+                            <tbody id="order-history-container">
+                                @forelse ($riwayatPesanan as $index => $pesanan)
+                                <tr class="text-center {{ $index >= 3 ? 'hidden' : '' }}" data-item-index="{{ $index }}">
+                                    <td class="border border-gray-300 px-4 py-2">{{ $loop->iteration }}</td>
+                                    <td class="border border-gray-300 px-4 py-2">{{ $pesanan['nama'] }}</td>
+                                    <td class="border border-gray-300 px-4 py-2">{{ $pesanan['amount'] }}</td>
+                                    <td class="border border-gray-300 px-4 py-2">{{ $pesanan['date'] }}</td>
+                                    <td class="border border-gray-300 px-4 py-2">
+                                        @if ($pesanan['status'] == 'Selesai')
+                                            <span class="px-2 py-1 bg-green-100 text-green-700 rounded-lg">{{ $pesanan['status'] }}</span>
+                                        @else
+                                            <span class="px-2 py-1 bg-yellow-100 text-yellow-700 rounded-lg">{{ $pesanan['status'] }}</span>
+                                        @endif
+                                    </td>
+                                    <td class="border border-gray-300 px-4 py-2">{{ number_format($pesanan['total_price'], 0, ',', '.') }}</td>
+                                    <td class="border border-gray-300 px-4 py-2">
+                                        <form action="{{ route('riwayat.reorder', $pesanan['id']) }}" method="POST">
+                                            @csrf
+                                            <button class="px-3 py-1 bg-blue-500 text-white rounded-lg" type="submit">↻ Reorder</button>
+                                        </form>
+                                    </td>
+                                </tr>
+                                @empty
+                                <tr>
+                                    <td colspan="7" class="text-center border border-gray-300 px-4 py-2">Tidak ada riwayat pesanan.</td>
+                                </tr>
+                                @endforelse
+                            </tbody>
+                        </table>
+                    </div>
 
-                <div class="text-center mt-3">
-                    <button class="btn btn-link">View All</button>
+                    <div class="text-center mt-4">
+                        <button id="view-more-button" class="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600">View All</button>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-</body>
-</html>
+        <script>
+            // Search functionality
+            document.getElementById('search-box').addEventListener('input', function() {
+                const searchValue = this.value.toLowerCase();
+                const rows = document.querySelectorAll('#order-history-container tr');
+                
+                rows.forEach(row => {
+                    const rowText = row.innerText.toLowerCase();
+                    row.style.display = rowText.includes(searchValue) ? '' : 'none';
+                });
+            });
+
+            // View More functionality
+            document.getElementById('view-more-button').addEventListener('click', function() {
+                let hiddenRows = document.querySelectorAll('#order-history-container .hidden');
+                let count = 0;
+
+                hiddenRows.forEach(function(row) {
+                    if (count < 3) {
+                        row.classList.remove('hidden');
+                        count++;
+                    }
+                });
+
+                if (document.querySelectorAll('#order-history-container .hidden').length === 0) {
+                    this.style.display = 'none';
+                }
+            });
+        </script>
+    </div>
+@endsection

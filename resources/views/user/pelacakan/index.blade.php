@@ -1,37 +1,64 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pelacakan</title>
-    <style>
-        body { font-family: Arial, sans-serif; }
-        .pelacakan-container { max-width: 800px; margin: 0 auto; padding: 20px; border: 1px solid #ccc; }
-        .pelacakan-header { margin-bottom: 20px; }
-        .pelacakan-item { border-bottom: 1px solid #ddd; padding: 10px 0; }
-        .pelacakan-item img { width: 50px; height: 50px; object-fit: cover; }
-        .pelacakan-item .details { margin-left: 10px; }
-    </style>
-</head>
-<body>
-    <div class="pelacakan-container">
-        <div class="pelacakan-header">
-            <h1>Pelacakan ID: {{ $pelacakan['id'] }}</h1>
-            <p>{{ $pelacakan['date'] }} from {{ $pelacakan['source'] }}</p>
-            <p>Status: <strong>{{ $pelacakan['status'] }}</strong></p>
+@extends('user.components.main')
+@section('container')
+<div class="lg:w-1/4 hidden lg:block">
+      @include('user.components.sidebar')
+</div>
+<!-- Main Content -->
+<div class="max-w-full mx-auto bg-white shadow-lg rounded-lg overflow-hidden">
+    <!-- Header -->
+    <div class="p-10 border-b border-gray-200">
+        <h1 class="text-2xl font-bold">Order ID: {{ $order['id'] }}</h1>
+        <div class="flex items-center justify-between mt-2">
+            <p class="text-gray-600">{{ $order['date'] }} at {{ $order['time'] }} from {{ $order['seller'] }}</p>
+            <span class="px-4 py-1 text-sm font-semibold text-white bg-green-500 rounded-full">{{ $order['status'] }}</span>
         </div>
+    </div>
 
-        @foreach ($pelacakan['items'] as $item)
-            <div class="pelacakan-item">
-                <img src="{{ asset('images/' . $item['image']) }}" alt="{{ $item['name'] }}">
-                <div class="details">
-                    <h2>{{ $item['name'] }} ({{ $item['quantity'] }} pcs)</h2>
-                    <p>{{ $item['details'] }} - Color: {{ $item['color'] }}</p>
-                    <p>Status: {{ $item['status'] }}</p>
-                    <p>Price: {{ $item['quantity'] }} x Rp {{ number_format($item['price_per_item'], 0, ',', '.') }}</p>
+    <!-- Order Items -->
+    <div id="order-items-container">
+        @foreach ($order['items'] as $index => $item)
+        <div class="flex flex-col md:flex-row items-start p-6 border-b last:border-none {{ $index >= 3 ? 'hidden' : '' }}" data-item-index="{{ $index }}">
+            <!-- Image Placeholder -->
+            <div class="w-20 h-20 bg-gray-200 rounded-md flex items-center justify-center">
+                <img src="{{ file_exists(public_path('images/' . strtolower($item['name']) . '.jpg')) 
+                    ? asset('images/' . strtolower($item['name']) . '.jpg') 
+                    : asset('images/logoGolaundry.png') }}" 
+                    alt="{{ $item['name'] }}" 
+                    class="object-cover rounded-md" />
+            </div>
+                <!-- Item Details -->
+                <div class="flex-1 ml-4">
+                    <h2 class="text-lg font-bold">{{ $item['name'] }}</h2>
+                    <p class="text-gray-600">{{ $item['quantity'] }} Pcs - <span class="text-black">{{ $item['color'] }}</span></p>
+                    @if ($item['note'])
+                    <p class="text-sm text-gray-500 mt-2">{{ $item['note'] }}</p>
+                    @endif
+                </div>
+
+                <!-- Pricing and Action -->
+                <div class="text-right">
+                    <!-- Status dipindahkan ke atas price -->
+                    <span class="inline-block px-3 py-1 text-xs font-semibold {{ $item['status'] === 'Selesai' ? 'bg-green-200 text-green-800' : ($item['status'] === 'Waiting' ? 'bg-yellow-200 text-yellow-800' : 'bg-blue-200 text-blue-800') }} rounded-full mb-2">{{ $item['status'] }}</span>
+                    <p class="font-semibold text-gray-800">{{ $item['quantity'] }} x Rp.{{ number_format($item['price_per_item'], 0, ',', '.') }}</p>
+                    <p class="font-bold text-gray-900">Rp.{{ number_format($item['quantity'] * $item['price_per_item'], 0, ',', '.') }}</p>
+                    <button class="mt-4 px-4 py-2 text-sm font-semibold text-white bg-red-500 hover:bg-blue-600 rounded-md">Chat seller</button>
                 </div>
             </div>
         @endforeach
+        <div class="d-flex justify-content-center bottom-0 w-100 mb-5">
+        <button id="view-all-button" class="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600">View All</button>
+        </div>
     </div>
-</body>
-</html>
+    
+   
+    <script>
+    document.getElementById('view-all-button').addEventListener('click', function() {
+        document.querySelectorAll('#order-items-container [data-item-index]').forEach(function(item) {
+            item.classList.remove('hidden');
+        });
+        this.style.display = 'none';
+    });
+</script>
+@endsection
+
+

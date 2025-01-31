@@ -7,20 +7,20 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\User;
 
-class DashboardController extends Controller
+class UserDashboardController extends Controller
 {
     public function index()
-    {
-        $user = Auth::user();
-        $orders = $user->orders();
-        
-        $washCount = $orders->where('status', 'wash')->count();
-        $dryCount = $orders->where('status', 'dry')->count();
-        $ironCount = $orders->where('status', 'iron')->count();
-        $doneCount = $orders->where('status', 'done')->count();
-        
-        return view('user.dashboard.index', compact('washCount', 'dryCount', 'ironCount', 'doneCount'));
-    }
+{
+    $user = Auth::user(); 
+    $orders = $user->orders();
+    
+    $washCount = $orders->where('status', 'wash')->count();
+    $dryCount = $orders->where('status', 'dry')->count();
+    $ironCount = $orders->where('status', 'iron')->count();
+    $doneCount = $orders->where('status', 'done')->count();
+    
+    return view('user.dashboard.index', compact('washCount', 'dryCount', 'ironCount', 'doneCount', 'user'));
+}
 
     public function profile()
     {

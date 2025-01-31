@@ -28,10 +28,12 @@
                     Log-in untuk menemukan layanan laundry terbaik sesuai kebutuhan Anda dengan mudah dan cepat.
                 </p>
                 <div class="mt-auto">
-                    <button
-                        class="w-64 h-12 rounded-3xl bg-[#0039c9] text-xs text-white hover:bg-[#002fa3] transition-colors">
-                        MASUK SEBAGAI PELANGGAN
+                    <a href="{{ url('user/login/') }}">
+                        <button
+                            class="w-64 h-12 rounded-3xl bg-[#0039c9] text-xs text-white hover:bg-[#002fa3] transition-colors">
+                                MASUK SEBAGAI PELANGGAN
                     </button>
+                    </a>
                 </div>
             </div>
             <!-- Kemitraan Card -->
@@ -42,10 +44,12 @@
                     Log-in untuk memantau usaha laundry Anda dan terhubung dengan lebih banyak pelanggan
                 </p>
                 <div class="mt-auto">
-                    <button
-                        class="w-64 h-12 px-2 rounded-3xl bg-[#0039c9] text-xs text-white hover:bg-[#002fa3] transition-colors">
-                        MASUK SEBAGAI KEMITRAAN
-                    </button>
+                    <a href="{{ url('merchant/login/') }}">
+                        <button
+                            class="w-64 h-12 px-2 rounded-3xl bg-[#0039c9] text-xs text-white hover:bg-[#002fa3] transition-colors">
+                            MASUK SEBAGAI KEMITRAAN
+                        </button>
+                    </a>
                 </div>
             </div>
             <!-- Admin Card -->
@@ -56,10 +60,12 @@
                     Log-in untuk mengelola aplikasi dan menjaga layanan tetap profesional sebagai penghubung terpercaya.
                 </p>
                 <div class="mt-auto">
-                    <button
-                        class="w-64 h-12 px-2 rounded-3xl bg-[#0039c9] text-xs text-white hover:bg-[#002fa3] transition-colors">
-                        MASUK SEBAGAI ADMIN
-                    </button>
+                    <a href="{{ url('admin/login/') }}">
+                        <button
+                            class="w-64 h-12 px-2 rounded-3xl bg-[#0039c9] text-xs text-white hover:bg-[#002fa3] transition-colors">
+                            MASUK SEBAGAI ADMIN
+                        </button>
+                    </a>
                 </div>
             </div>
         </div>

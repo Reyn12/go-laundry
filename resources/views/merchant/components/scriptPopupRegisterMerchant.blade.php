@@ -1,74 +1,111 @@
 <script>
-    const form = document.getElementById('signupForm');
-
-    // Fungsi validasi
-    function validateForm() {
-        const inputs = {
-            firstName: form.querySelector('input[name="firstName"]'),
-            lastName: form.querySelector('input[name="lastName"]'),
-            email: form.querySelector('input[name="email"]'),
-            password: form.querySelector('input[name="password"]'),
-            confirmPassword: form.querySelector('input[name="confirmPassword"]'),
-            laundryName: form.querySelector('input[name="laundryName"]'),
-            laundryAddress: form.querySelector('input[name="laundryAddress"]'),
-            description: form.querySelector('textarea[name="description"]'),
-            operationalHours: form.querySelector('input[name="operationalHours"]'),
-            services: form.querySelectorAll('input[name="services"]:checked'),
-            laundryPhoto: form.querySelector('input[name="laundryPhoto"]'),
-            terms: form.querySelector('input[name="terms"]')
-        };
-
-        let isValid = true;
-
-        // Reset semua error sebelumnya
-        form.querySelectorAll('.border-red-500').forEach(input => input.classList.remove('border-red-500'));
-        form.querySelectorAll('.error-message').forEach(msg => msg.remove());
-
-        // Fungsi untuk menambahkan pesan error
-        function showError(input, message) {
-            isValid = false;
-            input.classList.add('border-red-500');
-            const errorMessage = document.createElement('p');
-            errorMessage.className = 'text-red-500 text-sm mt-1 error-message';
-            errorMessage.textContent = message;
-            input.parentNode.appendChild(errorMessage);
-        }
-
-        // Validasi masing-masing field
-        if (!inputs.firstName.value.trim()) showError(inputs.firstName, 'Nama depan wajib diisi.');
-        if (!inputs.lastName.value.trim()) showError(inputs.lastName, 'Nama belakang wajib diisi.');
-        if (!inputs.email.value.trim() || !inputs.email.value.includes('@')) showError(inputs.email, 'Masukkan email yang valid.');
-        if (!inputs.password.value || inputs.password.value.length < 8) showError(inputs.password, 'Password harus minimal 8 karakter.');
-        if (inputs.confirmPassword.value !== inputs.password.value) showError(inputs.confirmPassword, 'Konfirmasi password harus sama.');
-        if (!inputs.laundryName.value.trim()) showError(inputs.laundryName, 'Nama laundry wajib diisi.');
-        if (!inputs.laundryAddress.value.trim()) showError(inputs.laundryAddress, 'Alamat laundry wajib diisi.');
-        if (!inputs.description.value.trim()) showError(inputs.description, 'Deskripsi wajib diisi.');
-        if (!inputs.operationalHours.value.trim()) showError(inputs.operationalHours, 'Jam operasional wajib diisi.');
-        if (inputs.services.length === 0) showError(form.querySelector('input[name="services"]'), 'Pilih minimal satu layanan.');
-        if (!inputs.laundryPhoto.files.length) showError(inputs.laundryPhoto, 'Upload foto laundry wajib dilakukan.');
-        if (!inputs.terms.checked) showError(inputs.terms, 'Anda harus menyetujui syarat & ketentuan.');
-
-        return isValid;
-    }
-
-    function showPopup() {
-        document.getElementById('popupOverlay').style.display = 'flex';
-    }
-
-    function closePopup() {
-        document.getElementById('popupOverlay').style.display = 'none';
-    }
-
-    function goToLogin() {
-        window.location.href = '/merchant/login'; // Ganti URL sesuai dengan halaman login Anda
-    }
-
-    // Tambahkan ke form submit event listener
-    form.addEventListener('submit', function (e) {
-        e.preventDefault();
-
-        if (validateForm()) {
-            showPopup();
+    // Setup CSRF token untuk semua request AJAX
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
         }
     });
+
+    // Handle form submission
+    $('#merchantForm').on('submit', function(e) {
+        e.preventDefault();
+        
+        // Disable tombol submit
+        var submitButton = $(this).find('button[type="submit"]');
+        if (submitButton.prop('disabled')) {
+            return; // Jika tombol sudah disabled, jangan submit lagi
+        }
+        submitButton.prop('disabled', true);
+        
+        // Kirim form
+        var formData = new FormData(this);
+        $.ajax({
+            url: '{{ route("merchant.register.submit") }}',
+            type: 'POST',
+            data: formData,
+            processData: false,
+            contentType: false,
+            success: function(response) {
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Berhasil!',
+                    text: 'Proses pengajuan pembukaan toko kamu sedang kami proses ya',
+                    confirmButtonText: 'Login Sekarang'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        window.location.href = '/merchant/login';
+                    }
+                });
+            },
+            error: function(xhr) {
+                submitButton.prop('disabled', false);
+                var errorMessage = 'Terjadi kesalahan saat registrasi';
+                
+                if (xhr.responseJSON && xhr.responseJSON.errors) {
+                    errorMessage = Object.values(xhr.responseJSON.errors)[0][0];
+                }
+                
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Oops...',
+                    text: errorMessage
+                });
+            }
+        });
+    });
+
+    // Validasi email saat input
+    $('input[name="email"]').on('input', function() {
+        var email = $(this).val();
+        var emailError = $('#emailError');
+        
+        if (email && !email.endsWith('@gmail.com')) {
+            emailError.removeClass('hidden');
+            $(this).addClass('border-red-500');
+        } else {
+            emailError.addClass('hidden');
+            $(this).removeClass('border-red-500');
+        }
+    });
+
+    // Validasi nomor telepon saat input
+    $('input[name="phone"]').on('input', function() {
+        this.value = this.value.replace(/[^0-9]/g, '');
+    });
+
+    // Event untuk membuka modal syarat dan ketentuan
+    $('#showTerms').on('click', function(e) {
+        e.preventDefault();
+        $('#termsModal').modal('show');
+    });
+
+    // Event untuk menutup modal syarat dan ketentuan
+    // Show modal
+    document.querySelector('[data-modal-trigger]').addEventListener('click', function(e) {
+                        e.preventDefault();
+                        document.getElementById('modal-backdrop').classList.remove('hidden');
+                        document.getElementById('termsModal').classList.remove('hidden');
+                    });
+
+                    // Hide modal
+                    function hideModal() {
+                        document.getElementById('modal-backdrop').classList.add('hidden');
+                        document.getElementById('termsModal').classList.add('hidden');
+                    }
+
+                    // Close button
+                    document.getElementById('closeModal').addEventListener('click', hideModal);
+
+                    // Agree button
+                    document.getElementById('agreeButton').addEventListener('click', function() {
+                        document.getElementById('agreement').checked = true;
+                        hideModal();
+                    });
+
+                    // Close when clicking outside
+                    document.getElementById('termsModal').addEventListener('click', function(e) {
+                        if (e.target === this) {
+                            hideModal();
+                        }
+                    });
 </script>

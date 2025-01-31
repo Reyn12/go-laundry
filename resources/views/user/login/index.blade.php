@@ -1,57 +1,77 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Go Laundry Login</title>
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
-
-<body class="bg-indigo-900">
-    <div class="flex items-center justify-center min-h-screen px-4">
-        <div class="flex flex-col lg:flex-row items-center lg:items-stretch w-full max-w-4xl bg-white bg-opacity-80 rounded-lg shadow-lg overflow-hidden">
+<body class="bg-blue-900 m-0">
+    <div class="flex items-center justify-center h-screen">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-5 w-10/12 max-w-23xl">
             <!-- Image Section -->
-            <div class="w-full lg:w-1/2 flex flex-col items-center justify-center bg-indigo-800 bg-opacity-90 py-20 px-20">
-                <h1 class="text-4xl font-bold text-white mb-6 text-center">GO LAUNDRYY</h1>
-                <img src="{{ asset('images/washing-machine.png') }}" alt="Laundry" class="w-48 sm:w-64 transform transition-transform duration-300 hover:scale-110">
+            <div class="flex flex-col items-center justify-center text-white">
+                <h1 class="text-5xl font-bold drop-shadow-lg mb-8">GO LAUNDRYY</h1>
+                <img src="{{ asset('images/washing-machine.png') }}" alt="Laundry" class="hover:scale-110 transition-transform duration-300">
             </div>
             <!-- Login Form Section -->
-            <div class="w-full lg:w-1/2 flex items-center justify-center py-8 px-6">
-                <div class="w-full max-w-sm">
-                    <h2 class="text-3xl font-bold text-center mb-6">Welcome Back!</h2>
-                    <form action="" method="POST">
-                        <div class="mb-4">
-                            <label for="username" class="block text-gray-700 font-medium mb-2">Username</label>
-                            <input type="text" id="username" class="w-full px-4 py-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500" placeholder="Masukkan Username" required>
-                        </div>
-                        <div class="mb-4">
-                            <label for="password" class="block text-gray-700 font-medium mb-2">Password</label>
-                            <input type="password" id="password" class="w-full px-4 py-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500" placeholder="Masukkan Password" required>
-                        </div>
-                        <div class="mb-4 flex items-center">
-                            <input type="checkbox" id="remember" class="w-4 h-4 text-indigo-600 border-gray-300 rounded focus:ring-indigo-500">
-                            <label for="remember" class="ml-2 text-gray-600">Ingat Saya</label>
-                        </div>
-                        <div class="mb-6">
-                            <button type="button" class="w-full bg-indigo-600 text-white py-3 rounded-lg hover:bg-indigo-700 transition" onclick="window.location.href='/user/dashboard';">Login</button>
-                        </div>
-                        <div class="text-center">
-                            <a href="#" class="text-indigo-600 hover:underline">Lupa Password</a>
-                        </div>
-                        <div class="mt-4 text-center">
-                            <button type="button" class="flex items-center justify-center w-full bg-gray-100 text-gray-700 py-3 rounded-lg border hover:bg-gray-200 transition">
-                                <img src="https://img.icons8.com/color/48/000000/google-logo.png" width="20" class="mr-2"> Sign In with Google
-                            </button>
-                        </div>
-                        <div class="mt-4 text-center">
-                            <small class="text-gray-600">Belum punya akun? <a href="#" class="text-indigo-600 hover:underline">Daftar Sekarang!</a></small>
-                        </div>
+            <div class="bg-white rounded-lg shadow-lg p-20 flex items-center justify-center">
+                <div class="w-full max-w-md">
+                    <h2 class="text-3xl font-bold text-center mb-8">Welcome Back!</h2>
+                    <form action="{{ route('login_proses') }}" method="post" class="space-y-4">
+                    @csrf
+                    <div>
+                    <label for="username" class="block text-sm font-medium text-gray-700">Username</label>
+                     <input type="text" id="username" name="username" class="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500" placeholder="Masukkan Username" required>
+                    </div>
+                    @error('username')
+                        <small>{{ $message }}</small>
+                    @enderror
+                    <div>
+                    <label for="password" class="block text-sm font-medium text-gray-700">Password</label>
+                     <input type="password" id="password" name="password" class="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500" placeholder="Masukkan Password" required>
+                    </div>
+                    @error('password')
+                        <small>{{ $message }}</small>
+                    @enderror
+                    <div class="flex items-center">
+                    <input type="checkbox" id="remember" class="h-4 w-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500">
+                    <label for="remember" class="ml-2 block text-sm text-gray-700">Ingat Saya</label>
+                    </div>
+                    <div>
+                    <button type="submit" class="w-full bg-blue-600 text-white font-bold py-2 px-4 rounded hover:bg-blue-700 transition-colors">Login</button>
+                    </div>
+                    <div class="text-center mt-3">
+                        <a href="#" class="text-blue-600 hover:underline">Lupa Password</a>
+                    </div>
+                    <div class="text-center mt-3">
+                        <button type="button" class="w-full bg-gray-100 text-gray-700 font-medium py-2 px-4 rounded flex items-center justify-center hover:bg-gray-200 transition-colors">
+                            <img src="https://img.icons8.com/color/48/000000/google-logo.png" width="20" class="mr-2">Sign In with Google
+                        </button>
+                    </div>
+                    <div class="text-center mt-3">
+                        <small>Belum punya akun? <a href="/user/register" class="text-blue-600 hover:underline">Daftar Sekarang!</a></small>
+                    </div>
                     </form>
                 </div>
             </div>
         </div>
     </div>
-</body>
+    <script src="{{ asset('plugins/jquery/jquery.min.js') }}"></script>
+    <script src="{{ asset('plugins/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
+    <script src="{{ asset('dist/js/adminlte.min.js') }}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
+    @if ($message = Session::get('success'))
+        <script>
+            Swal.fire('{{ $message }}');
+        </script>
+    @endif
+
+    @if ($message = Session::get('failed'))
+        <script>
+            Swal.fire('{{ $message }}');
+        </script>
+    @endif
+</body>
 </html>

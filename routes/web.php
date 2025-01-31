@@ -7,6 +7,11 @@ use App\Http\Controllers\AdminController\RegisterController;
 use App\Http\Controllers\UserController\LoginUserController;
 use App\Http\Controllers\UserController\DashboardUserController;
 use App\Http\Controllers\UserController\RegisterUserController;
+use App\Http\Controllers\UserController\UserPencarianController;
+use App\Http\Controllers\UserController\UserRiwayatController;
+use App\Http\Controllers\UserController\UserPelacakanController;
+use App\Http\Controllers\UserController\UserUlasanController;
+use App\Http\Controllers\UserController\PelacakanController;
 use App\Http\Controllers\MerchantController\RegisterMerchantController;
 use App\Http\Controllers\MerchantController\DashboardMerchantController;
 use App\Http\Controllers\MerchantController\LoginMerchantController;
@@ -19,6 +24,7 @@ use App\Http\Controllers\MerchantController\PenarikanSaldoMerchantController;
 
 use App\Http\Controllers\AdminController\UserManageController;
 use App\Http\Controllers\AdminController\MerchantManageController;
+// use App\Http\Controllers\UserController\OrderController;
 
 /*
 |--------------------------------------------------------------------------
@@ -45,26 +51,35 @@ Route::get('/masuk', function () {
 
 // Admin Routes
 Route::prefix('admin')->group(function () {
+    // Public routes (tidak perlu login)
     Route::get('/login', function () {
         return view('admin.login.index');
-    });
+    })->name('admin.login');
     Route::post('/login', [LoginController::class, 'login']);
-    
-    // Dashboard route
-    Route::get('/dashboard', [DashboardAdminController::class, 'index'])->name('admin.dashboard');
 
-    // User Management route
-    Route::get('/dashboard/user-manage', [UserManageController::class, 'index'])->name('admin.dashboard.user-manage.index');
-   
-    // Merchant Management routes
-    Route::prefix('dashboard/merchant-manage')->group(function () {
-        Route::get('/', [MerchantManageController::class, 'index'])->name('admin.dashboard.merchant-manage.index');
-        Route::get('/all', [MerchantManageController::class, 'all'])->name('admin.dashboard.merchant-manage.all');
-        Route::get('/pending', [MerchantManageController::class, 'pending'])->name('admin.dashboard.merchant-manage.pending');
-    });
-
-    //Admin register 
+    // Admin Register
     Route::get('/register', [RegisterController::class, 'index'])->name('admin.register');
+    Route::post('/register', [RegisterController::class, 'store'])->name('admin.register.submit');
+    
+    // Protected routes (perlu login dan role admin)
+    Route::middleware(['auth', 'admin'])->group(function () {
+        // Logout route
+        Route::post('/logout', [LoginController::class, 'logout'])->name('admin.logout');
+
+        // Dashboard route
+        Route::get('/dashboard', [DashboardAdminController::class, 'index'])->name('admin.dashboard');
+
+        // User Management route
+        Route::get('/dashboard/user-manage', [UserManageController::class, 'index'])->name('admin.dashboard.user-manage.index');
+
+        // Merchant Management routes
+        Route::prefix('dashboard/merchant-manage')->group(function () {
+            Route::get('/', [MerchantManageController::class, 'index'])->name('admin.dashboard.merchant-manage.index');
+            Route::get('/all', [MerchantManageController::class, 'all'])->name('admin.dashboard.merchant-manage.all');
+            Route::get('/pending', [MerchantManageController::class, 'pending'])->name('admin.dashboard.merchant-manage.pending');
+            Route::get('/verified', [MerchantManageController::class, 'verified'])->name('admin.dashboard.merchant-manage.verified');
+        });
+    });
 });
 
 // User Routes
@@ -72,27 +87,67 @@ Route::prefix('user')->group(function () {
     Route::get('/login', function () {
         return view('user.login.index');
     });
-    Route::post('/login', [LoginUserController::class, 'login']);
-    
+    Route::post('/login_proses', [LoginUserController::class, 'login_proses'])->name('login_proses');
     // Dashboard route
     Route::get('/dashboard', [DashboardUserController::class, 'index'])->name('user.dashboard');
     
-    //Admin register 
+    //User register 
     Route::get('/register', [RegisterUserController::class, 'index'])->name('user.register');
-});
+    Route::post('/register', [RegisterUserController::class, 'store'])->name('user.register.submit');
+
+    //Pencarian Route
+    Route::get('/pencarian', [UserPencarianController::class, 'index'])->name('user.pencarian');
+
+    //Riwayat Route
+    Route::get('/riwayat', [UserRiwayatController::class, 'index'])->name('user.riwayat');
+
+    //Reorder Route
+    Route::get('/riwayat/reorder', [UserRiwayatController::class, 'reorder'])->name('riwayat.reorder');
+
+    //pelacakan Route
+    Route::get('/pelacakan/{id?}', [UserPelacakanController::class, 'show'])->name('user.pelacakan');
+
+    //Ulasan Route
+    Route::get('/ulasan', function () {
+        return view('user.ulasan.index');
+    });
+
+    //Reviews Route
+    Route::get('/reviews', [UserUlasanController::class, 'getReviews'])->name('user.reviews');
+
+    //Pesanan Layanan Route
+    Route::get('/pesananlayanan',function(){
+        return view('user.pesananlayanan.index');
+    });
+
+    // Logout route
+    Route::post('/logout', [LoginUserController::class, 'logout'])->name('logout');
+    });
+
+    // Pelacakan Route
+    Route::get('/pelacakan', [PelacakanController::class, 'index'])->name('user.pelacakan.index');
+
+    // Order Route
+    // Route::get('/order/{id}', [OrderController::class, 'showOrder'])->name('order.show');
+
+    // Login Route
+    Route::get('/user/login', [LoginUserController::class, 'showLoginForm'])->name('user.login');
+    // Proses Login Route
+    Route::post('/user/login', [LoginUserController::class, 'login_proses'])->name('user.login.post');
 
 // Merchant Routes
-Route::prefix('merchant')->group(function () {
-    Route::get('/login', function () {
-        return view('merchant.login.index');
-    });
-    Route::post('/login', [LoginMerchantController::class, 'login']);
+    Route::prefix('merchant')->group(function () {
+        Route::get('/login', function () {
+            return view('merchant.login.index');
+        });
+        Route::post('/login', [LoginMerchantController::class, 'login']);
     
     // Dashboard route
     Route::get('/dashboard', [DashboardMerchantController::class, 'index'])->name('merchant.dashboard');
     
     //Merchant register 
     Route::get('/register', [RegisterMerchantController::class, 'index'])->name('merchant.register');
+    Route::post('/register', [RegisterMerchantController::class, 'store'])->name('merchant.register.submit');
 
     //Profile Route
     Route::get('/profile', [ProfileMerchantController::class, 'index'])->name('merchant.profile');

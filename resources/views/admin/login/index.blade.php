@@ -7,6 +7,7 @@
     <title>Document</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Lato:wght@400;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <style>
         body {
             font-family: 'Lato', sans-serif;
@@ -90,8 +91,24 @@
         {{-- Belum Punya Akun --}}
         </div>
         <div class="belum-punya-akun flex justify-center bottom-0 mt-10">
-            <span>Belum Punya Akun ? <a href="#" class="text-primary cursor-pointer ml-4">Daftar Sekarang</a></span>
+            <span>Belum Punya Akun ? <a href="/admin/register" class="text-primary cursor-pointer ml-4">Daftar Sekarang</a></span>
         </div>
     </div>
 </body>
+<script>
+    @if($errors->any())
+        Swal.fire({
+            icon: 'error',
+            title: 'Oops...',
+            text: '{{ $errors->first() }}',
+        });
+    @endif
+    @if(session('success'))
+        Swal.fire({
+            icon: 'success',
+            title: 'Berhasil!',
+            text: '{{ session('success') }}',
+        });
+    @endif
+</script>
 </html>
