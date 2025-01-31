@@ -69,8 +69,7 @@ class LaporanAdminController extends Controller
 
         // Data Transaksi Terbaru
         $transaksiTerbaru = Pesanan::select('pesanans.*', 'merchants.nama_laundry', 'users.nama_lengkap')
-            ->join('layanan_laundries', 'pesanans.layanan_id', '=', 'layanan_laundries.id')
-            ->join('merchants', 'layanan_laundries.merchant_id', '=', 'merchants.id')
+            ->join('merchants', 'pesanans.merchant_id', '=', 'merchants.id')
             ->join('users', 'pesanans.customer_id', '=', 'users.id')
             ->latest()
             ->take(10)
