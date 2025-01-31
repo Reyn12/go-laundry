@@ -14,7 +14,7 @@ class LayananLaundry extends Model
     protected $table = 'layanan_laundries';
 
     protected $fillable = [
-        'id_merchant',
+        'merchant_id',
         'nama_layanan',
         'harga',
         'estimasi',
@@ -26,7 +26,7 @@ class LayananLaundry extends Model
     // Relasi dengan Merchant
     public function merchant()
     {
-        return $this->belongsTo(Merchant::class, 'id_merchant');
+        return $this->belongsTo(Merchant::class, 'merchant_id');
     }
 
     // Relasi dengan Pesanan
