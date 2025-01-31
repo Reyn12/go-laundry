@@ -5,7 +5,7 @@ namespace App\Http\Controllers\MerchantController;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
-class DashboardMerchantController extends Controller
+class PenarikanSaldoMerchantController extends Controller
 {
     public function index()
     {
@@ -13,10 +13,9 @@ class DashboardMerchantController extends Controller
         // $data = Model::all(); // Replace with your actual model and data retrieval logic
 
         // Return the view for the admin dashboard
-        return view('merchant.dashboard.index', [
+        return view('merchant.penarikansaldo.index', [
             // Pass any data to the view if needed
             // 'data' => $data,
         ]);
     }
-    
 }

@@ -12,6 +12,10 @@ use App\Http\Controllers\MerchantController\DashboardMerchantController;
 use App\Http\Controllers\MerchantController\LoginMerchantController;
 use App\Http\Controllers\MerchantController\ProfileMerchantController;
 use App\Http\Controllers\MerchantController\KelolaLayananMerchantController;
+use App\Http\Controllers\MerchantController\ManajemenPemesananMerchantController;
+use App\Http\Controllers\MerchantController\UlasanMerchantController;
+use App\Http\Controllers\MerchantController\PenarikanSaldoMerchantController;
+
 
 use App\Http\Controllers\AdminController\UserManageController;
 use App\Http\Controllers\AdminController\MerchantManageController;
@@ -95,4 +99,13 @@ Route::prefix('merchant')->group(function () {
 
      //KelolaLayanan Route
      Route::get('/kelolalayanan', [KelolaLayananMerchantController::class, 'index'])->name('merchant.kelolalayanan');
-});
+
+     //ManajemenPemesanan Route
+     Route::get('/manajemenpemesanan', [ManajemenPemesananMerchantController::class, 'index'])->name('merchant.manajemenpemesanan');
+
+     //Ulasan dan Pendapatan Route
+     Route::get('/ulasan', [UlasanMerchantController::class, 'index'])->name('merchant.ulasan');
+
+      //Penarikan Saldo Route
+      Route::get('/penarikansaldo', [PenarikanSaldoMerchantController::class, 'index'])->name('merchant.penarikansaldo');
+}); 

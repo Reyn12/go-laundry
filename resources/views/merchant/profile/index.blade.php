@@ -6,76 +6,35 @@
     <title>Profile Merchant</title>
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body class="bg-gray-100">
-    <div class="flex h-screen overflow-hidden">
-        <!-- Sidebar -->
-        <div class="w-64 bg-white shadow-md flex flex-col justify-between flex-shrink-0">
-            <div>
-                <div class="px-6 py-4">
+<body>
+    <div class="w-full h-screen flex bg-gray-100">
+        @include('merchant.components.merchantsidebar')
+        <div class="flex-1 h-full p-4 overflow-y-auto">
+            <div class="sticky top-0 z-10 mb-4 bg-white p-4 rounded-lg shadow">
+                <div class="flex justify-between items-center">
+                    <div>
+                        <h1 class="text-lg font-semibold">{{ $mainTitle ?? $title ?? 'Profile Merchant' }}</h1>
+                        <p class="text-sm text-gray-500">{{ date('d F Y') }}</p>
+                    </div>
                     <div class="flex items-center space-x-4">
-                        <img src="{{ asset('images/icons/iconProfile.svg') }}" alt="Google" class="w-12 h-12">
-                        <div>
-                            <h2 class="text-lg font-semibold">Krisna Ariangga</h2>
-                            <p class="text-sm text-gray-500">Merchant</p>
+                        <div class="relative">
+                            <span class="absolute inset-y-0 left-0 flex items-center pl-3">
+                                <svg class="w-4 h-4 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+                                </svg>
+                            </span>
+                            <input type="search" class="pl-10 pr-4 py-2 w-64 rounded-full bg-gray-100 focus:outline-none" placeholder="Search">
+                        </div>
+                        <div class="flex items-center space-x-3">
+                            <div class="w-8 h-8 rounded-full bg-gray-200 overflow-hidden">
+                                <img src="{{ asset('images/icons/iconProfile.svg') }}" alt="Profile" class="w-full h-full object-cover">
+                            </div>
+                            <span class="font-medium">Krisna Ariangga</span>
                         </div>
                     </div>
                 </div>
-                <ul class="space-y-2 mt-4">
-                    <li class="px-6 py-2 hover:bg-gray-100 cursor-pointer flex items-center">
-                        <img src="{{ asset('images/icons/iconDashboard.svg') }}" alt="Icon Dashboard" class="w-5 h-5 mr-2">
-                    </i> Dashboard
-                    </li>
-                    <li class="px-6 py-2 hover:bg-gray-100 cursor-pointer flex items-center">
-                        <img src="{{ asset('images/icons/iconUserManage.svg') }}" alt="Icon Profile Merchant" class="w-5 h-5 mr-2">
-                    </i> Profile Merchant
-                    </li>
-                    <li class="px-6 py-2 hover:bg-gray-100 cursor-pointer flex items-center">
-                        <img src="{{ asset('images/icons/iconKelolaMerchant.svg') }}" alt="Icon Kelola Layanan" class="w-5 h-5 mr-2">
-                    </i> Kelola Layanan
-                    </li>
-                    <li class="px-6 py-2 hover:bg-gray-100 cursor-pointer flex items-center">
-                        <img src="{{ asset('images/icons/iconMerchantManage.svg') }}" alt="Icon Manajemen Pemesanan" class="w-5 h-5 mr-2">
-                    </i> Manajemen Pesanan
-                    </li>
-                    <li class="px-6 py-2 hover:bg-gray-100 cursor-pointer flex items-center">
-                        <img src="{{ asset('images/icons/iconLaporan.svg') }}" alt="Icon Ulasan & Pendapatan" class="w-5 h-5 mr-2">
-                    </i> Ulasan & Pendapatan
-                    </li>
-                    <li class="px-6 py-2 hover:bg-gray-100 cursor-pointer flex items-center">
-                        <img src="{{ asset('images/icons/iconCashout.svg') }}" alt="Icon Penarikan Saldo" class="w-5 h-5 mr-2">
-                        Penarikan Saldo
-                    </li>
-                    
-                </ul>
-                <hr class="my-4 border-1 border-black">
-                <ul class="space-y-2">
-                    <li class="px-6 py-2 hover:bg-gray-100 cursor-pointer flex items-center">
-                        <img src="{{ asset('images/icons/iconPengaturan.svg') }}" alt="Icon Pengaturan" class="w-5 h-5 mr-2">
-                        Settings
-                    </li>
-                    <li class="px-6 py-2 hover:bg-gray-100 cursor-pointer flex items-center">
-                        <img src="{{ asset('images/icons/iconNotifikasi.svg') }}" alt="Icon Notifikasi" class="w-5 h-5 mr-2">
-                        Notifikasi
-                    </li>
-                </ul>
             </div>
-            <div class="px-6 py-4">
-                <button class="w-full bg-red-600 text-white py-2 rounded-md">Log Out</button>
-            </div>
-        </div>
-        <!-- Main Content -->
-        <div class="flex-1 p-6 overflow-auto">
-            <header class="flex items-center justify-between mb-6">
-                <h1 class="text-2xl font-semibold">Profile Merchant</h1>
-                <div class="flex items-center space-x-4">
-                    <input type="text" placeholder="Search" class="border border-gray-300 rounded-md px-3 py-2">
-                    <span class="text-gray-600">🔔</span>
-                    <span class="text-gray-600">🌙</span>
-                </div>
-            </header>
-
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
-                <!-- Profile Section -->
                 <div class="bg-white shadow-md p-6 rounded-md">
                     <div class="flex items-center mb-4">
                         <img src="{{ asset('images/icons/iconProfile.svg') }}" alt="Profile Icon" class="w-12 h-12 mr-2">
@@ -84,25 +43,21 @@
                             <p class="text-gray-500 text-sm">Merchant</p>
                         </div>
                     </div>
-                    <p class="mb-2"><strong>About:</strong></p>
-                    <p class="text-gray-600 mb-4">081081081081<br>laundrygood@lalalala.com</p>
-                    <hr class="my-4 border-1 border-black">
-                    <p class="mb-2"><strong>Jam Operasional:</strong></p>
-                    <p class="text-gray-600 mb-4">09.00 - 20.00</p>
-                    <hr class="my-4 border-1 border-black">
-                    <p class="mb-2"><strong>Address:</strong></p>
-                    <p class="text-gray-600 mb-4">JL Kesana Kesini</p>
-                    <iframe
-                        src="https://maps.google.com/maps?q=Monas%20Jakarta&t=&z=13&ie=UTF8&iwloc=&output=embed"
-                        class="w-full h-48 rounded-md" frameborder="0">
-                    </iframe>
-                    <hr class="my-4 border-1 border-black">
+                    <form id="profileForm">
+                        <label class="block mb-2 font-semibold">About:</label>
+                        <textarea id="about" class="w-full border p-2 rounded-md bg-gray-100" disabled>081081081081
+laundrygood@lalalala.com</textarea>
+                        <label class="block mt-4 mb-2 font-semibold">Jam Operasional:</label>
+                        <input type="text" id="jam_operasional" class="w-full border p-2 rounded-md bg-gray-100" value="09.00 - 20.00" disabled>
+                        <label class="block mt-4 mb-2 font-semibold">Address:</label>
+                        <input type="text" id="address" class="w-full border p-2 rounded-md bg-gray-100" value="JL Kesana Kesini" disabled>
+                    </form>
+                    <div id="map" class="w-full h-48 rounded-md mt-4"></div>
                     <div class="flex justify-end mt-4">
-                        <button class="bg-blue-500 text-white px-4 py-2 rounded-md mr-2">Edit</button>
-                        <button class="bg-green-500 text-white px-4 py-2 rounded-md">Simpan</button>
+                        <button id="editBtn" class="bg-blue-500 text-white px-4 py-2 rounded-md mr-2">Edit</button>
+                        <button id="saveBtn" class="bg-green-500 text-white px-4 py-2 rounded-md hidden">Simpan</button>
                     </div>
                 </div>
-                
 
                 <!-- History Section -->
                 <div class="bg-white shadow-md p-6 rounded-md">
@@ -210,6 +165,45 @@
                     <img src="{{ asset('images/laundry1.png') }}" alt="Laundry Image 1" class="rounded-md w-full h-24 object-cover">
                     <img src="{{ asset('images/laundry2.png') }}" alt="Laundry Image 2" class="rounded-md w-full h-24 object-cover">
                 </div>
+                <script>
+                    document.addEventListener('DOMContentLoaded', function () {
+                        let editBtn = document.getElementById('editBtn');
+                        let saveBtn = document.getElementById('saveBtn');
+                        let about = document.getElementById('about');
+                        let jam_operasional = document.getElementById('jam_operasional');
+                        let address = document.getElementById('address');
+            
+                        editBtn.addEventListener('click', function () {
+                            about.disabled = false;
+                            jam_operasional.disabled = false;
+                            address.disabled = false;
+                            about.classList.remove('bg-gray-100');
+                            jam_operasional.classList.remove('bg-gray-100');
+                            address.classList.remove('bg-gray-100');
+                            editBtn.classList.add('hidden');
+                            saveBtn.classList.remove('hidden');
+                        });
+            
+                        saveBtn.addEventListener('click', function () {
+                            about.disabled = true;
+                            jam_operasional.disabled = true;
+                            address.disabled = true;
+                            about.classList.add('bg-gray-100');
+                            jam_operasional.classList.add('bg-gray-100');
+                            address.classList.add('bg-gray-100');
+                            editBtn.classList.remove('hidden');
+                            saveBtn.classList.add('hidden');
+                            updateMap(address.value);
+                        });
+            
+                        function updateMap(address) {
+                            let map = document.getElementById('map');
+                            let encodedAddress = encodeURIComponent(address);
+                            map.innerHTML = `<iframe src="https://www.google.com/maps?q=${encodedAddress}&output=embed" class="w-full h-full rounded-md" frameborder="0"></iframe>`;
+                        }
+                        updateMap(address.value);
+                    });
+                </script>
             </div>
         </main>
     </div>

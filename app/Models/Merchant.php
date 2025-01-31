@@ -38,24 +38,24 @@ class Merchant extends Model
     // Relasi dengan Pesanan
     public function pesanan()
     {
-        return $this->hasMany(Pesanan::class, 'id_merchant');
+        return $this->hasMany(Pesanan::class, 'merchant_id');
     }
 
     // Relasi dengan LayananLaundry
     public function layananLaundry()
     {
-        return $this->hasMany(LayananLaundry::class, 'id_merchant');
+        return $this->hasMany(LayananLaundry::class, 'merchant_id');
     }
 
     // Relasi dengan Review
     public function review()
     {
-        return $this->hasMany(Review::class, 'id_merchant');
+        return $this->hasMany(Review::class, 'merchant_id');
     }
 
     // Relasi dengan SaldoMerchant
     public function saldoMerchant()
     {
-        return $this->hasOne(SaldoMerchant::class, 'id_merchant');
+        return $this->hasOne(SaldoMerchant::class, 'merchant_id');
     }
 }
