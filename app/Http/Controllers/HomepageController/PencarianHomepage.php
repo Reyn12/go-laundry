@@ -8,7 +8,7 @@ use App\Http\Controllers\Controller;
 use App\Models\LayananLaundry;  // Menggunakan model LayananLaundry
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
-
+// tambahkan ini
 class PencarianHomepage extends Controller
 {
     /**
