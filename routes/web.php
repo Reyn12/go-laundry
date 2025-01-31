@@ -19,6 +19,7 @@ use App\Http\Controllers\MerchantController\ProfileMerchantController;
 use App\Http\Controllers\MerchantController\KelolaLayananMerchantController;
 use App\Http\Controllers\AdminController\UserManageController;
 use App\Http\Controllers\AdminController\MerchantManageController;
+use App\Http\Controllers\AdminController\LaporanAdminController;
 // use App\Http\Controllers\UserController\OrderController;
 
 /*
@@ -74,6 +75,10 @@ Route::prefix('admin')->group(function () {
             Route::get('/pending', [MerchantManageController::class, 'pending'])->name('admin.dashboard.merchant-manage.pending');
             Route::get('/verified', [MerchantManageController::class, 'verified'])->name('admin.dashboard.merchant-manage.verified');
         });
+
+        // Laporan & Statistik route
+        Route::get('/dashboard/laporan-statistik', [LaporanAdminController::class, 'index'])->name('admin.dashboard.laporan-statistik');
+
     });
 });
 
