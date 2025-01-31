@@ -48,7 +48,7 @@
 </head>
 <body class="bg-gray-100">
     <!-- Main Content -->
-    <main class="container-fluid-fluid mx-auto py-4">
+    <main class="container-fluid mx-auto py-4">
         <div class="ml-20">
             @yield('container')
         </div>

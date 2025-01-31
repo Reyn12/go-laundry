@@ -59,7 +59,7 @@ Route::prefix('admin')->group(function () {
     // Protected routes (perlu login dan role admin)
     Route::middleware(['auth', 'admin'])->group(function () {
         // Logout route
-        Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
+        Route::post('/logout', [LoginController::class, 'logout'])->name('admin.logout');
 
         // Dashboard route
         Route::get('/dashboard', [DashboardAdminController::class, 'index'])->name('admin.dashboard');
