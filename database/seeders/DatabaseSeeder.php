@@ -372,6 +372,7 @@ class DatabaseSeeder extends Seeder
         \App\Models\Pesanan::create([
             'customer_id' => 1,
             'layanan_id' => 1,
+            'merchant_id' => 1,
             'status' => 'menunggu',
             'alamat_pengambilan' => 'Jl. Kebon Jeruk No. 1, Bandung',
             'alamat_pengiriman' => 'Jl. Kebon Jeruk No. 1, Bandung',
@@ -384,6 +385,7 @@ class DatabaseSeeder extends Seeder
         \App\Models\Pesanan::create([
             'customer_id' => 2,
             'layanan_id' => 2,
+            'merchant_id' => 2,
             'status' => 'proses',
             'alamat_pengambilan' => 'Jl. Merdeka No. 2, Bandung',
             'alamat_pengiriman' => 'Jl. Merdeka No. 2, Bandung',
@@ -396,6 +398,7 @@ class DatabaseSeeder extends Seeder
         \App\Models\Pesanan::create([
             'customer_id' => 3,
             'layanan_id' => 1,
+            'merchant_id' => 1,
             'status' => 'selesai',
             'alamat_pengambilan' => 'Jl. Riau No. 3, Bandung',
             'alamat_pengiriman' => 'Jl. Riau No. 3, Bandung',
@@ -408,6 +411,7 @@ class DatabaseSeeder extends Seeder
         \App\Models\Pesanan::create([
             'customer_id' => 4,
             'layanan_id' => 3,
+            'merchant_id' => 3,
             'status' => 'menunggu',
             'alamat_pengambilan' => 'Jl. Cikapundung No. 4, Bandung',
             'alamat_pengiriman' => 'Jl. Cikapundung No. 4, Bandung',
@@ -420,6 +424,7 @@ class DatabaseSeeder extends Seeder
         \App\Models\Pesanan::create([
             'customer_id' => 5,
             'layanan_id' => 2,
+            'merchant_id' => 2,
             'status' => 'proses',
             'alamat_pengambilan' => 'Jl. Merdeka No. 5, Bandung',
             'alamat_pengiriman' => 'Jl. Merdeka No. 5, Bandung',
@@ -474,6 +479,7 @@ class DatabaseSeeder extends Seeder
         \App\Models\Pesanan::create([
             'customer_id' => 6,
             'layanan_id' => 1,
+            'merchant_id' => 1,
             'status' => 'selesai',
             'alamat_pengambilan' => 'Jl. Dago No. 15, Bandung',
             'alamat_pengiriman' => 'Jl. Dago No. 15, Bandung',
@@ -487,6 +493,7 @@ class DatabaseSeeder extends Seeder
         \App\Models\Pesanan::create([
             'customer_id' => 7,
             'layanan_id' => 3,
+            'merchant_id' => 3,
             'status' => 'menunggu',
             'alamat_pengambilan' => 'Jl. Pasir Kaliki No. 22, Bandung',
             'alamat_pengiriman' => 'Jl. Pasir Kaliki No. 22, Bandung',
@@ -500,6 +507,7 @@ class DatabaseSeeder extends Seeder
         \App\Models\Pesanan::create([
             'customer_id' => 8,
             'layanan_id' => 2,
+            'merchant_id' => 2,
             'status' => 'proses',
             'alamat_pengambilan' => 'Jl. Braga No. 8, Bandung',
             'alamat_pengiriman' => 'Jl. Braga No. 8, Bandung',
@@ -513,6 +521,7 @@ class DatabaseSeeder extends Seeder
         \App\Models\Pesanan::create([
             'customer_id' => 9,
             'layanan_id' => 1,
+            'merchant_id' => 1,
             'status' => 'selesai',
             'alamat_pengambilan' => 'Jl. Dipatiukur No. 35, Bandung',
             'alamat_pengiriman' => 'Jl. Dipatiukur No. 35, Bandung',
@@ -526,6 +535,7 @@ class DatabaseSeeder extends Seeder
         \App\Models\Pesanan::create([
             'customer_id' => 10,
             'layanan_id' => 3,
+            'merchant_id' => 3,
             'status' => 'proses',
             'alamat_pengambilan' => 'Jl. Ir. H. Juanda No. 42, Bandung',
             'alamat_pengiriman' => 'Jl. Ir. H. Juanda No. 42, Bandung',
