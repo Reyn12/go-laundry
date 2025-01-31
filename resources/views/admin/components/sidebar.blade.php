@@ -79,7 +79,7 @@
 
     {{-- <div class="flex-grow"></div> --}}
     <div class="button-logout mt-auto flex items-center justify-center w-full px-4">
-        <form action="{{ route('logout') }}" method="POST" class="w-full">
+        <form action="{{ route('admin.logout') }}" method="POST" class="w-full">
             @csrf
             <button class="flex items-center px-6 py-3 bg-red-700 text-white rounded-lg hover:bg-red-600 w-full justify-center">
                 <img src="{{ asset('images/icons/iconLogout.svg') }}" alt="Logout" class="w-6 h-6 mr-3">
