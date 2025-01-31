@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Go Laundry</title>
-
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 
@@ -44,29 +44,14 @@
             padding-left: 1rem;
             padding-right: 1rem;
         }
-
-        .py-4 {
-            padding-top: 1rem;
-            padding-bottom: 1rem;
-        }
     </style>
 </head>
 <body class="bg-gray-100">
     <!-- Main Content -->
-    <main class="container-fluid-fluid mx-auto py-4">
+    <main class="container-fluid mx-auto py-4">
         <div class="ml-20">
             @yield('container')
         </div>
     </main>
-
-    <!-- Footer -->
-    <footer class="bg-white shadow-lg">
-        <div class="container-fixed max-w-7xl mx-auto py-1 px-1">
-            <p class="text-center text-gray-600">&copy; 2024 Go Laundry. All rights reserved.</p>
-        </div>
-    </footer>
-
-    <!-- Bootstrap JS -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

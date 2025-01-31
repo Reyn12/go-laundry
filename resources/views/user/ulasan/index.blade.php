@@ -1,29 +1,41 @@
-@extends('user.components.main')
-@section('container')
-<div class="lg:flex lg:gap-2">
-  <!-- Sidebar -->
-  <div class="hidden lg:block">
-    @include('user.components.sidebar')
-  </div>
-
-  <!-- Main Content -->
-  <div class="lg:w-full">
-    <!DOCTYPE html>
-    <html lang="en">
-    <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
-  <head>
+<head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Rating Page</title>
     <script src="https://cdn.tailwindcss.com"></script>
-  </head>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/lucide/0.263.1/lucide.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Lato:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Lato', sans-serif;
+        }
+        .bg-primary {
+        background-color: #0039C9;
+        }
+
+        .text-primary {
+            color: #0039C9;
+        }
+    </style>
+</head>
+@extends('user.components.main')
+@section('container')
+<div class="lg:flex lg:gap-2">
+  <!-- Sidebar -->
+<div class="hidden lg:block">
+    @include('user.components.sidebar')
+</div>
+  <!-- Main Content -->
+  <div class="lg:w-full bg-white">
+ 
   <body class="bg-gray-100 py-10">
     <div class="container-fluid mx-auto">
       <!-- History Rating Section -->
-      <div class="bg-white rounded-lg shadow-lg p-6 mb-10">
+      <div class="bg-white rounded-lg  p-6 mb-10">
         <h2 class="text-center text-2xl font-bold mb-6">HISTORY RATING</h2>
-        <div class="grid grid-cols-3 gap-6 items-center">
+        <div class="grid grid-cols-3 gap-6 items-center ">
           <!-- Rating Breakdown -->
           <div class="space-y-4">
             <!-- 5 Star -->

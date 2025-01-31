@@ -1,17 +1,16 @@
+
 @extends('user.components.main')
 @section('container')
-<div class="lg:w-1/4 hidden lg:block">
-      @include('user.components.sidebar')
-</div>
+@include('user.components.sidebar')
 <!-- Search Box -->
 <div class="container-fluid mx-auto mt-4">
             <div class="mb-4">
                 <input type="text" id="search-box" placeholder="Cari riwayat pesanan..." 
                        class="border border-gray-300 rounded-lg p-2 w-full">
             </div>
-        </div>
+            </div>
     <!--main content-->
-    <div class="flex-grow ml-20">
+    <div class="flex-grow ml-15">
         <h1 class="text-2xl font-semibold ">Riwayat Pesanan</h1>
         <div class="container-fluid mx-auto mt-4">
             <div class="bg-white shadow rounded-lg">
@@ -21,7 +20,6 @@
                             <option>Apr 1 - Apr 30 2024</option>
                         </select>
                     </div>
-
                     <div class="overflow-x-auto">
                         <table class="w-full border-collapse border border-gray-300">
                             <thead class="bg-gray-100">

@@ -17,11 +17,13 @@ return new class extends Migration
             $table->string('nama_laundry'); // Nama toko laundry
             $table->string('alamat_laundry'); // Alamat toko laundry
             $table->text('deskripsi'); // Deskripsi laundry
+            $table->string('jam_operasional')->nullable();
             $table->decimal('latitude', 10, 8); // Koordinat latitude (untuk maps)
             $table->decimal('longitude', 11, 8); // Koordinat longitude (untuk maps)
             $table->string('no_hp'); // Nomor telepon toko laundry
             $table->string('email')->nullable(); // Email toko laundry (opsional)
             $table->timestamps(); // Waktu dibuat dan diperbarui
+            
         });
     }
 

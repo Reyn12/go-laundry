@@ -23,6 +23,7 @@ class Merchant extends Model
         'deskripsi',
         'no_hp',
         'email',
+        'jam_operasional',
         'latitude',
         'longitude',
         'created_at',
@@ -38,7 +39,7 @@ class Merchant extends Model
     // Relasi dengan Pesanan
     public function pesanan()
     {
-        return $this->hasMany(Pesanan::class, 'id_merchant');
+        return $this->hasMany(Pesanan::class, 'merchant_id');
     }
 
     // Relasi dengan LayananLaundry
