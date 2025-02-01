@@ -23,7 +23,7 @@
                             <div class="w-8 h-8 bg-gray-200 dark:bg-gray-600 rounded-full overflow-hidden">
                                 <img src="{{ asset('images/icons/iconProfile.svg') }}" alt="Profile" class="w-full h-full object-cover ">
                             </div>
-                            <span class="font-medium dark:text-white">Agus Sedih</span>
+                            <span class="font-medium dark:text-white">Krisna</span>
                         </div>
                     </td>
                     <td class="py-3"><span class="px-4 py-1 rounded-full bg-yellow-100 dark:bg-yellow-900 text-yellow-800 dark:text-yellow-200">Proses</span></td>
@@ -38,7 +38,7 @@
                             <div class="w-8 h-8 bg-gray-200 dark:bg-gray-600 rounded-full overflow-hidden">
                                 <img src="{{ asset('images/icons/iconProfile.svg') }}" alt="Profile" class="w-full h-full object-cover ">
                             </div>
-                            <span class="font-medium dark:text-white">Miftah Goblog</span>
+                            <span class="font-medium dark:text-white">Muh Reyy</span>
                         </div>
                     </td>
                     <td class="py-3"><span class="px-4 py-1 rounded-full bg-green-100 dark:bg-green-900 text-green-800 dark:text-green-200">Selesai</span></td>
@@ -53,7 +53,7 @@
                             <div class="w-8 h-8 bg-gray-200 dark:bg-gray-600 rounded-full overflow-hidden">
                                 <img src="{{ asset('images/icons/iconProfile.svg') }}" alt="Profile" class="w-full h-full object-cover ">
                             </div>
-                            <span class="font-medium dark:text-white">Agus Sedih</span>
+                            <span class="font-medium dark:text-white">Rizky F</span>
                         </div>
                     </td>
                     <td class="py-3"><span class="px-4 py-1 rounded-full bg-yellow-100 dark:bg-yellow-900 text-yellow-800 dark:text-yellow-200">Proses</span></td>
