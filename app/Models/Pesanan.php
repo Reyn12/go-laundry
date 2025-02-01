@@ -16,7 +16,7 @@ class Pesanan extends Model
 
     protected $fillable = [
         'id_user',
-        'id_merchant',
+        'merchant_id',
         'total_harga',
         'status',
         'tanggal_pesanan',
@@ -35,7 +35,7 @@ class Pesanan extends Model
     // Relasi dengan Merchant
     public function merchant()
     {
-        return $this->belongsTo(Merchant::class, 'id_merchant');
+        return $this->belongsTo(Merchant::class, 'merchant_id');
     }
 
     // Relasi dengan LayananLaundry (jika ada)
