@@ -98,7 +98,7 @@ Route::prefix('user')->group(function () {
     // Dashboard route
     Route::get('/dashboard', [DashboardUserController::class, 'index'])->name('user.dashboard');
     
-    //Admin register 
+    //User register 
     Route::get('/register', [RegisterUserController::class, 'index'])->name('user.register');
 
     //Pencarian Route
