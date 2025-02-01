@@ -26,7 +26,7 @@ class LoginController extends Controller
         }
 
         return back()->withErrors([
-            'username' => 'Invalid credentials or not an admin account.',
+            'username' => 'Username atau password salah. Silakan coba lagi.',
         ])->onlyInput('username');
     }
 
@@ -35,6 +35,6 @@ class LoginController extends Controller
         Auth::logout();
         $request->session()->invalidate();
         $request->session()->regenerateToken();
-        return redirect('/admin/login');
+        return redirect('/admin/login')->with('success', 'Logout berhasil!');
     }
 }

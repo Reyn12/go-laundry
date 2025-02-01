@@ -47,6 +47,8 @@
                 </div>
             </form>
         </div>
+        
+        <!-- List Laundry -->
         <div id="laundry-list">
             @forelse ($results as $result)
             <div class="bg-white shadow rounded-lg flex items-start p-6 laundry-item mb-2">
@@ -76,8 +78,6 @@
             <p class="text-gray-600">Tidak ada data ditemukan.</p>
             @endforelse
         </div>
-
-
     </div>
     <div class="flex-1 p-4 bg-white">
         <div id="map-container" class="h-screen w-full">

@@ -20,6 +20,7 @@ use App\Http\Controllers\MerchantController\ProfileMerchantController;
 use App\Http\Controllers\MerchantController\KelolaLayananMerchantController;
 use App\Http\Controllers\AdminController\UserManageController;
 use App\Http\Controllers\AdminController\MerchantManageController;
+use App\Http\Controllers\AdminController\LaporanAdminController;
 
 /*
 |--------------------------------------------------------------------------
@@ -58,21 +59,25 @@ Route::prefix('admin')->group(function () {
     // Protected routes (perlu login dan role admin)
     Route::middleware(['auth', 'admin'])->group(function () {
         // Logout route
-        Route::post('/admin/logout', [LoginController::class, 'logout'])->name('logout');
-        
+        Route::post('/logout', [LoginController::class, 'logout'])->name('admin.logout');
+
         // Dashboard route
         Route::get('/dashboard', [DashboardAdminController::class, 'index'])->name('admin.dashboard');
 
         // User Management route
         Route::get('/dashboard/user-manage', [UserManageController::class, 'index'])->name('admin.dashboard.user-manage.index');
-    
+
         // Merchant Management routes
         Route::prefix('dashboard/merchant-manage')->group(function () {
-            Route::get('/', [MerchantManageController::class, 'index'])->name('admin.dashboard.merchant-manage.index'); 
+            Route::get('/', [MerchantManageController::class, 'index'])->name('admin.dashboard.merchant-manage.index');
             Route::get('/all', [MerchantManageController::class, 'all'])->name('admin.dashboard.merchant-manage.all');
             Route::get('/pending', [MerchantManageController::class, 'pending'])->name('admin.dashboard.merchant-manage.pending');
             Route::get('/verified', [MerchantManageController::class, 'verified'])->name('admin.dashboard.merchant-manage.verified');
         });
+
+        // Laporan & Statistik route
+        Route::get('/dashboard/laporan-statistik', [LaporanAdminController::class, 'index'])->name('admin.dashboard.laporan-statistik');
+
     });
 });
 
