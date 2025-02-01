@@ -47,13 +47,11 @@
                 </div>
             </form>
         </div>
-        
         <!-- List Laundry -->
-        <div id="laundry-list">
+        <div id="laundry-list" class="grid grid-cols-1 md:grid-cols-2 gap-4">
             @forelse ($results as $result)
-            <div class="bg-white shadow rounded-lg flex items-start p-6 laundry-item mb-2">
-                <img src="{{ $result->image }}" alt="{{ $result->title }}"
-                    class="w-32 h-32 rounded-md object-cover">
+            <div class="bg-white shadow rounded-lg flex items-start p-6 laundry-item">
+                <img src="{{ $result->image }}" alt="{{ $result->title }}" class="w-32 h-32 rounded-md object-cover">
                 <div class="ml-6">
                     <h2 class="text-xl font-bold text-gray-800">{{ $result->title }}</h2>
                     <div class="flex items-center mt-2">
@@ -78,6 +76,7 @@
             <p class="text-gray-600">Tidak ada data ditemukan.</p>
             @endforelse
         </div>
+
     </div>
     <div class="flex-1 p-4 bg-white">
         <div id="map-container" class="h-screen w-full">
