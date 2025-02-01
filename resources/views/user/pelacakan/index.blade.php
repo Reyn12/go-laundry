@@ -64,11 +64,10 @@
                 <div class="bg-white rounded-lg shadow-sm border p-4">
                     <h3 class="font-bold">Order Item</h3>
                     <div class="flex items-center p-4">
-                        <img src="{{ asset('images/tshirt.png') }}" alt="Tshirt" class="w-16 h-16 object-cover rounded-md" />
                         <div class="ml-4">
-                            <h4 class="font-bold">Tshirt</h4>
+                            <h4 class="font-bold">Cuci Kering</h4>
                             <p class="text-sm">5 Pcs</p>
-                            <p class="text-sm text-gray-600">Lengan Panjang <span class="text-black">black &#9632;</span></p>
+                            <p class="text-sm text-gray-600">Tshirt,celana panjang,baju panjang,rompi</p>
                         </div>
                         <div class="ml-auto text-right">
                             <span class="px-2 py-1 text-xs font-semibold bg-green-200 text-green-800 rounded-full">Selesai</span>
@@ -76,9 +75,90 @@
                             <p class="font-bold">Rp. 10.000</p>
                         </div>
                     </div>
-                    <div class="bg-gray-100 p-4 rounded-b-lg flex justify-between items-center">
-                        <p class="text-sm text-gray-600">Sedang Diantarkan ke Jl. Seti...</p>
-                        <button class="px-3 py-1 text-sm font-semibold text-white bg-blue-500 hover:bg-blue-600 rounded-md">Chat seller</button>
+                </div>
+
+                <!-- Additional Item Layout Based on Image -->
+                <div class="bg-white rounded-lg shadow-sm border p-4">
+                    <h3 class="font-bold">Order Item</h3>
+                    <div class="flex items-center p-4">
+                        <div class="ml-4">
+                            <h4 class="font-bold">Reguler</h4>
+                            <p class="text-sm">3 Pcs</p>
+                            <p class="text-sm text-gray-600">Selimut,bed cover,Bantal</p>
+                        </div>
+                        <div class="ml-auto text-right">
+                            <span class="px-2 py-1 text-xs font-semibold bg-green-200 text-green-800 rounded-full">Selesai</span>
+                            <p class="text-sm">5 x Rp. 2000</p>
+                            <p class="font-bold">Rp. 10.000</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Additional Item Layout Based on Image -->
+                <div class="bg-white rounded-lg shadow-sm border p-4">
+                    <h3 class="font-bold">Order Item</h3>
+                    <div class="flex items-center p-4">
+                        <div class="ml-4">
+                            <h4 class="font-bold">Express</h4>
+                            <p class="text-sm">3 Pcs</p>
+                            <p class="text-sm text-gray-600">Kaos Dalam,Celana dalam,Daleman</p>
+                        </div>
+                        <div class="ml-auto text-right">
+                            <span class="px-2 py-1 text-xs font-semibold bg-yellow-200 text-yellow-800 rounded-full">Proses</span>
+                            <p class="text-sm">5 x Rp. 2000</p>
+                            <p class="font-bold">Rp. 10.000</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Additional Item Layout Based on Image -->
+                <div class="bg-white rounded-lg shadow-sm border p-4">
+                    <h3 class="font-bold">Order Item</h3>
+                    <div class="flex items-center p-4">
+                        <div class="ml-4">
+                            <h4 class="font-bold">Cuci Kering</h4>
+                            <p class="text-sm">5 Pcs</p>
+                            <p class="text-sm text-gray-600">Tshirt,celana panjang,baju panjang,rompi</p>
+                        </div>
+                        <div class="ml-auto text-right">
+                            <span class="px-2 py-1 text-xs font-semibold bg-green-200 text-green-800 rounded-full">Selesai</span>
+                            <p class="text-sm">5 x Rp. 2000</p>
+                            <p class="font-bold">Rp. 10.000</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Additional Item Layout Based on Image -->
+                <div class="bg-white rounded-lg shadow-sm border p-4">
+                    <h3 class="font-bold">Order Item</h3>
+                    <div class="flex items-center p-4">
+                        <div class="ml-4">
+                            <h4 class="font-bold">Reguler</h4>
+                            <p class="text-sm">3 Pcs</p>
+                            <p class="text-sm text-gray-600">Selimut,bed cover,Bantal</p>
+                        </div>
+                        <div class="ml-auto text-right">
+                            <span class="px-2 py-1 text-xs font-semibold bg-green-200 text-green-800 rounded-full">Selesai</span>
+                            <p class="text-sm">5 x Rp. 2000</p>
+                            <p class="font-bold">Rp. 10.000</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Additional Item Layout Based on Image -->
+                <div class="bg-white rounded-lg shadow-sm border p-4">
+                    <h3 class="font-bold">Order Item</h3>
+                    <div class="flex items-center p-4">
+                        <div class="ml-4">
+                            <h4 class="font-bold">Express</h4>
+                            <p class="text-sm">3 Pcs</p>
+                            <p class="text-sm text-gray-600">Kaos Dalam,Celana dalam,Daleman</p>
+                        </div>
+                        <div class="ml-auto text-right">
+                            <span class="px-2 py-1 text-xs font-semibold bg-yellow-200 text-yellow-800 rounded-full">Proses</span>
+                            <p class="text-sm">5 x Rp. 2000</p>
+                            <p class="font-bold">Rp. 10.000</p>
+                        </div>
                     </div>
                 </div>
         @endforeach

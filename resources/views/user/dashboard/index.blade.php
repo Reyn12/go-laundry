@@ -14,29 +14,36 @@
                 @endforeach
             </div>
 
+            <!-- Profile Picture and Name -->
             <div class="absolute left-[160px] top-[70px] text-white">
                 <div class="flex items-center space-x-4">
-                    <h1 class="text-2xl font-bold">{{ $user->name }}</h1>
+                    <h1 class="text-2xl font-bold">{{ auth()->user()->username }}</h1>
                     <div class="bg-yellow-400 text-black rounded-full px-2 flex items-center">
-                        <span class="text-black-500">★</span><span class="text-black-500">★</span><span class="text-black-500">★</span>
-                        <span class="text-yellow-300">★</span><span class="text-yellow-300">★</span>
+                    <span class="text-black-500">★</span><span class="text-black-500">★</span><span class="text-black-500">★</span>
+                    <span class="text-yellow-300">★</span><span class="text-yellow-300">★</span>
                     </div>
                 </div>
             </div>
         </div>
-
+    
+        <!-- Profile Picture -->
         <div class="absolute left-8 top-[60px]">
             <div class="w-28 h-28 rounded-full overflow-hidden border-4 border-white shadow-lg">
-                @if($user && $user->image)
-                    <img src="{{ asset($user->image) }}" alt="Profile" class="w-full h-full object-cover">
+                @php
+                    $imagePath = 'storage/profile_images/' . auth()->user()->username . '.jpg';
+                @endphp
+
+                @if(file_exists(public_path($imagePath)))
+                    <img src="{{ asset($imagePath) }}" alt="Profile Picture" class="w-full h-full object-cover">
                 @else
                     <div class="w-full h-full bg-gray-300 flex items-center justify-center text-gray-600">
-                        {{ $user ? substr($user->image, 0, 1) : 'U' }}
+                        {{ strtoupper(substr($user->name, 0, 1)) }}
                     </div>
                 @endif
             </div>
         </div>
 
+        <!-- Status Pencucian Title -->
         <div class="mt-20 px-8">
             <h3 class="text-xl font-semibold">Status Pencucian</h3>
         </div>
@@ -47,7 +54,7 @@
 <div class="p-4 relative bg-white mb-2">
     <div class="relative">
         <div id="slider" class="overflow-x-auto scroll-smooth custom-scrollbar h-64 flex space-x-4 snap-x snap-mandatory px-12">
-            @foreach ([['icon' => 'images/washing-machine.png', 'title' => 'Wash', 'time' => 'One Day Ago', 'color' => 'bg-red-600 text-white'], ['icon' => 'images/bleach.png', 'title' => 'Iron', 'time' => 'Two Days Ago', 'color' => 'bg-gray-200 text-gray-700'], ['icon' => 'images/logomerchantx1.png', 'title' => 'Dry', 'time' => 'Two Days Ago', 'color' => 'bg-gray-200 text-gray-700']] as $status)
+            @foreach ([['icon' => 'images/washing-machine.png', 'title' => 'Reguler', 'time' => 'Two Days Ago', 'color' => 'bg-red-600 text-white'], ['icon' => 'images/bleach.png', 'title' => 'Express', 'time' => 'Two Days Ago', 'color' => 'bg-gray-200 text-gray-700'], ['icon' => 'images/logomerchantx1.png', 'title' => 'Kilat', 'time' => 'Thre Days Ago', 'color' => 'bg-gray-200 text-gray-700']] as $status)
             <div class="relative flex flex-col items-center snap-center">
                 <div class="bg-white shadow-lg rounded-lg p-4 -mb-8 z-10">
                     <img src="{{ asset($status['icon']) }}" alt="{{ $status['title'] }}" class="h-16 w-16">
@@ -105,44 +112,96 @@
                 View All
             </button>
         </div>
+
+    <!-- Table Pesanan -->
     <div class="overflow-x-auto">
-        <table class="min-w-full bg-white" id="laundryTable">
+        <table class="min-w-full">
             <thead>
                 <tr class="text-left">
-                    <th class="py-2 px-4">No</th>
-                    <th class="py-2 px-4">Kategori Layanan</th>
-                    <th class="py-2 px-4">Nama Layanan</th>
-                    <th class="py-2 px-4">Harga</th>
-                    <th class="py-2 px-4">Tanggal</th>
+                    <th class="py-2 px-4 ">No</th>
+                    <th class="py-2 px-4 ">Item</th>
+                    <th class="py-2 px-4 ">Jenis Paket</th>
+                    <th class="py-2 px-4 ">Tanggal</th>
+                    <th class="py-2 px-4 ">Status</th>
                 </tr>
             </thead>
-            <tbody>
-                @if (!empty($laundryItems) && $laundryItems->count() > 0)
-                    @foreach ($laundryItems as $index => $item)
-                        <tr class="border-t hover:bg-gray-50">
-                            <td class="py-3 px-4">{{ $index + 1 }}</td>
-                            <td class="py-3 px-4">{{ $item->kategori_layanan ?? '-' }}</td>
-                            <td class="py-3 px-4">{{ $item->nama_layanan ?? '-' }}</td>
-                            <td class="py-3 px-4">Rp {{ number_format($item->harga_per_unit, 0, ',', '.') }}</td>
-                            <td class="py-3 px-4">{{ \Carbon\Carbon::parse($item->created_at)->format('d M Y') }}</td>
-                        </tr>
-                    @endforeach
-                @else
-                    <tr>
-                        <td colspan="5" class="text-center py-3">Tidak ada layanan laundry tersedia.</td>
-                    </tr>
-                @endif
-            </tbody>
-        </table>
+            <tbody id="isi-table-container">
+        @forelse ($LayananLaundry->take(3) as $index => $order)
+            @php
+                // Buat status secara acak
+                $statuses = ['Selesai', 'Dibatalkan'];
+                $randomStatus = $statuses[array_rand($statuses)];
+            @endphp
+            <tr class="border-t hover:bg-transparent hover:bg-gray-50 visible-row">
+                <td class="py-3 px-4">{{ $index + 1 }}</td>
+                <td class="py-3 px-4">{{ $order->kategori_layanan }}</td>
+                <td class="py-3 px-4">{{ $order->nama_layanan }}</td>
+                <td class="py-3 px-4">{{ $order->created_at }}</td>
+
+                <!-- Menampilkan status dengan warna sesuai -->
+                <td class="py-3 px-4">
+                    @if ($randomStatus == 'Selesai')
+                        <span class="inline-flex items-center px-2 py-1 text-sm font-semibold text-green-700 bg-green-200 rounded-full">
+                            ● Selesai
+                        </span>
+                    @else
+                        <span class="inline-flex items-center px-2 py-1 text-sm font-semibold text-red-700 bg-red-200 rounded-full">
+                            ● Dibatalkan
+                        </span>
+                    @endif
+                </td>
+            </tr>
+        @empty
+            <tr>
+                <td colspan="5" class="py-3 px-4 text-center">Tidak ada data tersedia</td>
+            </tr>
+        @endforelse
+
+        <!-- Hidden Rows -->
+        @forelse ($LayananLaundry->skip(3) as $index => $order)
+            @php
+                $statuses = ['Selesai', 'Dibatalkan'];
+                $randomStatus = $statuses[array_rand($statuses)];
+            @endphp
+            <tr class="border-t hover:bg-transparent hover:bg-gray-50 hidden-row">
+                <td class="py-3 px-4">{{ $index + 4 }}</td>
+                <td class="py-3 px-4">{{ $order->kategori_layanan }}</td>
+                <td class="py-3 px-4">{{ $order->nama_layanan }}</td>
+                <td class="py-3 px-4">{{ $order->created_at }}</td>
+
+                <!-- Menampilkan status dengan warna sesuai -->
+                <td class="py-3 px-4">
+                    @if ($randomStatus == 'Selesai')
+                        <span class="inline-flex items-center px-2 py-1 text-sm font-semibold text-green-700 bg-green-200 rounded-full">
+                            ● Selesai
+                        </span>
+                    @else
+                        <span class="inline-flex items-center px-2 py-1 text-sm font-semibold text-red-700 bg-red-200 rounded-full">
+                            ● Dibatalkan
+                        </span>
+                    @endif
+                </td>
+            </tr>
+        @empty
+            <tr>
+                <td colspan="5" class="py-3 px-4 text-center">Tidak ada data lainnya</td>
+            </tr>
+        @endforelse
+    </tbody>
+    </table>
     </div>
-</div>
+    </div>
 
-<script>
-    document.getElementById('viewAllButton').addEventListener('click', function () {
-        const rows = document.querySelectorAll('#laundryTable tr');
-        rows.forEach(row => row.classList.remove('hidden'));
-        this.style.display = 'none'; // Hide the "View All" button after showing all rows
-    });
-</script>
-
+    <script>
+        document.getElementById('viewAllButton').addEventListener('click', function() {
+            // Menampilkan semua baris tersembunyi
+            const hiddenRows = document.querySelectorAll('.hidden-row');
+            hiddenRows.forEach(row => {
+                row.classList.remove('hidden-row');
+                row.classList.add('visible-row');
+            });
+            // Menyembunyikan tombol setelah diklik
+            this.style.display = 'none';
+        });
+    </script>
 @endsection
