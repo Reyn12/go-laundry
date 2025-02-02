@@ -1,44 +1,48 @@
-<footer id="hubungiKami" class="bg-blue-700 text-white py-10">
-    <div class="max-w-screen-xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-6">
-        <!-- Find Us Section -->
-        <div>
-            <h3 class="font-thin mb-4">FIND US</h3>
-            <p>Jl. Dipati Ukur No.100, Lebakgede, Kecamatan Coblong, Kota Bandung, Jawa Barat 40251</p>
-            <ul class="mt-4 space-y-2">
-                <li><a href="#" class="hover:underline">Tentang Kami</a></li>
-                <li><a href="#" class="hover:underline">Kebijakan Privasi</a></li>
-                <li><a href="#" class="hover:underline">Syarat & Ketentuan</a></li>
-            </ul>
-        </div>
+<div class="bg-[#0039c9] w-full">
+    <div class="max-w-screen-xl mx-auto p-2.5">
+        <div class="flex flex-col md:flex-row items-start gap-2.5">
+            <!-- Bagian Contact Us -->
+            <div class="flex flex-col justify-center items-start gap-3 py-2.5 w-full md:w-auto">
+                <p class="w-44 h-6 text-xl text-left text-white">
+                    CONTACT US
+                </p>
+                <!-- Social Icons Container -->
+                <div class="flex items-center w-44">
+                    <div class="flex items-center gap-6 py-2.5">
+                        <!-- [SVG icons tetap sama] -->
+                    </div>
+                </div>
+                <!-- Quick Links -->
+                <div class="flex items-center self-stretch">
+                    <div class="flex flex-col gap-2.5 py-2.5">
+                        <p class="text-xs text-left text-white space-y-2">
+                            <a href="#" class="block hover:underline">Tentang Kami</a>
+                            <a href="#" class="block hover:underline">Kebijakan Privasi</a>
+                            <a href="#" class="block hover:underline">Syarat & Ketentuan</a>
+                        </p>
+                    </div>
+                </div>
+            </div>
 
-        <!-- Empty Middle Section (for spacing) -->
-        <div></div>
-
-        <!-- Contact Us Section -->
-        <div>
-            <h3 class="font-thin mb-4">CONTACT US</h3>
-            <ul class="space-y-2">
-                <li class="flex items-center space-x-2">
-                    <span><img src="{{ asset('/images/icons/iconEmail.svg') }}" alt="iconEmail"
-                            class="w-full h-full"></span>
-                    <span>golaundry@gmail.com</span>
-                </li>
-                <li class="flex items-center space-x-2">
-                    <span><img src="{{ asset('/images/icons/iconPhone.svg') }}" alt="iconEmail"
-                            class="w-full h-full"></span>
-                    <span>081222222222</span>
-                </li>
-                <li class="flex items-center space-x-2">
-                    <span><img src="{{ asset('/images/icons/iconWhatsapp.svg') }}" alt="iconEmail"
-                            class="w-full h-full"></span>
-                    <span>085444444444</span>
-                </li>
-                <li class="flex items-center space-x-2">
-                    <span><img src="{{ asset('/images/icons/iconInstagram.svg') }}" alt="iconEmail"
-                            class="w-full h-full"></span>
-                    <span>go_laundry</span>
-                </li>
-            </ul>
+            <!-- Bagian Find Us -->
+            <div class="flex flex-col justify-start items-start gap-2.5 flex-1">
+                <p class="text-xl text-left text-white">FIND US</p>
+                <p class="w-full md:w-[432px] text-[11px] text-left text-white">
+                    Jl. Dipati Ukur No.100, Lebakgede, Kecamatan Coblong, Kota Bandung, Jawa Barat 40251
+                </p>
+                
+            <!-- Container untuk garis dan copyright -->
+            <div class="w-full flex flex-col gap-16"> 
+                <!-- Divider -->
+                <div class="w-full">
+                    <div class="w-full h-[1px] bg-white"></div>
+                </div>
+                <!-- Copyright -->
+                <div class="w-full flex justify-end">
+                    <p class="text-xs text-white">© 2022 GoLaundry. All rights reserved.</p>
+                </div>
+            </div>
+            </div>
         </div>
     </div>
-</footer>
+</div>

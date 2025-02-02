@@ -1,14 +1,12 @@
 <?php
 
-// app/Http/Controllers/HomepageController/PencarianHomepage.php
-
 namespace App\Http\Controllers\HomepageController;
 
 use App\Http\Controllers\Controller;
-use App\Models\LayananLaundry;  // Menggunakan model LayananLaundry
+use App\Models\LayananLaundry;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
-// tambahkan ini
+
 class PencarianHomepage extends Controller
 {
     /**
@@ -38,6 +36,7 @@ class PencarianHomepage extends Controller
             ->with(['merchant' => function($query) {
                 $query->select('merchants.*');
             }]);
+
         // Filter berdasarkan kategori layanan yang dipilih
         if (!empty($services)) {
             $query->where(function($q) use ($services) {
@@ -59,15 +58,28 @@ class PencarianHomepage extends Controller
         // Eksekusi query
         $layananLaundryList = $query->get();
 
+        // Mengelompokkan layanan berdasarkan merchant
+        $groupedServices = [];
+        foreach ($layananLaundryList as $layanan) {
+            $merchantId = $layanan->merchant->id;
+            if (!isset($groupedServices[$merchantId])) {
+                $groupedServices[$merchantId] = [
+                    'merchant' => $layanan->merchant,
+                    'kategori_layanan' => $layanan->kategori_layanan,
+                    'durasi' => []
+                ];
+            }
+            // Tambahkan durasi jika belum ada dalam array
+            if (!in_array($layanan->nama_layanan, $groupedServices[$merchantId]['durasi'])) {
+                $groupedServices[$merchantId]['durasi'][] = $layanan->nama_layanan;
+            }
+        }
+
         // Log untuk debugging
         Log::info('Filter Services: ' . json_encode($services));
         Log::info('Filter Durations: ' . json_encode($durations));
-        Log::info('Hasil Pencarian: ' . $layananLaundryList);
-        // Sebelum return view, kita load dulu merchant untuk setiap layanan
-        foreach ($layananLaundryList as $layanan) {
-            $layanan->load('merchant');  // ini bakal load merchant berdasarkan relasi yang udah ada
-        }
+        Log::info('Hasil Pencarian: ' . json_encode($groupedServices));
 
-        return view('homepage.index', ['layananLaundries' => $layananLaundryList]);
+        return view('homepage.index', ['groupedServices' => $groupedServices]);
     }
 }

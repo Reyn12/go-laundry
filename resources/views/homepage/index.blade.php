@@ -116,7 +116,7 @@
                         <h3 class="text-lg lg:text-xl text-black mb-4">Service yang disediakan:</h3>
                         <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
                             @foreach ([ 'Cuci Karpet', 'Cuci Sepatu', 'Cuci Jas',
-                            'Cuci Setrika', 'Cuci Karpet', 'Cuci Kering Lipat'] as $service)
+                            'Cuci Setrika', 'Cuci Kering Lipat'] as $service)
                             <label class="flex items-center gap-2">
                                 <input type="checkbox" name="services[]" value="{{ $service }}" @if(in_array($service,
                                     old('services', []))) checked @endif class="w-4 h-4">
@@ -153,10 +153,9 @@
     <!-- search_results.blade.php -->
     <!-- Hasil Pencarian -->
     <!-- Hasil Pencarian -->
-    @if(isset($layananLaundries) && count($layananLaundries) > 0)
-    @include('homepage.components.merchant-card', ['layananLaundries' => $layananLaundries])
+    @if(isset($groupedServices))
+    @include('homepage.components.merchant-card', ['groupedServices' => $groupedServices])
     @endif
-
     <!-- Keunggulan Section -->
     @include('homepage.sections.keunggulan-section')
 
