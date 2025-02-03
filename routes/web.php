@@ -98,8 +98,9 @@ Route::prefix('user')->group(function () {
     // Dashboard route
     Route::get('/dashboard', [DashboardUserController::class, 'index'])->name('user.dashboard');
     
-    //User register 
-    Route::get('/register', [RegisterUserController::class, 'index'])->name('user.register');
+     //User register 
+     Route::get('/register', [RegisterUserController::class, 'index'])->name('user.register');
+     Route::post('/register', [RegisterUserController::class, 'store'])->name('user.register.submit');
 
     //Pencarian Route
     Route::get('/pencarian', [UserPencarianController::class, 'index'])->name('user.pencarian');
@@ -136,10 +137,8 @@ Route::prefix('user')->group(function () {
     Route::post('/user/login', [LoginUserController::class, 'login_proses'])->name('user.login.post');
 
     //Pesanan Route
-    Route::get('/layanan', [PesananController::class, 'getLayanan'])->name('user.layanan');
-
-    //Pesanan Route
-    Route::get('/pesanan', [PesananController::class, 'index'])->name('pesanan.index');
+    Route::post('/pesanan/store', [PesananController::class, 'store']);
+    Route::get('/riwayat', [PesananController::class, 'index']);
 
     //Pelacakan Route
     Route::get('/user/pelacakan/{id?}', [UserPelacakanController::class, 'show'])->name('user.pelacakan.index');

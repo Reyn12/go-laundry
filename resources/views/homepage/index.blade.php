@@ -102,16 +102,6 @@
     @include('homepage.sections.hero-section')
 
     <!-- Filter Pencarian Laundry -->
-<<<<<<< HEAD
-    @include('homepage.components.filter-pencarian')
-    <!-- Hasil Pencarian -->
-    <div class="flex flex-col items-center gap-2 px-6 pt-6 pb-6">
-        <div class="flex flex-col items-center w-full gap-6 p-6 rounded-[36px] border border-black">
-            <div class="flex flex-wrap items-center gap-2">
-                <p class="text-xl text-black">Hasil Pencarian :</p>
-                @include('homepage.components.category-services', ['services' => 'Cuci Reguler'])
-                @include('homepage.components.category-services', ['services' => 'Cuci Kering'])
-=======
     <!-- homepage/components/filter-pencarian.blade.php -->
     <div class="flex flex-col items-center justify-center min-h-screen w-full py-12" id="Pencarian">
         <form action="{{ url('/search-laundry') }}" method="GET" class="w-full flex justify-center">
@@ -157,65 +147,15 @@
                     CARI
                     <img src="{{ asset('images/icons/iconKaca.svg') }}" alt="" class="w-5 h-5">
                 </button>
->>>>>>> 86af8045fc8564b97edda3aaa6235e9929a84a48
             </div>
-            <!-- Card Merchant -->
-            <div class="flex flex-wrap justify-center gap-4">
-                @include('homepage.components.merchant-card', [
-                'no' => 1,
-                'name' => 'Laundry Atlas',
-                'distance' => 4,
-                'address' => 'Jl Sekeloa Utara',
-                'services' => 'Cuci Reguler, Cuci Sepatu'
-                ])
-                @include('homepage.components.merchant-card', [
-                'no' => 2,
-                'name' => 'Laundry B',
-                'distance' => 5,
-                'address' => 'Jl Dipatiukur',
-                'services' => 'Cuci Kering, Setrika'
-                ])
-                @include('homepage.components.merchant-card', [
-                'no' => 3,
-                'name' => 'Laundry C',
-                'distance' => 3,
-                'address' => 'Jl Dago',
-                'services' => 'Cuci Basah, Cuci Karpet'
-                ])
-                @include('homepage.components.merchant-card', [
-                'no' => 4,
-                'name' => 'Laundry D',
-                'distance' => 2,
-                'address' => 'Jl Surapati',
-                'services' => 'Cuci Selimut, Setrika'
-                ])
-                @include('homepage.components.merchant-card', [
-                'no' => 5,
-                'name' => 'Laundry E',
-                'distance' => 1,
-                'address' => 'Jl Cihapit',
-                'services' => 'Cuci Reguler, Cuci Kering'
-                ])
-                @include('homepage.components.merchant-card', [
-                'no' => 6,
-                'name' => 'Laundry F',
-                'distance' => 6,
-                'address' => 'Jl Cihanjua',
-                'services' => 'Cuci Reguler, Cuci Kering'
-                ])
-            </div>
-        </div>
+        </form>
     </div>
-<<<<<<< HEAD
-
-=======
     <!-- search_results.blade.php -->
     <!-- Hasil Pencarian -->
     <!-- Hasil Pencarian -->
     @if(isset($groupedServices))
     @include('homepage.components.merchant-card', ['groupedServices' => $groupedServices])
     @endif
->>>>>>> 86af8045fc8564b97edda3aaa6235e9929a84a48
     <!-- Keunggulan Section -->
     @include('homepage.sections.keunggulan-section')
 
