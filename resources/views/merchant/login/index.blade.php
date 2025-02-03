@@ -25,12 +25,24 @@
                     <h2 class="text-2xl font-bold text-gray-700 mt-2">Welcome, Merchant</h2>
                     <p class="text-gray-500 text-sm">Merchant Laundry Terbaik</p>
                 </div>
-                <form action="/login" method="POST" class="space-y-4">
+                <form action="{{ route('merchant.login.process') }}" method="POST" class="space-y-4">
                     @csrf
+                    @if($errors->any())
+                        <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative" role="alert">
+                            @foreach($errors->all() as $error)
+                                <p>{{ $error }}</p>
+                            @endforeach
+                        </div>
+                    @endif
+                    @if(session('success'))
+                        <div class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded relative" role="alert">
+                            <p>{{ session('success') }}</p>
+                        </div>
+                    @endif
                     <div>
                         <label for="username" class="block text-sm font-medium text-gray-700">Username</label>
                         <div class="relative">
-                            <input type="text" name="username" id="username" placeholder="Enter your username"
+                            <input type="text" name="username" id="username" value="{{ old('username') }}" placeholder="Enter your username"
                                 class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 pl-10">
                             <span class="absolute inset-y-0 left-3 flex items-center text-gray-400">@</span>
                         </div>

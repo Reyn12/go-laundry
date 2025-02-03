@@ -136,12 +136,17 @@ Route::prefix('user')->group(function () {
     Route::post('/user/login', [LoginUserController::class, 'login_proses'])->name('user.login.post');
 
 // Merchant Routes
-    Route::prefix('merchant')->group(function () {
-        Route::get('/login', function () {
-            return view('merchant.login.index');
-        });
-        Route::post('/login', [LoginMerchantController::class, 'login']);
+Route::prefix('merchant')->group(function () {
+    Route::get('/login', [LoginMerchantController::class, 'index'])->name('merchant.login');
+    Route::post('/login', [LoginMerchantController::class, 'login'])->name('merchant.login.process');
+    Route::post('/logout', [LoginMerchantController::class, 'logout'])->name('merchant.logout');
     
+    // Protected merchant routes
+    Route::middleware(['auth'])->group(function () {
+        Route::get('/dashboard', [DashboardMerchantController::class, 'index'])->name('merchant.dashboard');
+        // Add other merchant routes here
+    });
+
     // Dashboard route
     Route::get('/dashboard', [DashboardMerchantController::class, 'index'])->name('merchant.dashboard');
     

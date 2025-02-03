@@ -99,13 +99,16 @@
         </li>
     </ul>
 
-    {{-- <div class="flex-grow"></div> --}}
+    {{-- Logout Button --}}
     <div class="button-logout mt-auto flex items-center justify-center w-full">
-        <button class="flex items-center px-4 py-2 bg-red-700 text-white rounded-lg hover:bg-red-600 w-3/4 justify-center">
-            <span class="mr-2">
-                <img src="{{ asset('images/icons/iconLogout.svg') }}" alt="Logout" class="w-5 h-5">
-            </span>
-            Logout
-        </button>
+        <form action="{{ route('merchant.logout') }}" method="POST" class="w-3/4">
+            @csrf
+            <button type="submit" class="flex items-center px-4 py-2 bg-red-700 text-white rounded-lg hover:bg-red-600 w-full justify-center">
+                <span class="mr-2">
+                    <img src="{{ asset('images/icons/iconLogout.svg') }}" alt="Logout" class="w-5 h-5">
+                </span>
+                Logout
+            </button>
+        </form>
     </div>
 </div>
