@@ -30,6 +30,7 @@ class RegisterMerchantController extends Controller
                 'password' => 'required|string|min:8|confirmed',
                 'description' => 'nullable|string',
                 'operationalHours' => 'required|string',
+                'services' => 'required|array', // Validasi services harus array
             ]);
 
             DB::beginTransaction();
@@ -61,6 +62,18 @@ class RegisterMerchantController extends Controller
             ]);
 
             Log::info('Merchant berhasil dibuat', ['merchant_id' => $merchant->id]);
+
+            // Simpan layanan yang dipilih ke dalam database
+            if ($request->has('services')) {
+                foreach ($request->services as $serviceName) {
+                    DB::table('layanan_laundries')->insert([
+                        'merchant_id' => $merchant->id,
+                        'nama_layanan' => $serviceName,
+                        'created_at' => now(),
+                        'updated_at' => now()
+                    ]);
+                }
+            }
 
             DB::commit();
             

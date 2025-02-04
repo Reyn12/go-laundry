@@ -146,9 +146,6 @@ Route::prefix('merchant')->group(function () {
         Route::get('/dashboard', [DashboardMerchantController::class, 'index'])->name('merchant.dashboard');
         // Add other merchant routes here
     });
-
-    // Dashboard route
-    Route::get('/dashboard', [DashboardMerchantController::class, 'index'])->name('merchant.dashboard');
     
     //Merchant register 
     Route::get('/register', [RegisterMerchantController::class, 'index'])->name('merchant.register');
@@ -159,6 +156,9 @@ Route::prefix('merchant')->group(function () {
 
      //KelolaLayanan Route
      Route::get('/kelolalayanan', [KelolaLayananMerchantController::class, 'index'])->name('merchant.kelolalayanan');
+     Route::post('/layanan', [KelolaLayananMerchantController::class, 'store'])->name('merchant.layanan.store');
+     Route::get('/layanan/{id}', [KelolaLayananMerchantController::class, 'show'])->name('merchant.layanan.show');
+     Route::put('/layanan/{id}', [KelolaLayananMerchantController::class, 'update'])->name('merchant.layanan.update');
 
      //ManajemenPemesanan Route
      Route::get('/manajemenpemesanan', [ManajemenPemesananMerchantController::class, 'index'])->name('merchant.manajemenpemesanan');
@@ -168,4 +168,4 @@ Route::prefix('merchant')->group(function () {
 
       //Penarikan Saldo Route
       Route::get('/penarikansaldo', [PenarikanSaldoMerchantController::class, 'index'])->name('merchant.penarikansaldo');
-}); 
+});

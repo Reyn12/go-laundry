@@ -40,10 +40,9 @@
                 <div class="flex justify-between items-center mb-6">
                     <h2 class="text-xl font-semibold">Daftar Layanan</h2>
 
-                    <!-- Tombol Update & Tambah Layanan -->
+                    <!-- Tombol Tambah Layanan -->
                     <div class="flex space-x-2">
                         <button class="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600" onclick="addService()">Tambah Layanan</button>
-                        <button class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600" onclick="updateServiceStatus()">Update Layanan</button>
                     </div>
                 </div>
 
@@ -79,15 +78,19 @@
                                 <td class="px-6 py-4 text-gray-500">{{ $item->deskripsi }}</td>
                                 <td class="px-6 py-4">
                                     <div class="flex space-x-2">
-                                        <button onclick="editService({{ $item->id }})" class="text-blue-600 hover:text-blue-800">
-                                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path>
+                                        <button onclick="editService('{{ $item->id }}')" 
+                                                class="bg-blue-500 hover:bg-blue-600 text-white px-3 py-1 rounded-md text-sm flex items-center">
+                                            <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/>
                                             </svg>
+                                            Update
                                         </button>
-                                        <button onclick="deleteService({{ $item->id }})" class="text-red-600 hover:text-red-800">
-                                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path>
+                                        <button onclick="deleteService('{{ $item->id }}')"
+                                                class="bg-red-500 hover:bg-red-600 text-white px-3 py-1 rounded-md text-sm flex items-center">
+                                            <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/>
                                             </svg>
+                                            Hapus
                                         </button>
                                     </div>
                                 </td>
@@ -100,36 +103,41 @@
         </div>
     </div>
 
-    <!-- Modal Tambah/Edit Layanan -->
-    <div id="serviceModal" class="fixed inset-0 bg-gray-600 bg-opacity-50 hidden overflow-y-auto h-full w-full">
+    <!-- Modal Tambah Layanan -->
+    <div id="serviceModal" class="fixed inset-0 bg-gray-600 bg-opacity-50 hidden overflow-y-auto h-full w-full mt-20">
         <div class="relative top-20 mx-auto p-5 border w-96 shadow-lg rounded-md bg-white">
             <div class="mt-3">
                 <h3 class="text-lg leading-6 font-medium text-gray-900" id="modalTitle">Tambah Layanan Baru</h3>
                 <form id="serviceForm" class="mt-4">
+                    @csrf
                     <input type="hidden" id="serviceId">
                     <div class="mb-4">
                         <label class="block text-gray-700 text-sm font-bold mb-2" for="kategoriLayanan">
                             Kategori Layanan
                         </label>
-                        <input type="text" id="kategoriLayanan" name="kategori_layanan" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+                        <input type="text" id="kategoriLayanan" name="kategori_layanan" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" required>
                     </div>
                     <div class="mb-4">
                         <label class="block text-gray-700 text-sm font-bold mb-2" for="namaLayanan">
                             Nama Layanan
                         </label>
-                        <input type="text" id="namaLayanan" name="nama_layanan" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+                        <select id="namaLayanan" name="nama_layanan" class="shadow border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" required>
+                            <option value="Reguler">Reguler</option>
+                            <option value="Express">Express</option>
+                            <option value="Kilat">Kilat</option>
+                        </select>
                     </div>
                     <div class="mb-4">
                         <label class="block text-gray-700 text-sm font-bold mb-2" for="hargaPerUnit">
                             Harga
                         </label>
-                        <input type="number" id="hargaPerUnit" name="harga_per_unit" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+                        <input type="number" id="hargaPerUnit" name="harga_per_unit" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" required>
                     </div>
                     <div class="mb-4">
                         <label class="block text-gray-700 text-sm font-bold mb-2" for="satuan">
                             Satuan
                         </label>
-                        <select id="satuan" name="satuan" class="shadow border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+                        <select id="satuan" name="satuan" class="shadow border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" required>
                             <option value="KG">KG</option>
                             <option value="PCS">PCS</option>
                         </select>
@@ -138,7 +146,7 @@
                         <label class="block text-gray-700 text-sm font-bold mb-2" for="waktuPengerjaan">
                             Waktu Pengerjaan
                         </label>
-                        <input type="text" id="waktuPengerjaan" name="waktu_pengerjaan" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+                        <input type="text" id="waktuPengerjaan" name="waktu_pengerjaan" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" required>
                     </div>
                     <div class="mb-4">
                         <label class="block text-gray-700 text-sm font-bold mb-2" for="deskripsi">
@@ -146,12 +154,55 @@
                         </label>
                         <textarea id="deskripsi" name="deskripsi" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"></textarea>
                     </div>
-                    <div class="flex items-center justify-between mt-4">
-                        <button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
+                    <div class="flex justify-end space-x-2">
+                        <button type="button" class="bg-gray-500 hover:bg-gray-600 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" onclick="closeModal()">
+                            Batal
+                        </button>
+                        <button type="submit" class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
                             Simpan
                         </button>
-                        <button type="button" onclick="closeModal()" class="bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Update Layanan -->
+    <div id="updateModal" class="fixed inset-0 bg-gray-600 bg-opacity-50 hidden overflow-y-auto h-full w-full mt-20">
+        <div class="relative top-20 mx-auto p-5 border w-96 shadow-lg rounded-md bg-white">
+            <div class="mt-3">
+                <h3 class="text-lg leading-6 font-medium text-gray-900">Update Layanan</h3>
+                <form id="updateForm" class="mt-4">
+                    @csrf
+                    <input type="hidden" id="updateLayananId" name="id">
+
+                    <div class="mb-4">
+                        <label class="block text-gray-700 text-sm font-bold mb-2" for="updateHargaPerUnit">
+                            Harga
+                        </label>
+                        <input type="number" id="updateHargaPerUnit" name="harga_per_unit" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" required>
+                    </div>
+
+                    <div class="mb-4">
+                        <label class="block text-gray-700 text-sm font-bold mb-2" for="updateWaktuPengerjaan">
+                            Waktu Pengerjaan
+                        </label>
+                        <input type="text" id="updateWaktuPengerjaan" name="waktu_pengerjaan" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" required>
+                    </div>
+
+                    <div class="mb-4">
+                        <label class="block text-gray-700 text-sm font-bold mb-2" for="updateDeskripsi">
+                            Deskripsi
+                        </label>
+                        <textarea id="updateDeskripsi" name="deskripsi" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"></textarea>
+                    </div>
+
+                    <div class="flex justify-end space-x-2">
+                        <button type="button" class="bg-gray-500 hover:bg-gray-600 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" onclick="closeUpdateModal()">
                             Batal
+                        </button>
+                        <button type="submit" class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
+                            Simpan Perubahan
                         </button>
                     </div>
                 </form>
@@ -160,7 +211,6 @@
     </div>
 
     <script>
-        // Fungsi untuk membuka modal tambah layanan
         function addService() {
             document.getElementById('modalTitle').textContent = 'Tambah Layanan Baru';
             document.getElementById('serviceId').value = '';
@@ -168,105 +218,107 @@
             document.getElementById('serviceModal').classList.remove('hidden');
         }
 
-        // Fungsi untuk membuka modal edit layanan
-        function editService(id) {
-            document.getElementById('modalTitle').textContent = 'Edit Layanan';
-            document.getElementById('serviceId').value = id;
+        document.getElementById('serviceForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
             
-            // Fetch layanan data
-            fetch(`/api/merchant/layanan/${id}`)
-                .then(response => response.json())
-                .then(data => {
-                    document.getElementById('kategoriLayanan').value = data.kategori_layanan;
-                    document.getElementById('namaLayanan').value = data.nama_layanan;
-                    document.getElementById('hargaPerUnit').value = data.harga_per_unit;
-                    document.getElementById('satuan').value = data.satuan;
-                    document.getElementById('waktuPengerjaan').value = data.waktu_pengerjaan;
-                    document.getElementById('deskripsi').value = data.deskripsi;
-                    document.getElementById('serviceModal').classList.remove('hidden');
-                });
-        }
+            // Kumpulkan data form
+            const formData = new FormData(this);
+            const data = {};
+            formData.forEach((value, key) => {
+                data[key] = value;
+            });
 
-        // Fungsi untuk menutup modal
+            try {
+                const response = await fetch('{{ route("merchant.layanan.store") }}', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content,
+                        'Accept': 'application/json'
+                    },
+                    credentials: 'same-origin', // Penting untuk mengirim cookies session
+                    body: JSON.stringify(data)
+                });
+
+                const result = await response.json();
+
+                if (response.ok && result.status === 'success') {
+                    alert('Layanan berhasil ditambahkan!');
+                    window.location.reload();
+                } else {
+                    let errorMessage = result.message || 'Terjadi kesalahan saat menyimpan data';
+                    if (result.errors) {
+                        errorMessage = Object.values(result.errors).flat().join('\n');
+                    }
+                    throw new Error(errorMessage);
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                alert('Terjadi kesalahan: ' + error.message);
+            }
+        });
+
         function closeModal() {
             document.getElementById('serviceModal').classList.add('hidden');
             document.getElementById('serviceForm').reset();
         }
 
-        // Handle form submission
-        document.getElementById('serviceForm').addEventListener('submit', function(e) {
-            e.preventDefault();
-            const serviceId = document.getElementById('serviceId').value;
-            const formData = {
-                kategori_layanan: document.getElementById('kategoriLayanan').value,
-                nama_layanan: document.getElementById('namaLayanan').value,
-                harga_per_unit: document.getElementById('hargaPerUnit').value,
-                satuan: document.getElementById('satuan').value,
-                waktu_pengerjaan: document.getElementById('waktuPengerjaan').value,
-                deskripsi: document.getElementById('deskripsi').value
-            };
-
-            const url = serviceId ? `/api/merchant/layanan/${serviceId}` : '/api/merchant/layanan';
-            const method = serviceId ? 'PUT' : 'POST';
-
-            fetch(url, {
-                method: method,
-                headers: {
-                    'Content-Type': 'application/json',
-                    'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content
-                },
-                body: JSON.stringify(formData)
-            })
-            .then(response => response.json())
-            .then(data => {
-                if (data.status === 'success') {
-                    alert(data.message);
-                    closeModal();
-                    location.reload();
-                } else {
-                    alert('Terjadi kesalahan');
-                }
-            })
-            .catch(error => {
-                console.error('Error:', error);
-                alert('Terjadi kesalahan');
-            });
-        });
-
-        // Fungsi untuk menghapus layanan
-        function deleteService(id) {
-            if (confirm('Apakah Anda yakin ingin menghapus layanan ini?')) {
-                fetch(`/api/merchant/layanan/${id}`, {
-                    method: 'DELETE',
-                    headers: {
-                        'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content
-                    }
-                })
+        function editService(id) {
+            fetch(`{{ url('/merchant/layanan') }}/${id}`)
                 .then(response => response.json())
                 .then(data => {
-                    if (data.status === 'success') {
-                        alert(data.message);
-                        location.reload();
-                    } else {
-                        alert('Terjadi kesalahan saat menghapus layanan');
-                    }
+                    document.getElementById('updateLayananId').value = id;
+                    document.getElementById('updateHargaPerUnit').value = data.harga_per_unit;
+                    document.getElementById('updateWaktuPengerjaan').value = data.waktu_pengerjaan;
+                    document.getElementById('updateDeskripsi').value = data.deskripsi || '';
+                    document.getElementById('updateModal').classList.remove('hidden');
                 })
                 .catch(error => {
                     console.error('Error:', error);
-                    alert('Terjadi kesalahan saat menghapus layanan');
+                    alert('Terjadi kesalahan saat mengambil data layanan');
                 });
-            }
         }
 
-        // Search functionality
-        document.getElementById('searchInput').addEventListener('input', function(e) {
-            const searchValue = e.target.value.toLowerCase();
-            const rows = document.querySelectorAll('tbody tr');
+        function closeUpdateModal() {
+            document.getElementById('updateModal').classList.add('hidden');
+            document.getElementById('updateForm').reset();
+        }
+
+        document.getElementById('updateForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
             
-            rows.forEach(row => {
-                const text = row.textContent.toLowerCase();
-                row.style.display = text.includes(searchValue) ? '' : 'none';
+            const id = document.getElementById('updateLayananId').value;
+            const formData = new FormData(this);
+            const data = {};
+            formData.forEach((value, key) => {
+                if (key !== '_token' && key !== 'id') { // Exclude CSRF token and ID
+                    data[key] = value;
+                }
             });
+
+            try {
+                const response = await fetch(`{{ url('/merchant/layanan') }}/${id}`, {
+                    method: 'PUT',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content,
+                        'Accept': 'application/json'
+                    },
+                    body: JSON.stringify(data)
+                });
+
+                const result = await response.json();
+
+                if (response.ok && result.status === 'success') {
+                    alert('Layanan berhasil diupdate!');
+                    window.location.reload();
+                } else {
+                    throw new Error(result.message || 'Terjadi kesalahan saat mengupdate data');
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                alert('Terjadi kesalahan: ' + error.message);
+            }
         });
     </script>
 </body>

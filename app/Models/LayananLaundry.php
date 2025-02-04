@@ -15,9 +15,11 @@ class LayananLaundry extends Model
 
     protected $fillable = [
         'merchant_id',
+        'kategori_layanan',
         'nama_layanan',
-        'harga',
-        'estimasi',
+        'harga_per_unit',
+        'satuan',
+        'waktu_pengerjaan',
         'deskripsi',
         'created_at',
         'updated_at'

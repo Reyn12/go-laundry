@@ -5,13 +5,23 @@ namespace App\Http\Controllers\MerchantController;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\LayananLaundry;
+use App\Models\Merchant;
 use Illuminate\Support\Facades\Auth;
 
 class KelolaLayananMerchantController extends Controller
 {
     public function index()
     {
-        $layanan = LayananLaundry::where('merchant_id', Auth::id())->get();
+        // Dapatkan merchant_id dari user yang login
+        $merchant = Merchant::where('user_id', Auth::id())->first();
+        
+        if (!$merchant) {
+            return redirect()->back()->with('error', 'Akun anda bukan merchant');
+        }
+
+        // Ambil layanan berdasarkan merchant_id yang benar
+        $layanan = LayananLaundry::where('merchant_id', $merchant->id)->get();
+        
         return view('merchant.kelolalayanan.index', [
             'mainTitle' => 'Kelola Layanan',
             'layanan' => $layanan
@@ -20,87 +30,150 @@ class KelolaLayananMerchantController extends Controller
 
     public function store(Request $request)
     {
-        $validated = $request->validate([
-            'kategori_layanan' => 'required|string|max:255',
-            'nama_layanan' => 'required|string|max:255',
-            'harga_per_unit' => 'required|numeric|min:0',
-            'satuan' => 'required|string|in:KG,PCS',
-            'waktu_pengerjaan' => 'required|string',
-            'deskripsi' => 'nullable|string',
-        ]);
+        try {
+            // Pastikan user sudah login
+            if (!Auth::check()) {
+                return response()->json([
+                    'status' => 'error',
+                    'message' => 'Anda harus login terlebih dahulu'
+                ], 401);
+            }
 
-        $layanan = new LayananLaundry();
-        $layanan->merchant_id = Auth::id();
-        $layanan->kategori_layanan = $validated['kategori_layanan'];
-        $layanan->nama_layanan = $validated['nama_layanan'];
-        $layanan->harga_per_unit = $validated['harga_per_unit'];
-        $layanan->satuan = $validated['satuan'];
-        $layanan->waktu_pengerjaan = $validated['waktu_pengerjaan'];
-        $layanan->deskripsi = $validated['deskripsi'];
-        $layanan->save();
+            // Cek apakah user adalah merchant
+            $merchant = Merchant::where('user_id', Auth::id())->first();
+            if (!$merchant) {
+                return response()->json([
+                    'status' => 'error',
+                    'message' => 'Akun anda bukan merchant'
+                ], 403);
+            }
 
-        return response()->json([
-            'status' => 'success',
-            'message' => 'Layanan berhasil ditambahkan',
-            'data' => $layanan
-        ], 201);
+            // Validasi input
+            $validated = $request->validate([
+                'kategori_layanan' => 'required|string|max:255',
+                'nama_layanan' => 'required|string|max:255',
+                'harga_per_unit' => 'required|numeric|min:0',
+                'satuan' => 'required|string|in:KG,PCS',
+                'waktu_pengerjaan' => 'required|string',
+                'deskripsi' => 'nullable|string',
+            ]);
+
+            // Buat layanan baru
+            $layanan = new LayananLaundry();
+            $layanan->merchant_id = $merchant->id;
+            $layanan->kategori_layanan = $validated['kategori_layanan'];
+            $layanan->nama_layanan = $validated['nama_layanan'];
+            $layanan->harga_per_unit = $validated['harga_per_unit'];
+            $layanan->satuan = $validated['satuan'];
+            $layanan->waktu_pengerjaan = $validated['waktu_pengerjaan'];
+            $layanan->deskripsi = $validated['deskripsi'] ?? '';
+
+            // Simpan ke database
+            $layanan->save();
+
+            return response()->json([
+                'status' => 'success',
+                'message' => 'Layanan berhasil ditambahkan',
+                'data' => $layanan
+            ], 201);
+
+        } catch (\Illuminate\Validation\ValidationException $e) {
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Validasi gagal',
+                'errors' => $e->errors()
+            ], 422);
+        } catch (\Exception $e) {
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Terjadi kesalahan saat menyimpan layanan: ' . $e->getMessage()
+            ], 500);
+        }
+    }
+
+    public function show($id)
+    {
+        try {
+            $merchant = Merchant::where('user_id', Auth::id())->first();
+            if (!$merchant) {
+                return response()->json([
+                    'status' => 'error',
+                    'message' => 'Akun anda bukan merchant'
+                ], 403);
+            }
+
+            $layanan = LayananLaundry::where('merchant_id', $merchant->id)
+                                   ->where('id', $id)
+                                   ->first();
+
+            if (!$layanan) {
+                return response()->json([
+                    'status' => 'error',
+                    'message' => 'Layanan tidak ditemukan'
+                ], 404);
+            }
+
+            return response()->json($layanan);
+        } catch (\Exception $e) {
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Terjadi kesalahan: ' . $e->getMessage()
+            ], 500);
+        }
     }
 
     public function update(Request $request, $id)
     {
-        $layanan = LayananLaundry::where('merchant_id', Auth::id())
-                                ->where('id', $id)
-                                ->firstOrFail();
+        try {
+            $merchant = Merchant::where('user_id', Auth::id())->first();
+            if (!$merchant) {
+                return response()->json([
+                    'status' => 'error',
+                    'message' => 'Akun anda bukan merchant'
+                ], 403);
+            }
 
-        $validated = $request->validate([
-            'kategori_layanan' => 'sometimes|string|max:255',
-            'nama_layanan' => 'sometimes|string|max:255',
-            'harga_per_unit' => 'sometimes|numeric|min:0',
-            'satuan' => 'sometimes|string|in:KG,PCS',
-            'waktu_pengerjaan' => 'sometimes|string',
-            'deskripsi' => 'nullable|string',
-        ]);
+            $layanan = LayananLaundry::where('merchant_id', $merchant->id)
+                                   ->where('id', $id)
+                                   ->first();
 
-        $layanan->update($validated);
+            if (!$layanan) {
+                return response()->json([
+                    'status' => 'error',
+                    'message' => 'Layanan tidak ditemukan'
+                ], 404);
+            }
 
-        return response()->json([
-            'status' => 'success',
-            'message' => 'Layanan berhasil diperbarui',
-            'data' => $layanan
-        ]);
-    }
+            // Validasi input
+            $validated = $request->validate([
+                'harga_per_unit' => 'required|numeric|min:0',
+                'waktu_pengerjaan' => 'required|string',
+                'deskripsi' => 'nullable|string',
+            ]);
 
-    public function updateBatch(Request $request)
-    {
-        $validated = $request->validate([
-            'layanan' => 'required|array',
-            'layanan.*.id' => 'required|exists:layanan_laundries,id',
-            'layanan.*.waktu_pengerjaan' => 'required|string'
-        ]);
+            // Update data
+            $layanan->harga_per_unit = $validated['harga_per_unit'];
+            $layanan->waktu_pengerjaan = $validated['waktu_pengerjaan'];
+            $layanan->deskripsi = $validated['deskripsi'] ?? '';
+            $layanan->save();
 
-        foreach ($validated['layanan'] as $data) {
-            LayananLaundry::where('id', $data['id'])
-                         ->where('merchant_id', Auth::id())
-                         ->update(['waktu_pengerjaan' => $data['waktu_pengerjaan']]);
+            return response()->json([
+                'status' => 'success',
+                'message' => 'Layanan berhasil diupdate',
+                'data' => $layanan
+            ]);
+
+        } catch (\Illuminate\Validation\ValidationException $e) {
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Validasi gagal',
+                'errors' => $e->errors()
+            ], 422);
+        } catch (\Exception $e) {
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Terjadi kesalahan saat mengupdate layanan: ' . $e->getMessage()
+            ], 500);
         }
-
-        return response()->json([
-            'status' => 'success',
-            'message' => 'Status layanan berhasil diperbarui'
-        ]);
-    }
-
-    public function destroy($id)
-    {
-        $layanan = LayananLaundry::where('merchant_id', Auth::id())
-                                ->where('id', $id)
-                                ->firstOrFail();
-        
-        $layanan->delete();
-
-        return response()->json([
-            'status' => 'success',
-            'message' => 'Layanan berhasil dihapus'
-        ], 200);
     }
 }

@@ -52,18 +52,20 @@
                             <div class="w-8 h-8 rounded-full bg-gray-200 overflow-hidden">
                                 <img src="{{ asset('images/icons/iconProfile.svg') }}" alt="Profile" class="w-full h-full object-cover">
                             </div>
-                            <span class="font-medium">Krisna Ariangga</span>
+                            <span class="font-medium">{{ Auth::user()->nama_lengkap }}</span>
                         </div>
                     </div>
                 </div>
             </div>
 
             <div class="grid grid-cols-4 gap-4 mb-6">
-                <!-- Saldo -->
+                <!-- Merchant Info -->
                 <div class="bg-white shadow-md p-6 rounded-md col-span-1">
-                    <h2 class="text-lg font-semibold mb-4">Halo Key Merchant</h2>
-                    <h3 class="text-2xl font-bold">Saldo</h3>
-                    <p class="text-lg font-semibold text-green-500">Rp. 2.500.000</p>
+                    <h2 class="text-lg font-semibold mb-4">Halo, {{ Auth::user()->nama_lengkap }}</h2>
+                    <div class="mt-4">
+                        <h3 class="text-2xl font-bold">Saldo Tersedia</h3>
+                        <p class="text-lg font-semibold text-green-500">Rp. {{ number_format(Auth::user()->merchant->saldoMerchant->saldo_tersedia ?? 0, 0, ',', '.') }}</p>
+                    </div>
                 </div>
 
              <!-- Today's Sales -->
@@ -76,7 +78,7 @@
                 <img src={{asset("images/icons/iconMerchant1.svg")}} alt="Pendapatan Icon" class="w-8 h-8">
             </div>
             <h2 class="text-lg font-semibold mb-1">Pendapatan</h2>
-            <h3 class="text-2xl font-bold">Rp.500.000</h3>
+            <h3 class="text-2xl font-bold">Rp. {{ number_format($todayIncome ?? 0, 0, ',', '.') }}</h3>
         </div>
         
         <!-- Total Order -->
@@ -85,25 +87,25 @@
                 <img src={{asset("images/icons/iconMerchant2.svg")}} alt="Total Order Icon" class="w-8 h-8">
             </div>
             <h2 class="text-lg font-semibold mb-1">Total Order</h2>
-            <h3 class="text-2xl font-bold">200</h3>
+            <h3 class="text-2xl font-bold">{{ $totalOrders ?? 0 }}</h3>
         </div>
         
-        <!-- Layanan Tersedia -->
+        <!-- Order Selesai -->
         <div class="text-center">
             <div class="flex justify-center mb-2">
-                <img src={{asset("images/icons/iconMerchant3.svg")}} alt="Layanan Tersedia Icon" class="w-8 h-8">
+                <img src={{asset("images/icons/iconMerchant3.svg")}} alt="Order Selesai Icon" class="w-8 h-8">
             </div>
-            <h2 class="text-lg font-semibold mb-1">Layanan Tersedia</h2>
-            <h3 class="text-2xl font-bold">5</h3>
+            <h2 class="text-lg font-semibold mb-1">Order Selesai</h2>
+            <h3 class="text-2xl font-bold">{{ $completedOrders ?? 0 }}</h3>
         </div>
         
-        <!-- Pelanggan Baru -->
+        <!-- Order Pending -->
         <div class="text-center">
             <div class="flex justify-center mb-2">
-                <img src={{asset("images/icons/iconMerchant4.svg")}} alt="Pelanggan Baru Icon" class="w-8 h-8">
+                <img src={{asset("images/icons/iconMerchant4.svg")}} alt="Order Pending Icon" class="w-8 h-8">
             </div>
-            <h2 class="text-lg font-semibold mb-1">Pelanggan Baru</h2>
-            <h3 class="text-2xl font-bold">12</h3>
+            <h2 class="text-lg font-semibold mb-1">Order Menunggu</h2>
+            <h3 class="text-2xl font-bold">{{ $pendingOrders ?? 0 }}</h3>
         </div>
     </div>
 </div>
@@ -153,7 +155,7 @@
                                 </div>
                                 <div class="flex-1">
                                     <div class="flex items-center justify-between mb-1">
-                                        <h3 class="font-medium text-gray-900">Agus Sedih</h3>
+                                        <h3 class="font-medium text-gray-900">Anonymous</h3>
                                         <span class="text-sm text-gray-500">04 December 2024</span>
                                     </div>
                                     <div class="flex items-center mb-2">
@@ -171,7 +173,7 @@
                                             <span class="ml-2 text-sm font-medium text-gray-500">1.0/5.0</span>
                                         </div>
                                     </div>
-                                    <p class="text-gray-700">"Balikin duit gw!! Ga sesuai gw itu duit gw goblok."</p>
+                                    <p class="text-gray-700">"Tidak Sesuai Dengan Yang Saya Harapkan"</p>
                                 </div>
                             </div>
                         </div>
