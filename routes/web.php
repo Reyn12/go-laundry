@@ -114,8 +114,10 @@ Route::prefix('user')->group(function () {
     //Reorder Route
     Route::get('/riwayat/reorder', [UserRiwayatController::class, 'reorder'])->name('riwayat.reorder');
 
-    //Order Route
-    Route::post('/order', [OrderController::class, 'createOrder'])->name('order');
+     //Order Route
+     Route::post('/order', [OrderController::class, 'createOrder'])->name('order');
+     Route::post('/order/store', [OrderController::class, 'store'])->name('order.store');
+ 
 
     //pelacakan Route
     Route::get('/pelacakan/{id?}', [UserPelacakanController::class, 'show'])->name('user.pelacakan');

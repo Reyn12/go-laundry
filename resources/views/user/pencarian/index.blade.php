@@ -162,9 +162,9 @@
         <h3 class="text-lg font-semibold mt-6">Metode Pembayaran</h3>
         <div class="flex-grow">
             <select id="transactionMethod" name="transactionMethod" class="w-full px-3 py-2 border rounded-md">
-                <option selected>Pilih Metode</option>
-                <option value="qris">Qris</option>
-                <option value="cod">Cash On Delivery (COD)</option>
+                <option value="">Pilih Metode</option>
+                <option value="QRIS">QRIS</option>
+                <option value="COD">Cash On Delivery (COD)</option>
             </select>
         </div>
         
@@ -237,108 +237,116 @@
     document.addEventListener("DOMContentLoaded", function () {
         let checkboxes = document.querySelectorAll(".layanan-checkbox");
         let totalHargaElement = document.getElementById("total-harga");
+        let selectedServices = [];
 
         function updateTotal() {
             let total = 0;
+            selectedServices = [];
+            
             checkboxes.forEach(checkbox => {
                 if (checkbox.checked) {
-                    total += parseFloat(checkbox.getAttribute("data-harga"));
+                    let harga = parseFloat(checkbox.getAttribute("data-harga"));
+                    total += harga;
+                    
+                    // Simpan data layanan yang dipilih
+                    selectedServices.push({
+                        nama: checkbox.getAttribute("data-nama"),
+                        kategori: checkbox.getAttribute("data-kategori"),
+                        harga: harga,
+                        berat: checkbox.getAttribute("data-berat")
+                    });
                 }
             });
+            
             totalHargaElement.textContent = total.toLocaleString("id-ID");
+            return total;
         }
 
         checkboxes.forEach(checkbox => {
             checkbox.addEventListener("change", updateTotal);
         });
-    });
 
-    // Order button functionality 1
-    document.getElementById("orderLaundryBtn").addEventListener("click", function() {
-        document.getElementById("orderOverlay").classList.add("hidden");
-        document.getElementById("orderFormOverlay").classList.remove("hidden");
-    });
+        // Order button functionality
+        document.getElementById("orderLaundryBtn").addEventListener("click", function() {
+            let produkTerpilih = document.getElementById("produkTerpilih");
+            let finalTotal = document.getElementById("finalTotal");
+            produkTerpilih.innerHTML = "";
+            
+            if (selectedServices.length === 0) {
+                alert("Silakan pilih layanan terlebih dahulu!");
+                return;
+            }
 
-    document.getElementById("closeOverlayBtn").addEventListener("click", function() {
-        document.getElementById("orderOverlay").classList.add("hidden");
-    });
+            let totalHarga = updateTotal(); // Pastikan total harga terupdate
 
-    // Order button functionality 2
-    document.getElementById("orderLaundryBtn").addEventListener("click", function() {
-        let selectedServices = document.querySelectorAll(".layanan-checkbox:checked");
-        let produkTerpilih = document.getElementById("produkTerpilih");
-        let finalTotal = document.getElementById("finalTotal");
-        produkTerpilih.innerHTML = "";
-        let totalHarga = 0;
+            selectedServices.forEach(service => {
+                let div = document.createElement("div");
+                div.classList.add("flex", "justify-between", "items-center", "mb-2");
+                div.innerHTML = `<div><p class='font-semibold'>${service.kategori} - ${service.nama}</p><p class='text-sm text-gray-600'>Berat: ${service.berat}</p></div><p class='font-bold'>Rp${service.harga.toLocaleString("id-ID")}</p>`;
+                produkTerpilih.appendChild(div);
+            });
 
-        selectedServices.forEach(service => {
-            let nama = service.getAttribute("data-nama");
-            let kategori = service.getAttribute("data-kategori");
-            let harga = parseInt(service.getAttribute("data-harga"));
-            let berat = service.getAttribute("data-berat");
-            totalHarga += harga;
-
-            let div = document.createElement("div");
-            div.classList.add("flex", "justify-between", "items-center", "mb-2");
-            div.innerHTML = `<div><p class='font-semibold'>${kategori} - ${nama}</p><p class='text-sm text-gray-600'>Berat: ${berat}</p></div><p class='font-bold'>Rp${harga.toLocaleString("id-ID")}</p>`;
-            produkTerpilih.appendChild(div);
+            finalTotal.textContent = `Rp${(totalHarga + 10000).toLocaleString("id-ID")}`;
+            document.getElementById("orderOverlay").classList.add("hidden");
+            document.getElementById("orderFormOverlay").classList.remove("hidden");
         });
-        finalTotal.textContent = `Rp${(totalHarga + 10000).toLocaleString("id-ID")}`;
-        document.getElementById("orderOverlay").classList.add("hidden");
-        document.getElementById("orderFormOverlay").classList.remove("hidden");
+
+        // Submit order
+        document.getElementById("submitOrder").addEventListener("click", function() {
+            if (selectedServices.length === 0) {
+                alert("Silakan pilih layanan terlebih dahulu!");
+                return;
+            }
+
+            let searchInput = document.getElementById("searchInput").value.trim();
+            let totalHarga = updateTotal(); // Ambil total harga terbaru
+            let userName = "{{ auth()->user()->username }}";
+            let userId = "{{ auth()->user()->id }}";
+            let alamatPengiriman = "{{ auth()->user()->alamat }}";
+            let metodePembayaran = document.getElementById("transactionMethod").value.trim();
+
+            if (!searchInput || !metodePembayaran) {
+                alert("Silakan lengkapi semua informasi sebelum memesan.");
+                return;
+            }
+
+            let orderData = {
+                alamat_pengiriman: alamatPengiriman,
+                nama_laundry: searchInput,
+                produk_terpilih: JSON.stringify(selectedServices), // Kirim data lengkap layanan yang dipilih
+                user_id: userId,
+                total_price: totalHarga,
+                metode_pembayaran: metodePembayaran
+            };
+
+            fetch("{{ route('order') }}", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    "X-CSRF-TOKEN": "{{ csrf_token() }}"
+                },
+                body: JSON.stringify(orderData)
+            })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error("HTTP status " + response.status);
+                }
+                return response.json();
+            })
+            .then(data => {
+                if (data.success) {
+                    alert("Pesanan berhasil dibuat!");
+                    window.location.href = "/user/riwayat";
+                } else {
+                    alert("Terjadi kesalahan: " + data.message);
+                }
+            })
+            .catch(error => {
+                console.error("Error:", error);
+                alert("Terjadi kesalahan saat membuat pesanan");
+            });
+        });
     });
-
-    document.getElementById("closeOverlayBtn").addEventListener("click", function() {
-        document.getElementById("orderOverlay").classList.add("hidden");
-    });
-    document.getElementById("submitOrder").addEventListener("click", function() {
-    let searchInput = document.getElementById("searchInput").value.trim();
-    let selectedProduct = document.getElementById("produkTerpilih").textContent.trim();
-    let totalPrice = document.getElementById("total-harga").textContent.trim();
-    let userName = "{{ auth()->user()->username }}";
-    let userId = "{{ auth()->user()->id }}";
-    let alamatPengiriman = "{{ auth()->user()->alamat }}";
-    let metodePembayaran = document.getElementById("transactionMethod").value.trim();
-
-    if (searchInput === "" || selectedProduct === "" || totalPrice === "") {
-        alert("Silakan lengkapi semua informasi sebelum memesan.");
-        return;
-    }
-
-    let orderData = {
-        alamat_pengiriman: alamatPengiriman,
-        nama_laundry: searchInput,
-        produk_terpilih: selectedProduct,
-        user_id: userId,
-        total_price: totalPrice,
-        metode_pembayaran: metodePembayaran
-    };
-
-    fetch("{{ route('order') }}", {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json",
-            "X-CSRF-TOKEN": "{{ csrf_token() }}"
-        },
-        body: JSON.stringify(orderData)
-    })
-    .then(response => {
-        if (!response.ok) {
-            throw new Error("HTTP status " + response.status);
-        }
-        return response.json();
-    })
-    .then(data => {
-        console.log(data);
-        if (data.success) {
-            alert("Pesanan berhasil dibuat!");
-            window.location.href = "/user/riwayat";
-        } else {
-            alert("Terjadi kesalahan: " + data.message);
-        }
-    })
-    .catch(error => console.error("Error:", error));
-});
 </script>
 
 @endsection
