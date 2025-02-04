@@ -265,6 +265,78 @@ document.addEventListener("DOMContentLoaded", function () {
             document.getElementById('orderOverlay').classList.add('hidden');
         });
     }
+
+    // Order Laundry button handler
+    const orderLaundryBtn = document.getElementById('orderLaundryBtn');
+    if (orderLaundryBtn) {
+        orderLaundryBtn.addEventListener('click', function() {
+            // Check if a service is selected
+            const selectedRadio = document.querySelector('.layanan-radio:checked');
+            if (!selectedRadio) {
+                alert('Silakan pilih layanan terlebih dahulu!');
+                return;
+            }
+
+            // Hide order overlay
+            document.getElementById('orderOverlay').classList.add('hidden');
+            // Show order form overlay
+            document.getElementById('orderFormOverlay').classList.remove('hidden');
+        });
+    }
+
+    // Close form overlay button
+    const closeFormBtn = document.getElementById('closeFormOverlayBtn');
+    if (closeFormBtn) {
+        closeFormBtn.addEventListener('click', function() {
+            document.getElementById('orderFormOverlay').classList.add('hidden');
+            document.getElementById('orderOverlay').classList.remove('hidden');
+        });
+    }
+
+    // Submit order button handler
+    const submitOrderBtn = document.getElementById('submitOrder');
+    if (submitOrderBtn) {
+        submitOrderBtn.addEventListener('click', function() {
+            const selectedRadio = document.querySelector('.layanan-radio:checked');
+            const transactionMethod = document.getElementById('transactionMethod').value;
+
+            if (!transactionMethod) {
+                alert('Silakan pilih metode pembayaran!');
+                return;
+            }
+
+            // Collect order data
+            const orderData = {
+                layanan_nama: selectedRadio.dataset.nama,
+                layanan_kategori: selectedRadio.dataset.kategori,
+                harga: parseInt(selectedRadio.dataset.harga),
+                metode_pembayaran: transactionMethod
+            };
+
+            // Send order data to server
+            fetch('/api/order/create', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content
+                },
+                body: JSON.stringify(orderData)
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    alert('Order berhasil dibuat!');
+                    window.location.href = '/user/orders'; // Redirect ke halaman orders
+                } else {
+                    alert('Gagal membuat order: ' + data.message);
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('Terjadi kesalahan saat membuat order');
+            });
+        });
+    }
 });
 </script>
 
