@@ -3,7 +3,7 @@
 <div class="lg:w-1/4 hidden lg:block">
     @include('user.components.sidebar')
 </div>
-
+ 
 <!-- Main Content -->
 <div class="flex-1 m-auto bg-white">
     <div class="relative">
