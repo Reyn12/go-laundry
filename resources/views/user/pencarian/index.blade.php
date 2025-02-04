@@ -15,6 +15,7 @@
     <div class="w-full md:w-2/3 p-4 bg-white">
         <div class="search-sidebar">
             <h5 class="text-black font-bold text-lg mb-4">248 Ready in Bandung</h5>
+            
             <form action="{{ route('user.pencarian') }}" method="GET">
             <div class="flex justify-between mb-3 space-x-2">
                 <div>
@@ -66,9 +67,13 @@
                         <span>{{ $result->location }}</span>
                     </div>
                     <div>
-                        <!-- Button Order -->
+                        <!-- Button Order dengan debug info -->
+                        <div class="text-sm text-gray-500 mb-2">
+                            Available fields: {{ implode(', ', array_keys((array)$result)) }}
+                        </div>
                         <button class="chatSellerBtn px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700" 
-                                data-laundry-name="{{ $result->title }}">
+                                data-laundry-name="{{ $result->title }}"
+                                data-merchant-id="{{ $result->merchant_id }}">
                             Order Laundry
                         </button>
                     </div>
@@ -92,35 +97,11 @@
 <div id="orderOverlay" class="fixed inset-0 bg-black bg-opacity-50 hidden z-50 flex justify-center items-center">
     <div id="orderFormContainer" class="fixed w-full max-w-4xl p-8 bg-white rounded-lg shadow-xl">
         <h2 class="text-2xl font-bold mb-2 text-center">Keranjang Belanja</h2>
-
-        @if(isset($layanan_laundries) && count($layanan_laundries) > 0)
-            <div class="max-h-96 overflow-y-auto">
-                <tbody id="pencarian-container">
-                @foreach($layanan_laundries->take(3) as $layanan)
-                    <div class="border p-2 rounded-lg shadow-sm mb-4 bg-gray-50">
-                        <div class="flex items-center justify-between border-b pb-3">
-                            <div class="flex items-center">
-                                <input type="checkbox" class="mr-3 layanan-checkbox" data-nama="{{ $layanan->nama_layanan }}" data-kategori="{{ $layanan->kategori_layanan }}" data-harga="{{ $layanan->harga_per_unit }}" data-berat="5 kg">
-                                <span class="font-medium text-gray-700 text-sm">Layanan Laundry</span>
-                            </div>
-                        </div>
-                        <div class="flex items-center mt-3">
-                            <div class="flex-1">
-                                <p class="text-gray-800 font-semibold text-lg">{{ $layanan->kategori_layanan }} - {{ $layanan->nama_layanan }}</p>
-                                <span class="text-gray-500 text-sm">Waktu Pengerjaan: {{ $layanan->waktu_pengerjaan }}</span>
-                            </div>
-                            <div class="text-right">
-                                <span class="line-through text-gray-400 text-sm">Rp{{ number_format($layanan->harga_per_unit * 1.5, 0, ',', '.') }}</span>
-                                <p class="text-red-500 font-bold text-xl">Rp{{ number_format($layanan->harga_per_unit, 0, ',', '.') }}</p>
-                            </div>
-                        </div>
-                    </div>
-                    @endforeach
-                </tbody>
+        <div class="max-h-96 overflow-y-auto">
+            <div id="pencarian-container">
+                <!-- Layanan akan di-load secara dinamis lewat JavaScript -->
             </div>
-        @else
-            <p class="text-center text-gray-500 text-sm">Tidak ada layanan tersedia.</p>
-        @endif
+        </div>
 
         <div class="mt-5 border-t pt-4 text-center">
             <h2 class="text-xl font-bold text-gray-800">Total: Rp<span id="total-harga">0</span></h2>
@@ -132,7 +113,7 @@
         </div>
     </div>
 </div>
-<form>
+
 <!-- Order Form Overlay -->
 <!--penerima-->
 <div id="orderFormOverlay" class="fixed inset-0 bg-black bg-opacity-50 hidden z-50 flex justify-center items-center">
@@ -181,172 +162,110 @@
         </div>
     </div>
 </div>
+<form>
 </form>
 
 <script>
-    // Search functionality
-    document.addEventListener("DOMContentLoaded", function () {
-        const searchBox = document.getElementById('searchInput');
-        const laundryList = document.getElementById('laundry-list');
-        const laundryItems = laundryList.querySelectorAll('.laundry-item');
-
-        searchBox.addEventListener('keyup', function () {
-            const searchValue = this.value.toLowerCase().trim();
-            
-            laundryItems.forEach(item => {
-                const title = item.querySelector('h2').innerText.toLowerCase();
-                const description = item.querySelector('.text-sm').innerText.toLowerCase();
-
-                if (title.includes(searchValue) || description.includes(searchValue)) {
-                    item.style.display = 'flex';
-                } else {
-                    item.style.display = 'none';
-                }
-            });
-        });
-
-        // Order button functionality
-        const overlay = document.getElementById("orderOverlay");
-        const mainContent = document.getElementById("mainContent");
-        const orderButtons = document.querySelectorAll(".chatSellerBtn");
-        const closeOverlayBtn = document.getElementById("closeOverlayBtn");
-
-        // Open the overlay
-        orderButtons.forEach(button => {
-            button.addEventListener("click", () => {
-                overlay.classList.remove("hidden");
-                mainContent.classList.add("blurred");
-            });
-        });
-
-        // Close the overlay
-        closeOverlayBtn.addEventListener("click", () => {
-            overlay.classList.add("hidden");
-            mainContent.classList.remove("blurred");
-        });
-    });
-
-    // Close order form
-    document.getElementById("closeFormOverlayBtn").addEventListener("click", function() {
-        document.getElementById("orderFormOverlay").classList.add("hidden");
-        document.getElementById("orderOverlay").classList.remove("hidden");
-    });
-
+document.addEventListener("DOMContentLoaded", function () {
+    console.log('DOM fully loaded');
     
-    // Update total harga 1
-    document.addEventListener("DOMContentLoaded", function () {
-        let checkboxes = document.querySelectorAll(".layanan-checkbox");
-        let totalHargaElement = document.getElementById("total-harga");
-        let selectedServices = [];
-
-        function updateTotal() {
-            let total = 0;
-            selectedServices = [];
+    // Event listener untuk tombol Order Laundry
+    const orderButtons = document.querySelectorAll('.chatSellerBtn');
+    console.log('Found order buttons:', orderButtons.length);
+    
+    orderButtons.forEach(button => {
+        button.addEventListener('click', function(e) {
+            e.preventDefault();
+            console.log('Button clicked');
             
-            checkboxes.forEach(checkbox => {
-                if (checkbox.checked) {
-                    let harga = parseFloat(checkbox.getAttribute("data-harga"));
-                    total += harga;
+            const merchantId = this.getAttribute('data-merchant-id');
+            console.log('Merchant ID:', merchantId);
+            
+            // Show overlay first
+            document.getElementById('orderOverlay').classList.remove('hidden');
+            
+            // Ajax request untuk ambil layanan
+            fetch(`/api/merchant/${merchantId}/layanan`)
+                .then(response => {
+                    console.log('Response status:', response.status);
+                    return response.json();
+                })
+                .then(data => {
+                    console.log('Layanan data:', data);
+                    // Update container layanan
+                    const container = document.getElementById('pencarian-container');
+                    container.innerHTML = ''; // Clear existing content
                     
-                    // Simpan data layanan yang dipilih
-                    selectedServices.push({
-                        nama: checkbox.getAttribute("data-nama"),
-                        kategori: checkbox.getAttribute("data-kategori"),
-                        harga: harga,
-                        berat: checkbox.getAttribute("data-berat")
+                    data.forEach(layanan => {
+                        container.innerHTML += `
+                            <div class="border p-2 rounded-lg shadow-sm mb-4 bg-gray-50">
+                                <div class="flex items-center mt-3">
+                                    <div class="flex items-center mr-4">
+                                        <input type="radio" 
+                                               name="layanan-radio" 
+                                               class="mr-3 layanan-radio" 
+                                               data-nama="${layanan.nama_layanan}" 
+                                               data-kategori="${layanan.kategori_layanan}" 
+                                               data-harga="${layanan.harga_per_unit}" 
+                                               data-berat="5 kg">
+                                    </div>
+                                    <div class="flex-1">
+                                        <p class="text-gray-800 font-semibold text-lg">${layanan.kategori_layanan} - ${layanan.nama_layanan}</p>
+                                        <span class="text-gray-500 text-sm">Waktu Pengerjaan: ${layanan.waktu_pengerjaan}</span>
+                                    </div>
+                                    <div class="text-right">
+                                        <span class="line-through text-gray-400 text-sm">Rp${formatNumber(layanan.harga_per_unit * 1.5)}</span>
+                                        <p class="text-red-500 font-bold text-xl">Rp${formatNumber(layanan.harga_per_unit)}</p>
+                                    </div>
+                                </div>
+                            </div>
+                        `;
                     });
-                }
-            });
-            
-            totalHargaElement.textContent = total.toLocaleString("id-ID");
-            return total;
-        }
-
-        checkboxes.forEach(checkbox => {
-            checkbox.addEventListener("change", updateTotal);
-        });
-
-        // Order button functionality
-        document.getElementById("orderLaundryBtn").addEventListener("click", function() {
-            let produkTerpilih = document.getElementById("produkTerpilih");
-            let finalTotal = document.getElementById("finalTotal");
-            produkTerpilih.innerHTML = "";
-            
-            if (selectedServices.length === 0) {
-                alert("Silakan pilih layanan terlebih dahulu!");
-                return;
-            }
-
-            let totalHarga = updateTotal(); // Pastikan total harga terupdate
-
-            selectedServices.forEach(service => {
-                let div = document.createElement("div");
-                div.classList.add("flex", "justify-between", "items-center", "mb-2");
-                div.innerHTML = `<div><p class='font-semibold'>${service.kategori} - ${service.nama}</p><p class='text-sm text-gray-600'>Berat: ${service.berat}</p></div><p class='font-bold'>Rp${service.harga.toLocaleString("id-ID")}</p>`;
-                produkTerpilih.appendChild(div);
-            });
-
-            finalTotal.textContent = `Rp${(totalHarga + 10000).toLocaleString("id-ID")}`;
-            document.getElementById("orderOverlay").classList.add("hidden");
-            document.getElementById("orderFormOverlay").classList.remove("hidden");
-        });
-
-        // Submit order
-        document.getElementById("submitOrder").addEventListener("click", function() {
-            if (selectedServices.length === 0) {
-                alert("Silakan pilih layanan terlebih dahulu!");
-                return;
-            }
-
-            let searchInput = document.getElementById("searchInput").value.trim();
-            let totalHarga = updateTotal(); // Ambil total harga terbaru
-            let userName = "{{ auth()->user()->username }}";
-            let userId = "{{ auth()->user()->id }}";
-            let alamatPengiriman = "{{ auth()->user()->alamat }}";
-            let metodePembayaran = document.getElementById("transactionMethod").value.trim();
-
-            if (!searchInput || !metodePembayaran) {
-                alert("Silakan lengkapi semua informasi sebelum memesan.");
-                return;
-            }
-
-            let orderData = {
-                alamat_pengiriman: alamatPengiriman,
-                nama_laundry: searchInput,
-                produk_terpilih: JSON.stringify(selectedServices), // Kirim data lengkap layanan yang dipilih
-                user_id: userId,
-                total_price: totalHarga,
-                metode_pembayaran: metodePembayaran
-            };
-
-            fetch("{{ route('order') }}", {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                    "X-CSRF-TOKEN": "{{ csrf_token() }}"
-                },
-                body: JSON.stringify(orderData)
-            })
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error("HTTP status " + response.status);
-                }
-                return response.json();
-            })
-            .then(data => {
-                if (data.success) {
-                    alert("Pesanan berhasil dibuat!");
-                    window.location.href = "/user/riwayat";
-                } else {
-                    alert("Terjadi kesalahan: " + data.message);
-                }
-            })
-            .catch(error => {
-                console.error("Error:", error);
-                alert("Terjadi kesalahan saat membuat pesanan");
-            });
+                    
+                    // Reinitialize radio button event listeners
+                    initRadioListeners();
+                })
+                .catch(error => {
+                    console.error('Error fetching layanan:', error);
+                    alert('Gagal mengambil data layanan. Silakan coba lagi.');
+                });
         });
     });
+
+    function initRadioListeners() {
+        let radios = document.querySelectorAll(".layanan-radio");
+        let totalHargaElement = document.getElementById("total-harga");
+        let selectedService = null;
+
+        radios.forEach(radio => {
+            radio.addEventListener('change', function() {
+                if (this.checked) {
+                    selectedService = {
+                        nama: this.dataset.nama,
+                        kategori: this.dataset.kategori,
+                        harga: parseInt(this.dataset.harga),
+                        berat: this.dataset.berat
+                    };
+                    
+                    // Update total
+                    totalHargaElement.textContent = formatNumber(selectedService.harga);
+                }
+            });
+        });
+    }
+
+    function formatNumber(num) {
+        return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+    }
+
+    // Close overlay button
+    const closeBtn = document.getElementById('closeOverlayBtn');
+    if (closeBtn) {
+        closeBtn.addEventListener('click', function() {
+            document.getElementById('orderOverlay').classList.add('hidden');
+        });
+    }
+});
 </script>
 
 @endsection

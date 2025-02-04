@@ -36,76 +36,18 @@
                 @if(file_exists(public_path($imagePath)))
                     <img src="{{ asset($imagePath) }}" alt="Profile Picture" class="w-full h-full object-cover">
                 @else
-                    <div class="w-full h-full bg-gray-300 flex items-center justify-center text-gray-600">
-                        {{ strtoupper(substr($user->name, 0, 1)) }}
-                    </div>
+                    <img src="https://images.unsplash.com/photo-1633332755192-727a05c4013d?w=400&h=400" alt="Profile Picture" class="w-full h-full object-cover">
                 @endif
             </div>
         </div>
 
         <!-- Status Pencucian Title -->
         <div class="mt-20 px-8">
-            <h3 class="text-xl font-semibold">Status Pencucian</h3>
         </div>
     </div>
 </div>
-
-<!-- Status Pencucian Section -->
-<div class="p-4 relative bg-white mb-2">
-    <div class="relative">
-        <div id="slider" class="overflow-x-auto scroll-smooth custom-scrollbar h-64 flex space-x-4 snap-x snap-mandatory px-12">
-            @foreach ([['icon' => 'images/washing-machine.png', 'title' => 'Reguler', 'time' => 'Two Days Ago', 'color' => 'bg-red-600 text-white'], ['icon' => 'images/bleach.png', 'title' => 'Express', 'time' => 'Two Days Ago', 'color' => 'bg-gray-200 text-gray-700'], ['icon' => 'images/logomerchantx1.png', 'title' => 'Kilat', 'time' => 'Thre Days Ago', 'color' => 'bg-gray-200 text-gray-700']] as $status)
-            <div class="relative flex flex-col items-center snap-center">
-                <div class="bg-white shadow-lg rounded-lg p-4 -mb-8 z-10">
-                    <img src="{{ asset($status['icon']) }}" alt="{{ $status['title'] }}" class="h-16 w-16">
-                </div>
-                <div class="{{ $status['color'] }} p-6 rounded-lg flex flex-col justify-between h-48 w-48 mb-6">
-                    <div class="absolute bottom-8 left-4 mb-10">
-                        <div class="font-bold text-lg">{{ $status['title'] }}</div>
-                        <div class="text-sm">{{ $status['time'] }}</div>
-                    </div>
-                    <a href="/user/pelacakan" class="transition-transform duration-300 hover:scale-105 btn btn-primary absolute bottom-8 left-3 btn-primary px-4 py-2 rounded-full text-sm">View</a>
-                </div>
-            </div>
-            @endforeach
-        </div>
-    </div>
-
-    <!-- Scroll JavaScript -->
-    <script>
-        document.addEventListener("DOMContentLoaded", function() {
-            const slider = document.getElementById('slider');
-            const scrollLeftButton = document.getElementById('scroll-left');
-            const scrollRightButton = document.getElementById('scroll-right');
-
-            scrollLeftButton.addEventListener('click', () => {
-                slider.scrollBy({ left: -300, behavior: 'smooth' });
-            });
-
-            scrollRightButton.addEventListener('click', () => {
-                slider.scrollBy({ left: 300, behavior: 'smooth' });
-            });
-        });
-    </script>
-
-    <!-- Scrollbar Styling -->
-    <style>
-        .custom-scrollbar::-webkit-scrollbar {
-            height: 8px;
-        }
-
-        .custom-scrollbar::-webkit-scrollbar-thumb {
-            background: #888;
-            border-radius: 4px;
-        }
-
-        .custom-scrollbar::-webkit-scrollbar-thumb:hover {
-            background: #555;
-        }
-    </style>
-
     <!-- Pesanan Terbaru Section -->
-    <div class="mt-1 px-3 bg-white">
+    <div class="mt-1 px-3 bg-transparent">
     <h3 class="text-xl font-semibold">Pesanan Terbaru</h3>
     <div class="text-right mt-4">
             <button id="viewAllButton" class="px-4 py-2 bg-transparent text-black underline rounded hover:bg-transparent transition-transform duration-300 hover:scale-105">

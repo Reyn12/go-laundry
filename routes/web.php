@@ -158,6 +158,9 @@ Route::prefix('user')->group(function () {
     Route::post('/create-order', [OrderController::class, 'createOrder']);
     });
 
+    // Route untuk API layanan
+    Route::get('/api/merchant/{id}/layanan', [App\Http\Controllers\UserController\UserPencarianController::class, 'getLayanan'])->name('api.merchant.layanan');
+
 // Merchant Routes
     Route::prefix('merchant')->group(function () {
         Route::get('/login', function () {
@@ -177,3 +180,5 @@ Route::prefix('user')->group(function () {
      //KelolaLayanan Route
      Route::get('/kelolalayanan', [KelolaLayananMerchantController::class, 'index'])->name('merchant.kelolalayanan');
 });
+
+
