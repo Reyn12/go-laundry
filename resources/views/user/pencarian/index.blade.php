@@ -7,7 +7,7 @@
     @include('user.components.sidebar')
 </div>
 <style>
-    #overlay {
+    #overlay { 
         filter: blur(5px);
         pointer-events: none; /* Mencegah klik pada elemen di belakang overlay */
     }
