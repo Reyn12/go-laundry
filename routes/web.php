@@ -13,6 +13,7 @@ use App\Http\Controllers\UserController\UserPelacakanController;
 use App\Http\Controllers\UserController\UserUlasanController;
 use App\Http\Controllers\UserController\PelacakanController;
 use App\Http\Controllers\UserController\PesananController;
+use App\Http\Controllers\UserController\OrderController;
 use App\Http\Controllers\MerchantController\RegisterMerchantController;
 use App\Http\Controllers\MerchantController\DashboardMerchantController;
 use App\Http\Controllers\MerchantController\LoginMerchantController;
@@ -100,6 +101,8 @@ Route::prefix('user')->group(function () {
     
      //User register 
      Route::get('/register', [RegisterUserController::class, 'index'])->name('user.register');
+
+     //User register submit
      Route::post('/register', [RegisterUserController::class, 'store'])->name('user.register.submit');
 
     //Pencarian Route
@@ -110,6 +113,9 @@ Route::prefix('user')->group(function () {
 
     //Reorder Route
     Route::get('/riwayat/reorder', [UserRiwayatController::class, 'reorder'])->name('riwayat.reorder');
+
+    //Order Route
+    Route::post('/order/store', [OrderController::class, 'store'])->name('order.store');
 
     //pelacakan Route
     Route::get('/pelacakan/{id?}', [UserPelacakanController::class, 'show'])->name('user.pelacakan');

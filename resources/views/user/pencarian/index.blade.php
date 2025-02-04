@@ -49,10 +49,9 @@
             </form>
         </div>
        <!-- List Laundry -->
-        <div id="laundry-list" class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div id="laundry-list" class="grid grid-cols-1 md:grid-cols-2 gap-3">
             @forelse ($results as $result)
             <div class="bg-white shadow rounded-lg flex items-start p-6 laundry-item">
-                <img src="{{ $result->image }}" alt="{{ $result->title }}" class="w-32 h-32 rounded-md object-cover">
                 <div class="ml-6">
                     <h2 class="text-xl font-bold text-gray-800">{{ $result->title }}</h2>
                     <div class="flex items-center mt-2">
@@ -106,7 +105,6 @@
                             </div>
                         </div>
                         <div class="flex items-center mt-3">
-                            <img src="laundry.jpg" alt="Layanan Laundry" class="w-20 h-20 mr-5 rounded-md object-cover">
                             <div class="flex-1">
                                 <p class="text-gray-800 font-semibold text-lg">{{ $layanan->kategori_layanan }} - {{ $layanan->nama_layanan }}</p>
                                 <span class="text-gray-500 text-sm">Waktu Pengerjaan: {{ $layanan->waktu_pengerjaan }}</span>
@@ -295,41 +293,51 @@
     });
     // Submit order
     document.getElementById("submitOrder").addEventListener("click", function() {
-        let searchInput = document.getElementById("searchInput").value.trim();
-        let selectedProduct = document.getElementById("produkTerpilih").textContent.trim();
-        let totalPrice = document.getElementById("total-harga").textContent.trim();
-        let date = new Date().toLocaleDateString();
-        let status = "Pending";
-        let userName = "{{ auth()->user()->username }}";
+    let searchInput = document.getElementById("searchInput").value.trim();
+    let selectedProduct = document.getElementById("produkTerpilih").textContent.trim();
+    let totalPrice = document.getElementById("total-harga").textContent.trim();
+    let userName = "{{ auth()->user()->username }}";
+    let userId = "{{ auth()->user()->id }}";
+    let alamatPengiriman = "{{ auth()->user()->alamat }}";
 
-        if (searchInput === "") {
-            alert("Silakan masukkan pencarian sebelum memesan.");
-            return;
+    if (searchInput === "") {
+        alert("Silakan masukkan pencarian sebelum memesan.");
+        return;
+    }
+
+    let orderData = {
+        alamat_pengiriman: alamatPengiriman,
+        nama_laundry: searchInput,
+        user_id: userId,
+        total_price: totalPrice
+    };
+
+    fetch("{{ route('order.store') }}", {
+    method: "POST",
+    headers: {
+        "Content-Type": "application/json",
+        "X-CSRF-TOKEN": "{{ csrf_token() }}"
+    },
+    body: JSON.stringify(orderData)
+    })
+    .then(response => {
+        if (!response.ok) {
+            throw new Error("HTTP status " + response.status);
         }
+        return response.json();
+    })
+    .then(data => {
+        console.log(data);
+        if (data.success) {
+            alert("Pesanan berhasil dibuat!");
+            window.location.href = "/user/riwayat";
+        } else {
+            alert("Terjadi kesalahan: " + data.message);
+        }
+    })
+    .catch(error => console.error("Error:", error));
 
-        let orderData = {
-            id: Date.now(),
-            name: userName,
-            package: selectedProduct,
-            date: date,
-            status: status,
-            total_price: totalPrice
-        };
-
-        // Ambil pesanan lama dari localStorage
-        let existingOrders = JSON.parse(localStorage.getItem("riwayatPesanan")) || [];
-        existingOrders.push(orderData);
-
-        // Simpan kembali ke localStorage
-        localStorage.setItem("riwayatPesanan", JSON.stringify(existingOrders));
-
-        alert("Pesanan berhasil ditambahkan ke riwayat.");
-
-
-        // Arahkan ke halaman riwayat pesanan
-        window.location.href = "/user/riwayat"; 
-    });
-
+});
 </script>
 
 @endsection

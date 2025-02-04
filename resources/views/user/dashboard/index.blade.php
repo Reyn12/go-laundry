@@ -106,7 +106,7 @@
 
     <!-- Pesanan Terbaru Section -->
     <div class="mt-1 px-3 bg-white">
-    <h3 class="text-xl font-semibold">Layanan Laundry</h3>
+    <h3 class="text-xl font-semibold">Pesanan Terbaru</h3>
     <div class="text-right mt-4">
             <button id="viewAllButton" class="px-4 py-2 bg-transparent text-black underline rounded hover:bg-transparent transition-transform duration-300 hover:scale-105">
                 View All
@@ -119,43 +119,45 @@
             <thead>
                 <tr class="text-left">
                     <th class="py-2 px-4 ">No</th>
-                    <th class="py-2 px-4 ">Item</th>
-                    <th class="py-2 px-4 ">Jenis Paket</th>
+                    <th class="py-2 px-4 ">Nama Laundry</th>
+                    <th class="py-2 px-4 ">Kategori Layanan</th>
+                    <th class="py-2 px-4 ">Jenis Layanan</th>
                     <th class="py-2 px-4 ">Tanggal</th>
                     <th class="py-2 px-4 ">Status</th>
                 </tr>
             </thead>
+            <!-- Tabel Pesanan -->
             <tbody id="isi-table-container">
-        @forelse ($LayananLaundry->take(3) as $index => $order)
-            @php
-                // Buat status secara acak
-                $statuses = ['Selesai', 'Dibatalkan'];
-                $randomStatus = $statuses[array_rand($statuses)];
-            @endphp
-            <tr class="border-t hover:bg-transparent hover:bg-gray-50 visible-row">
-                <td class="py-3 px-4">{{ $index + 1 }}</td>
-                <td class="py-3 px-4">{{ $order->kategori_layanan }}</td>
-                <td class="py-3 px-4">{{ $order->nama_layanan }}</td>
-                <td class="py-3 px-4">{{ $order->created_at }}</td>
+            @forelse ($LayananLaundry as $index => $order)
+    @php
+        $statuses = ['Selesai', 'Dibatalkan'];
+        $randomStatus = $statuses[array_rand($statuses)];
+    @endphp
+    <tr class="border-t hover:bg-transparent hover:bg-gray-50 visible-row">
+        <td class="py-3 px-4">{{ $index + 1 }}</td>
+        <td class="py-3 px-4">{{ $merchant->nama_laundry ?? 'Tidak ada data' }}</td>
+        <td class="py-3 px-4">{{ $order->kategori_layanan }}</td>
+        <td class="py-3 px-4">{{ $order->nama_layanan }}</td>
+        <td class="py-3 px-4">{{ $order->created_at }}</td>
 
-                <!-- Menampilkan status dengan warna sesuai -->
-                <td class="py-3 px-4">
-                    @if ($randomStatus == 'Selesai')
-                        <span class="inline-flex items-center px-2 py-1 text-sm font-semibold text-green-700 bg-green-200 rounded-full">
-                            ● Selesai
-                        </span>
-                    @else
-                        <span class="inline-flex items-center px-2 py-1 text-sm font-semibold text-red-700 bg-red-200 rounded-full">
-                            ● Dibatalkan
-                        </span>
-                    @endif
-                </td>
-            </tr>
-        @empty
-            <tr>
-                <td colspan="5" class="py-3 px-4 text-center">Tidak ada data tersedia</td>
-            </tr>
-        @endforelse
+        <!-- Menampilkan status dengan warna sesuai -->
+        <td class="py-3 px-4">
+            @if ($randomStatus == 'Selesai')
+                <span class="inline-flex items-center px-2 py-1 text-sm font-semibold text-green-700 bg-green-200 rounded-full">
+                    ● Selesai
+                </span>
+            @else
+                <span class="inline-flex items-center px-2 py-1 text-sm font-semibold text-red-700 bg-red-200 rounded-full">
+                    ● Dibatalkan
+                </span>
+            @endif
+        </td>
+    </tr>
+@empty
+    <tr>
+        <td colspan="6" class="py-3 px-4 text-center">Tidak ada data tersedia</td>
+    </tr>
+@endforelse
 
         <!-- Hidden Rows -->
         @forelse ($LayananLaundry->skip(3) as $index => $order)
@@ -165,6 +167,7 @@
             @endphp
             <tr class="border-t hover:bg-transparent hover:bg-gray-50 hidden-row">
                 <td class="py-3 px-4">{{ $index + 4 }}</td>
+                <td class="py-3 px-4">{{ $merchant->nama_laundry ?? 'Tidak ada data' }}</td>
                 <td class="py-3 px-4">{{ $order->kategori_layanan }}</td>
                 <td class="py-3 px-4">{{ $order->nama_layanan }}</td>
                 <td class="py-3 px-4">{{ $order->created_at }}</td>
