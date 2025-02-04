@@ -21,7 +21,7 @@
             <div class="sticky top-0 z-10 mb-4 bg-white p-4 rounded-lg shadow">
                 <div class="flex justify-between items-center">
                     <div>
-                        <h1 class="text-lg font-semibold">{{ $mainTitle ?? $title ?? 'Dashboard' }}</h1>
+                        <h1 class="text-lg font-semibold">{{ $mainTitle ?? $title ?? 'Ulasan & Pendapatan' }}</h1>
                         <p class="text-sm text-gray-500">{{ date('d F Y') }}</p>
                     </div>
                     <div class="flex items-center space-x-4">
@@ -124,9 +124,9 @@
                     <h2 class="font-semibold text-lg">Ulasan Terbaru</h2>
                     <div class="mt-4">
                         <div class="p-4 bg-gray-50 rounded shadow-sm">
-                            <p class="font-bold">Agus Sedih</p>
+                            <p class="font-bold">Anonymous</p>
                             <p class="text-yellow-500 text-sm">★☆☆☆☆</p>
-                            <p class="text-gray-600 mt-2">Balikin duit gw..! Ga sudi gw itu duit gw gobloq</p>
+                            <p class="text-gray-600 mt-2">Kurang Puas</p>
                             <p class="text-xs text-gray-400 mt-1">04 Desember 2024</p>
                         </div>
                     </div>

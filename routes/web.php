@@ -189,6 +189,8 @@ Route::prefix('user')->group(function () {
 
     //Profile Route
     Route::get('/profile', [ProfileMerchantController::class, 'index'])->name('merchant.profile');
+    Route::get('/merchant/profile/edit', [ProfileMerchantController::class, 'edit'])->name('merchant.profile.edit');
+Route::post('/merchant/profile/update', [ProfileMerchantController::class, 'update'])->name('merchant.profile.update');
 
      //KelolaLayanan Route
      Route::get('/kelolalayanan', [KelolaLayananMerchantController::class, 'index'])->name('merchant.kelolalayanan');
@@ -198,7 +200,9 @@ Route::prefix('user')->group(function () {
 
      //ManajemenPemesanan Route
      Route::get('/manajemenpemesanan', [ManajemenPemesananMerchantController::class, 'index'])->name('merchant.manajemenpemesanan');
-
+     Route::get('/pesanan', [ManajemenPemesananMerchantController::class, 'index'])->name('merchant.pesanan');
+     Route::post('/pesanan/{id}/status', [ManajemenPemesananMerchantController::class, 'updateStatus'])->name('merchant.pesanan.updateStatus');
+    
      //Ulasan dan Pendapatan Route
      Route::get('/ulasan', [UlasanMerchantController::class, 'index'])->name('merchant.ulasan');
 

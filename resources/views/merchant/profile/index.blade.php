@@ -29,7 +29,7 @@
                             <div class="w-8 h-8 rounded-full bg-gray-200 overflow-hidden">
                                 <img src="{{ asset('images/icons/iconProfile.svg') }}" alt="Profile" class="w-full h-full object-cover">
                             </div>
-                            <span class="font-medium">Krisna Ariangga</span>
+                            <span class="font-medium">{{ $merchant->nama_laundry }}</span>
                         </div>
                     </div>
                 </div>
@@ -39,14 +39,14 @@
                     <div class="flex items-center mb-4">
                         <img src="{{ asset('images/icons/iconProfile.svg') }}" alt="Profile Icon" class="w-12 h-12 mr-2">
                         <div>
-                            <h2 class="text-xl font-bold">Laundry Good</h2>
-                            <p class="text-gray-500 text-sm">Merchant</p>
+                            <h2 class="text-xl font-bold">{{ $merchant->nama_laundry }}</h2>
                         </div>
                     </div>
                     <form id="profileForm">
-                        <label class="block mb-2 font-semibold">About:</label>
-                        <textarea id="about" class="w-full border p-2 rounded-md bg-gray-100" disabled>081081081081
-laundrygood@lalalala.com</textarea>
+                        <label class="block mb-2 font-semibold">Nomor Telepon:</label>
+                        <input type="text" id="phone" class="w-full border p-2 rounded-md bg-gray-100" value="{{ $merchant->no_hp }}" disabled>
+                        <label class="block mt-4 mb-2 font-semibold">Email:</label>
+                        <input type="text" id="email" class="w-full border p-2 rounded-md bg-gray-100" value="{{ $merchant->email }}" disabled>
                         <label class="block mt-4 mb-2 font-semibold">Jam Operasional:</label>
                         <input type="text" id="jam_operasional" class="w-full border p-2 rounded-md bg-gray-100" value="09.00 - 20.00" disabled>
                         <label class="block mt-4 mb-2 font-semibold">Address:</label>
@@ -169,15 +169,18 @@ laundrygood@lalalala.com</textarea>
                     document.addEventListener('DOMContentLoaded', function () {
                         let editBtn = document.getElementById('editBtn');
                         let saveBtn = document.getElementById('saveBtn');
-                        let about = document.getElementById('about');
+                        let phone = document.getElementById('phone');
+                        let email = document.getElementById('email');
                         let jam_operasional = document.getElementById('jam_operasional');
                         let address = document.getElementById('address');
             
                         editBtn.addEventListener('click', function () {
-                            about.disabled = false;
+                            phone.disabled = false;
+                            email.disabled = false;
                             jam_operasional.disabled = false;
                             address.disabled = false;
-                            about.classList.remove('bg-gray-100');
+                            phone.classList.remove('bg-gray-100');
+                            email.classList.remove('bg-gray-100');
                             jam_operasional.classList.remove('bg-gray-100');
                             address.classList.remove('bg-gray-100');
                             editBtn.classList.add('hidden');
@@ -185,10 +188,12 @@ laundrygood@lalalala.com</textarea>
                         });
             
                         saveBtn.addEventListener('click', function () {
-                            about.disabled = true;
+                            phone.disabled = true;
+                            email.disabled = true;
                             jam_operasional.disabled = true;
                             address.disabled = true;
-                            about.classList.add('bg-gray-100');
+                            phone.classList.add('bg-gray-100');
+                            email.classList.add('bg-gray-100');
                             jam_operasional.classList.add('bg-gray-100');
                             address.classList.add('bg-gray-100');
                             editBtn.classList.remove('hidden');
@@ -205,7 +210,7 @@ laundrygood@lalalala.com</textarea>
                     });
                 </script>
             </div>
-        </main>
+        </div>
     </div>
 </body>
 </html>

@@ -1,13 +1,17 @@
 {{-- Sidebar Component --}}
 <div class="sidebar bg-white w-64 h-full p-4 flex flex-col">
 
-    {{-- Logo Admin dan Nama Admin --}}
+    {{-- Logo dan Nama Merchant --}}
     <div class="flex justify-start items-center p-1">
         <span class="flex items-center justify-center w-12 h-12 bg-white rounded-full mr-2 ml-2">
-            <img src="{{ asset('images/icons/iconProfile.svg') }}" alt="">
+            @if(auth()->user()->merchant && auth()->user()->merchant->foto_profil)
+                <img src="{{ asset('storage/' . auth()->user()->merchant->foto_profil) }}" alt="Foto Profil" class="w-full h-full object-cover rounded-full">
+            @else
+                <img src="{{ asset('images/icons/iconProfile.svg') }}" alt="Default Profile">
+            @endif
         </span>
         <span>
-            <p class="text-black text-sm font-bold tracking-wide">Krisna Ariangga</p>
+            <p class="text-black text-sm font-bold tracking-wide">{{ auth()->user()->merchant ? auth()->user()->merchant->nama_laundry : 'Merchant' }}</p>
             <p class="text-slate-400 text-xs tracking-wide text-sm">Merchant</p>
         </span>
     </div>

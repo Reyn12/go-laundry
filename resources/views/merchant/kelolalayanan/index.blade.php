@@ -6,6 +6,7 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>Kelola Layanan</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 <body>
     <div class="w-full h-screen flex bg-gray-100">
@@ -63,10 +64,7 @@
                             @foreach($layanan as $item)
                             <tr class="hover:bg-gray-50 transition-colors duration-200" data-layanan-id="{{ $item->id }}">
                                 <td class="px-6 py-4">
-                                    <div class="flex items-center space-x-3">
-                                        <div class="flex-shrink-0 w-10 h-10 rounded-full overflow-hidden shadow-sm">
-                                            <img src="{{ asset('images/laundry-service.png') }}" alt="{{ $item->kategori_layanan }}" class="w-full h-full object-cover">
-                                        </div>
+                                    <div class="flex items-center">
                                         <div class="font-medium text-gray-900">{{ $item->kategori_layanan }}</div>
                                     </div>
                                 </td>
@@ -220,13 +218,15 @@
 
         document.getElementById('serviceForm').addEventListener('submit', async function(e) {
             e.preventDefault();
-            
-            // Kumpulkan data form
-            const formData = new FormData(this);
-            const data = {};
-            formData.forEach((value, key) => {
-                data[key] = value;
-            });
+
+            const data = {
+                kategori_layanan: document.getElementById('kategoriLayanan').value,
+                nama_layanan: document.getElementById('namaLayanan').value,
+                harga_per_unit: document.getElementById('hargaPerUnit').value,
+                satuan: document.getElementById('satuan').value,
+                waktu_pengerjaan: document.getElementById('waktuPengerjaan').value,
+                deskripsi: document.getElementById('deskripsi').value
+            };
 
             try {
                 const response = await fetch('{{ route("merchant.layanan.store") }}', {
@@ -236,15 +236,22 @@
                         'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content,
                         'Accept': 'application/json'
                     },
-                    credentials: 'same-origin', // Penting untuk mengirim cookies session
+                    credentials: 'same-origin',
                     body: JSON.stringify(data)
                 });
 
                 const result = await response.json();
 
                 if (response.ok && result.status === 'success') {
-                    alert('Layanan berhasil ditambahkan!');
-                    window.location.reload();
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Berhasil!',
+                        text: 'Layanan berhasil ditambahkan',
+                        showConfirmButton: false,
+                        timer: 1500
+                    }).then(() => {
+                        window.location.reload();
+                    });
                 } else {
                     let errorMessage = result.message || 'Terjadi kesalahan saat menyimpan data';
                     if (result.errors) {
@@ -254,9 +261,55 @@
                 }
             } catch (error) {
                 console.error('Error:', error);
-                alert('Terjadi kesalahan: ' + error.message);
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Oops...',
+                    text: 'Terjadi kesalahan: ' + error.message
+                });
             }
         });
+
+        function deleteService(id) {
+            Swal.fire({
+                title: 'Apakah anda yakin?',
+                text: "Data layanan akan dihapus permanen!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Ya, hapus!',
+                cancelButtonText: 'Batal'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    // Lanjutkan dengan proses delete
+                    fetch(`/merchant/layanan/${id}`, {
+                        method: 'DELETE',
+                        headers: {
+                            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content,
+                        },
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        if(data.status === 'success') {
+                            Swal.fire(
+                                'Terhapus!',
+                                'Layanan berhasil dihapus.',
+                                'success'
+                            ).then(() => {
+                                window.location.reload();
+                            });
+                        }
+                    })
+                    .catch(error => {
+                        Swal.fire(
+                            'Error!',
+                            'Terjadi kesalahan saat menghapus layanan.',
+                            'error'
+                        );
+                    });
+                }
+            });
+        }
 
         function closeModal() {
             document.getElementById('serviceModal').classList.add('hidden');
