@@ -22,6 +22,7 @@ use App\Http\Controllers\MerchantController\KelolaLayananMerchantController;
 use App\Http\Controllers\AdminController\UserManageController;
 use App\Http\Controllers\AdminController\MerchantManageController;
 use App\Http\Controllers\AdminController\LaporanAdminController;
+use App\Http\Controllers\HomepageController\PencarianHomepage;
 
 /*
 |--------------------------------------------------------------------------
@@ -34,15 +35,14 @@ use App\Http\Controllers\AdminController\LaporanAdminController;
 |
 */
 // Homepage Routes
-Route::get('/', function () {
-    return view('homepage.index');
-});
+Route::get('/', [PencarianHomepage::class, 'index']);
 Route::get('/daftar', function () {
     return view('homepage.daftar.index');
 });
 Route::get('/masuk', function () {
     return view('homepage.masuk.index');
 });
+Route::get('/search-laundry', [PencarianHomepage::class, 'search']);
 
 
 // Admin Routes
@@ -180,5 +180,3 @@ Route::prefix('user')->group(function () {
      //KelolaLayanan Route
      Route::get('/kelolalayanan', [KelolaLayananMerchantController::class, 'index'])->name('merchant.kelolalayanan');
 });
-
-
