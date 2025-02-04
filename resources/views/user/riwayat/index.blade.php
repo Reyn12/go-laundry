@@ -29,30 +29,29 @@
         <tr class="bg-gray-200">
             <th class="border px-4 py-2">ID</th>
             <th class="border px-4 py-2">Nama</th>
-            <th class="border px-4 py-2">Paket Laundry</th>
-            <th class="border px-4 py-2">Tanggal</th>
-            <th class="border px-4 py-2">Status</th>
+            <th class="border px-4 py-2">Alamat Pengambilan</th>
+            <th class="border px-4 py-2">Alamat Pengiriman</th>
             <th class="border px-4 py-2">Total Harga</th>
-            <th class="border px-4 py-2">Aksi</th>
-        </tr>
-    </thead>
+            <th class="border px-4 py-2">Status</th>
+            <th class="border px-4 py-2">Reorder</th>
+</tr>
     <tbody id="riwayatTable">
     @foreach($riwayatPesanan as $pesanan)
     <tr class="border">
         <td class="border px-4 py-2">{{ $pesanan->id }}</td>
         <td class="border px-4 py-2">{{ $pesanan->user->username }}</td>
-        <td class="border px-4 py-2">{{ $pesanan->layanan->nama }}</td>
         <td class="border px-4 py-2">{{ $pesanan->alamat_pengambilan }}</td>
         <td class="border px-4 py-2">{{ $pesanan->alamat_pengiriman }}</td>
-        <td class="border px-4 py-2">{{ $pesanan->status }}</td>
         <td class="border px-4 py-2">Rp{{ number_format($pesanan->total_harga, 0, ',', '.') }}</td>
-        <td class="border px-4 py-2">{{ $pesanan->berat_kg }} kg</td>
-        <td class="border px-4 py-2">{{ $pesanan->jumlah_pesanan }}</td>
-        <td class="border px-4 py-2">{{ $pesanan->created_at }}</td>
-    </tr>
+        <td class="border px-4 py-2">{{ $pesanan->status }}</td>
+        <td class="border border-gray-300 px-4 py-2">
+                                        <form action="{{ route('user.pencarian') }}" method="GET">
+                                            @csrf
+                                            <button class="px-3 py-1 bg-blue-500 text-white rounded-lg" type="submit">↻ Reorder</button>
+                                        </form>
+                                    </td>
     @endforeach
 </tbody>
-
     </table>
 </div>
 
@@ -75,27 +74,7 @@
         });
     });
 
-    // Ambil data dari localStorage
-     document.addEventListener("DOMContentLoaded", function() {
-        let table = document.getElementById("riwayatTable");
-
-        // Ambil data dari localStorage
-        let orders = JSON.parse(localStorage.getItem("riwayatPesanan")) || [];
-
-        orders.forEach(order => {
-            let newRow = table.insertRow();
-            newRow.innerHTML = `
-                <td class="border px-4 py-2">${order.id}</td>
-                <td class="border px-4 py-2">${order.name}</td>
-                <td class="border px-4 py-2">${order.package}</td>
-                <td class="border px-4 py-2">${order.date}</td>
-                <td class="border px-4 py-2 status">${order.status}</td>
-                <td class="border px-4 py-2">Rp${order.total_price}</td>
-                <td class="border px-4 py-2">-</td>
-            `;
-        });
-    });
-    
+    //button
      document.querySelector("button.bg-blue-600").addEventListener("click", function() {
         let nama = "{{ auth()->user()->username }}";
         let paket = document.getElementById("produkTerpilih").textContent.trim();

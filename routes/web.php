@@ -130,9 +130,6 @@ Route::prefix('user')->group(function () {
     // Pelacakan Route
     Route::get('/pelacakan', [PelacakanController::class, 'index'])->name('user.pelacakan.index');
 
-    // Order Route
-    Route::get('/order/{id}', [OrderController::class, 'showOrder'])->name('order.show');
-
     // Proses Login Route
     Route::post('/user/login', [LoginUserController::class, 'login_proses'])->name('user.login.post');
 
