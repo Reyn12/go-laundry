@@ -55,7 +55,7 @@ class User extends Authenticatable
     // Relasi dengan Merchant (jika user adalah merchant)
     public function merchant()
     {
-        return $this->hasOne(Merchant::class, 'id_user');
+        return $this->hasOne(Merchant::class, 'user_id');
     }
 
     // Relasi dengan Pesanan (sebagai customer)

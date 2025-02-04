@@ -31,7 +31,7 @@ class Pesanan extends Model
       // Relasi dengan User
       public function user()
       {
-          return $this->belongsTo(User::class, 'customer_id');
+          return $this->belongsTo(User::class, 'customer_id', 'id');
       }
   
       // Relasi dengan LayananLaundry
@@ -46,9 +46,5 @@ class Pesanan extends Model
         return $this->belongsTo(Merchant::class, 'merchant_id');
     }
 
-    // Relasi dengan LayananLaundry (jika ada)
-    public function layananLaundry()
-    {
-        return $this->belongsToMany(LayananLaundry::class, 'detail_pesanan', 'id_pesanan', 'id_layanan');
-    }
+    
 }

@@ -15,9 +15,11 @@ class LayananLaundry extends Model
 
     protected $fillable = [
         'merchant_id',
+        'kategori_layanan',
         'nama_layanan',
-        'harga',
-        'estimasi',
+        'harga_per_unit',
+        'satuan',
+        'waktu_pengerjaan',
         'deskripsi',
         'created_at',
         'updated_at'
@@ -27,6 +29,7 @@ class LayananLaundry extends Model
     public function merchant()
     {
         return $this->belongsTo(Merchant::class, 'merchant_id');
+       
     }
 
     // Relasi dengan Pesanan

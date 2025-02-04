@@ -122,6 +122,26 @@ class DatabaseSeeder extends Seeder
             'role' => 'customer',
             'status' => 'aktif',
         ]);
+        \App\Models\User::create([
+            'username' => 'laundryexpress',
+            'email' => 'express@gmail.com',
+            'password' => bcrypt('laundry123'),
+            'nama_lengkap' => 'Budi Laundry Express',
+            'no_hp' => '081234567890',
+            'alamat' => 'Jl. Raya Bogor No. 100, Jakarta Timur',
+            'role' => 'merchant',
+            'status' => 'aktif',
+        ]);
+        \App\Models\User::create([
+            'username' => 'cleanlaundry',
+            'email' => 'clean@laundry.com',
+            'password' => bcrypt('clean123'),
+            'nama_lengkap' => 'Sari Clean Laundry',
+            'no_hp' => '081234567891',
+            'alamat' => 'Jl. Margonda Raya No. 50, Depok',
+            'role' => 'merchant',
+            'status' => 'aktif',
+        ]);
 
 // Menambahkan data merchant secara manual
         \App\Models\Merchant::create([

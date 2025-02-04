@@ -19,6 +19,11 @@ use App\Http\Controllers\MerchantController\DashboardMerchantController;
 use App\Http\Controllers\MerchantController\LoginMerchantController;
 use App\Http\Controllers\MerchantController\ProfileMerchantController;
 use App\Http\Controllers\MerchantController\KelolaLayananMerchantController;
+use App\Http\Controllers\MerchantController\ManajemenPemesananMerchantController;
+use App\Http\Controllers\MerchantController\UlasanMerchantController;
+use App\Http\Controllers\MerchantController\PenarikanSaldoMerchantController;
+
+
 use App\Http\Controllers\AdminController\UserManageController;
 use App\Http\Controllers\AdminController\MerchantManageController;
 use App\Http\Controllers\AdminController\LaporanAdminController;
@@ -168,21 +173,39 @@ Route::prefix('user')->group(function () {
 
     //Merchant Routes
     Route::prefix('merchant')->group(function () {
-        Route::get('/login', function () {
-            return view('merchant.login.index');
+        Route::get('/login', [LoginMerchantController::class, 'index'])->name('merchant.login');
+        Route::post('/login', [LoginMerchantController::class, 'login'])->name('merchant.login.process');
+        Route::post('/logout', [LoginMerchantController::class, 'logout'])->name('merchant.logout');
+        
+        // Protected merchant routes
+        Route::middleware(['auth'])->group(function () {
+            Route::get('/dashboard', [DashboardMerchantController::class, 'index'])->name('merchant.dashboard');
+            // Add other merchant routes here
         });
-        Route::post('/login', [LoginMerchantController::class, 'login']);
     
-    // Dashboard route
-    Route::get('/dashboard', [DashboardMerchantController::class, 'index'])->name('merchant.dashboard');
-
     //Merchant register 
     Route::get('/register', [RegisterMerchantController::class, 'index'])->name('merchant.register');
     Route::post('/register', [RegisterMerchantController::class, 'store'])->name('merchant.register.submit');
 
     //Profile Route
     Route::get('/profile', [ProfileMerchantController::class, 'index'])->name('merchant.profile');
+    Route::get('/merchant/profile/edit', [ProfileMerchantController::class, 'edit'])->name('merchant.profile.edit');
+Route::post('/merchant/profile/update', [ProfileMerchantController::class, 'update'])->name('merchant.profile.update');
 
      //KelolaLayanan Route
      Route::get('/kelolalayanan', [KelolaLayananMerchantController::class, 'index'])->name('merchant.kelolalayanan');
+     Route::post('/layanan', [KelolaLayananMerchantController::class, 'store'])->name('merchant.layanan.store');
+     Route::get('/layanan/{id}', [KelolaLayananMerchantController::class, 'show'])->name('merchant.layanan.show');
+     Route::put('/layanan/{id}', [KelolaLayananMerchantController::class, 'update'])->name('merchant.layanan.update');
+
+     //ManajemenPemesanan Route
+     Route::get('/manajemenpemesanan', [ManajemenPemesananMerchantController::class, 'index'])->name('merchant.manajemenpemesanan');
+     Route::get('/pesanan', [ManajemenPemesananMerchantController::class, 'index'])->name('merchant.pesanan');
+     Route::post('/pesanan/{id}/status', [ManajemenPemesananMerchantController::class, 'updateStatus'])->name('merchant.pesanan.updateStatus');
+    
+     //Ulasan dan Pendapatan Route
+     Route::get('/ulasan', [UlasanMerchantController::class, 'index'])->name('merchant.ulasan');
+
+      //Penarikan Saldo Route
+      Route::get('/penarikansaldo', [PenarikanSaldoMerchantController::class, 'index'])->name('merchant.penarikansaldo');
 });
