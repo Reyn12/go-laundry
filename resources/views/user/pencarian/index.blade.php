@@ -1,5 +1,8 @@
 @extends('user.components.main')
 @section('container')
+<!-- Import SweetAlert2 -->
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
 <div class="lg:w-1/4 hidden lg:block">
     @include('user.components.sidebar')
 </div>
@@ -94,6 +97,9 @@
     </div>
 </div>
 <!-- Overlay for the form -->
+<div id="loadingSpinner" class="hidden fixed inset-0 bg-black bg-opacity-50 z-50 flex justify-center items-center">
+    <div class="animate-spin rounded-full h-32 w-32 border-t-2 border-b-2 border-blue-500"></div>
+</div>
 <div id="orderOverlay" class="fixed inset-0 bg-black bg-opacity-50 hidden z-50 flex justify-center items-center">
     <div id="orderFormContainer" class="fixed w-full max-w-4xl p-8 bg-white rounded-lg shadow-xl">
         <h2 class="text-2xl font-bold mb-2 text-center">Keranjang Belanja</h2>
@@ -169,96 +175,232 @@
 document.addEventListener("DOMContentLoaded", function () {
     console.log('DOM fully loaded');
     
-    // Event listener untuk tombol Order Laundry
-    const orderButtons = document.querySelectorAll('.chatSellerBtn');
-    console.log('Found order buttons:', orderButtons.length);
-    
-    orderButtons.forEach(button => {
-        button.addEventListener('click', function(e) {
-            e.preventDefault();
-            console.log('Button clicked');
-            
-            const merchantId = this.getAttribute('data-merchant-id');
-            console.log('Merchant ID:', merchantId);
-            
-            // Show overlay first
-            document.getElementById('orderOverlay').classList.remove('hidden');
-            
-            // Ajax request untuk ambil layanan
-            fetch(`/api/merchant/${merchantId}/layanan`)
-                .then(response => {
-                    console.log('Response status:', response.status);
-                    return response.json();
-                })
-                .then(data => {
-                    console.log('Layanan data:', data);
-                    // Update container layanan
-                    const container = document.getElementById('pencarian-container');
-                    container.innerHTML = ''; // Clear existing content
-                    
-                    data.forEach(layanan => {
-                        container.innerHTML += `
-                            <div class="border p-2 rounded-lg shadow-sm mb-4 bg-gray-50">
-                                <div class="flex items-center mt-3">
-                                    <div class="flex items-center mr-4">
-                                        <input type="radio" 
-                                               name="layanan-radio" 
-                                               class="mr-3 layanan-radio" 
-                                               data-nama="${layanan.nama_layanan}" 
-                                               data-kategori="${layanan.kategori_layanan}" 
-                                               data-harga="${layanan.harga_per_unit}" 
-                                               data-berat="5 kg">
-                                    </div>
-                                    <div class="flex-1">
-                                        <p class="text-gray-800 font-semibold text-lg">${layanan.kategori_layanan} - ${layanan.nama_layanan}</p>
-                                        <span class="text-gray-500 text-sm">Waktu Pengerjaan: ${layanan.waktu_pengerjaan}</span>
-                                    </div>
-                                    <div class="text-right">
-                                        <span class="line-through text-gray-400 text-sm">Rp${formatNumber(layanan.harga_per_unit * 1.5)}</span>
-                                        <p class="text-red-500 font-bold text-xl">Rp${formatNumber(layanan.harga_per_unit)}</p>
-                                    </div>
-                                </div>
-                            </div>
-                        `;
-                    });
-                    
-                    // Reinitialize radio button event listeners
-                    initRadioListeners();
-                })
-                .catch(error => {
-                    console.error('Error fetching layanan:', error);
-                    alert('Gagal mengambil data layanan. Silakan coba lagi.');
-                });
-        });
-    });
+    // Function helper
+    function showLoading() {
+        document.getElementById('loadingSpinner').classList.remove('hidden');
+    }
 
-    function initRadioListeners() {
-        let radios = document.querySelectorAll(".layanan-radio");
-        let totalHargaElement = document.getElementById("total-harga");
-        let selectedService = null;
-
-        radios.forEach(radio => {
-            radio.addEventListener('change', function() {
-                if (this.checked) {
-                    selectedService = {
-                        nama: this.dataset.nama,
-                        kategori: this.dataset.kategori,
-                        harga: parseInt(this.dataset.harga),
-                        berat: this.dataset.berat
-                    };
-                    
-                    // Update total
-                    totalHargaElement.textContent = formatNumber(selectedService.harga);
-                }
-            });
-        });
+    function hideLoading() {
+        document.getElementById('loadingSpinner').classList.add('hidden');
     }
 
     function formatNumber(num) {
         return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
     }
 
-    // Close overlay button
+    // Function helper untuk alert
+    function showErrorAlert(message) {
+        Swal.fire({
+            title: 'Error!',
+            text: message,
+            icon: 'error',
+            confirmButtonText: 'Oke',
+            confirmButtonColor: '#3085d6'
+        });
+    }
+
+    function showSuccessAlert(message, callback = null) {
+        Swal.fire({
+            title: 'Berhasil!',
+            text: message,
+            icon: 'success',
+            confirmButtonText: 'Oke',
+            confirmButtonColor: '#3085d6'
+        }).then((result) => {
+            if (result.isConfirmed && callback) {
+                callback();
+            }
+        });
+    }
+
+    function showConfirmAlert(message, callback) {
+        Swal.fire({
+            title: 'Konfirmasi',
+            text: message,
+            icon: 'question',
+            showCancelButton: true,
+            confirmButtonText: 'Oke',
+            cancelButtonText: 'Batal',
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                callback();
+            }
+        });
+    }
+
+    // Event listener untuk tombol Order Laundry
+    const orderButtons = document.querySelectorAll('.chatSellerBtn');
+    console.log('Found order buttons:', orderButtons.length);
+    
+    orderButtons.forEach(button => {
+        button.addEventListener('click', async function(e) {
+            e.preventDefault();
+            
+            const merchantId = this.getAttribute('data-merchant-id');
+            console.log('Merchant ID:', merchantId);
+            
+            try {
+                // Disable button dan show loading
+                this.disabled = true;
+                showLoading();
+                
+                // Show overlay
+                document.getElementById('orderOverlay').classList.remove('hidden');
+                
+                // Fetch data layanan
+                const response = await fetch(`/api/merchant/${merchantId}/layanan`);
+                if (!response.ok) {
+                    throw new Error('Gagal ambil data layanan');
+                }
+                
+                const data = await response.json();
+                console.log('Layanan data:', data);
+                
+                // Update container layanan
+                const container = document.getElementById('pencarian-container');
+                container.innerHTML = ''; // Clear existing content
+                
+                data.forEach(layanan => {
+                    container.innerHTML += `
+                        <div class="border p-2 rounded-lg shadow-sm mb-4 bg-gray-50 hover:bg-gray-100">
+                            <div class="flex items-center mt-3">
+                                <div class="flex items-center mr-4">
+                                    <input type="radio" 
+                                           name="layanan-radio" 
+                                           class="mr-3 layanan-radio" 
+                                           data-nama="${layanan.nama_layanan}" 
+                                           data-kategori="${layanan.kategori_layanan}" 
+                                           data-harga="${layanan.harga_per_unit}" 
+                                           data-berat="5 kg"
+                                           data-merchant-id="${merchantId}">
+                                </div>
+                                <div class="flex-1">
+                                    <p class="text-gray-800 font-semibold text-lg">${layanan.kategori_layanan} - ${layanan.nama_layanan}</p>
+                                    <span class="text-gray-500 text-sm">Waktu Pengerjaan: ${layanan.waktu_pengerjaan}</span>
+                                </div>
+                                <div class="text-right">
+                                    <span class="line-through text-gray-400 text-sm">Rp${formatNumber(layanan.harga_per_unit * 1.5)}</span>
+                                    <p class="text-red-500 font-bold text-xl">Rp${formatNumber(layanan.harga_per_unit)}</p>
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                });
+                
+                // Reinitialize radio button event listeners
+                initRadioListeners();
+                
+            } catch (error) {
+                console.error('Error:', error);
+                showErrorAlert('Gagal mengambil data layanan. Coba refresh ya!');
+            } finally {
+                hideLoading();
+                this.disabled = false;
+            }
+        });
+    });
+
+    function initRadioListeners() {
+        let radios = document.querySelectorAll(".layanan-radio");
+        let totalHargaElement = document.getElementById("total-harga");
+
+        radios.forEach(radio => {
+            radio.addEventListener('change', function() {
+                if (this.checked) {
+                    const harga = parseInt(this.dataset.harga);
+                    totalHargaElement.textContent = formatNumber(harga);
+                }
+            });
+        });
+    }
+
+    // Submit order handler
+    const submitOrderBtn = document.getElementById('submitOrder');
+    if (submitOrderBtn) {
+        submitOrderBtn.addEventListener('click', async function() {
+            const selectedRadio = document.querySelector('.layanan-radio:checked');
+            const transactionMethod = document.getElementById('transactionMethod').value;
+
+            // Validasi
+            if (!selectedRadio) {
+                showErrorAlert('Pilih layanan dulu ya!');
+                return;
+            }
+            if (!transactionMethod) {
+                showErrorAlert('Pilih metode pembayaran dulu ya!');
+                return;
+            }
+
+            // Validasi merchant
+            const merchantId = selectedRadio.getAttribute('data-merchant-id');
+            if (!merchantId) {
+                showErrorAlert('Data merchant tidak ditemukan!');
+                return;
+            }
+
+            const orderButton = document.querySelector(`.chatSellerBtn[data-merchant-id="${merchantId}"]`);
+            if (!orderButton) {
+                showErrorAlert('Data laundry tidak ditemukan!');
+                return;
+            }
+
+            // Konfirmasi order dengan SweetAlert2
+            showConfirmAlert('Yakin mau submit order ini?', async () => {
+                try {
+                    showLoading();
+                    submitOrderBtn.disabled = true;
+
+                    const hargaLayanan = parseInt(selectedRadio.dataset.harga);
+                    const hargaOngkir = 10000;
+                    const totalHarga = hargaLayanan + hargaOngkir;
+
+                    const orderData = {
+                        user_id: {{ auth()->id() }},
+                        alamat_pengiriman: '{{ auth()->user()->alamat }}',
+                        total_price: totalHarga,
+                        nama_laundry: orderButton.getAttribute('data-laundry-name'),
+                        merchant_id: merchantId,
+                        produk_terpilih: JSON.stringify([{
+                            nama: selectedRadio.dataset.nama,
+                            kategori: selectedRadio.dataset.kategori,
+                            harga: hargaLayanan,
+                            berat: selectedRadio.dataset.berat
+                        }]),
+                        metode_pembayaran: transactionMethod
+                    };
+
+                    const response = await fetch('/user/create-order', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content
+                        },
+                        body: JSON.stringify(orderData)
+                    });
+
+                    const result = await response.json();
+                    
+                    if (result.success) {
+                        showSuccessAlert('Order berhasil dibuat!', () => {
+                            window.location.href = '/user/riwayat';
+                        });
+                    } else {
+                        throw new Error(result.message || 'Gagal membuat order');
+                    }
+                } catch (error) {
+                    console.error('Error:', error);
+                    showErrorAlert('Gagal membuat order: ' + error.message);
+                } finally {
+                    hideLoading();
+                    submitOrderBtn.disabled = false;
+                }
+            });
+        });
+    }
+
+    // Close overlay handlers
     const closeBtn = document.getElementById('closeOverlayBtn');
     if (closeBtn) {
         closeBtn.addEventListener('click', function() {
@@ -266,25 +408,6 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     }
 
-    // Order Laundry button handler
-    const orderLaundryBtn = document.getElementById('orderLaundryBtn');
-    if (orderLaundryBtn) {
-        orderLaundryBtn.addEventListener('click', function() {
-            // Check if a service is selected
-            const selectedRadio = document.querySelector('.layanan-radio:checked');
-            if (!selectedRadio) {
-                alert('Silakan pilih layanan terlebih dahulu!');
-                return;
-            }
-
-            // Hide order overlay
-            document.getElementById('orderOverlay').classList.add('hidden');
-            // Show order form overlay
-            document.getElementById('orderFormOverlay').classList.remove('hidden');
-        });
-    }
-
-    // Close form overlay button
     const closeFormBtn = document.getElementById('closeFormOverlayBtn');
     if (closeFormBtn) {
         closeFormBtn.addEventListener('click', function() {
@@ -293,51 +416,46 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     }
 
-    // Submit order button handler
-    const submitOrderBtn = document.getElementById('submitOrder');
-    if (submitOrderBtn) {
-        submitOrderBtn.addEventListener('click', function() {
+    // Order Laundry button handler
+    const orderLaundryBtn = document.getElementById('orderLaundryBtn');
+    if (orderLaundryBtn) {
+        orderLaundryBtn.addEventListener('click', function() {
             const selectedRadio = document.querySelector('.layanan-radio:checked');
-            const transactionMethod = document.getElementById('transactionMethod').value;
-
-            if (!transactionMethod) {
-                alert('Silakan pilih metode pembayaran!');
+            if (!selectedRadio) {
+                showErrorAlert('Pilih layanan dulu ya!');
                 return;
             }
 
-            // Collect order data
-            const orderData = {
-                layanan_nama: selectedRadio.dataset.nama,
-                layanan_kategori: selectedRadio.dataset.kategori,
-                harga: parseInt(selectedRadio.dataset.harga),
-                metode_pembayaran: transactionMethod
-            };
+            // Update produk terpilih
+            updateProdukTerpilih(selectedRadio);
 
-            // Send order data to server
-            fetch('/api/order/create', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content
-                },
-                body: JSON.stringify(orderData)
-            })
-            .then(response => response.json())
-            .then(data => {
-                if (data.success) {
-                    alert('Order berhasil dibuat!');
-                    window.location.href = '/user/orders'; // Redirect ke halaman orders
-                } else {
-                    alert('Gagal membuat order: ' + data.message);
-                }
-            })
-            .catch(error => {
-                console.error('Error:', error);
-                alert('Terjadi kesalahan saat membuat order');
-            });
+            // Hide order overlay dan show form
+            document.getElementById('orderOverlay').classList.add('hidden');
+            document.getElementById('orderFormOverlay').classList.remove('hidden');
         });
+    }
+
+    function updateProdukTerpilih(selectedRadio) {
+        const produkTerpilihContainer = document.getElementById('produkTerpilih');
+        produkTerpilihContainer.innerHTML = `
+            <div class="flex justify-between items-center p-3 bg-gray-50 rounded-lg">
+                <div>
+                    <p class="font-semibold">${selectedRadio.dataset.kategori} - ${selectedRadio.dataset.nama}</p>
+                    <p class="text-sm text-gray-600">Berat: ${selectedRadio.dataset.berat}</p>
+                </div>
+                <div class="text-right">
+                    <p class="text-red-500 font-bold">Rp${formatNumber(selectedRadio.dataset.harga)}</p>
+                </div>
+            </div>
+        `;
+
+        // Update final total
+        const finalTotalElement = document.getElementById('finalTotal');
+        const hargaLayanan = parseInt(selectedRadio.dataset.harga);
+        const hargaOngkir = 10000;
+        const totalHarga = hargaLayanan + hargaOngkir;
+        finalTotalElement.innerHTML = `Rp${formatNumber(totalHarga)}`;
     }
 });
 </script>
-
 @endsection
