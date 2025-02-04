@@ -14,8 +14,6 @@ class Merchant extends Model
 {
     use HasFactory;
 
-    protected $table = 'merchants';
-
     protected $fillable = [
         'user_id',
         'nama_laundry',
@@ -29,7 +27,7 @@ class Merchant extends Model
         'created_at',
         'updated_at'
     ];
-
+    
     // Relasi dengan User
     public function user()
     {

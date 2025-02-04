@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('customer_id')->constrained('users'); // foreign key ke tabel users (customer)
             $table->foreignId('layanan_id')->constrained('layanan_laundries'); // foreign key ke tabel layanan_laundry
+            $table->foreignId('merchant_id')->contrained('merchant');
             $table->enum('status', ['menunggu', 'proses', 'selesai', 'dibatalkan']); // status pesanan
             $table->string('alamat_pengambilan'); // alamat pengambilan
             $table->string('alamat_pengiriman'); // alamat pengiriman

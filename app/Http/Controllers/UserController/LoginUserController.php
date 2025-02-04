@@ -27,23 +27,17 @@ class LoginUserController extends Controller
         Log::debug('Login proses dimulai', ['input' => $request->all()]);
 
         if (Auth::attempt($credentials)) {
-            Log::info('Login berhasil', ['username' => $credentials['username']]);
-
+            $request->session()->regenerate();
             $user = Auth::user();
-            Log::info('User berhasil login', ['user_id' => $user->id, 'role' => $user->role]);
-
-            if ($user->role === 'customer') {
-                $request->session()->regenerate();
-                Log::info('Sesi berhasil diregenerasi', ['user_id' => $user->id]);
-
-                return redirect()->route('user.dashboard');
-            }
-
-            Log::warning('Login gagal: Bukan akun user', ['user_id' => $user->id]);
-            return back()->withErrors([
-                'username' => 'Invalid credentials or not an user account.',
-            ])->onlyInput('username');
+            
+            // Simpan username ke session
+            session(['username' => $user->username]);
+        
+            return redirect()->route('user.dashboard');
         }
+
+        Log::warning('Login gagal: Username atau password salah', ['username' => $request->username]);
+        Auth::logout();        
 
         // Jika login gagal
         Log::warning('Login gagal: Username atau password salah', ['username' => $request->username]);

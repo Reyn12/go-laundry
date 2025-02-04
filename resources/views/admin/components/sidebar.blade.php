@@ -47,8 +47,8 @@
 
         {{-- Laporan & Statistik --}}
         <li>
-            <a href="#" class="block">
-                <div class="menu-sidebar flex items-center px-4 py-2 rounded-lg mb-3 {{ request()->is('admin/dashboard/reports') ? 'bg-primary font-bold text-white' : 'hover:bg-blue-100 dark:hover:bg-gray-700' }}">
+            <a href="{{ route('admin.dashboard.laporan-statistik') }}" class="block">
+                <div class="menu-sidebar flex items-center px-4 py-2 rounded-lg mb-3 {{ request()->is('admin/dashboard/laporan-statistik') ? 'bg-primary font-bold text-white' : 'hover:bg-blue-100 dark:hover:bg-gray-700' }}">
                     <span class="mr-4"><img src="{{ asset('images/icons/iconLaporan.svg') }}" alt=""></span>
                     <span class="dark:text-white">Laporan & Statistik</span>
                 </div>

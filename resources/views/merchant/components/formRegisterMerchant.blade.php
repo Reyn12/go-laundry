@@ -21,6 +21,15 @@
             </div>
             <form id="merchantForm" class="space-y-5 w-full text-center text-gray-800">
                 @csrf
+                <!-- Username -->
+                <div>
+                    <input
+                        type="text"
+                        placeholder="Username"
+                        name="username"
+                        class="w-full p-3 rounded-lg border border-gray-300 bg-gray-100 text-gray-900 outline-none focus:ring-2 focus:ring-blue-500"
+                    />
+                </div>
                 <!-- Nama Laundry -->
                 <div class="relative">
                     <input
@@ -103,60 +112,6 @@
                         name="operationalHours"
                         class="w-full p-3 rounded-lg border border-gray-300 bg-gray-100 text-gray-900 outline-none focus:ring-2 focus:ring-blue-500"
                     />
-                </div>
-
-                <!-- Pilihan Paket Laundry -->
-                <div class="text-left">
-                    <p class="text-gray-800 font-semibold mb-2">Pilih Paket Laundry yang akan disediakan:</p>
-                    <div class="grid grid-cols-2 gap-4">
-                        <label class="flex items-center">
-                            <input type="checkbox" name="services" value="Cuci, Lipat, dan Setrika" class="mr-2">
-                            Cuci, Lipat, dan Setrika
-                        </label>
-                        <label class="flex items-center">
-                            <input type="checkbox" name="services" value="Cuci Duvet/Bedcover" class="mr-2">
-                            Cuci Duvet/Bedcover
-                        </label>
-                        <label class="flex items-center">
-                            <input type="checkbox" name="services" value="Cuci Mobil/Motor" class="mr-2">
-                            Cuci Mobil/Motor
-                        </label>
-                        <label class="flex items-center">
-                            <input type="checkbox" name="services" value="Cuci Jas" class="mr-2">
-                            Cuci Jas
-                        </label>
-                        <label class="flex items-center">
-                            <input type="checkbox" name="services" value="Cuci Sepatu" class="mr-2">
-                            Cuci Sepatu
-                        </label>
-                        <label class="flex items-center">
-                            <input type="checkbox" name="services" value="Setrika" class="mr-2">
-                            Setrika
-                        </label>
-                        <label class="flex items-center">
-                            <input type="checkbox" name="services" value="Cuci Karpet" class="mr-2">
-                            Cuci Karpet
-                        </label>
-                        <label class="flex items-center">
-                            <input type="checkbox" name="services" value="Cuci Baju Kerja" class="mr-2">
-                            Cuci Baju Kerja
-                        </label>
-                    </div>
-                    <span class="text-red-500 text-sm hidden services-error">Pilih minimal satu paket laundry</span>
-                </div>
-
-                <!-- Upload Foto -->
-                <div class="text-left">
-                    <label class="block mb-2 text-gray-800 font-semibold">Upload Foto Laundry (Opsional):</label>
-                    <div class="w-full p-4 border-2 border-dashed border-gray-300 rounded-lg bg-gray-100 flex justify-center items-center">
-                        <input type="file" name="laundryPhoto" class="hidden" id="fileInput" accept="image/*">
-                        <label for="fileInput" class="cursor-pointer text-gray-600">
-                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" class="w-8 h-8 mx-auto">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 16s1-1 3-1 3 1 5 1 3-1 5-1 3 1 3 1m-3 4H6a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V18a2 2 0 01-2 2z"/>
-                            </svg>
-                            <span>Upload Foto Laundry</span>
-                        </label>
-                    </div>
                 </div>
 
                 <!-- Syarat dan Ketentuan -->
