@@ -23,6 +23,7 @@ class RegisterMerchantController extends Controller
             Log::info('Mencoba registrasi merchant baru', ['data' => $request->all()]);
             
             $validator = $request->validate([
+                'username'=> 'required|string|unique:users,username',
                 'laundryName' => 'required|string|max:255',
                 'laundryAddress' => 'required|string',
                 'phone' => 'required|string|max:15',
@@ -36,11 +37,12 @@ class RegisterMerchantController extends Controller
             
             // Buat user baru
             $user = User::create([
-                'username' => strtolower(str_replace(' ', '', $request->laundryName)),
+                'username' => strtolower(str_replace(' ', '', $request->username)),
                 'email' => $request->email,
                 'password' => Hash::make($request->password),
                 'nama_lengkap' => $request->laundryName,
                 'no_hp' => $request->phone,
+                'alamat'=> $request->laundryAddress,
                 'role' => 'merchant',
                 'status' => 'aktif'
             ]);
