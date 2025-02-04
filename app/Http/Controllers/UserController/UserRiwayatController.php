@@ -8,55 +8,8 @@ class UserRiwayatController extends Controller
 {
     public function index()
     {
-        // Contoh data riwayat pesanan
-        $riwayatPesanan = [
-            [
-                'id' => 1,
-                'nama' => 'John Doe',
-                'amount' => 2,
-                'date' => '2024-04-01',
-                'status' => 'Selesai',
-                'total_price' => 50000,
-            ],
-            [
-                'id' => 2,
-                'nama' => 'Jane Doe',
-                'amount' => 1,
-                'date' => '2024-04-15',
-                'status' => 'Di Laundry',
-                'total_price' => 25000,
-            ],[
-                'id' => 3,
-                'nama' => 'Samsudin',
-                'amount' => 2,
-                'date' => '2024-04-01',
-                'status' => 'Selesai',
-                'total_price' => 50000,
-            ],
-            [
-                'id' => 4,
-                'nama' => 'Agus Buntung',
-                'amount' => 1,
-                'date' => '2024-04-15',
-                'status' => 'Di Laundry',
-                'total_price' => 25000,
-            ],[
-                'id' => 5,
-                'nama' => 'Alexander',
-                'amount' => 2,
-                'date' => '2024-04-01',
-                'status' => 'Selesai',
-                'total_price' => 50000,
-            ],
-            [
-                'id' => 6,
-                'nama' => 'ipal',
-                'amount' => 1,
-                'date' => '2024-04-15',
-                'status' => 'Di Laundry',
-                'total_price' => 25000,
-            ],
-        ];
+        // Mengambil semua pesanan yang telah selesai
+        $riwayatPesanan = Pesanan::with('layanan')->where('customer_id', auth()->id())->get();
 
         return view('user.riwayat.index', compact('riwayatPesanan'));
     }

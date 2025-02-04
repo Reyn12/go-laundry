@@ -12,5 +12,8 @@
         class="border-b-2 {{ request()->routeIs('admin.dashboard.merchant-manage.verified') ? 'border-blue-500 text-blue-600 dark:text-blue-400' : 'border-transparent text-gray-500 dark:text-gray-400 hover:border-gray-300 dark:hover:border-gray-500 hover:text-gray-700 dark:hover:text-gray-300' }} py-4 px-1 text-sm font-medium">
             Verified
         </a>
+        <a href="#" class="border-b-2 border-transparent py-4 px-1 text-sm font-medium text-gray-500 dark:text-gray-400 hover:border-gray-300 dark:hover:border-gray-500 hover:text-gray-700 dark:hover:text-gray-300">
+            Rejected
+        </a>
     </nav>
 </div>

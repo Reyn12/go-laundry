@@ -15,22 +15,30 @@ class Pesanan extends Model
     protected $table = 'pesanans';
 
     protected $fillable = [
-        'id_user',
+        'customer_id',
+        'layanan_id',
         'merchant_id',
-        'total_harga',
         'status',
-        'tanggal_pesanan',
-        'metode_pembayaran',
-        'bukti_pembayaran',
+        'alamat_pengambilan',
+        'alamat_pengiriman',
+        'total_harga',
+        'berat_kg',
+        'jumlah_pesanan',
         'created_at',
         'updated_at'
     ];
 
-    // Relasi dengan User
-    public function user()
-    {
-        return $this->belongsTo(User::class, 'id_user');
-    }
+      // Relasi dengan User
+      public function user()
+      {
+          return $this->belongsTo(User::class, 'customer_id');
+      }
+  
+      // Relasi dengan LayananLaundry
+      public function layanan()
+      {
+          return $this->belongsTo(LayananLaundry::class, 'layanan_id');
+      }
 
     // Relasi dengan Merchant
     public function merchant()

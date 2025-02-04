@@ -10,7 +10,7 @@
         <button class="absolute left-0 top-1/2 -translate-y-1/2 bg-white dark:bg-gray-700 shadow-md rounded-full p-2">
             <img src="{{ asset('images/icons/iconKiri.svg') }}" alt="Previous" class="w-6 h-6 ">
         </button>
-
+        
         {{-- Review Card --}}
         <div class="mx-8">
             <div class="p-4 bg-gray-50 dark:bg-gray-700 rounded-xl border border-gray-500 dark:border-gray-600">

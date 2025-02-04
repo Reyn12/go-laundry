@@ -104,7 +104,7 @@
     <!-- Filter Pencarian Laundry -->
     <!-- homepage/components/filter-pencarian.blade.php -->
     <div class="flex flex-col items-center justify-center min-h-screen w-full py-12" id="Pencarian">
-        <form action="{{ url('/search-laundry') }}" method="GET" class="w-full flex justify-center">
+        <form action="{{ route('pencarian.search') }}" method="GET" class="w-full flex justify-center">
             <div class="flex flex-col items-center w-full max-w-[900px] bg-white rounded-[56px] shadow-lg p-6"
                 style="box-shadow: 0px 4px 24px 4px rgba(0, 0, 0, 0.5);">
                 <h2 class="text-2xl lg:text-4xl text-center text-black mb-6">PENCARIAN LAUNDRY TERDEKAT</h2>

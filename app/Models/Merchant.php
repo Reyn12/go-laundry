@@ -14,8 +14,6 @@ class Merchant extends Model
 {
     use HasFactory;
 
-    protected $table = 'merchants';
-
     protected $fillable = [
         'user_id',
         'nama_laundry',
@@ -29,7 +27,7 @@ class Merchant extends Model
         'created_at',
         'updated_at'
     ];
-
+    
     // Relasi dengan User
     public function user()
     {
@@ -51,12 +49,12 @@ class Merchant extends Model
     // Relasi dengan Review
     public function review()
     {
-        return $this->hasMany(Review::class, 'id_merchant');
+        return $this->hasMany(Review::class, 'merchant_id');
     }
 
     // Relasi dengan SaldoMerchant
     public function saldoMerchant()
     {
-        return $this->hasOne(SaldoMerchant::class, 'id_merchant');
+        return $this->hasOne(SaldoMerchant::class, 'merchant_id');
     }
 }
