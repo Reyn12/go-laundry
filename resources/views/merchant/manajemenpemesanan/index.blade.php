@@ -57,96 +57,50 @@
     </div>
         <!-- Header -->
         <div class="bg-white shadow rounded-lg p-6">
-            <div class="flex justify-between items-center mb-6">
-                <!-- Gambar di kiri -->
-                <img src="/images/mesinlaundry.png" alt="Kelola Layanan" class="w-24 h-24">
-                
-                <!-- Judul di tengah -->
-                <h2 class="text-2xl font-bold text-center flex-1">Daftar Pesanan</h2>
-                
-                <!-- Tombol Edit Layanan di kanan -->
-                <button class="bg-blue-500 text-white px-4 py-2 rounded mt-20 block">Edit Status</button>
+            <div class="mb-6">
+                <h2 class="text-2xl font-bold">Daftar Pesanan</h2>
             </div> 
             <!-- Tabel Pesanan -->
-            <table class="w-full table-auto border-collapse">
-                <thead>
-                    <tr>
-                        <th class="border p-2 text-left">No</th>
-                        <th class="border p-2 text-left">Nama Pelanggan</th>
-                        <th class="border p-2 text-left">Layanan</th>
-                        <th class="border p-2 text-left">Total Harga</th>
-                        <th class="border p-2 text-left">Catatan Pelanggan</th>
-                        <th class="border p-2 text-left">Status</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td class="border p-2">1</td>
-                        <td class="border p-2">Krisna</td>
-                        <td class="border p-2">Laundry Regular</td>
-                        <td class="border p-2">Rp.50.000</td>
-                        <td class="border p-2">Estimasi 1-3 Hari</td>
-                        <td class="border p-2 text-orange-500">Menunggu Pickup</td>
-                    </tr>
-                    <tr>
-                        <td class="border p-2">2</td>
-                        <td class="border p-2">Krisna</td>
-                        <td class="border p-2">Laundry Express</td>
-                        <td class="border p-2">Rp.50.000</td>
-                        <td class="border p-2">1 Hari Selesai</td>
-                        <td class="border p-2 text-orange-500">Menunggu Pickup</td>
-                    </tr>
-                    <tr>
-                        <td class="border p-2">3</td>
-                        <td class="border p-2">Krisna</td>
-                        <td class="border p-2">Laundry Regular</td>
-                        <td class="border p-2">Rp.50.000</td>
-                        <td class="border p-2">Estimasi 1-3 Hari</td>
-                        <td class="border p-2 text-green-500">Selesai</td>
-                    </tr>
-                    <tr>
-                        <td class="border p-2">4</td>
-                        <td class="border p-2">Krisna</td>
-                        <td class="border p-2">Laundry Regular</td>
-                        <td class="border p-2">Rp.50.000</td>
-                        <td class="border p-2">Estimasi 1-3 Hari</td>
-                        <td class="border p-2 text-yellow-500">Proses</td>
-                    </tr>
-                    <tr>
-                        <td class="border p-2">5</td>
-                        <td class="border p-2">Krisna</td>
-                        <td class="border p-2">Laundry Regular</td>
-                        <td class="border p-2">Rp.50.000</td>
-                        <td class="border p-2">Estimasi 1-3 Hari</td>
-                        <td class="border p-2 text-blue-500">Dalam Pickup</td>
-                    </tr>
-                    <tr>
-                        <td class="border p-2">6</td>
-                        <td class="border p-2">Krisna</td>
-                        <td class="border p-2">Laundry Regular</td>
-                        <td class="border p-2">Rp.50.000</td>
-                        <td class="border p-2">Estimasi 1-3 Hari</td>
-                        <td class="border p-2 text-purple-500">Dalam Pengantaran</td>
-                    </tr>
-                    <tr>
-                        <td class="border p-2">7</td>
-                        <td class="border p-2">Krisna</td>
-                        <td class="border p-2">Laundry Regular</td>
-                        <td class="border p-2">Rp.50.000</td>
-                        <td class="border p-2">Estimasi 1-3 Hari</td>
-                        <td class="border p-2 text-orange-500">Menunggu Pickup</td>
-                    </tr>
-                    <tr>
-                        <td class="border p-2">8</td>
-                        <td class="border p-2">Krisna</td>
-                        <td class="border p-2">Laundry Regular</td>
-                        <td class="border p-2">Rp.50.000</td>
-                        <td class="border p-2">Estimasi 1-3 Hari</td>
-                        <td class="border p-2 text-green-500">Selesai</td>
-                    </tr>
-                </tbody>
-            </table>
-
+            <div class="overflow-x-auto">
+                <table class="min-w-full bg-white rounded-lg overflow-hidden">
+                    <thead class="bg-gray-100">
+                        <tr>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">No</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Nama Pelanggan</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Layanan</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Total Harga</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Catatan Pelanggan</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
+                        </tr>
+                    </thead>
+                    <tbody class="divide-y divide-gray-200">
+                        <tr class="hover:bg-gray-50">
+                            <td class="px-6 py-4 whitespace-nowrap">1</td>
+                            <td class="px-6 py-4 whitespace-nowrap">Krisna</td>
+                            <td class="px-6 py-4 whitespace-nowrap">Laundry Regular</td>
+                            <td class="px-6 py-4 whitespace-nowrap">Rp.50.000</td>
+                            <td class="px-6 py-4 whitespace-nowrap">Estimasi 1-3 Hari</td>
+                            <td class="px-6 py-4 whitespace-nowrap">
+                                <button onclick="cycleStatus(this, 1)" class="px-4 py-2 bg-yellow-500 text-white rounded-md hover:bg-yellow-600 focus:outline-none">
+                                    Menunggu
+                                </button>
+                            </td>
+                        </tr>
+                        <tr class="hover:bg-gray-50">
+                            <td class="px-6 py-4 whitespace-nowrap">2</td>
+                            <td class="px-6 py-4 whitespace-nowrap">Krisna</td>
+                            <td class="px-6 py-4 whitespace-nowrap">Laundry Express</td>
+                            <td class="px-6 py-4 whitespace-nowrap">Rp.50.000</td>
+                            <td class="px-6 py-4 whitespace-nowrap">1 Hari Selesai</td>
+                            <td class="px-6 py-4 whitespace-nowrap">
+                                <button onclick="cycleStatus(this, 2)" class="px-4 py-2 bg-yellow-500 text-white rounded-md hover:bg-yellow-600 focus:outline-none">
+                                    Menunggu
+                                </button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
             <!-- Pagination -->
             <div class="mt-4 flex justify-center">
                 <a href="?page=1" class="px-4 py-2 bg-blue-500 text-white rounded mx-1">1</a>
