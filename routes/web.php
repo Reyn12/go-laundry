@@ -22,6 +22,7 @@ use App\Http\Controllers\MerchantController\KelolaLayananMerchantController;
 use App\Http\Controllers\AdminController\UserManageController;
 use App\Http\Controllers\AdminController\MerchantManageController;
 use App\Http\Controllers\AdminController\LaporanAdminController;
+use App\Http\Controllers\HomepageController\PencarianHomepage;
 
 /*
 |--------------------------------------------------------------------------
@@ -161,7 +162,11 @@ Route::prefix('user')->group(function () {
     // Route untuk API layanan
     Route::get('/api/merchant/{id}/layanan', [App\Http\Controllers\UserController\UserPencarianController::class, 'getLayanan'])->name('api.merchant.layanan');
 
-// Merchant Routes
+    // Route untuk pencarian homepage
+    Route::get('/pencarian', [PencarianHomepage::class, 'index'])->name('pencarian.homepage');
+    Route::get('/pencarian/search', [PencarianHomepage::class, 'search'])->name('pencarian.search');
+
+    //Merchant Routes
     Route::prefix('merchant')->group(function () {
         Route::get('/login', function () {
             return view('merchant.login.index');
@@ -170,9 +175,10 @@ Route::prefix('user')->group(function () {
     
     // Dashboard route
     Route::get('/dashboard', [DashboardMerchantController::class, 'index'])->name('merchant.dashboard');
-    
+
     //Merchant register 
     Route::get('/register', [RegisterMerchantController::class, 'index'])->name('merchant.register');
+    Route::post('/register', [RegisterMerchantController::class, 'store'])->name('merchant.register.submit');
 
     //Profile Route
     Route::get('/profile', [ProfileMerchantController::class, 'index'])->name('merchant.profile');
