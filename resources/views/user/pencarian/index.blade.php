@@ -11,6 +11,7 @@
         filter: blur(5px);
         pointer-events: none; /* Mencegah klik pada elemen di belakang overlay */
     }
+    
 </style>
 <div id="overlay" class="hidden"></div>
 <div class="flex flex-col md:flex-row w-full" id="mainContent">
@@ -53,37 +54,48 @@
             </form>
         </div>
        <!-- List Laundry -->
-        <div id="laundry-list" class="grid grid-cols-1 md:grid-cols-2 gap-3">
+       <div id="laundry-list" class="grid grid-cols-1 md:grid-cols-2 gap-6 p-4">
             @forelse ($results as $result)
-            <div class="bg-white shadow rounded-lg flex items-start p-6 laundry-item">
-                <div class="ml-6">
-                    <h2 class="text-xl font-bold text-gray-800">{{ $result->title }}</h2>
-                    <div class="flex items-center mt-2">
-                        <span class="text-yellow-400 text-xl mr-1">★★★★★</span>
-                        <span class="text-gray-600 text-sm">{{ $result->rating }}</span>
-                        <span class="text-gray-400 text-sm ml-2">{{ $result->reviews }} reviews</span>
-                    </div>
-                    <div class="flex items-center mt-1 text-sm text-gray-600">
-                        <span>{{ $result->description }}</span>
-                    </div>
-                    <div class="flex items-center justify-between mt-1 text-sm text-gray-600 w-full">
-                        <span>{{ $result->location }}</span>
-                    </div>
-                    <div>
-                        <!-- Button Order dengan debug info -->
-                        <div class="text-sm text-gray-500 mb-2">
-                            Available fields: {{ implode(', ', array_keys((array)$result)) }}
+            <div class="bg-white rounded-xl shadow-sm hover:shadow-md transition-all duration-300 overflow-hidden">
+                <div class="p-6">
+                    <div class="flex justify-between items-start">
+                        <h2 class="text-xl font-bold text-gray-800 hover:text-blue-600 transition-colors">{{ $result->title }}</h2>
+                        <div class="flex items-center bg-blue-50 px-3 py-1 rounded-full">
+                            <svg class="w-4 h-4 text-yellow-400" fill="currentColor" viewBox="0 0 20 20">
+                                <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/>
+                            </svg>
+                            <span class="ml-1 text-sm font-medium text-gray-600">{{ $result->rating }}</span>
+                            <span class="mx-1.5 text-gray-400">•</span>
+                            <span class="text-sm text-gray-500">{{ $result->reviews }} reviews</span>
                         </div>
-                        <button class="chatSellerBtn px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700" 
+                    </div>
+                    
+                    <p class="mt-3 text-gray-600 text-sm">{{ $result->description }}</p>
+                    
+                    <div class="mt-4 flex items-center text-gray-600">
+                        <svg class="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/>
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/>
+                        </svg>
+                        <span class="ml-2 text-sm">{{ $result->location }}</span>
+                    </div>
+        
+                    <div class="mt-6">
+                        <button class="chatSellerBtn w-full bg-blue-600 hover:bg-blue-700 text-white py-2.5 px-4 rounded-lg transition-colors duration-300 flex items-center justify-center space-x-2"
                                 data-laundry-name="{{ $result->title }}"
                                 data-merchant-id="{{ $result->merchant_id }}">
-                            Order Laundry
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"/>
+                            </svg>
+                            <span>Order Laundry</span>
                         </button>
                     </div>
                 </div>
             </div>
             @empty
-            <p class="text-gray-600">Tidak ada data ditemukan.</p>
+                <div class="col-span-2 text-center py-10">
+                    <p class="text-gray-500">Tidak ada laundry yang ditemukan</p>
+                </div>
             @endforelse
         </div>
 
@@ -101,21 +113,40 @@
     <div class="animate-spin rounded-full h-32 w-32 border-t-2 border-b-2 border-blue-500"></div>
 </div>
 <div id="orderOverlay" class="fixed inset-0 bg-black bg-opacity-50 hidden z-50 flex justify-center items-center">
-    <div id="orderFormContainer" class="fixed w-full max-w-4xl p-8 bg-white rounded-lg shadow-xl">
-        <h2 class="text-2xl font-bold mb-2 text-center">Keranjang Belanja</h2>
-        <div class="max-h-96 overflow-y-auto">
-            <div id="pencarian-container">
-                <!-- Layanan akan di-load secara dinamis lewat JavaScript -->
+    <div id="orderFormContainer" class="fixed w-full max-w-4xl bg-white rounded-2xl shadow-2xl overflow-hidden">
+        <!-- Header -->
+        <div class="bg-gradient-to-r from-blue-600 to-blue-700 p-6">
+            <h2 class="text-2xl font-bold text-white text-center">Keranjang Belanja</h2>
+        </div>
+
+        <!-- Content -->
+        <div class="p-6">
+            <div class="max-h-[calc(100vh-400px)] overflow-y-auto pr-2 space-y-4" style="scrollbar-width: thin;">
+                <div id="pencarian-container">
+                    <!-- Layanan akan di-load secara dinamis lewat JavaScript -->
+                </div>
             </div>
-        </div>
 
-        <div class="mt-5 border-t pt-4 text-center">
-            <h2 class="text-xl font-bold text-gray-800">Total: Rp<span id="total-harga">0</span></h2>
-        </div>
+            <!-- Total -->
+            <div class="mt-6 border-t border-gray-100 pt-6">
+                <div class="flex justify-between items-center">
+                    <span class="text-gray-600 font-medium">Total Pembayaran</span>
+                    <h2 class="text-2xl font-bold text-blue-600">Rp<span id="total-harga">0</span></h2>
+                </div>
+            </div>
 
-        <div class="flex justify-between mt-5">
-            <button id="closeOverlayBtn" class="w-1/2 bg-gray-500 text-white p-3 rounded-lg hover:bg-gray-600 mr-3 text-sm">Tutup</button>
-            <button id="orderLaundryBtn" class="w-1/2 bg-blue-600 text-white p-3 rounded-lg hover:bg-blue-700 text-sm">Order Laundry</button>
+            <!-- Buttons -->
+            <div class="flex gap-4 mt-6">
+                <button id="closeOverlayBtn" class="flex-1 px-6 py-3 bg-gray-100 text-gray-700 rounded-xl hover:bg-gray-200 transition-colors duration-200 font-medium">
+                    Tutup
+                </button>
+                <button id="orderLaundryBtn" class="flex-1 px-6 py-3 bg-blue-600 text-white rounded-xl hover:bg-blue-700 transition-colors duration-200 font-medium flex items-center justify-center gap-2">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"/>
+                    </svg>
+                    Order Laundry
+                </button>
+            </div>
         </div>
     </div>
 </div>
@@ -123,7 +154,7 @@
 <!-- Order Form Overlay -->
 <!--penerima-->
 <div id="orderFormOverlay" class="fixed inset-0 bg-black bg-opacity-50 hidden z-50 flex justify-center items-center">
-    <div class="fixed w-full max-w-4xl mx-auto p-6 bg-white shadow-lg rounded-xl">
+    <div class="fixed w-full max-w-3xl mx-auto p-6 bg-white shadow-lg rounded-xl">
         <!-- Alamat Penerima -->
         <h2 class="text-xl font-bold text-red-600 mb-4">Alamat Penerima</h2>
         <p class="font-bold">{{ auth()->user()->username }}</p>
