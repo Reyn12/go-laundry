@@ -81,7 +81,7 @@
                             @foreach($pesanans as $index => $p)
                             <tr>
                                 <td class="px-6 py-4 whitespace-nowrap">{{ $index + 1 }}</td>
-                                <td class="px-6 py-4 whitespace-nowrap">{{ $p->user->name }}</td>
+                                <td class="px-6 py-4 whitespace-nowrap">{{ $p->user->nama_lengkap  }}</td>
                                 <td class="px-6 py-4 whitespace-nowrap">{{ $p->layanan->nama_layanan }}</td>
                                 <td class="px-6 py-4 whitespace-nowrap">Rp {{ number_format($p->total_harga, 0, ',', '.') }}</td>
                                 <td class="px-6 py-4 whitespace-nowrap">{{ $p->catatan ?? '-' }}</td>
