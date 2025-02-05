@@ -132,7 +132,7 @@
         </div>
     </div>
 </div>
-
+<form>
 <!-- Order Form Overlay -->
 <!--penerima-->
 <div id="orderFormOverlay" class="fixed inset-0 bg-black bg-opacity-50 hidden z-50 flex justify-center items-center">
@@ -181,7 +181,7 @@
         </div>
     </div>
 </div>
-
+</form>
 
 <script>
     // Search functionality
@@ -291,7 +291,6 @@
     document.getElementById("closeOverlayBtn").addEventListener("click", function() {
         document.getElementById("orderOverlay").classList.add("hidden");
     });
-    // Submit order
     document.getElementById("submitOrder").addEventListener("click", function() {
     let searchInput = document.getElementById("searchInput").value.trim();
     let selectedProduct = document.getElementById("produkTerpilih").textContent.trim();
@@ -299,26 +298,29 @@
     let userName = "{{ auth()->user()->username }}";
     let userId = "{{ auth()->user()->id }}";
     let alamatPengiriman = "{{ auth()->user()->alamat }}";
+    let metodePembayaran = document.getElementById("transactionMethod").value.trim();
 
-    if (searchInput === "") {
-        alert("Silakan masukkan pencarian sebelum memesan.");
+    if (searchInput === "" || selectedProduct === "" || totalPrice === "") {
+        alert("Silakan lengkapi semua informasi sebelum memesan.");
         return;
     }
 
     let orderData = {
         alamat_pengiriman: alamatPengiriman,
         nama_laundry: searchInput,
+        produk_terpilih: selectedProduct,
         user_id: userId,
-        total_price: totalPrice
+        total_price: totalPrice,
+        metode_pembayaran: metodePembayaran
     };
 
-    fetch("{{ route('order.store') }}", {
-    method: "POST",
-    headers: {
-        "Content-Type": "application/json",
-        "X-CSRF-TOKEN": "{{ csrf_token() }}"
-    },
-    body: JSON.stringify(orderData)
+    fetch("{{ route('order') }}", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+            "X-CSRF-TOKEN": "{{ csrf_token() }}"
+        },
+        body: JSON.stringify(orderData)
     })
     .then(response => {
         if (!response.ok) {
@@ -336,7 +338,6 @@
         }
     })
     .catch(error => console.error("Error:", error));
-
 });
 </script>
 

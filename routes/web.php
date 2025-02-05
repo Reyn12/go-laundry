@@ -99,11 +99,11 @@ Route::prefix('user')->group(function () {
     // Dashboard route
     Route::get('/dashboard', [DashboardUserController::class, 'index'])->name('user.dashboard');
     
-     //User register 
-     Route::get('/register', [RegisterUserController::class, 'index'])->name('user.register');
+    //User register 
+    Route::get('/register', [RegisterUserController::class, 'index'])->name('user.register');
 
-     //User register submit
-     Route::post('/register', [RegisterUserController::class, 'store'])->name('user.register.submit');
+    //User register submit
+    Route::post('/register', [RegisterUserController::class, 'store'])->name('user.register.submit');
 
     //Pencarian Route
     Route::get('/pencarian', [UserPencarianController::class, 'index'])->name('user.pencarian');
@@ -115,7 +115,7 @@ Route::prefix('user')->group(function () {
     Route::get('/riwayat/reorder', [UserRiwayatController::class, 'reorder'])->name('riwayat.reorder');
 
     //Order Route
-    Route::post('/order/store', [OrderController::class, 'store'])->name('order.store');
+    Route::post('/order', [OrderController::class, 'createOrder'])->name('order');
 
     //pelacakan Route
     Route::get('/pelacakan/{id?}', [UserPelacakanController::class, 'show'])->name('user.pelacakan');
@@ -148,6 +148,12 @@ Route::prefix('user')->group(function () {
 
     // Logout route
     Route::post('/logout', [LoginUserController::class, 'logout'])->name('logout');
+
+    //Submit order
+    Route::post('/submit-order', 'OrderController@submitOrder');
+
+    //Order Route
+    Route::post('/create-order', [OrderController::class, 'createOrder']);
     });
 
 // Merchant Routes
