@@ -131,8 +131,8 @@
         <p>{{ auth()->user()->no_hp }}</p>
 
         <!-- Pencarian Produk -->
-        <h3 class="text-lg font-semibold mt-6">Cari Produk</h3>
-        <input type="text" id="searchInput" class="w-full px-3 py-2 border rounded-md mt-2" placeholder="Masukkan nama produk...">
+        {{-- <h3 class="text-lg font-semibold mt-6">Cari Produk</h3>
+        <input type="text" id="searchInput" class="w-full px-3 py-2 border rounded-md mt-2" placeholder="Masukkan nama produk..."> --}}
         
         <!-- Produk Dipilih -->
         <h3 class="text-lg font-semibold mt-6">Produk Dipilih</h3>

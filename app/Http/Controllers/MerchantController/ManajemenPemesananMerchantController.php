@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\Pesanan;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
 
 class ManajemenPemesananMerchantController extends Controller
 {
@@ -21,6 +22,8 @@ class ManajemenPemesananMerchantController extends Controller
             ->orderBy('created_at', 'desc')
             ->get();
         
+        Log::info('Data pesanan:', $pesanans->toArray());
+
         return view('merchant.manajemenpemesanan.index', [
             'pesanans' => $pesanans
         ]);
