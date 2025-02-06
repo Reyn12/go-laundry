@@ -197,6 +197,7 @@ Route::post('/merchant/profile/update', [ProfileMerchantController::class, 'upda
      Route::post('/layanan', [KelolaLayananMerchantController::class, 'store'])->name('merchant.layanan.store');
      Route::get('/layanan/{id}', [KelolaLayananMerchantController::class, 'show'])->name('merchant.layanan.show');
      Route::put('/layanan/{id}', [KelolaLayananMerchantController::class, 'update'])->name('merchant.layanan.update');
+     Route::delete('/layanan/{id}', [KelolaLayananMerchantController::class, 'destroy'])->name('merchant.layanan.destroy');
 
      //ManajemenPemesanan Route
      Route::get('/manajemenpemesanan', [ManajemenPemesananMerchantController::class, 'index'])->name('merchant.manajemenpemesanan');

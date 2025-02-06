@@ -50,7 +50,14 @@ class DashboardMerchantController extends Controller
         // Debug: Tampilkan pesanan hari ini
         Log::info('Today orders:', ['orders' => $todayOrders->get()->toArray()]);
 
-        $todayIncome = $todayOrders->sum('total_harga');
+        // Hitung pendapatan dengan mempertimbangkan pesanan yang dibatalkan
+        $todayIncome = Pesanan::where('merchant_id', $merchant->id)
+                             ->whereDate('created_at', $today)
+                             ->where(function($query) {
+                                 $query->where('status', '!=', 'dibatalkan')
+                                     ->orWhereNull('status');
+                             })
+                             ->sum('total_harga');
 
         // Hitung total semua pesanan (tidak dibatasi hari ini)
         $totalOrders = Pesanan::where('merchant_id', $merchant->id)->count();
@@ -98,9 +105,13 @@ class DashboardMerchantController extends Controller
                 'y' => $count
             ];
 
-            // Data pendapatan
+            // Data pendapatan (mempertimbangkan pesanan yang dibatalkan)
             $earnings = Pesanan::where('merchant_id', $merchant->id)
                              ->whereDate('created_at', $date)
+                             ->where(function($query) {
+                                 $query->where('status', '!=', 'dibatalkan')
+                                     ->orWhereNull('status');
+                             })
                              ->sum('total_harga');
             $weeklyEarnings[] = [
                 'x' => $date->format('l'),
