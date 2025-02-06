@@ -182,7 +182,7 @@ document.addEventListener("DOMContentLoaded", function () {
                                 <input type="radio" 
                                        name="layanan-radio" 
                                        class="layanan-radio peer hidden"
-                                       data-nama="${layanan.nama_layanan}" 
+                                       data-nama="${layanan.display_name}" 
                                        data-kategori="${layanan.kategori_layanan}" 
                                        data-harga="${layanan.harga_per_unit}" 
                                        data-berat="5 kg"
@@ -198,7 +198,7 @@ document.addEventListener("DOMContentLoaded", function () {
                                     <div class="flex-1">
                                         <div class="flex justify-between items-start">
                                             <div>
-                                                <p class="text-gray-800 font-semibold text-lg group-hover:text-blue-600 peer-checked:!text-blue-600 transition-colors">${layanan.nama_layanan}</p>
+                                                <p class="text-gray-800 font-semibold text-lg group-hover:text-blue-600 peer-checked:!text-blue-600 transition-colors">${layanan.display_name}</p>
                                                 <div class="space-y-0.5">
                                                     <span class="text-gray-500 text-sm block">Waktu Pengerjaan:</span>
                                                     <span class="text-gray-600 font-medium block">${layanan.waktu_pengerjaan}</span>

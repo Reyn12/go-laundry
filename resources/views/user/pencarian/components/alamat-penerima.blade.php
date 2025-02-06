@@ -27,8 +27,8 @@
             <!-- Grid 2 Kolom: Produk & Pengiriman -->
             <div class="grid grid-cols-2 gap-4 mb-6">
                 <!-- Produk Dipilih -->
-                <div class="bg-white rounded-xl p-4 border border-gray-100">
-                    <div class="flex items-center gap-4 mb-2">
+                <div class="bg-white rounded-xl p-4 border border-gray-100 shadow-sm">
+                    <div class="flex items-center gap-4 mb-4">
                         <div class="p-3 bg-blue-100 rounded-lg">
                             <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-blue-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" />
@@ -36,7 +36,31 @@
                         </div>
                         <h3 class="text-lg font-semibold text-gray-900">Produk Dipilih</h3>
                     </div>
-                    <div id="produkTerpilih" class="ml-[52px]"></div>
+                    <div id="produkTerpilih" class="space-y-3">
+                        <!-- Template untuk produk yang dipilih -->
+                        <template id="produkTemplate">
+                            <div class="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
+                                <div class="flex items-center gap-3">
+                                    <div class="flex-shrink-0">
+                                        <div class="w-10 h-10 bg-blue-100 rounded-lg flex items-center justify-center">
+                                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-blue-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
+                                            </svg>
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <h4 class="font-medium text-gray-900 produk-nama"></h4>
+                                        <p class="text-sm text-gray-500 produk-harga"></p>
+                                    </div>
+                                </div>
+                                <button class="text-red-500 hover:text-red-600 delete-produk">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                                    </svg>
+                                </button>
+                            </div>
+                        </template>
+                    </div>
                 </div>
 
                 <!-- Opsi Pengiriman -->

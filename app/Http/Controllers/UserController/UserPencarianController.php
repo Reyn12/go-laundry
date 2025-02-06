@@ -52,6 +52,14 @@ class UserPencarianController extends Controller
     {
         $layanan = DB::table('layanan_laundries')
             ->where('merchant_id', $merchantId)
+            ->select(
+                'kategori_layanan',
+                'nama_layanan',
+                DB::raw("CONCAT(kategori_layanan, ' ', nama_layanan) as display_name"),
+                'waktu_pengerjaan',
+                'harga_per_unit',
+                'satuan'
+            )
             ->get();
             
         return response()->json($layanan);

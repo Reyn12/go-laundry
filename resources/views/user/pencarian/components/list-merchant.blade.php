@@ -15,8 +15,22 @@
             <div class="layanan">
                 <span class="text-sm text-gray-500">Layanan:</span>
                 <ul class="mt-2 space-y-1">
+                    @php
+                        $shownRegular = false;
+                        $shownExpress = false;
+                        $shownKilat = false;
+                    @endphp
                     @foreach($result->layananLaundries as $layanan)
-                        <li class="text-sm">{{ $layanan->nama_layanan }}</li>
+                        @if($layanan->nama_layanan === 'Reguler' && !$shownRegular)
+                            <li class="text-sm">{{ $layanan->nama_layanan }}</li>
+                            @php $shownRegular = true; @endphp
+                        @elseif($layanan->nama_layanan === 'Express' && !$shownExpress)
+                            <li class="text-sm">{{ $layanan->nama_layanan }}</li>
+                            @php $shownExpress = true; @endphp
+                        @elseif($layanan->nama_layanan === 'Kilat' && !$shownKilat)
+                            <li class="text-sm">{{ $layanan->nama_layanan }}</li>
+                            @php $shownKilat = true; @endphp
+                        @endif
                     @endforeach
                 </ul>
             </div>
