@@ -62,7 +62,7 @@ Route::prefix('admin')->group(function () {
     // Admin Register
     Route::get('/register', [RegisterController::class, 'index'])->name('admin.register');
     Route::post('/register', [RegisterController::class, 'store'])->name('admin.register.submit');
-    
+
     // Protected routes (perlu login dan role admin)
     Route::middleware(['auth', 'admin'])->group(function () {
         // Logout route
@@ -104,8 +104,8 @@ Route::prefix('user')->group(function () {
 
     // Dashboard route
     Route::get('/dashboard', [DashboardUserController::class, 'index'])->name('user.dashboard');
-    
-    //User register 
+
+    //User register
     Route::get('/register', [RegisterUserController::class, 'index'])->name('user.register');
 
     //User register submit
@@ -123,7 +123,7 @@ Route::prefix('user')->group(function () {
      //Order Route
      Route::post('/order', [OrderController::class, 'createOrder'])->name('order');
      Route::post('/order/store', [OrderController::class, 'store'])->name('order.store');
- 
+
 
     //pelacakan Route
     Route::get('/pelacakan/{id?}', [UserPelacakanController::class, 'show'])->name('user.pelacakan');
@@ -176,14 +176,14 @@ Route::prefix('user')->group(function () {
         Route::get('/login', [LoginMerchantController::class, 'index'])->name('merchant.login');
         Route::post('/login', [LoginMerchantController::class, 'login'])->name('merchant.login.process');
         Route::post('/logout', [LoginMerchantController::class, 'logout'])->name('merchant.logout');
-        
+
         // Protected merchant routes
         Route::middleware(['auth'])->group(function () {
             Route::get('/dashboard', [DashboardMerchantController::class, 'index'])->name('merchant.dashboard');
             // Add other merchant routes here
         });
-    
-    //Merchant register 
+
+    //Merchant register
     Route::get('/register', [RegisterMerchantController::class, 'index'])->name('merchant.register');
     Route::post('/register', [RegisterMerchantController::class, 'store'])->name('merchant.register.submit');
 
@@ -202,7 +202,7 @@ Route::post('/merchant/profile/update', [ProfileMerchantController::class, 'upda
      Route::get('/manajemenpemesanan', [ManajemenPemesananMerchantController::class, 'index'])->name('merchant.manajemenpemesanan');
      Route::get('/pesanan', [ManajemenPemesananMerchantController::class, 'index'])->name('merchant.pesanan');
      Route::post('/pesanan/{id}/status', [ManajemenPemesananMerchantController::class, 'updateStatus'])->name('merchant.pesanan.updateStatus');
-    
+
      //Ulasan dan Pendapatan Route
      Route::get('/ulasan', [UlasanMerchantController::class, 'index'])->name('merchant.ulasan');
 

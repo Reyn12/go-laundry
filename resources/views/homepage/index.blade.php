@@ -104,21 +104,24 @@
 
     <!-- Filter Pencarian Laundry -->
     <!-- homepage/components/filter-pencarian.blade.php -->
-    <div class="flex flex-col items-center justify-center min-h-screen w-full py-12 bg-gradient-to-b from-blue-800 to-cyan-600 md:my-20 mt-10 md:mt-10" id="Pencarian">
+    <div class="flex flex-col items-center justify-center min-h-screen w-full py-12 bg-gradient-to-b from-blue-800 to-cyan-600 md:my-20 mt-10 md:mt-10"
+        id="Pencarian">
         <form action="{{ route('pencarian.search') }}" method="GET" class="w-full flex justify-center px-4">
-            <div class="w-full max-w-[900px] backdrop-blur-md bg-white/10 rounded-[40px] p-8 lg:p-12" 
-                 style="box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);">
-                
+            <div class="w-full max-w-[900px] backdrop-blur-md bg-white/10 rounded-[40px] p-8 lg:p-12"
+                style="box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);">
+
                 <h2 class="text-2xl lg:text-4xl text-center text-white font-bold mb-12" data-aos="fade-down">
                     PENCARIAN LAUNDRY TERDEKAT
                 </h2>
-    
+
                 <div class="flex flex-col lg:flex-row justify-between gap-8" data-aos="fade-up">
                     <!-- Service Section -->
-                    <div class="flex-1 bg-blue-600/90 rounded-3xl p-6 lg:p-8 transition-all duration-300 hover:bg-blue-700/90">
+                    <div
+                        class="flex-1 bg-blue-600/90 rounded-3xl p-6 lg:p-8 transition-all duration-300 hover:bg-blue-700/90">
                         <h3 class="text-xl text-white font-semibold mb-6">Service yang disediakan:</h3>
                         <div class="grid grid-cols-1 gap-4">
-                            @foreach (['Cuci Karpet', 'Cuci Sepatu', 'Cuci Jas', 'Cuci Setrika', 'Cuci Kering Lipat'] as $service)
+                            @foreach (['Cuci Karpet', 'Cuci Sepatu', 'Cuci Jas', 'Cuci Setrika', 'Cuci Kering Lipat'] as
+                            $service)
                             <label class="flex items-center gap-3 group cursor-pointer">
                                 <div class="relative">
                                     <input type="checkbox" name="services[]" value="{{ $service }}"
@@ -126,17 +129,20 @@
                                         class="peer appearance-none w-5 h-5 border-2 border-white/50 rounded-md checked:bg-blue-500 checked:border-blue-500 transition-all duration-300">
                                     <svg class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-3 h-3 pointer-events-none opacity-0 peer-checked:opacity-100 text-white transition-opacity"
                                         fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7" />
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3"
+                                            d="M5 13l4 4L19 7" />
                                     </svg>
                                 </div>
-                                <span class="text-lg text-white group-hover:text-blue-200 transition-colors">{{ $service }}</span>
+                                <span
+                                    class="text-lg text-white group-hover:text-blue-200 transition-colors">{{ $service }}</span>
                             </label>
                             @endforeach
                         </div>
                     </div>
-    
+
                     <!-- Duration Section -->
-                    <div class="flex-1 bg-blue-600/90 rounded-3xl p-6 lg:p-8 transition-all duration-300 hover:bg-blue-700/90">
+                    <div
+                        class="flex-1 bg-blue-600/90 rounded-3xl p-6 lg:p-8 transition-all duration-300 hover:bg-blue-700/90">
                         <h3 class="text-xl text-white font-semibold mb-6">Lama Pengerjaan:</h3>
                         <div class="grid grid-cols-1 gap-4">
                             @foreach (['Reguler', 'Express', 'Kilat'] as $duration)
@@ -147,23 +153,28 @@
                                         class="peer appearance-none w-5 h-5 border-2 border-white/50 rounded-md checked:bg-blue-500 checked:border-blue-500 transition-all duration-300">
                                     <svg class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-3 h-3 pointer-events-none opacity-0 peer-checked:opacity-100 text-white transition-opacity"
                                         fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7" />
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3"
+                                            d="M5 13l4 4L19 7" />
                                     </svg>
                                 </div>
-                                <span class="text-lg text-white group-hover:text-blue-200 transition-colors">{{ $duration }}</span>
+                                <span
+                                    class="text-lg text-white group-hover:text-blue-200 transition-colors">{{ $duration }}</span>
                             </label>
                             @endforeach
                         </div>
                     </div>
                 </div>
-    
+
                 <div class="flex justify-center mt-12" data-aos="fade-up" data-aos-delay="200">
                     <button type="submit"
                         class="group relative px-16 py-4 bg-blue-600 text-white text-lg rounded-full overflow-hidden transition-all duration-300 hover:bg-blue-700 hover:shadow-lg hover:shadow-blue-500/30">
-                        <div class="absolute inset-0 bg-gradient-to-r from-blue-600 to-blue-400 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                        <div
+                            class="absolute inset-0 bg-gradient-to-r from-blue-600 to-blue-400 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                        </div>
                         <div class="relative flex items-center gap-3">
                             CARI
-                            <img src="{{ asset('images/icons/iconKaca.svg') }}" alt="" class="w-5 h-5 group-hover:scale-110 transition-transform">
+                            <img src="{{ asset('images/icons/iconKaca.svg') }}" alt=""
+                                class="w-5 h-5 group-hover:scale-110 transition-transform">
                         </div>
                     </button>
                 </div>
