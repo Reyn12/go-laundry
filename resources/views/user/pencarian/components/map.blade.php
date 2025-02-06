@@ -26,7 +26,14 @@
         }
     </style>
     
-    <div id="map-container" class="h-[500px] w-full">
+    <div id="map-container" class="h-[500px] w-full relative">
+        <!-- Tombol Cari Terdekat -->
+        <div class="absolute top-3 left-3 z-10">
+            <button id="findNearest" class="flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200 hover:-translate-y-0.5 shadow-md">
+                <i class="fas fa-location-crosshairs"></i>
+                Cari Terdekat
+            </button>
+        </div>
         <div id="map" class="w-full h-full rounded-md"></div>
     </div>
 
@@ -239,6 +246,42 @@
                 // Update tampilan
                 const container = document.getElementById('laundry-list');
                 cards.forEach(card => container.appendChild(card));
+            }
+        });
+
+        // Event listener untuk tombol Cari Terdekat
+        document.getElementById('findNearest').addEventListener('click', function() {
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(function(position) {
+                    // Update lokasi user di map
+                    updateUserLocation(position);
+                    
+                    // Update nilai input hidden untuk sorting
+                    document.getElementById('user_lat').value = position.coords.latitude;
+                    document.getElementById('user_lng').value = position.coords.longitude;
+                    
+                    // Trigger event change untuk sort merchant
+                    document.getElementById('location').dispatchEvent(new Event('change'));
+                }, function(error) {
+                    // Handle error
+                    let message = '';
+                    switch(error.code) {
+                        case error.PERMISSION_DENIED:
+                            message = "Kamu perlu izinkan akses lokasi dulu ya";
+                            break;
+                        case error.POSITION_UNAVAILABLE:
+                            message = "Info lokasi gak tersedia nih";
+                            break;
+                        case error.TIMEOUT:
+                            message = "Request timeout, coba lagi ya";
+                            break;
+                        default:
+                            message = "Error yang gak diketahui, coba refresh halaman";
+                    }
+                    alert(message);
+                });
+            } else {
+                alert("Browser kamu gak support fitur geolocation nih");
             }
         });
     </script>
