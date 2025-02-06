@@ -21,17 +21,19 @@ class UserPencarianController extends Controller
             })
             ->select(
                 'id as merchant_id', 
-                'nama_laundry as title',
+                'nama_laundry',
                 'deskripsi as description',
                 DB::raw('5.0 as rating'), 
                 DB::raw('125 as reviews'), 
-                'alamat_laundry as location',
+                'alamat_laundry',
+                'latitude',
+                'longitude',
                 DB::raw('"https://via.placeholder.com/150" as image') 
             )
             ->get();
 
         // Kirim data ke view
-        return view('user.pencarian.index', compact('results'));
+        return view('user.pencarian.index', ['results' => $results, 'merchants' => $results]);
     }
 
     public function getLayanan($merchantId)

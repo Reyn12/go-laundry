@@ -7,22 +7,22 @@
     
     <style>
         .marker {
-            background-size: cover;
-            width: 30px;
-            height: 30px;
-            border-radius: 50%;
             cursor: pointer;
         }
         .user-marker {
             background-color: #2563eb;
-            border: 2px solid white;
-        }
-        .merchant-marker {
-            background-color: #dc2626;
-            border: 2px solid white;
+            border: 3px solid white;
+            border-radius: 50%;
+            width: 16px;
+            height: 16px;
+            box-shadow: 0 0 0 4px rgba(37,99,235,0.2);
         }
         .mapboxgl-popup {
-            max-width: 200px;
+            max-width: 280px;
+        }
+        .mapboxgl-popup-content {
+            padding: 16px;
+            border-radius: 12px;
         }
     </style>
     
@@ -39,50 +39,78 @@
         // Inisialisasi map dengan lokasi default Bandung
         const map = new mapboxgl.Map({
             container: 'map',
-            style: 'mapbox://styles/mapbox/streets-v12', // style dengan 3D buildings
+            style: 'mapbox://styles/mapbox/basic-v9',  // Ganti ke light style biar lebih clean
             center: [107.619125, -6.917464],
             zoom: 15,
-            pitch: 45, // Sudut kemiringan untuk efek 3D
+            pitch: 45,
             bearing: -17.6,
             antialias: true
         });
-
+ 
         // Tambah kontrol navigasi
         map.addControl(new mapboxgl.NavigationControl());
 
-        // Aktifkan 3D buildings saat map load
+        // Custom style saat map load
         map.on('load', () => {
-            // Tambah 3D building layer
-            map.addLayer({
-                'id': '3d-buildings',
-                'source': 'composite',
-                'source-layer': 'building',
-                'filter': ['==', 'extrude', 'true'],
-                'type': 'fill-extrusion',
-                'minzoom': 15,
-                'paint': {
-                    'fill-extrusion-color': '#aaa',
-                    'fill-extrusion-height': [
-                        'interpolate',
-                        ['linear'],
-                        ['zoom'],
-                        15,
-                        0,
-                        15.05,
-                        ['get', 'height']
-                    ],
-                    'fill-extrusion-base': [
-                        'interpolate',
-                        ['linear'],
-                        ['zoom'],
-                        15,
-                        0,
-                        15.05,
-                        ['get', 'min_height']
-                    ],
-                    'fill-extrusion-opacity': 0.6
-                }
-            });
+            // Tambah marker untuk setiap merchant
+            @foreach($merchants as $merchant)
+                // Container untuk pin dan label
+                const containerEl_{{$merchant->merchant_id}} = document.createElement('div');
+                containerEl_{{$merchant->merchant_id}}.className = 'marker flex flex-col items-center';
+
+                // Buat label merchant (taruh duluan biar di atas)
+                const labelEl_{{$merchant->merchant_id}} = document.createElement('div');
+                labelEl_{{$merchant->merchant_id}}.className = 'bg-blue-600 text-white px-3 py-1 rounded-lg whitespace-nowrap font-bold text-sm mb-2';
+                labelEl_{{$merchant->merchant_id}}.textContent = '{{$merchant->nama_laundry}}';
+                containerEl_{{$merchant->merchant_id}}.appendChild(labelEl_{{$merchant->merchant_id}});
+
+                // Buat pin marker dengan titik di tengah
+                const pinEl_{{$merchant->merchant_id}} = document.createElement('div');
+                pinEl_{{$merchant->merchant_id}}.className = 'w-4 h-4 bg-yellow-400 border-2 border-white rounded-full shadow-md relative';
+                
+                // Buat titik di tengah pin
+                const dotEl_{{$merchant->merchant_id}} = document.createElement('div');
+                dotEl_{{$merchant->merchant_id}}.className = 'absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-1 h-1 bg-white rounded-full';
+                pinEl_{{$merchant->merchant_id}}.appendChild(dotEl_{{$merchant->merchant_id}});
+                containerEl_{{$merchant->merchant_id}}.appendChild(pinEl_{{$merchant->merchant_id}});
+                
+                // Buat popup dengan info merchant
+                const popup_{{$merchant->merchant_id}} = new mapboxgl.Popup({ offset: 25 })
+                    .setHTML(`
+                        <div class="p-2">
+                            <h3 class="font-bold text-lg mb-1">{{$merchant->nama_laundry}}</h3>
+                            <p class="text-gray-600 text-sm">{{$merchant->alamat_laundry}}</p>
+                        </div>
+                    `);
+
+                // Tambah marker ke map
+                new mapboxgl.Marker(containerEl_{{$merchant->merchant_id}})
+                    .setLngLat([parseFloat('{{$merchant->longitude}}'), parseFloat('{{$merchant->latitude}}')])
+                    .setPopup(popup_{{$merchant->merchant_id}})
+                    .addTo(map);
+            @endforeach
+
+            // Get user location
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(position => {
+                    const userLng = position.coords.longitude;
+                    const userLat = position.coords.latitude;
+
+                    // Buat marker untuk user
+                    const userMarkerEl = document.createElement('div');
+                    userMarkerEl.className = 'marker user-marker';
+
+                    new mapboxgl.Marker(userMarkerEl)
+                        .setLngLat([userLng, userLat])
+                        .addTo(map);
+
+                    // Update map center ke lokasi user
+                    map.flyTo({
+                        center: [userLng, userLat],
+                        zoom: 15
+                    });
+                });
+            }
         });
 
         // Marker untuk lokasi user
@@ -101,8 +129,7 @@
             // Buat element untuk marker
             const el = document.createElement('div');
             el.className = 'marker user-marker';
-            el.innerHTML = '<i class="fas fa-user-circle text-white"></i>';
-            
+
             // Tambah marker baru
             userMarker = new mapboxgl.Marker(el)
                 .setLngLat([lng, lat])
@@ -139,7 +166,7 @@
                 // Buat element untuk marker
                 const el = document.createElement('div');
                 el.className = 'marker merchant-marker';
-                el.innerHTML = '<i class="fas fa-store text-white"></i>';
+                el.textContent = merchant.name;
                 
                 // Buat popup content
                 const popup = new mapboxgl.Popup({ offset: 25 }).setHTML(`
@@ -194,24 +221,6 @@
         
         function deg2rad(deg) {
             return deg * (Math.PI/180);
-        }
-        
-        // Get lokasi user
-        if (navigator.geolocation) {
-            navigator.geolocation.getCurrentPosition(updateUserLocation, (error) => {
-                console.error('Error getting location:', error);
-                Swal.fire({
-                    title: 'Error!',
-                    text: 'Tidak bisa mendapatkan lokasi kamu. Pastikan GPS aktif dan izinkan akses lokasi.',
-                    icon: 'error'
-                });
-            });
-        } else {
-            Swal.fire({
-                title: 'Error!',
-                text: 'Browser kamu tidak support Geolocation.',
-                icon: 'error'
-            });
         }
 
         // Event listener untuk filter berdasarkan jarak
