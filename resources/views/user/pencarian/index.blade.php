@@ -35,19 +35,12 @@
                         <option value="high">High to Low</option>
                     </select>
                 </div>
-                <div class="flex-grow">
-                    <select id="rating" name="rating" class="w-full px-3 py-2 border rounded-md">
-                        <option selected>Rating</option>
-                        <option value="good">Good Rating</option>
-                        <option value="bad">Bad Rating</option>
-                    </select>
-                </div>
             </div>
 
                 <!-- Search Box -->
                 <div class="container-fluid mx-auto mt-4">
                     <div class="mb-4">
-                        <input type="text" id="search-box" placeholder="Cari riwayat pesanan..." 
+                        <input type="text" id="search-box" placeholder="Cari laundry..." 
                                class="border border-gray-300 rounded-lg p-2 w-full">
                     </div>
                 </div>
@@ -55,7 +48,21 @@
         </div>
        <!-- List Laundry -->
        <div id="laundry-list" class="grid grid-cols-1 md:grid-cols-2 gap-6 p-4">
+            <!-- Card Laundry -->
             @forelse ($results as $result)
+            @php
+            // Menentukan rentang harga berdasarkan merchant_id
+            $prices = [
+                1 => [6000, 12000], // Kilat Laundry
+                2 => [25000, 35000], // Bersih Sejahtera Laundry
+                3 => [20000, 30000], // Super Clean Laundry
+                4 => [15000, 25000], // Cerah Laundry
+                5 => [4000, 9000], // Santai Laundry
+            ];
+            $merchant_id = $result->merchant_id;
+            $price_range = isset($prices[$merchant_id]) ? 'Rp ' . number_format($prices[$merchant_id][0], 0, ',', '.') . ' - Rp ' . number_format($prices[$merchant_id][1], 0, ',', '.') : 'Harga tidak tersedia';
+        @endphp
+            <!-- Card Laundry -->
             <div class="bg-white rounded-xl shadow-sm hover:shadow-md transition-all duration-300 overflow-hidden">
                 <div class="p-6">
                     <div class="flex justify-between items-start">
@@ -69,9 +76,20 @@
                             <span class="text-sm text-gray-500">{{ $result->reviews }} reviews</span>
                         </div>
                     </div>
-                    
-                    <p class="mt-3 text-gray-600 text-sm">{{ $result->description }}</p>
-                    
+
+                    <!-- Rentang Harga dalam Label -->
+                    <div class="flex items-center justify-between mt-3">
+
+                        <!-- Deskripsi -->
+                        <p class="text-gray-600 text-sm">{{ $result->description }}</p>
+
+                        <!-- Rentang Harga dalam Label -->
+                        <div class="bg-gray-100 px-3 py-1 rounded-full">
+                            <span class="text-sm font-semibold text-gray-800">{{ $price_range }}</span>
+                        </div>
+                    </div>
+
+                    <!--Location-->
                     <div class="mt-4 flex items-center text-gray-600">
                         <svg class="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/>
@@ -80,6 +98,7 @@
                         <span class="ml-2 text-sm">{{ $result->location }}</span>
                     </div>
         
+                    <!-- Order Button -->
                     <div class="mt-6">
                         <button class="chatSellerBtn w-full bg-blue-600 hover:bg-blue-700 text-white py-2.5 px-4 rounded-lg transition-colors duration-300 flex items-center justify-center space-x-2"
                                 data-laundry-name="{{ $result->title }}"
