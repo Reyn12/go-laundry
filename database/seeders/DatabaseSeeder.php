@@ -145,7 +145,7 @@ class DatabaseSeeder extends Seeder
 
 // Menambahkan data merchant secara manual
         \App\Models\Merchant::create([
-            'user_id' => 1, // Asumsikan user_id 1 adalah pemilik laundry A
+            'user_id' => 3, // Asumsikan user_id 1 adalah pemilik laundry A
             'nama_laundry' => 'Kilat Laundry',
             'alamat_laundry' => 'Jl. Kebon Jeruk No. 1, Jakarta',
             'deskripsi' => 'Laundry cepat dan bersih',
@@ -155,7 +155,7 @@ class DatabaseSeeder extends Seeder
             'longitude' => 106.816666,
         ]);
         \App\Models\Merchant::create([
-            'user_id' => 2, // Asumsikan user_id 2 adalah pemilik laundry B
+            'user_id' => 9, // Asumsikan user_id 2 adalah pemilik laundry B
             'nama_laundry' => 'Bersih Sejahtera Laundry',
             'alamat_laundry' => 'Jl. Merdeka No. 2, Bandung',
             'deskripsi' => 'Laundry dengan pelayanan terbaik',
@@ -165,7 +165,7 @@ class DatabaseSeeder extends Seeder
             'longitude' => 107.619123,
         ]);
         \App\Models\Merchant::create([
-            'user_id' => 3, // Asumsikan user_id 3 adalah pemilik laundry C
+            'user_id' => 10, // Asumsikan user_id 3 adalah pemilik laundry C
             'nama_laundry' => 'Super Clean Laundry',
             'alamat_laundry' => 'Jl. Pahlawan No. 3, Surabaya',
             'deskripsi' => 'Laundry praktis dengan harga terjangkau',
@@ -175,7 +175,7 @@ class DatabaseSeeder extends Seeder
             'longitude' => 112.768845,
         ]);
         \App\Models\Merchant::create([
-            'user_id' => 4, // Asumsikan user_id 4 adalah pemilik laundry D
+            'user_id' => 11, // Asumsikan user_id 4 adalah pemilik laundry D
             'nama_laundry' => 'Cerah Laundry',
             'alamat_laundry' => 'Jl. Raya No. 4, Yogyakarta',
             'deskripsi' => 'Laundry cepat dan ramah lingkungan',
@@ -185,7 +185,7 @@ class DatabaseSeeder extends Seeder
             'longitude' => 110.369489,
         ]);
         \App\Models\Merchant::create([
-            'user_id' => 5, // Asumsikan user_id 5 adalah pemilik laundry E
+            'user_id' => 12, // Asumsikan user_id 12 adalah pemilik laundry E
             'nama_laundry' => 'Santai Laundry',
             'alamat_laundry' => 'Jl. Citra No. 5, Medan',
             'deskripsi' => 'Laundry dengan pelayanan terbaik dan cepat',
