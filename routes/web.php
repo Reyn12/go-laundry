@@ -202,7 +202,9 @@ Route::post('/merchant/profile/update', [ProfileMerchantController::class, 'upda
      Route::get('/manajemenpemesanan', [ManajemenPemesananMerchantController::class, 'index'])->name('merchant.manajemenpemesanan');
      Route::get('/pesanan', [ManajemenPemesananMerchantController::class, 'index'])->name('merchant.pesanan');
      Route::post('/pesanan/{id}/status', [ManajemenPemesananMerchantController::class, 'updateStatus'])->name('merchant.pesanan.updateStatus');
-    
+     Route::post('/pesanan/{id}/cancel', [ManajemenPemesananMerchantController::class, 'cancel'])->name('merchant.pesanan.cancel');
+
+
      //Ulasan dan Pendapatan Route
      Route::get('/ulasan', [UlasanMerchantController::class, 'index'])->name('merchant.ulasan');
 
