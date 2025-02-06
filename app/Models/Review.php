@@ -15,30 +15,30 @@ class Review extends Model
     protected $table = 'reviews';
 
     protected $fillable = [
-        'id_user',
-        'id_merchant',
-        'id_pesanan',
+        'customer_id',
+        'merchant_id',
+        'pesanan_id',
         'rating',
-        'ulasan',
+        'komentar',
         'created_at',
         'updated_at'
     ];
 
-    // Relasi dengan User
-    public function user()
+    // Relasi dengan User (Customer)
+    public function customer()
     {
-        return $this->belongsTo(User::class, 'id_user');
+        return $this->belongsTo(User::class, 'customer_id');
     }
 
     // Relasi dengan Merchant
     public function merchant()
     {
-        return $this->belongsTo(Merchant::class, 'id_merchant');
+        return $this->belongsTo(Merchant::class, 'merchant_id');
     }
 
     // Relasi dengan Pesanan
     public function pesanan()
     {
-        return $this->belongsTo(Pesanan::class, 'id_pesanan');
+        return $this->belongsTo(Pesanan::class, 'pesanan_id');
     }
 }

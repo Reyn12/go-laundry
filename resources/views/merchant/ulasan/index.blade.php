@@ -64,73 +64,123 @@
                 <!-- Total Ulasan -->
                 <div class="bg-white shadow rounded p-4">
                     <p class="text-gray-500">Total Ulasan</p>
-                    <p class="text-3xl font-bold">1000</p>
+                    <p class="text-3xl font-bold">{{ $totalReviews }}</p>
                     <p class="text-sm text-gray-400">Total ulasan tahun ini</p>
                 </div>
                 <!-- Rata-rata Rating -->
                 <div class="bg-white shadow rounded p-4">
                     <p class="text-gray-500">Rata-Rata Rating</p>
-                    <p class="text-3xl font-bold">5.0</p>
-                    <p class="text-sm text-gray-400">Rata-rata rating tahun ini</p>
+                    <div class="flex items-center mt-2">
+                        <p class="text-3xl font-bold mr-2">{{ $averageRating }}</p>
+                        <div class="flex text-yellow-400">
+                            @for ($i = 1; $i <= 5; $i++)
+                                @if ($i <= $averageRating)
+                                    <svg class="w-5 h-5 fill-current" viewBox="0 0 24 24">
+                                        <path d="M12 17.27L18.18 21L16.54 13.97L22 9.24L14.81 8.63L12 2L9.19 8.63L2 9.24L7.46 13.97L5.82 21L12 17.27Z"/>
+                                    </svg>
+                                @else
+                                    <svg class="w-5 h-5 fill-current text-gray-300" viewBox="0 0 24 24">
+                                        <path d="M12 17.27L18.18 21L16.54 13.97L22 9.24L14.81 8.63L12 2L9.19 8.63L2 9.24L7.46 13.97L5.82 21L12 17.27Z"/>
+                                    </svg>
+                                @endif
+                            @endfor
+                        </div>
+                    </div>
+                    <p class="text-sm text-gray-400 mt-1">Dari {{ $totalReviews }} ulasan</p>
                 </div>
                 <!-- Rating Breakdown -->
-                <div class="bg-white shadow rounded p-4">
-                    <h2 class="font-semibold text-lg">Rating Breakdown</h2>
-                    <div class="mt-4 space-y-2">
-                        <div class="flex items-center">
-                            <img src="{{ asset('images/icons/iconStar.svg') }}" alt="Star" class="w-4 h-4 mr-2">
-                            <span class="w-6 text-gray-500">5</span>
-                            <div class="flex-1 h-2 bg-gray-200 rounded-full overflow-hidden mx-2">
-                                <div class="h-full bg-green-500" style="width: 60%;"></div>
+                <div class="bg-white shadow rounded p-4 col-span-2">
+                    <h2 class="font-semibold text-lg mb-4">Rating Breakdown</h2>
+                    <div class="space-y-3">
+                        @foreach(range(5, 1) as $rating)
+                            @php
+                                $count = $ratingBreakdown[$rating];
+                                $percentage = $totalReviews > 0 ? ($count / $totalReviews) * 100 : 0;
+                                
+                                // Menentukan warna berdasarkan rating
+                                $barColor = match($rating) {
+                                    5 => 'bg-green-500',
+                                    4 => 'bg-green-400',
+                                    3 => 'bg-yellow-400',
+                                    2 => 'bg-orange-400',
+                                    1 => 'bg-red-400',
+                                };
+                            @endphp
+                            <div class="flex items-center">
+                                <div class="flex items-center w-24">
+                                    <span class="text-sm font-medium w-3">{{ $rating }}</span>
+                                    <div class="flex text-yellow-400 ml-1">
+                                        @for ($i = 0; $i < 5; $i++)
+                                            @if ($i < $rating)
+                                                <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24">
+                                                    <path d="M12 17.27L18.18 21L16.54 13.97L22 9.24L14.81 8.63L12 2L9.19 8.63L2 9.24L7.46 13.97L5.82 21L12 17.27Z"/>
+                                                </svg>
+                                            @else
+                                                <svg class="w-4 h-4 fill-current text-gray-300" viewBox="0 0 24 24">
+                                                    <path d="M12 17.27L18.18 21L16.54 13.97L22 9.24L14.81 8.63L12 2L9.19 8.63L2 9.24L7.46 13.97L5.82 21L12 17.27Z"/>
+                                                </svg>
+                                            @endif
+                                        @endfor
+                                    </div>
+                                </div>
+                                <div class="flex-1 h-2 mx-4 rounded-full bg-gray-200">
+                                    <div class="h-full rounded-full {{ $barColor }}" style="width: {{ $percentage }}%"></div>
+                                </div>
+                                <div class="w-16 text-right">
+                                    <span class="text-sm font-medium">{{ $count }}</span>
+                                </div>
                             </div>
-                            <span class="w-8 text-gray-500">600</span>
-                        </div>
-                        <div class="flex items-center">
-                            <img src="{{ asset('images/icons/iconStar.svg') }}" alt="Star" class="w-4 h-4 mr-2">
-                            <span class="w-6 text-gray-500">4</span>
-                            <div class="flex-1 h-2 bg-gray-200 rounded-full overflow-hidden mx-2">
-                                <div class="h-full bg-yellow-500" style="width: 25%;"></div>
-                            </div>
-                            <span class="w-8 text-gray-500">250</span>
-                        </div>
-                        <div class="flex items-center">
-                            <img src="{{ asset('images/icons/iconStar.svg') }}" alt="Star" class="w-4 h-4 mr-2">
-                            <span class="w-6 text-gray-500">3</span>
-                            <div class="flex-1 h-2 bg-gray-200 rounded-full overflow-hidden mx-2">
-                                <div class="h-full bg-blue-500" style="width: 10%;"></div>
-                            </div>
-                            <span class="w-8 text-gray-500">100</span>
-                        </div>
-                        <div class="flex items-center">
-                            <img src="{{ asset('images/icons/iconStar.svg') }}" alt="Star" class="w-4 h-4 mr-2">
-                            <span class="w-6 text-gray-500">2</span>
-                            <div class="flex-1 h-2 bg-gray-200 rounded-full overflow-hidden mx-2">
-                                <div class="h-full bg-red-500" style="width: 5%;"></div>
-                            </div>
-                            <span class="w-8 text-gray-500">50</span>
-                        </div>
-                        <div class="flex items-center">
-                            <img src="{{ asset('images/icons/iconStar.svg') }}" alt="Star" class="w-4 h-4 mr-2">
-                            <span class="w-6 text-gray-500">1</span>
-                            <div class="flex-1 h-2 bg-gray-200 rounded-full overflow-hidden mx-2">
-                                <div class="h-full bg-gray-500" style="width: 0%;"></div>
-                            </div>
-                            <span class="w-8 text-gray-500">0</span>
-                        </div>
+                        @endforeach
                     </div>
                 </div>
-                <!-- Ulasan Terbaru -->
-                <div class="bg-white shadow rounded p-4">
-                    <h2 class="font-semibold text-lg">Ulasan Terbaru</h2>
+            </div>
+
+            <!-- Daftar Ulasan -->
+            <div class="mt-6 bg-white shadow rounded p-4">
+                <h2 class="font-semibold text-lg mb-4">Daftar Ulasan</h2>
+                @if($reviews->count() > 0)
+                    <div class="space-y-4">
+                        @foreach($reviews as $review)
+                            <div class="border-b border-gray-200 pb-4 last:border-0">
+                                <div class="flex justify-between items-start">
+                                    <div>
+                                        <p class="font-semibold">{{ $review->pesanan->user->name }}</p>
+                                        <div class="flex items-center mt-1">
+                                            <div class="flex text-yellow-400">
+                                                @for ($i = 1; $i <= 5; $i++)
+                                                    @if ($i <= $review->rating)
+                                                        <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24">
+                                                            <path d="M12 17.27L18.18 21L16.54 13.97L22 9.24L14.81 8.63L12 2L9.19 8.63L2 9.24L7.46 13.97L5.82 21L12 17.27Z"/>
+                                                        </svg>
+                                                    @else
+                                                        <svg class="w-4 h-4 fill-current text-gray-300" viewBox="0 0 24 24">
+                                                            <path d="M12 17.27L18.18 21L16.54 13.97L22 9.24L14.81 8.63L12 2L9.19 8.63L2 9.24L7.46 13.97L5.82 21L12 17.27Z"/>
+                                                        </svg>
+                                                    @endif
+                                                @endfor
+                                            </div>
+                                            <span class="text-sm text-gray-500 ml-2">{{ $review->created_at->format('d F Y') }}</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <p class="text-gray-600 mt-2">{{ $review->komentar }}</p>
+                            </div>
+                        @endforeach
+                    </div>
+
+                    <!-- Pagination -->
                     <div class="mt-4">
-                        <div class="p-4 bg-gray-50 rounded shadow-sm">
-                            <p class="font-bold">Anonymous</p>
-                            <p class="text-yellow-500 text-sm">★☆☆☆☆</p>
-                            <p class="text-gray-600 mt-2">Kurang Puas</p>
-                            <p class="text-xs text-gray-400 mt-1">04 Desember 2024</p>
-                        </div>
+                        {{ $reviews->links() }}
                     </div>
-                </div>
+                @else
+                    <div class="text-center py-8">
+                        <svg class="mx-auto h-12 w-12 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 13V6a2 2 0 00-2-2H6a2 2 0 00-2 2v7m16 0v5a2 2 0 01-2 2H6a2 2 0 01-2-2v-5m16 0h-2.586a1 1 0 00-.707.293l-2.414 2.414a1 1 0 01-.707.293h-3.172a1 1 0 01-.707-.293l-2.414-2.414A1 1 0 006.586 13H4"/>
+                        </svg>
+                        <h3 class="mt-2 text-sm font-medium text-gray-900">Belum ada ulasan</h3>
+                        <p class="mt-1 text-sm text-gray-500">Tunggu pelanggan memberikan ulasan untuk layanan Anda.</p>
+                    </div>
+                @endif
             </div>
 
             <!-- Grafik -->
@@ -138,7 +188,7 @@
                 <!-- Grafik Pendapatan -->
                 <div class="bg-white shadow rounded p-4">
                     <h2 class="font-semibold text-lg">Pendapatan</h2>
-                    <p class="text-gray-500 mt-2">Total Pendapatan: <span class="font-bold">Rp. 2.500.000</span></p>
+                    <p class="text-gray-500 mt-2">Total Pendapatan: <span class="font-bold">Rp. {{ number_format($totalRevenue, 0, ',', '.') }}</span></p>
                     <div id="pendapatanChart" class="mt-6"></div>
                 </div>
                 <!-- Grafik Pesanan -->
@@ -152,23 +202,82 @@
 
     <!-- Script ApexCharts -->
     <script>
-        // Grafik Pendapatan
-        var optionsPendapatan = {
-            chart: { type: 'area', height: 350 },
-            series: [{ name: 'Pendapatan', data: [1200000, 1800000, 2200000, 2500000, 2300000, 2000000, 2400000, 2600000, 2800000, 3000000, 3200000, 3400000] }],
-            xaxis: { categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'] },
-            colors: ['#4f46e5']
-        };
-        new ApexCharts(document.querySelector("#pendapatanChart"), optionsPendapatan).render();
+        document.addEventListener('DOMContentLoaded', function() {
+            // Grafik Pendapatan
+            var optionsPendapatan = {
+                chart: { 
+                    type: 'area', 
+                    height: 350,
+                    toolbar: {
+                        show: true
+                    }
+                },
+                series: [{ 
+                    name: 'Pendapatan', 
+                    data: @json($revenueData)
+                }],
+                xaxis: { 
+                    categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
+                },
+                colors: ['#4f46e5'],
+                stroke: {
+                    curve: 'smooth',
+                    width: 2
+                },
+                fill: {
+                    type: 'gradient',
+                    gradient: {
+                        shadeIntensity: 1,
+                        opacityFrom: 0.7,
+                        opacityTo: 0.3
+                    }
+                },
+                dataLabels: {
+                    enabled: false
+                },
+                tooltip: {
+                    y: {
+                        formatter: function(value) {
+                            return 'Rp ' + value.toLocaleString('id-ID');
+                        }
+                    }
+                }
+            };
 
-        // Grafik Pesanan
-        var optionsPesanan = {
-            chart: { type: 'pie', height: 350 },
-            series: [80, 20],
-            labels: ['Selesai', 'Dibatalkan'],
-            colors: ['#34d399', '#f87171']
-        };
-        new ApexCharts(document.querySelector("#pesananChart"), optionsPesanan).render();
+            // Grafik Pesanan
+            var optionsPesanan = {
+                chart: { 
+                    type: 'pie',
+                    height: 350
+                },
+                series: [@json($completedOrders), @json($cancelledOrders)],
+                labels: ['Selesai', 'Dibatalkan'],
+                colors: ['#34d399', '#f87171'],
+                legend: {
+                    position: 'bottom'
+                },
+                dataLabels: {
+                    enabled: true,
+                    formatter: function(val, opts) {
+                        return opts.w.config.series[opts.seriesIndex];
+                    }
+                },
+                tooltip: {
+                    y: {
+                        formatter: function(value) {
+                            return value + ' pesanan';
+                        }
+                    }
+                }
+            };
+
+            try {
+                new ApexCharts(document.querySelector("#pendapatanChart"), optionsPendapatan).render();
+                new ApexCharts(document.querySelector("#pesananChart"), optionsPesanan).render();
+            } catch (error) {
+                console.error('Error rendering charts:', error);
+            }
+        });
     </script>
 </body>
 </html>
