@@ -17,6 +17,16 @@
         }
         submitButton.prop('disabled', true);
         
+        // Tampilkan loading screen
+        Swal.fire({
+            title: 'Mohon Tunggu',
+            allowOutsideClick: false,
+            showConfirmButton: false,
+            didOpen: () => {
+                Swal.showLoading();
+            }
+        });
+        
         // Kirim form
         var formData = new FormData(this);
         $.ajax({
@@ -26,6 +36,9 @@
             processData: false,
             contentType: false,
             success: function(response) {
+                // Tutup loading screen
+                Swal.close();
+                
                 Swal.fire({
                     icon: 'success',
                     title: 'Berhasil!',
@@ -38,6 +51,9 @@
                 });
             },
             error: function(xhr) {
+                // Tutup loading screen
+                Swal.close();
+                
                 submitButton.prop('disabled', false);
                 var errorMessage = 'Terjadi kesalahan saat registrasi';
                 
@@ -144,78 +160,186 @@
                         }
                     });
 
-    // Fungsi untuk mendapatkan lokasi
+    var map;
+    var marker;
+    var selectedLat = null;
+    var selectedLng = null;
+
+    // Fungsi untuk menampilkan map
     function getLocation() {
-        if (navigator.geolocation) {
-            // Tampilkan loading
-            Swal.fire({
-                title: 'Mendapatkan Lokasi...',
-                allowOutsideClick: false,
-                showConfirmButton: false,
-                willOpen: () => {
-                    Swal.showLoading();
-                }
+        var mapModal = document.getElementById('mapModal');
+        mapModal.classList.remove('hidden');
+        
+        if (!map) {
+            mapboxgl.accessToken = '{{ env('MAPBOX_TOKEN') }}';
+            
+            map = new mapboxgl.Map({
+                container: 'map',
+                style: 'mapbox://styles/mapbox/dark-v11',
+                center: [106.816666, -6.200000], // Jakarta
+                zoom: 15,
+                pitch: 35, // Kurangin kemiringan biar ga terlalu ekstrim
+                bearing: 0, // Reset rotasi
+                antialias: true
             });
 
-            navigator.geolocation.getCurrentPosition(
-                function(position) {
-                    const lat = position.coords.latitude;
-                    const long = position.coords.longitude;
-                    
-                    // Simpan koordinat
-                    document.getElementById('latitude').value = lat;
-                    document.getElementById('longitude').value = long;
-                    
-                    // Ambil alamat dari koordinat
-                    fetch(`https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${long}`)
-                    .then(response => response.json())
-                    .then(data => {
-                        document.querySelector('input[name="laundryAddress"]').value = data.display_name;
-                        Swal.fire({
-                            icon: 'success',
-                            title: 'Lokasi Ditemukan!',
-                            text: 'Alamat telah diisi otomatis',
-                            timer: 1500,
-                            showConfirmButton: false
-                        });
-                    })
-                    .catch(error => {
-                        console.error('Error:', error);
-                        Swal.fire({
-                            icon: 'error',
-                            title: 'Oops...',
-                            text: 'Gagal mendapatkan alamat dari koordinat'
-                        });
-                    });
-                },
-                function(error) {
-                    let errorMessage = 'Terjadi kesalahan saat mendapatkan lokasi';
-                    
-                    switch(error.code) {
-                        case error.PERMISSION_DENIED:
-                            errorMessage = "Izin akses lokasi ditolak. Mohon izinkan akses lokasi di browser Anda";
-                            break;
-                        case error.POSITION_UNAVAILABLE:
-                            errorMessage = "Informasi lokasi tidak tersedia";
-                            break;
-                        case error.TIMEOUT:
-                            errorMessage = "Waktu permintaan lokasi habis";
-                            break;
-                    }
+            // Tambah kontrol navigasi (di kanan)
+            map.addControl(new mapboxgl.NavigationControl(), 'top-right');
 
-                    Swal.fire({
-                        icon: 'error',
-                        title: 'Oops...',
-                        text: errorMessage
-                    });
-                }
-            );
-        } else {
-            Swal.fire({
-                icon: 'error',
-                title: 'Browser Tidak Mendukung',
-                text: 'Geolocation tidak didukung di browser ini'
+            // Tambah geocoder untuk pencarian lokasi (di kiri)
+            var geocoder = new MapboxGeocoder({
+                accessToken: mapboxgl.accessToken,
+                mapboxgl: mapboxgl,
+                placeholder: 'Cari lokasi...',
+                language: 'id',
+                countries: 'id'
+            });
+            map.addControl(geocoder, 'top-left');
+
+            // Event ketika map di klik
+            map.on('click', function(e) {
+                var lngLat = e.lngLat;
+                setMarker(lngLat.lat, lngLat.lng);
+            });
+
+            // Event ketika hasil pencarian dipilih
+            geocoder.on('result', function(e) {
+                var coordinates = e.result.geometry.coordinates;
+                setMarker(coordinates[1], coordinates[0]);
             });
         }
+
+        // Pastikan map dirender dengan benar
+        setTimeout(function() {
+            map.resize();
+        }, 100);
     }
+
+    function setMarker(lat, lng) {
+        if (!map) return;
+
+        // Hapus marker lama jika ada
+        if (marker) {
+            marker.remove();
+        }
+
+        // Buat marker baru
+        marker = new mapboxgl.Marker()
+            .setLngLat([lng, lat])
+            .addTo(map);
+
+        selectedLat = lat;
+        selectedLng = lng;
+
+        // Pindahkan view ke marker
+        map.flyTo({
+            center: [lng, lat],
+            zoom: 17
+        });
+    }
+
+    function handleMyLocation() {
+        if (!navigator.geolocation) {
+            Swal.fire({
+                icon: 'error',
+                title: 'Waduh...',
+                text: 'Browser kamu ga support GPS nih'
+            });
+            return;
+        }
+
+        Swal.fire({
+            title: 'Bentar ya...',
+            text: 'Lagi nyari lokasi kamu',
+            allowOutsideClick: false,
+            showConfirmButton: false,
+            didOpen: () => {
+                Swal.showLoading();
+            }
+        });
+
+        navigator.geolocation.getCurrentPosition(
+            function(position) {
+                var lat = position.coords.latitude;
+                var lng = position.coords.longitude;
+                
+                if (map) {
+                    setMarker(lat, lng);
+                }
+                Swal.close();
+            },
+            function(error) {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Waduh...',
+                    text: 'Ga bisa dapet lokasi nih. Coba aktifin GPS dulu ya'
+                });
+            }
+        );
+    }
+
+    function handleConfirmLocation() {
+        if (!selectedLat || !selectedLng) {
+            Swal.fire({
+                icon: 'warning',
+                title: 'Eh...',
+                text: 'Pilih lokasinya dulu ya'
+            });
+            return;
+        }
+
+        document.getElementById('latitude').value = selectedLat;
+        document.getElementById('longitude').value = selectedLng;
+
+        // Gunakan Mapbox Geocoding API untuk mendapatkan alamat
+        fetch(`https://api.mapbox.com/geocoding/v5/mapbox.places/${selectedLng},${selectedLat}.json?access_token=${mapboxgl.accessToken}&language=id`)
+            .then(response => response.json())
+            .then(data => {
+                if (data.features && data.features.length > 0) {
+                    document.querySelector('input[name="laundryAddress"]').value = data.features[0].place_name;
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+
+        closeModal();
+    }
+
+    function closeModal() {
+        var mapModal = document.getElementById('mapModal');
+        if (mapModal) {
+            mapModal.classList.add('hidden');
+            // Reset marker saat modal ditutup
+            if (marker) {
+                marker.remove();
+                marker = null;
+            }
+            selectedLat = null;
+            selectedLng = null;
+        }
+    }
+
+    // Event untuk backdrop
+    var backdrop = document.getElementById('mapModalBackdrop');
+    if (backdrop) {
+        backdrop.onclick = closeModal;
+    }
+
+    // Event untuk tombol ESC
+    document.onkeydown = function(e) {
+        if (e.key === 'Escape') {
+            closeModal();
+        }
+    };
+
+    // Event untuk tombol Lokasi Saya
+    document.getElementById('myLocation').onclick = function() {
+        handleMyLocation();
+    };
+
+    // Event untuk tombol Pilih Lokasi
+    document.getElementById('confirmLocation').onclick = function() {
+        handleConfirmLocation();
+    };
 </script>

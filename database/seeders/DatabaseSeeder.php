@@ -143,6 +143,116 @@ class DatabaseSeeder extends Seeder
             'status' => 'aktif',
         ]);
 
+        \App\Models\User::create([
+            'username' => 'pojok',
+            'email' => 'pojoklaundry@example.com',
+            'password' => bcrypt('pojok123'),
+            'nama_lengkap' => 'Pojok Laundry',
+            'no_hp' => '081234567816',
+            'alamat' => 'Jl. Dago Pojok, Coblong, Bandung',
+            'role' => 'merchant',
+            'status' => 'aktif',
+        ]);
+        
+        \App\Models\User::create([
+            'username' => 'zone',
+            'email' => 'laundryzone@example.com',
+            'password' => bcrypt('zone123'),
+            'nama_lengkap' => 'Laundry Zone',
+            'no_hp' => '081234567817',
+            'alamat' => 'Jl. Padasuka A No.7, Pasirlayung, Bandung',
+            'role' => 'merchant',
+            'status' => 'aktif',
+        ]);
+        
+        \App\Models\User::create([
+            'username' => 'utama',
+            'email' => 'utamalaundry@example.com',
+            'password' => bcrypt('utama123'),
+            'nama_lengkap' => 'Utama Laundry',
+            'no_hp' => '081234567818',
+            'alamat' => 'Jl. Babakan Sari 1 No.139, Bandung',
+            'role' => 'merchant',
+            'status' => 'aktif',
+        ]);
+        
+        \App\Models\User::create([
+            'username' => 'fresh',
+            'email' => 'freshlaundry@example.com',
+            'password' => bcrypt('fresh123'),
+            'nama_lengkap' => 'Fresh Laundry',
+            'no_hp' => '081234567819',
+            'alamat' => 'Jl. Surapati No.33, Bandung',
+            'role' => 'merchant',
+            'status' => 'aktif',
+        ]);
+        
+        \App\Models\User::create([
+            'username' => 'quick',
+            'email' => 'quickwash@example.com',
+            'password' => bcrypt('quick123'),
+            'nama_lengkap' => 'Quick Wash',
+            'no_hp' => '081234567820',
+            'alamat' => 'Jl. PHH Mustofa No.25, Bandung',
+            'role' => 'merchant',
+            'status' => 'aktif',
+        ]);
+        
+        \App\Models\User::create([
+            'username' => 'eco',
+            'email' => 'ecolaundry@example.com',
+            'password' => bcrypt('eco123'),
+            'nama_lengkap' => 'Eco Laundry',
+            'no_hp' => '081234567821',
+            'alamat' => 'Jl. Cikutra No.15, Bandung',
+            'role' => 'merchant',
+            'status' => 'aktif',
+        ]);
+        
+        \App\Models\User::create([
+            'username' => 'clean',
+            'email' => 'cleanexpress@example.com',
+            'password' => bcrypt('clean123'),
+            'nama_lengkap' => 'Clean Express',
+            'no_hp' => '081234567822',
+            'alamat' => 'Jl. Dipatiukur No.50, Bandung',
+            'role' => 'merchant',
+            'status' => 'aktif',
+        ]);
+        
+        \App\Models\User::create([
+            'username' => 'bright',
+            'email' => 'brightlaundry@example.com',
+            'password' => bcrypt('bright123'),
+            'nama_lengkap' => 'Bright Laundry',
+            'no_hp' => '081234567823',
+            'alamat' => 'Jl. Cisitu Lama No.10, Bandung',
+            'role' => 'merchant',
+            'status' => 'aktif',
+        ]);
+        
+        \App\Models\User::create([
+            'username' => 'super',
+            'email' => 'superwash@example.com',
+            'password' => bcrypt('super123'),
+            'nama_lengkap' => 'Super Wash',
+            'no_hp' => '081234567824',
+            'alamat' => 'Jl. Sukajadi No.88, Bandung',
+            'role' => 'merchant',
+            'status' => 'aktif',
+        ]);
+        
+        \App\Models\User::create([
+            'username' => 'happy',
+            'email' => 'happylaundry@example.com',
+            'password' => bcrypt('happy123'),
+            'nama_lengkap' => 'Happy Laundry',
+            'no_hp' => '081234567825',
+            'alamat' => 'Jl. Rancaekek No.12, Bandung',
+            'role' => 'merchant',
+            'status' => 'aktif',
+        ]);
+
 // Menambahkan data merchant secara manual
         \App\Models\Merchant::create([
             'user_id' => 3, // Asumsikan user_id 1 adalah pemilik laundry A
@@ -193,6 +303,116 @@ class DatabaseSeeder extends Seeder
             'email' => 'santailaundry@example.com',
             'latitude' => 3.595192,
             'longitude' => 98.672226,
+        ]);
+
+        \App\Models\Merchant::create([
+            'user_id' => 13,
+            'nama_laundry' => 'Pojok Laundry',
+            'alamat_laundry' => 'Jl. Dago Pojok, Coblong, Bandung',
+            'deskripsi' => 'Menyediakan jasa cuci kiloan dengan layanan cepat dan bersih',
+            'no_hp' => '081234567816',
+            'email' => 'pojoklaundry@example.com',
+            'latitude' => -6.8713,
+            'longitude' => 107.6107,
+        ]);
+        
+        \App\Models\Merchant::create([
+            'user_id' => 14,
+            'nama_laundry' => 'Laundry Zone',
+            'alamat_laundry' => 'Jl. Padasuka A No.7, Pasirlayung, Bandung',
+            'deskripsi' => 'Layanan laundry profesional dengan hasil bersih dan wangi',
+            'no_hp' => '081234567817',
+            'email' => 'laundryzone@example.com',
+            'latitude' => -6.8977,
+            'longitude' => 107.6423,
+        ]);
+        
+        \App\Models\Merchant::create([
+            'user_id' => 15,
+            'nama_laundry' => 'Utama Laundry',
+            'alamat_laundry' => 'Jl. Babakan Sari 1 No.139, Bandung',
+            'deskripsi' => 'Menyediakan layanan cuci dan setrika dengan harga terjangkau',
+            'no_hp' => '081234567818',
+            'email' => 'utamalaundry@example.com',
+            'latitude' => -6.9275,
+            'longitude' => 107.6550,
+        ]);
+        
+        \App\Models\Merchant::create([
+            'user_id' => 16,
+            'nama_laundry' => 'Fresh Laundry',
+            'alamat_laundry' => 'Jl. Surapati No.33, Bandung',
+            'deskripsi' => 'Cuci cepat dan bersih, layanan antar jemput gratis',
+            'no_hp' => '081234567819',
+            'email' => 'freshlaundry@example.com',
+            'latitude' => -6.8889,
+            'longitude' => 107.6265,
+        ]);
+        
+        \App\Models\Merchant::create([
+            'user_id' => 17,
+            'nama_laundry' => 'Quick Wash',
+            'alamat_laundry' => 'Jl. PHH Mustofa No.25, Bandung',
+            'deskripsi' => 'Solusi laundry express untuk kebutuhan harian',
+            'no_hp' => '081234567820',
+            'email' => 'quickwash@example.com',
+            'latitude' => -6.8902,
+            'longitude' => 107.6279,
+        ]);
+        
+        \App\Models\Merchant::create([
+            'user_id' => 18,
+            'nama_laundry' => 'Eco Laundry',
+            'alamat_laundry' => 'Jl. Cikutra No.15, Bandung',
+            'deskripsi' => 'Laundry ramah lingkungan dengan bahan deterjen organik',
+            'no_hp' => '081234567821',
+            'email' => 'ecolaundry@example.com',
+            'latitude' => -6.8807,
+            'longitude' => 107.6334,
+        ]);
+        
+        \App\Models\Merchant::create([
+            'user_id' => 19,
+            'nama_laundry' => 'Clean Express',
+            'alamat_laundry' => 'Jl. Dipatiukur No.50, Bandung',
+            'deskripsi' => 'Layanan cuci cepat dengan kualitas premium',
+            'no_hp' => '081234567822',
+            'email' => 'cleanexpress@example.com',
+            'latitude' => -6.8865,
+            'longitude' => 107.6109,
+        ]);
+        
+        \App\Models\Merchant::create([
+            'user_id' => 20,
+            'nama_laundry' => 'Bright Laundry',
+            'alamat_laundry' => 'Jl. Cisitu Lama No.10, Bandung',
+            'deskripsi' => 'Pakaian bersih dan harum, siap pakai dalam waktu singkat',
+            'no_hp' => '081234567823',
+            'email' => 'brightlaundry@example.com',
+            'latitude' => -6.8801,
+            'longitude' => 107.6042,
+        ]);
+        
+        \App\Models\Merchant::create([
+            'user_id' => 21,
+            'nama_laundry' => 'Super Wash',
+            'alamat_laundry' => 'Jl. Sukajadi No.88, Bandung',
+            'deskripsi' => 'Pilih Super Wash untuk hasil laundry maksimal',
+            'no_hp' => '081234567824',
+            'email' => 'superwash@example.com',
+            'latitude' => -6.8793,
+            'longitude' => 107.5928,
+        ]);
+        
+        \App\Models\Merchant::create([
+            'user_id' => 22,
+            'nama_laundry' => 'Happy Laundry',
+            'alamat_laundry' => 'Jl. Rancaekek No.12, Bandung',
+            'deskripsi' => 'Laundry cepat dan bersih dengan harga terjangkau',
+            'no_hp' => '081234567825',
+            'email' => 'happylaundry@example.com',
+            'latitude' => -6.9548,
+            'longitude' => 107.7193,
         ]);
         
         // Menambahkan saldo untuk merchant
