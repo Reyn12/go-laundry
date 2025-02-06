@@ -33,20 +33,20 @@ class DatabaseSeeder extends Seeder
             'status' => 'aktif',
         ]);
         \App\Models\User::create([
-            'username' => 'budi',
-            'email' => 'budi12@gmail.com',
-            'password' => bcrypt('budi123'),
-            'nama_lengkap' => 'Budi Santoso',
+            'username' => 'krisna',
+            'email' => 'krisna12@gmail.com',
+            'password' => bcrypt('krisna123'),
+            'nama_lengkap' => 'krisna Santoso',
             'no_hp' => '081234567802',
             'alamat' => 'Jl. Kebon Kacang No. 3, Surabaya',
-            'role' => 'customer',
+            'role' => 'merchant',
             'status' => 'aktif',
         ]);
         \App\Models\User::create([
-            'username' => 'cici',
-            'email' => 'cici12@gmail.com',
-            'password' => bcrypt('cici123'),
-            'nama_lengkap' => 'Cici Nuraini',
+            'username' => 'hamid',
+            'email' => 'hamid12@gmail.com',
+            'password' => bcrypt('hamid123'),
+            'nama_lengkap' => 'hamid Nuraini',
             'no_hp' => '081234567803',
             'alamat' => 'Jl. Citra No. 4, Yogyakarta',
             'role' => 'customer',
@@ -96,20 +96,20 @@ class DatabaseSeeder extends Seeder
             'username' => 'hana',
             'email' => 'hana12@gmail.com',
             'password' => bcrypt('hana123'),
-            'nama_lengkap' => 'Hana Kusuma',
+            'nama_lengkap' => 'Hana laundry',
             'no_hp' => '081234567808',
             'alamat' => 'Jl. Puspa No. 9, Semarang',
-            'role' => 'customer',
+            'role' => 'merchant',
             'status' => 'aktif',
         ]);
         \App\Models\User::create([
             'username' => 'irfan',
             'email' => 'irfan12@gmail.com',
             'password' => bcrypt('irfan123'),
-            'nama_lengkap' => 'Irfan Ahmad',
+            'nama_lengkap' => 'Irfan laundry',
             'no_hp' => '081234567809',
             'alamat' => 'Jl. Merpati No. 10, Palembang',
-            'role' => 'customer',
+            'role' => 'merchant',
             'status' => 'aktif',
         ]);
         \App\Models\User::create([
@@ -119,24 +119,24 @@ class DatabaseSeeder extends Seeder
             'nama_lengkap' => 'Joko Santoso',
             'no_hp' => '081234567810',
             'alamat' => 'Jl. Raya Timur No. 11, Solo',
-            'role' => 'customer',
-            'status' => 'aktif',
+            'role' => 'merchant',
+            'status' => 'aktif', 
         ]);
         \App\Models\User::create([
-            'username' => 'laundryexpress',
-            'email' => 'express@gmail.com',
-            'password' => bcrypt('laundry123'),
-            'nama_lengkap' => 'Budi Laundry Express',
+            'username' => 'henri',
+            'email' => 'henri@gmail.com',
+            'password' => bcrypt('henri123'),
+            'nama_lengkap' => 'henri laundry',
             'no_hp' => '081234567890',
             'alamat' => 'Jl. Raya Bogor No. 100, Jakarta Timur',
             'role' => 'merchant',
             'status' => 'aktif',
         ]);
         \App\Models\User::create([
-            'username' => 'cleanlaundry',
-            'email' => 'clean@laundry.com',
-            'password' => bcrypt('clean123'),
-            'nama_lengkap' => 'Sari Clean Laundry',
+            'username' => 'galih',
+            'email' => 'galih@laundry.com',
+            'password' => bcrypt('galih123'),
+            'nama_lengkap' => 'galih Laundry',
             'no_hp' => '081234567891',
             'alamat' => 'Jl. Margonda Raya No. 50, Depok',
             'role' => 'merchant',
@@ -145,7 +145,7 @@ class DatabaseSeeder extends Seeder
 
 // Menambahkan data merchant secara manual
         \App\Models\Merchant::create([
-            'user_id' => 1, // Asumsikan user_id 1 adalah pemilik laundry A
+            'user_id' => 3, // Asumsikan user_id 1 adalah pemilik laundry A
             'nama_laundry' => 'Kilat Laundry',
             'alamat_laundry' => 'Jl. Kebon Jeruk No. 1, Jakarta',
             'deskripsi' => 'Laundry cepat dan bersih',
@@ -155,7 +155,7 @@ class DatabaseSeeder extends Seeder
             'longitude' => 106.816666,
         ]);
         \App\Models\Merchant::create([
-            'user_id' => 2, // Asumsikan user_id 2 adalah pemilik laundry B
+            'user_id' => 9, // Asumsikan user_id 2 adalah pemilik laundry B
             'nama_laundry' => 'Bersih Sejahtera Laundry',
             'alamat_laundry' => 'Jl. Merdeka No. 2, Bandung',
             'deskripsi' => 'Laundry dengan pelayanan terbaik',
@@ -165,7 +165,7 @@ class DatabaseSeeder extends Seeder
             'longitude' => 107.619123,
         ]);
         \App\Models\Merchant::create([
-            'user_id' => 3, // Asumsikan user_id 3 adalah pemilik laundry C
+            'user_id' => 10, // Asumsikan user_id 3 adalah pemilik laundry C
             'nama_laundry' => 'Super Clean Laundry',
             'alamat_laundry' => 'Jl. Pahlawan No. 3, Surabaya',
             'deskripsi' => 'Laundry praktis dengan harga terjangkau',
@@ -175,7 +175,7 @@ class DatabaseSeeder extends Seeder
             'longitude' => 112.768845,
         ]);
         \App\Models\Merchant::create([
-            'user_id' => 4, // Asumsikan user_id 4 adalah pemilik laundry D
+            'user_id' => 11, // Asumsikan user_id 4 adalah pemilik laundry D
             'nama_laundry' => 'Cerah Laundry',
             'alamat_laundry' => 'Jl. Raya No. 4, Yogyakarta',
             'deskripsi' => 'Laundry cepat dan ramah lingkungan',
@@ -185,7 +185,7 @@ class DatabaseSeeder extends Seeder
             'longitude' => 110.369489,
         ]);
         \App\Models\Merchant::create([
-            'user_id' => 5, // Asumsikan user_id 5 adalah pemilik laundry E
+            'user_id' => 12, // Asumsikan user_id 12 adalah pemilik laundry E
             'nama_laundry' => 'Santai Laundry',
             'alamat_laundry' => 'Jl. Citra No. 5, Medan',
             'deskripsi' => 'Laundry dengan pelayanan terbaik dan cepat',
