@@ -36,8 +36,5 @@
     </div>
     {{-- Script Validasi dan Popup --}}
     @include('merchant.components.scriptPopupRegisterMerchant')
-    <script>
-        lucide.createIcons();
-    </script>
 </body>
 </html>
