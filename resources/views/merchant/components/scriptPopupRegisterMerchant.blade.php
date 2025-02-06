@@ -79,6 +79,41 @@
         $('#termsModal').modal('show');
     });
 
+    // Handle modal syarat dan ketentuan
+    $(document).ready(function() {
+        const modal = document.getElementById('termsModal');
+        const modalBackdrop = document.getElementById('modal-backdrop');
+        const openModalBtn = document.getElementById('openTermsModal');
+        const closeModalBtn = document.getElementById('closeModal');
+        const agreeBtn = document.getElementById('agreeButton');
+        const termsCheckbox = document.getElementById('terms');
+
+        // Buka modal
+        openModalBtn.addEventListener('click', function() {
+            modal.classList.remove('hidden');
+            modalBackdrop.classList.remove('hidden');
+        });
+
+        // Tutup modal dengan tombol close
+        closeModalBtn.addEventListener('click', function() {
+            modal.classList.add('hidden');
+            modalBackdrop.classList.add('hidden');
+        });
+
+        // Tutup modal dengan klik backdrop
+        modalBackdrop.addEventListener('click', function() {
+            modal.classList.add('hidden');
+            modalBackdrop.classList.add('hidden');
+        });
+
+        // Handle tombol setuju
+        agreeBtn.addEventListener('click', function() {
+            termsCheckbox.checked = true;
+            modal.classList.add('hidden');
+            modalBackdrop.classList.add('hidden');
+        });
+    });
+
     // Event untuk menutup modal syarat dan ketentuan
     // Show modal
     document.querySelector('[data-modal-trigger]').addEventListener('click', function(e) {
@@ -108,4 +143,79 @@
                             hideModal();
                         }
                     });
+
+    // Fungsi untuk mendapatkan lokasi
+    function getLocation() {
+        if (navigator.geolocation) {
+            // Tampilkan loading
+            Swal.fire({
+                title: 'Mendapatkan Lokasi...',
+                allowOutsideClick: false,
+                showConfirmButton: false,
+                willOpen: () => {
+                    Swal.showLoading();
+                }
+            });
+
+            navigator.geolocation.getCurrentPosition(
+                function(position) {
+                    const lat = position.coords.latitude;
+                    const long = position.coords.longitude;
+                    
+                    // Simpan koordinat
+                    document.getElementById('latitude').value = lat;
+                    document.getElementById('longitude').value = long;
+                    
+                    // Ambil alamat dari koordinat
+                    fetch(`https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${long}`)
+                    .then(response => response.json())
+                    .then(data => {
+                        document.querySelector('input[name="laundryAddress"]').value = data.display_name;
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'Lokasi Ditemukan!',
+                            text: 'Alamat telah diisi otomatis',
+                            timer: 1500,
+                            showConfirmButton: false
+                        });
+                    })
+                    .catch(error => {
+                        console.error('Error:', error);
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Oops...',
+                            text: 'Gagal mendapatkan alamat dari koordinat'
+                        });
+                    });
+                },
+                function(error) {
+                    let errorMessage = 'Terjadi kesalahan saat mendapatkan lokasi';
+                    
+                    switch(error.code) {
+                        case error.PERMISSION_DENIED:
+                            errorMessage = "Izin akses lokasi ditolak. Mohon izinkan akses lokasi di browser Anda";
+                            break;
+                        case error.POSITION_UNAVAILABLE:
+                            errorMessage = "Informasi lokasi tidak tersedia";
+                            break;
+                        case error.TIMEOUT:
+                            errorMessage = "Waktu permintaan lokasi habis";
+                            break;
+                    }
+
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Oops...',
+                        text: errorMessage
+                    });
+                }
+            );
+        } else {
+            Swal.fire({
+                icon: 'error',
+                title: 'Browser Tidak Mendukung',
+                text: 'Geolocation tidak didukung di browser ini'
+            });
+        }
+    }
 </script>

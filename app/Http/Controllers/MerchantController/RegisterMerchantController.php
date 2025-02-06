@@ -31,6 +31,8 @@ class RegisterMerchantController extends Controller
                 'password' => 'required|string|min:8|confirmed',
                 'description' => 'nullable|string',
                 'operationalHours' => 'required|string',
+                'latitude' => 'required|numeric',
+                'longitude' => 'required|numeric',
             ]);
 
             DB::beginTransaction();
@@ -49,7 +51,7 @@ class RegisterMerchantController extends Controller
 
             Log::info('User berhasil dibuat', ['user_id' => $user->id]);
 
-            // Buat merchant baru dengan default latitude longitude
+            // Buat merchant baru dengan koordinat dari form
             $merchant = Merchant::create([
                 'user_id' => $user->id,
                 'nama_laundry' => $request->laundryName,
@@ -58,8 +60,8 @@ class RegisterMerchantController extends Controller
                 'no_hp' => $request->phone,
                 'email' => $request->email,
                 'jam_operasional' => $request->operationalHours,
-                'latitude' => -6.914744, // Default latitude Bandung
-                'longitude' => 107.609810 // Default longitude Bandung
+                'latitude' => $request->latitude,
+                'longitude' => $request->longitude,
             ]);
 
             Log::info('Merchant berhasil dibuat', ['merchant_id' => $merchant->id]);
