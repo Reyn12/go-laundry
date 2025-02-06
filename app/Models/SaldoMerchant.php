@@ -13,7 +13,7 @@ class SaldoMerchant extends Model
     protected $table = 'saldo_merchants';
 
     protected $fillable = [
-        'id_merchant',
+        'merchant_id',
         'saldo',
         'created_at',
         'updated_at'
@@ -22,6 +22,6 @@ class SaldoMerchant extends Model
     // Relasi dengan Merchant
     public function merchant()
     {
-        return $this->belongsTo(Merchant::class, 'id_merchant');
+        return $this->belongsTo(Merchant::class, 'merchant_id');
     }
 }

@@ -19,12 +19,12 @@ class UlasanMerchantController extends Controller
         // Mengambil semua ulasan untuk merchant ini
         $allReviews = Review::whereHas('pesanan', function($query) use ($merchant_id) {
             $query->where('merchant_id', $merchant_id);
-        })->with(['pesanan.user'])->get();
+        })->with(['customer', 'pesanan'])->get();
 
         // Mengambil ulasan dengan pagination
         $reviews = Review::whereHas('pesanan', function($query) use ($merchant_id) {
             $query->where('merchant_id', $merchant_id);
-        })->with(['pesanan.user'])
+        })->with(['customer', 'pesanan'])
           ->orderBy('created_at', 'desc')
           ->paginate(5);
 

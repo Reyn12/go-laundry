@@ -211,4 +211,5 @@ Route::post('/merchant/profile/update', [ProfileMerchantController::class, 'upda
 
       //Penarikan Saldo Route
       Route::get('/penarikansaldo', [PenarikanSaldoMerchantController::class, 'index'])->name('merchant.penarikansaldo');
+      Route::post('/penarikansaldo/store', [PenarikanSaldoMerchantController::class, 'store'])->name('merchant.penarikansaldo.store');
 });
