@@ -12,15 +12,22 @@
 
         <!-- Layanan dan Harga -->
         <div class="grid grid-cols-2 gap-4 mb-4">
-            <div>
-                <p class="text-sm text-gray-500">Layanan:</p>
-                <p class="text-sm">Cuci Reguler</p>
-                <p class="text-sm">Cuci Express</p>
-                <p class="text-sm">Setrika</p>
+            <div class="layanan">
+                <span class="text-sm text-gray-500">Layanan:</span>
+                <ul class="mt-2 space-y-1">
+                    @foreach($result->layananLaundries as $layanan)
+                        <li class="text-sm">{{ $layanan->nama_layanan }}</li>
+                    @endforeach
+                </ul>
             </div>
-            <div>
-                <p class="text-sm text-gray-500">Harga Mulai:</p>
-                <p class="text-sm font-medium">Rp 7.000/kg</p>
+            <div class="harga-mulai">
+                <span class="text-sm text-gray-500">Harga:</span>
+                <div class="mt-2">
+                    <p class="text-sm">
+                        Rp {{ number_format($result->price_range['min'], 0, ',', '.') }} - 
+                        Rp {{ number_format($result->price_range['max'], 0, ',', '.') }}/kg
+                    </p>
+                </div>
             </div>
         </div>
 

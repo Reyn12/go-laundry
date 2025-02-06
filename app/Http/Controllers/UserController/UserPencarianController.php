@@ -4,6 +4,7 @@ namespace App\Http\Controllers\UserController;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use App\Models\layananLaundry;
 
 class UserPencarianController extends Controller
 {
@@ -32,6 +33,17 @@ class UserPencarianController extends Controller
             )
             ->get();
 
+        // Tambah data price_range dan layanan untuk setiap merchant
+        foreach ($results as $result) {
+            // Ambil price range
+            $priceRange = $this->getMerchantPriceRange($result->merchant_id);
+            $result->price_range = $priceRange;
+
+            // Ambil layanan
+            $layananLaundries = LayananLaundry::where('merchant_id', $result->merchant_id)->get();
+            $result->layananLaundries = $layananLaundries;
+        }
+
         // Kirim data ke view
         return view('user.pencarian.index', ['results' => $results, 'merchants' => $results]);
     }
@@ -43,5 +55,16 @@ class UserPencarianController extends Controller
             ->get();
             
         return response()->json($layanan);
+    }
+
+    public function getMerchantPriceRange($merchantId) {
+        $priceRange = LayananLaundry::where('merchant_id', $merchantId)
+            ->selectRaw('MIN(harga_per_unit) as min_price, MAX(harga_per_unit) as max_price')
+            ->first();
+            
+        return [
+            'min' => $priceRange->min_price,
+            'max' => $priceRange->max_price
+        ];
     }
 }
