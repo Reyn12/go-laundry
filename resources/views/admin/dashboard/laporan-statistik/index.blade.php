@@ -175,21 +175,26 @@
                     {{-- Table Section --}}
                     <div class="bg-white dark:bg-gray-800 rounded-[32px] p-6 shadow-sm">
                         {{-- Table Header with Filters --}}
-                        <div class="flex flex-col md:flex-row justify-between items-center mb-6 gap-4">
-                            <div class="flex gap-4 overflow-x-auto">
-                                <button class="px-4 py-2 text-sm bg-gray-100 dark:bg-gray-700 dark:text-gray-300 rounded-xl hover:bg-gray-200 dark:hover:bg-gray-600 whitespace-nowrap">Transaksi</button>
-                                <button class="px-4 py-2 text-sm bg-gray-100 dark:bg-gray-700 dark:text-gray-300 rounded-xl hover:bg-gray-200 dark:hover:bg-gray-600 whitespace-nowrap">User</button>
-                                <button class="px-4 py-2 text-sm bg-gray-100 dark:bg-gray-700 dark:text-gray-300 rounded-xl hover:bg-gray-200 dark:hover:bg-gray-600 whitespace-nowrap">Merchant</button>
+                        <div class="flex flex-col space-y-4 mb-6">
+                            {{-- Filter Buttons --}}
+                            <div class="flex gap-2 md:gap-4 overflow-x-auto pb-2 md:pb-0">
+                                <button class="px-3 md:px-4 py-1.5 md:py-2 text-xs md:text-sm bg-gray-100 dark:bg-gray-700 dark:text-gray-300 rounded-xl hover:bg-gray-200 dark:hover:bg-gray-600 whitespace-nowrap">Transaksi</button>
+                                <button class="px-3 md:px-4 py-1.5 md:py-2 text-xs md:text-sm bg-gray-100 dark:bg-gray-700 dark:text-gray-300 rounded-xl hover:bg-gray-200 dark:hover:bg-gray-600 whitespace-nowrap">User</button>
+                                <button class="px-3 md:px-4 py-1.5 md:py-2 text-xs md:text-sm bg-gray-100 dark:bg-gray-700 dark:text-gray-300 rounded-xl hover:bg-gray-200 dark:hover:bg-gray-600 whitespace-nowrap">Merchant</button>
                             </div>
-                            <div class="flex gap-4">
-                                <div class="relative">
-                                    <input type="text" placeholder="Search" class="pl-10 pr-4 py-2 border rounded-xl bg-gray-50 dark:bg-gray-700 dark:border-gray-600 dark:text-gray-300">
-                                    <svg class="w-5 h-5 text-gray-400 absolute left-3 top-2.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+
+                            {{-- Search and Actions --}}
+                            <div class="flex flex-col sm:flex-row gap-2 md:gap-4 w-full">
+                                <div class="relative flex-1">
+                                    <input type="text" placeholder="Search" class="w-full pl-10 pr-4 py-1.5 md:py-2 text-xs md:text-sm border rounded-xl bg-gray-50 dark:bg-gray-700 dark:border-gray-600 dark:text-gray-300">
+                                    <svg class="w-4 h-4 md:w-5 md:h-5 text-gray-400 absolute left-3 top-1/2 transform -translate-y-1/2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
                                     </svg>
                                 </div>
-                                <button class="px-4 py-2 bg-primary text-white rounded-xl hover:bg-blue-700">Export</button>
-                                <button class="px-4 py-2 bg-gray-100 dark:bg-gray-700 dark:text-gray-300 rounded-xl hover:bg-gray-200 dark:hover:bg-gray-600">Filter</button>
+                                <div class="flex gap-2 md:gap-4">
+                                    <button class="flex-1 sm:flex-none px-3 md:px-4 py-1.5 md:py-2 text-xs md:text-sm bg-primary text-white rounded-xl hover:bg-blue-700">Export</button>
+                                    <button class="flex-1 sm:flex-none px-3 md:px-4 py-1.5 md:py-2 text-xs md:text-sm bg-gray-100 dark:bg-gray-700 dark:text-gray-300 rounded-xl hover:bg-gray-200 dark:hover:bg-gray-600">Filter</button>
+                                </div>
                             </div>
                         </div>
 
