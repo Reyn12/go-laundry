@@ -1,4 +1,4 @@
-<div class="flex flex-col lg:flex-row justify-center items-center lg:h-[740px] overflow-hidden gap-6 px-4 lg:px-12 py-2.5 bg-gray-100"
+<div class="flex flex-col lg:flex-row justify-center items-center lg:h-[840px] overflow-hidden gap-6 px-4 lg:px-12 py-2.5 bg-gray-100"
     id="hero">
     <div class="flex flex-col lg:flex-row justify-start items-center flex-grow gap-2.5 w-full">
 

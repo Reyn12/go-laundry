@@ -1,8 +1,28 @@
-<!-- resources/views/homepage/components/merchant-card.blade.php -->
 <div class="flex flex-col items-center gap-2 px-6 pb-6">
     <div class="flex flex-col items-center w-full gap-6 p-6 rounded-[36px] border border-black">
         <div class="flex flex-col items-center gap-2">
-            <p class="flex flex-col items-center text-xl text-black">Hasil Pencarian :</p>
+            <!-- Hasil Pencarian Header -->
+            <div class="flex flex-wrap items-center gap-2">
+                <p class="flex flex-wrap items-center text-xl text-black">Hasil Pencarian :</p>
+                <!-- Tampilkan filter yang aktif -->
+                @if(isset($selectedServices))
+                @foreach($selectedServices as $service)
+                <div
+                    class="flex flex-wrap items-center justify-center gap-2 px-6 py-2 rounded-3xl border border-black w-[200px]">
+                    <p class="text-xs text-black">{{ $service }}</p>
+                </div>
+                @endforeach
+                @endif
+                @if(isset($selectedDurations))
+                @foreach($selectedDurations as $duration)
+                <div
+                    class="flex flex-wrap items-center justify-center gap-2 px-6 py-2 rounded-3xl border border-black w-[200px]">
+                    <p class="text-xs text-black">{{ $duration }}</p>
+                </div>
+                @endforeach
+                @endif
+            </div>
+
             <!-- Loop hasil pencarian -->
             <div class="flex flex-wrap justify-center gap-4">
                 @foreach ($groupedServices as $merchantId => $data)
@@ -20,7 +40,7 @@
                         <p class="text-base text-white">{{ $data['kategori_layanan'] }}</p>
                         <p class="text-lg text-white py-3 font-bold">Durasi yang Tersedia:</p>
                         @foreach ($data['durasi'] as $durasi)
-                            <p class="text-base text-white">• {{ $durasi }}</p>
+                        <p class="text-base text-white">• {{ $durasi }}</p>
                         @endforeach
                     </div>
                     <div class="mt-auto pt-4">
@@ -32,6 +52,7 @@
                 </div>
                 @endforeach
             </div>
-        </div>
+      
+  </div>
     </div>
 </div>

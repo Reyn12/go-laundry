@@ -27,41 +27,44 @@ class PencarianHomepage extends Controller
      */
     public function search(Request $request)
     {
-        // Ambil data filter dari form
-        $services = $request->input('services', []);
-        $durations = $request->input('durations', []);
+        // Ambil data dari form
+        $selectedServices = $request->input('services', []);
+        $selectedDurations = $request->input('durations', []);
+
+        // Debug
+        Log::info('Selected Services:', $selectedServices);
+        Log::info('Selected Durations:', $selectedDurations);
 
         // Query dasar
-        $query = LayananLaundry::join('merchants', 'layanan_laundries.merchant_id', '=', 'merchants.id')
-            ->with(['merchant' => function($query) {
-                $query->select('merchants.*');
-            }]);
+        $query = LayananLaundry::with('merchant');
 
-        // Filter berdasarkan kategori layanan yang dipilih
-        if (!empty($services)) {
-            $query->where(function($q) use ($services) {
-                foreach ($services as $service) {
-                    $q->orWhere('kategori_layanan', 'like', "%{$service}%");
-                }
-            });
+        // Filter berdasarkan services yang dipilih
+        if (!empty($selectedServices)) {
+            $query->whereIn('kategori_layanan', $selectedServices);
         }
 
-        // Filter berdasarkan nama layanan (durasi) yang dipilih
-        if (!empty($durations)) {
-            $query->where(function($q) use ($durations) {
-                foreach ($durations as $duration) {
-                    $q->orWhere('nama_layanan', 'like', "%{$duration}%");
-                }
-            });
+        // Filter berdasarkan durasi yang dipilih
+        if (!empty($selectedDurations)) {
+            $query->whereIn('nama_layanan', $selectedDurations);
         }
 
-        // Eksekusi query
         $layananLaundryList = $query->get();
 
-        // Mengelompokkan layanan berdasarkan merchant
+        // Group hasil
         $groupedServices = [];
         foreach ($layananLaundryList as $layanan) {
-            $merchantId = $layanan->merchant->id;
+            $merchantId = $layanan->merchant_id;
+
+            // Skip jika tidak memenuhi filter
+            if (!empty($selectedServices) && !in_array($layanan->kategori_layanan, $selectedServices)) {
+                continue;
+            }
+
+            if (!empty($selectedDurations) && !in_array($layanan->nama_layanan, $selectedDurations)) {
+                continue;
+            }
+
+            // Inisialisasi merchant baru
             if (!isset($groupedServices[$merchantId])) {
                 $groupedServices[$merchantId] = [
                     'merchant' => $layanan->merchant,
@@ -69,17 +72,17 @@ class PencarianHomepage extends Controller
                     'durasi' => []
                 ];
             }
-            // Tambahkan durasi jika belum ada dalam array
+
+            // Tambah durasi jika belum ada
             if (!in_array($layanan->nama_layanan, $groupedServices[$merchantId]['durasi'])) {
                 $groupedServices[$merchantId]['durasi'][] = $layanan->nama_layanan;
             }
         }
 
-        // Log untuk debugging
-        Log::info('Filter Services: ' . json_encode($services));
-        Log::info('Filter Durations: ' . json_encode($durations));
-        Log::info('Hasil Pencarian: ' . json_encode($groupedServices));
-
-        return view('homepage.index', ['groupedServices' => $groupedServices]);
+        return view('homepage.index', [
+            'groupedServices' => $groupedServices,
+            'selectedServices' => $selectedServices,
+            'selectedDurations' => $selectedDurations
+        ]);
     }
 }
