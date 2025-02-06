@@ -104,7 +104,7 @@
 
     <!-- Filter Pencarian Laundry -->
     <!-- homepage/components/filter-pencarian.blade.php -->
-    <div class="flex flex-col items-center justify-center min-h-screen w-full py-12 bg-gradient-to-b from-blue-800 to-cyan-600 md:my-20" id="Pencarian">
+    <div class="flex flex-col items-center justify-center min-h-screen w-full py-12 bg-gradient-to-b from-blue-800 to-cyan-600 md:my-20 mt-10 md:mt-10" id="Pencarian">
         <form action="{{ route('pencarian.search') }}" method="GET" class="w-full flex justify-center px-4">
             <div class="w-full max-w-[900px] backdrop-blur-md bg-white/10 rounded-[40px] p-8 lg:p-12" 
                  style="box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);">
@@ -115,7 +115,7 @@
     
                 <div class="flex flex-col lg:flex-row justify-between gap-8" data-aos="fade-up">
                     <!-- Service Section -->
-                    <div class="flex-1 backdrop-blur-lg bg-blue-400/20 rounded-3xl p-6 lg:p-8 transition-all duration-300 hover:bg-blue-400/30">
+                    <div class="flex-1 bg-blue-600/90 rounded-3xl p-6 lg:p-8 transition-all duration-300 hover:bg-blue-700/90">
                         <h3 class="text-xl text-white font-semibold mb-6">Service yang disediakan:</h3>
                         <div class="grid grid-cols-1 gap-4">
                             @foreach (['Cuci Karpet', 'Cuci Sepatu', 'Cuci Jas', 'Cuci Setrika', 'Cuci Kering Lipat'] as $service)
@@ -136,7 +136,7 @@
                     </div>
     
                     <!-- Duration Section -->
-                    <div class="flex-1 backdrop-blur-lg bg-blue-400/20 rounded-3xl p-6 lg:p-8 transition-all duration-300 hover:bg-blue-400/30">
+                    <div class="flex-1 bg-blue-600/90 rounded-3xl p-6 lg:p-8 transition-all duration-300 hover:bg-blue-700/90">
                         <h3 class="text-xl text-white font-semibold mb-6">Lama Pengerjaan:</h3>
                         <div class="grid grid-cols-1 gap-4">
                             @foreach (['Reguler', 'Express', 'Kilat'] as $duration)
