@@ -80,7 +80,7 @@
                 {{-- Conditional Content --}}
                 @if(request()->routeIs('admin.dashboard.merchant-manage.index') || request()->routeIs('admin.dashboard.merchant-manage.all'))
                     {{-- Card All Merchant --}}
-                    @include('admin.components.cardAllMerchant')
+                    @include('admin.components.cardAllMerchant', ['merchants' => $merchants])
                 @elseif(request()->routeIs('admin.dashboard.merchant-manage.pending'))
                     {{-- Card Pending Verifikasi --}}
                     @include('admin.components.cardPendingVerifikasi')
