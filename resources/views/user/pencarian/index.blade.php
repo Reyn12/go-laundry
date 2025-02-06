@@ -40,8 +40,8 @@
 
         <!-- Content -->
         <div class="p-6">
-            <div class="max-h-[calc(100vh-400px)] overflow-y-auto pr-2 space-y-4" style="scrollbar-width: thin;">
-                <div id="pencarian-container">
+            <div class="max-h-[calc(100vh-400px)] overflow-y-auto pr-2" style="scrollbar-width: thin;">
+                <div id="pencarian-container" class="grid grid-cols-2 gap-4">
                     <!-- Layanan akan di-load secara dinamis lewat JavaScript -->
                 </div>
             </div>
@@ -167,33 +167,66 @@ document.addEventListener("DOMContentLoaded", function () {
                 
                 data.forEach(layanan => {
                     container.innerHTML += `
-                        <div class="border p-2 rounded-lg shadow-sm mb-4 bg-gray-50 hover:bg-gray-100">
-                            <div class="flex items-center mt-3">
-                                <div class="flex items-center mr-4">
-                                    <input type="radio" 
-                                           name="layanan-radio" 
-                                           class="mr-3 layanan-radio" 
-                                           data-nama="${layanan.nama_layanan}" 
-                                           data-kategori="${layanan.kategori_layanan}" 
-                                           data-harga="${layanan.harga_per_unit}" 
-                                           data-berat="5 kg"
-                                           data-merchant-id="${merchantId}">
+                        <label class="block cursor-pointer">
+                            <div class="border p-4 rounded-xl shadow-sm bg-white hover:bg-blue-50 peer-checked:bg-blue-50 transition-all duration-200 relative group">
+                                <!-- Badge Selected -->
+                                <div class="absolute -top-2 -right-2 scale-0 group-peer-checked:scale-100 transition-transform">
+                                    <span class="bg-blue-500 text-white text-xs font-medium px-2.5 py-1 rounded-full shadow-sm inline-flex items-center">
+                                        <svg class="w-3 h-3 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                                        </svg>
+                                        Selected
+                                    </span>
                                 </div>
-                                <div class="flex-1">
-                                    <p class="text-gray-800 font-semibold text-lg">${layanan.kategori_layanan} - ${layanan.nama_layanan}</p>
-                                    <span class="text-gray-500 text-sm">Waktu Pengerjaan: ${layanan.waktu_pengerjaan}</span>
+
+                                <input type="radio" 
+                                       name="layanan-radio" 
+                                       class="layanan-radio peer hidden"
+                                       data-nama="${layanan.nama_layanan}" 
+                                       data-kategori="${layanan.kategori_layanan}" 
+                                       data-harga="${layanan.harga_per_unit}" 
+                                       data-berat="5 kg"
+                                       data-merchant-id="${merchantId}">
+                                <div class="flex items-center gap-4">
+                                    <!-- Icon Container -->
+                                    <div class="w-12 h-12 flex items-center justify-center rounded-lg bg-blue-50 group-hover:bg-blue-100 peer-checked:bg-blue-500 transition-colors">
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 text-blue-500 group-hover:text-blue-600 peer-checked:text-white transition-colors" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/>
+                                        </svg>
+                                    </div>
+                                    
+                                    <div class="flex-1">
+                                        <div class="flex justify-between items-start">
+                                            <div>
+                                                <p class="text-gray-800 font-semibold text-lg group-hover:text-blue-600 peer-checked:!text-blue-600 transition-colors">${layanan.nama_layanan}</p>
+                                                <div class="space-y-0.5">
+                                                    <span class="text-gray-500 text-sm block">Waktu Pengerjaan:</span>
+                                                    <span class="text-gray-600 font-medium block">${layanan.waktu_pengerjaan}</span>
+                                                </div>
+                                            </div>
+                                            <div class="text-right">
+                                                <span class="line-through text-gray-400 text-sm">Rp${formatNumber(layanan.harga_per_unit * 1.5)}</span>
+                                                <p class="text-red-500 font-bold text-xl">Rp${formatNumber(layanan.harga_per_unit)}</p>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
-                                <div class="text-right">
-                                    <span class="line-through text-gray-400 text-sm">Rp${formatNumber(layanan.harga_per_unit * 1.5)}</span>
-                                    <p class="text-red-500 font-bold text-xl">Rp${formatNumber(layanan.harga_per_unit)}</p>
-                                </div>
+                                
+                                <!-- Active State Border -->
+                                <div class="absolute inset-0 border-2 border-blue-500 rounded-xl opacity-0 peer-checked:!opacity-100 transition-all"></div>
                             </div>
-                        </div>
+                        </label>
                     `;
                 });
                 
-                // Reinitialize radio button event listeners
-                initRadioListeners();
+                // Event listener untuk radio buttons
+                container.addEventListener('change', (e) => {
+                    if (e.target.classList.contains('layanan-radio')) {
+                        // Update total harga
+                        const harga = parseInt(e.target.dataset.harga);
+                        document.getElementById('total-harga').textContent = formatNumber(harga);
+                    }
+                });
                 
             } catch (error) {
                 console.error('Error:', error);
@@ -204,20 +237,6 @@ document.addEventListener("DOMContentLoaded", function () {
             }
         });
     });
-
-    function initRadioListeners() {
-        let radios = document.querySelectorAll(".layanan-radio");
-        let totalHargaElement = document.getElementById("total-harga");
-
-        radios.forEach(radio => {
-            radio.addEventListener('change', function() {
-                if (this.checked) {
-                    const harga = parseInt(this.dataset.harga);
-                    totalHargaElement.textContent = formatNumber(harga);
-                }
-            });
-        });
-    }
 
     // Submit order handler
     const submitOrderBtn = document.getElementById('submitOrder');
