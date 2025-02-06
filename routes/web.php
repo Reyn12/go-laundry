@@ -50,7 +50,6 @@ Route::get('/masuk', function () {
     return view('homepage.masuk.index');
 });
 
-
 // Admin Routes
 Route::prefix('admin')->group(function () {
     // Public routes (tidak perlu login)
