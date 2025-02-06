@@ -1,27 +1,35 @@
-<section id="tentangKami" class="h-auto py-10 bg-white mb-10">
-    <div class="max-w-screen-xl mx-auto px-4">
-        <h2 class="text-center text-4xl p-4">TENTANG KAMI</h2>
-        <div class="flex flex-col md:flex-row items-center">
-            <!-- Text Section -->
-            <div class="md:w-2/3 text-gray-700 text-justify md:pr-8">
-                <p class="m-4 leading-9">
-                    Aplikasi Go Laundry adalah solusi praktis untuk kebutuhan laundry Anda, dirancang dengan
-                    tujuan
-                    memberikan kenyamanan dan efisiensi dalam proses pencucian pakaian. Aplikasi ini
-                    dikembangkan
-                    pada
-                    tahun 2024 oleh mahasiswa semester 5 Program Studi Teknik Informatika UNIKOM, sebagai bagian
-                    dari
-                    proyek mata kuliah Rekayasa Perangkat Lunak 2.
-                    Kami berkomitmen untuk mempermudah pengalaman pengguna dalam memilih layanan laundry yang
-                    terpercaya, dengan antarmuka yang sederhana dan mudah digunakan. Go Laundry hadir untuk
-                    memenuhi
-                    kebutuhan masyarakat akan layanan laundry yang cepat, praktis, dan dapat diandalkan.
+<!-- Section Visi Misi -->
+<section class="max-w-screen-xl mx-auto px-4 py-10">
+    <!-- Visi Section -->
+    <div class="mb-16">
+        <div class="flex flex-col md:flex-row items-center gap-8">
+            <div class="md:w-1/2 flex items-center justify-center" data-aos="fade-up" data-aos-duration="1000">
+                <img src="{{ asset('images/bgVisi.jpeg') }}" alt="Visi Go Laundry" class="w-[300px] rounded-lg shadow-lg">
+            </div>
+            <div class="md:w-1/2" data-aos="fade-up" data-aos-duration="1000" data-aos-delay="200">
+                <h3 class="text-3xl font-semibold mb-4">Visi Kami</h3>
+                <p class="text-gray-700 leading-relaxed">
+                    Menjadi platform laundry terdepan yang menghubungkan pelanggan dengan penyedia jasa laundry terpercaya, 
+                    memberikan pengalaman mencuci yang efisien, dan mendukung pertumbuhan bisnis laundry lokal.
                 </p>
             </div>
-            <!-- Logo Section -->
-            <div class="md:w-1/3 mt-6 md:mt-0 flex justify-center">
-                <img src="{{ asset('images/LogoGoLaundry.png') }}" alt="logoLaundry" class="w-128 h-128">
+        </div>
+    </div>
+
+    <!-- Misi Section -->
+    <div>
+        <div class="flex flex-col md:flex-row-reverse items-center gap-8">
+            <div class="md:w-1/2 flex items-center justify-center" data-aos="fade-up" data-aos-duration="1000">
+                <img src="{{ asset('images/bgMisi.jpeg') }}" alt="Misi Go Laundry" class="w-[300px] rounded-lg shadow-lg">
+            </div>
+            <div class="md:w-1/2" data-aos="fade-up" data-aos-duration="1000" data-aos-delay="200">
+                <h3 class="text-3xl font-semibold mb-4">Misi Kami</h3>
+                <p class="text-gray-700 leading-relaxed">
+                    1. Menyediakan layanan laundry yang berkualitas dan terjangkau<br>
+                    2. Memudahkan akses pelanggan ke layanan laundry profesional<br>
+                    3. Mendukung pertumbuhan UMKM dalam industri laundry<br>
+                    4. Menghadirkan inovasi teknologi dalam industri laundry
+                </p>
             </div>
         </div>
     </div>

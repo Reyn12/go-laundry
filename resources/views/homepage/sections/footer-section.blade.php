@@ -1,48 +1,65 @@
-<div class="bg-[#0039c9] w-full">
-    <div class="max-w-screen-xl mx-auto p-2.5">
-        <div class="flex flex-col md:flex-row items-start gap-2.5">
-            <!-- Bagian Contact Us -->
-            <div class="flex flex-col justify-center items-start gap-3 py-2.5 w-full md:w-auto">
-                <p class="w-44 h-6 text-xl text-left text-white">
-                    CONTACT US
-                </p>
-                <!-- Social Icons Container -->
-                <div class="flex items-center w-44">
-                    <div class="flex items-center gap-6 py-2.5">
-                        <!-- [SVG icons tetap sama] -->
-                    </div>
-                </div>
-                <!-- Quick Links -->
-                <div class="flex items-center self-stretch">
-                    <div class="flex flex-col gap-2.5 py-2.5">
-                        <p class="text-xs text-left text-white space-y-2">
-                            <a href="#" class="block hover:underline">Tentang Kami</a>
-                            <a href="#" class="block hover:underline">Kebijakan Privasi</a>
-                            <a href="#" class="block hover:underline">Syarat & Ketentuan</a>
-                        </p>
-                    </div>
-                </div>
+<!-- Footer Section -->
+<footer class="bg-gray-900 text-gray-300 py-12">
+    <div class="max-w-screen-xl mx-auto px-4">
+        <!-- Main Footer Content -->
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-8 mb-8">
+            <!-- Product Column -->
+            <div data-aos="fade-up" data-aos-duration="1000">
+                <h3 class="text-white font-semibold mb-3">Produk</h3>
+                <ul class="space-y-2">
+                    <li><a href="#" class="hover:text-white">Layanan Cuci</a></li>
+                    <li><a href="#" class="hover:text-white">Setrika</a></li>
+                    <li><a href="#" class="hover:text-white">Dry Clean</a></li>
+                    <li><a href="#" class="hover:text-white">Paket Laundry</a></li>
+                </ul>
             </div>
 
-            <!-- Bagian Find Us -->
-            <div class="flex flex-col justify-start items-start gap-2.5 flex-1">
-                <p class="text-xl text-left text-white">FIND US</p>
-                <p class="w-full md:w-[432px] text-[11px] text-left text-white">
-                    Jl. Dipati Ukur No.100, Lebakgede, Kecamatan Coblong, Kota Bandung, Jawa Barat 40251
-                </p>
-                
-            <!-- Container untuk garis dan copyright -->
-            <div class="w-full flex flex-col gap-16"> 
-                <!-- Divider -->
-                <div class="w-full">
-                    <div class="w-full h-[1px] bg-white"></div>
-                </div>
-                <!-- Copyright -->
-                <div class="w-full flex justify-end">
-                    <p class="text-xs text-white">© 2022 GoLaundry. All rights reserved.</p>
+            <!-- Company Column -->
+            <div data-aos="fade-up" data-aos-duration="1000" data-aos-delay="200">
+                <h3 class="text-white font-semibold mb-3">Perusahaan</h3>
+                <ul class="space-y-2">
+                    <li><a href="#" class="hover:text-white">Tentang Kami</a></li>
+                    <li><a href="#" class="hover:text-white">Blog</a></li>
+                    <li><a href="#" class="hover:text-white">Karir</a></li>
+                    <li><a href="#" class="hover:text-white">Hubungi Kami</a></li>
+                </ul>
+            </div>
+
+            <!-- Resources Column -->
+            <div data-aos="fade-up" data-aos-duration="1000" data-aos-delay="400">
+                <h3 class="text-white font-semibold mb-3">Bantuan</h3>
+                <ul class="space-y-2">
+                    <li><a href="#" class="hover:text-white">Pusat Bantuan</a></li>
+                    <li><a href="#" class="hover:text-white">FAQ</a></li>
+                    <li><a href="#" class="hover:text-white">Status Sistem</a></li>
+                    <li><a href="#" class="hover:text-white">Dokumentasi API</a></li>
+                </ul>
+            </div>
+
+            <!-- Try GoLaundry Column -->
+            <div data-aos="fade-up" data-aos-duration="1000" data-aos-delay="600">
+                <h3 class="text-white font-semibold mb-3">Coba GoLaundry</h3>
+                <div class="flex flex-col space-y-2">
+                    <input type="email" placeholder="Masukkan email kamu" class="bg-gray-800 text-white px-4 py-2 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
+                    <button class="bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700">Mulai</button>
                 </div>
             </div>
+        </div>
+
+        <!-- Footer Bottom -->
+        <div class="pt-8 border-t border-gray-800" data-aos="fade-up" data-aos-duration="1000" data-aos-delay="800">
+            <div class="flex flex-col md:flex-row justify-between items-center">
+                <!-- Logo and Tagline -->
+                <div class="mb-4 md:mb-0">
+                    <p class="text-sm">Fully customizable marketplace for your laundry's data</p>
+                </div>
+
+                <!-- Terms and Privacy -->
+                <div class="flex space-x-4 text-sm">
+                    <a href="#" class="hover:text-white">Syarat & Ketentuan</a>
+                    <a href="#" class="hover:text-white">Kebijakan Privasi</a>
+                </div>
             </div>
         </div>
     </div>
-</div>
+</footer>
