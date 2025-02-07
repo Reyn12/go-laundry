@@ -25,7 +25,7 @@
     </style>
 </head>
 
-<body>
+<>
     <nav class="sticky top-0 z-50 bg-white shadow-lg">
         <div
             class="max-w-screen-xl flex items-center justify-between mx-auto py-3 px-4 md:py-4 md:px-6 lg:py-4 lg:px-8">
@@ -204,8 +204,8 @@
 
     // Fungsi untuk toggle menu
     menuToggle.addEventListener('click', () => {
-       
- mobileMenu.classList.toggle('hidden');
+
+        mobileMenu.classList.toggle('hidden');
     });
 
     // Tutup menu ketika link diklik
