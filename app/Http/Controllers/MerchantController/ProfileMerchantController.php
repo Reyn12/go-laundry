@@ -18,7 +18,8 @@ class ProfileMerchantController extends Controller
 
         // Ambil data pesanan yang sudah selesai (history)
         $historyPesanan = $merchant->pesanan()
-            ->where('status', 'Selesai')
+            ->with('layanan')  // Eager load relasi layanan
+            ->whereIn('status', ['menunggu', 'proses', 'selesai', 'dibatalkan'])
             ->orderBy('created_at', 'desc')
             ->paginate(10); // 10 pesanan per halaman
 

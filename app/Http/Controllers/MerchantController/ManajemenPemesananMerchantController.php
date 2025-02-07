@@ -42,8 +42,19 @@ class ManajemenPemesananMerchantController extends Controller
             return response()->json(['error' => 'Unauthorized'], 403);
         }
 
+        // Simpan status lama untuk pengecekan
+        $oldStatus = $pesanan->status;
+
         // Simpan status dalam lowercase
         $pesanan->status = strtolower($request->status);
+        
+        // Jika status berubah menjadi selesai, update saldo merchant
+        if ($pesanan->status === 'selesai' && $oldStatus !== 'selesai') {
+            $merchant = Auth::user()->merchant;
+            $merchant->saldo = $merchant->saldo + $pesanan->total_harga;
+            $merchant->save();
+        }
+
         $pesanan->save();
 
         return response()->json([

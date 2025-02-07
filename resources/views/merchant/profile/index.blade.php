@@ -72,145 +72,87 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <td class="border border-gray-300 px-4 py-2">1</td>
-                                <td class="border border-gray-300 px-4 py-2">Baju</td>
-                                <td class="border border-gray-300 px-4 py-2">13/12/2024</td>
-                                <td class="border border-gray-300 px-4 py-2">
-                                    <span class="text-green-500 font-semibold">Sukses</span>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td class="border border-gray-300 px-4 py-2">2</td>
-                                <td class="border border-gray-300 px-4 py-2">Celana</td>
-                                <td class="border border-gray-300 px-4 py-2">13/12/2024</td>
-                                <td class="border border-gray-300 px-4 py-2">
-                                    <span class="text-blue-500 font-semibold">Menunggu</span>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td class="border border-gray-300 px-4 py-2">3</td>
-                                <td class="border border-gray-300 px-4 py-2">Jaket</td>
-                                <td class="border border-gray-300 px-4 py-2">13/12/2024</td>
-                                <td class="border border-gray-300 px-4 py-2">
-                                    <span class="text-yellow-500 font-semibold">Proses</span>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td class="border border-gray-300 px-4 py-2">4</td>
-                                <td class="border border-gray-300 px-4 py-2">Sepatu</td>
-                                <td class="border border-gray-300 px-4 py-2">13/12/2024</td>
-                                <td class="border border-gray-300 px-4 py-2">
-                                    <span class="text-red-500 font-semibold">Dibatalkan</span>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td class="border border-gray-300 px-4 py-2">5</td>
-                                <td class="border border-gray-300 px-4 py-2">Topi</td>
-                                <td class="border border-gray-300 px-4 py-2">13/12/2024</td>
-                                <td class="border border-gray-300 px-4 py-2">
-                                    <span class="text-green-500 font-semibold">Sukses</span>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td class="border border-gray-300 px-4 py-2">6</td>
-                                <td class="border border-gray-300 px-4 py-2">Handuk</td>
-                                <td class="border border-gray-300 px-4 py-2">13/12/2024</td>
-                                <td class="border border-gray-300 px-4 py-2">
-                                    <span class="text-blue-500 font-semibold">Menunggu</span>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td class="border border-gray-300 px-4 py-2">7</td>
-                                <td class="border border-gray-300 px-4 py-2">Kaos</td>
-                                <td class="border border-gray-300 px-4 py-2">13/12/2024</td>
-                                <td class="border border-gray-300 px-4 py-2">
-                                    <span class="text-yellow-500 font-semibold">Proses</span>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td class="border border-gray-300 px-4 py-2">8</td>
-                                <td class="border border-gray-300 px-4 py-2">Sarung</td>
-                                <td class="border border-gray-300 px-4 py-2">13/12/2024</td>
-                                <td class="border border-gray-300 px-4 py-2">
-                                    <span class="text-red-500 font-semibold">Dibatalkan</span>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td class="border border-gray-300 px-4 py-2">9</td>
-                                <td class="border border-gray-300 px-4 py-2">Kemeja</td>
-                                <td class="border border-gray-300 px-4 py-2">13/12/2024</td>
-                                <td class="border border-gray-300 px-4 py-2">
-                                    <span class="text-green-500 font-semibold">Sukses</span>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td class="border border-gray-300 px-4 py-2">10</td>
-                                <td class="border border-gray-300 px-4 py-2">Rok</td>
-                                <td class="border border-gray-300 px-4 py-2">13/12/2024</td>
-                                <td class="border border-gray-300 px-4 py-2">
-                                    <span class="text-blue-500 font-semibold">Menunggu</span>
-                                </td>
-                            </tr>
+                            @forelse($historyPesanan as $index => $pesanan)
+                                <tr>
+                                    <td class="border border-gray-300 px-4 py-2">{{ $loop->iteration }}</td>
+                                    <td class="border border-gray-300 px-4 py-2">{{ $pesanan->layanan->nama_layanan }} ({{ $pesanan->jumlah_pesanan }} pcs)</td>
+                                    <td class="border border-gray-300 px-4 py-2">{{ $pesanan->created_at->format('d/m/Y') }}</td>
+                                    <td class="border border-gray-300 px-4 py-2">
+                                        @if($pesanan->status == 'selesai')
+                                            <span class="text-green-500 font-semibold">Sukses</span>
+                                        @elseif($pesanan->status == 'menunggu')
+                                            <span class="text-blue-500 font-semibold">Menunggu</span>
+                                        @elseif($pesanan->status == 'proses')
+                                            <span class="text-yellow-500 font-semibold">Proses</span>
+                                        @else
+                                            <span class="text-red-500 font-semibold">Dibatalkan</span>
+                                        @endif
+                                    </td>
+                                </tr>
+                            @empty
+                                <tr>
+                                    <td colspan="4" class="border border-gray-300 px-4 py-2 text-center">Tidak ada history pesanan</td>
+                                </tr>
+                            @endforelse
                         </tbody>
                     </table>
-                    <div class="flex justify-between mt-4">
-                        <a href="#" class="px-3 py-1 bg-gray-200 rounded">&laquo; Prev</a>
-                        <a href="#" class="px-3 py-1 bg-gray-200 rounded">Next &raquo;</a>
+                    <div class="mt-4">
+                        {{ $historyPesanan->links() }}
                     </div>
-             <!-- New Section for Laundry Images -->
-             <div class="bg-white shadow-md p-6 rounded-md mt-6">
-                <h2 class="text-xl font-bold mb-4">Gambar Laundry</h2>
-                <div class="grid grid-cols-3 gap-4">
-                    <img src="{{ asset('images/laundry1.png') }}" alt="Laundry Image 1" class="rounded-md w-full h-24 object-cover">
-                    <img src="{{ asset('images/laundry2.png') }}" alt="Laundry Image 2" class="rounded-md w-full h-24 object-cover">
+
+                    <!-- Gambar Laundry Section -->
+                    <h2 class="text-xl font-bold mb-4 mt-6">Gambar Laundry</h2>
+                    <div class="grid grid-cols-3 gap-4">
+                        <img src="{{ asset('images/laundry1.png') }}" alt="Laundry Image 1" class="rounded-md w-full h-24 object-cover">
+                        <img src="{{ asset('images/laundry2.png') }}" alt="Laundry Image 2" class="rounded-md w-full h-24 object-cover">
+                    </div>
                 </div>
-                <script>
-                    document.addEventListener('DOMContentLoaded', function () {
-                        let editBtn = document.getElementById('editBtn');
-                        let saveBtn = document.getElementById('saveBtn');
-                        let phone = document.getElementById('phone');
-                        let email = document.getElementById('email');
-                        let jam_operasional = document.getElementById('jam_operasional');
-                        let address = document.getElementById('address');
-            
-                        editBtn.addEventListener('click', function () {
-                            phone.disabled = false;
-                            email.disabled = false;
-                            jam_operasional.disabled = false;
-                            address.disabled = false;
-                            phone.classList.remove('bg-gray-100');
-                            email.classList.remove('bg-gray-100');
-                            jam_operasional.classList.remove('bg-gray-100');
-                            address.classList.remove('bg-gray-100');
-                            editBtn.classList.add('hidden');
-                            saveBtn.classList.remove('hidden');
-                        });
-            
-                        saveBtn.addEventListener('click', function () {
-                            phone.disabled = true;
-                            email.disabled = true;
-                            jam_operasional.disabled = true;
-                            address.disabled = true;
-                            phone.classList.add('bg-gray-100');
-                            email.classList.add('bg-gray-100');
-                            jam_operasional.classList.add('bg-gray-100');
-                            address.classList.add('bg-gray-100');
-                            editBtn.classList.remove('hidden');
-                            saveBtn.classList.add('hidden');
-                            updateMap(address.value);
-                        });
-            
-                        function updateMap(address) {
-                            let map = document.getElementById('map');
-                            let encodedAddress = encodeURIComponent(address);
-                            map.innerHTML = `<iframe src="https://www.google.com/maps?q=${encodedAddress}&output=embed" class="w-full h-full rounded-md" frameborder="0"></iframe>`;
-                        }
-                        updateMap(address.value);
-                    });
-                </script>
             </div>
         </div>
     </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            let editBtn = document.getElementById('editBtn');
+            let saveBtn = document.getElementById('saveBtn');
+            let phone = document.getElementById('phone');
+            let email = document.getElementById('email');
+            let jam_operasional = document.getElementById('jam_operasional');
+            let address = document.getElementById('address');
+
+            editBtn.addEventListener('click', function () {
+                phone.disabled = false;
+                email.disabled = false;
+                jam_operasional.disabled = false;
+                address.disabled = false;
+                phone.classList.remove('bg-gray-100');
+                email.classList.remove('bg-gray-100');
+                jam_operasional.classList.remove('bg-gray-100');
+                address.classList.remove('bg-gray-100');
+                editBtn.classList.add('hidden');
+                saveBtn.classList.remove('hidden');
+            });
+
+            saveBtn.addEventListener('click', function () {
+                phone.disabled = true;
+                email.disabled = true;
+                jam_operasional.disabled = true;
+                address.disabled = true;
+                phone.classList.add('bg-gray-100');
+                email.classList.add('bg-gray-100');
+                jam_operasional.classList.add('bg-gray-100');
+                address.classList.add('bg-gray-100');
+                editBtn.classList.remove('hidden');
+                saveBtn.classList.add('hidden');
+                updateMap(address.value);
+            });
+
+            function updateMap(address) {
+                let map = document.getElementById('map');
+                let encodedAddress = encodeURIComponent(address);
+                map.innerHTML = `<iframe src="https://www.google.com/maps?q=${encodedAddress}&output=embed" class="w-full h-full rounded-md" frameborder="0"></iframe>`;
+            }
+            updateMap(address.value);
+        });
+    </script>
 </body>
 </html>
