@@ -32,14 +32,7 @@
                                 </svg>
                             </span>
                             <input type="search" class="pl-10 pr-4 py-2 w-64 rounded-full bg-gray-100 focus:outline-none" placeholder="Search">
-                        </div>
-                        <!-- Profile -->
-                        <div class="flex items-center space-x-3">
-                            <div class="w-8 h-8 rounded-full bg-gray-200 overflow-hidden">
-                                <img src="{{ asset('images/icons/iconProfile.svg') }}" alt="Profile" class="w-full h-full object-cover">
-                            </div>
-                            <span class="font-medium">{{ Auth::user()->name }}</span>
-                        </div>
+                        </div>  
                     </div>
                 </div>
             </div>

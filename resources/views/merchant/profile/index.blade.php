@@ -26,11 +26,7 @@
                             <input type="search" class="pl-10 pr-4 py-2 w-64 rounded-full bg-gray-100 focus:outline-none" placeholder="Search">
                         </div>
                         <div class="flex items-center space-x-3">
-                            <div class="w-8 h-8 rounded-full bg-gray-200 overflow-hidden">
-                                <img src="{{ asset('images/icons/iconProfile.svg') }}" alt="Profile" class="w-full h-full object-cover">
-                            </div>
-                            <span class="font-medium">{{ $merchant->nama_laundry }}</span>
-                        </div>
+                         </div>
                     </div>
                 </div>
             </div>
@@ -43,14 +39,18 @@
                         </div>
                     </div>
                     <form id="profileForm">
+                        @csrf
                         <label class="block mb-2 font-semibold">Nomor Telepon:</label>
-                        <input type="text" id="phone" class="w-full border p-2 rounded-md bg-gray-100" value="{{ $merchant->no_hp }}" disabled>
+                        <input type="text" id="phone" name="no_hp" class="w-full border p-2 rounded-md bg-gray-100" value="{{ $merchant->no_hp }}" disabled>
+                        
                         <label class="block mt-4 mb-2 font-semibold">Email:</label>
-                        <input type="text" id="email" class="w-full border p-2 rounded-md bg-gray-100" value="{{ $merchant->email }}" disabled>
+                        <input type="text" id="email" name="email" class="w-full border p-2 rounded-md bg-gray-100" value="{{ $merchant->email }}" disabled>
+                        
                         <label class="block mt-4 mb-2 font-semibold">Jam Operasional:</label>
-                        <input type="text" id="jam_operasional" class="w-full border p-2 rounded-md bg-gray-100" value="09.00 - 20.00" disabled>
+                        <input type="text" id="jam_operasional" name="jam_operasional" class="w-full border p-2 rounded-md bg-gray-100" value="{{ $merchant->jam_operasional }}" disabled>
+                        
                         <label class="block mt-4 mb-2 font-semibold">Address:</label>
-                        <input type="text" id="address" class="w-full border p-2 rounded-md bg-gray-100" value="JL Kesana Kesini" disabled>
+                        <input type="text" id="address" name="alamat_laundry" class="w-full border p-2 rounded-md bg-gray-100" value="{{ $merchant->alamat_laundry }}" disabled>
                     </form>
                     <div id="map" class="w-full h-48 rounded-md mt-4"></div>
                     <div class="flex justify-end mt-4">
@@ -110,48 +110,55 @@
             </div>
         </div>
     </div>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
         document.addEventListener('DOMContentLoaded', function () {
-            let editBtn = document.getElementById('editBtn');
-            let saveBtn = document.getElementById('saveBtn');
-            let phone = document.getElementById('phone');
-            let email = document.getElementById('email');
-            let jam_operasional = document.getElementById('jam_operasional');
-            let address = document.getElementById('address');
-
-            editBtn.addEventListener('click', function () {
-                phone.disabled = false;
-                email.disabled = false;
-                jam_operasional.disabled = false;
-                address.disabled = false;
-                phone.classList.remove('bg-gray-100');
-                email.classList.remove('bg-gray-100');
-                jam_operasional.classList.remove('bg-gray-100');
-                address.classList.remove('bg-gray-100');
+            const editBtn = document.getElementById('editBtn');
+            const saveBtn = document.getElementById('saveBtn');
+            const inputs = document.querySelectorAll('#profileForm input[type="text"]');
+            
+            editBtn.addEventListener('click', function() {
+                inputs.forEach(input => {
+                    input.disabled = false;
+                    input.classList.remove('bg-gray-100');
+                    input.classList.add('bg-white');
+                });
                 editBtn.classList.add('hidden');
                 saveBtn.classList.remove('hidden');
             });
 
-            saveBtn.addEventListener('click', function () {
-                phone.disabled = true;
-                email.disabled = true;
-                jam_operasional.disabled = true;
-                address.disabled = true;
-                phone.classList.add('bg-gray-100');
-                email.classList.add('bg-gray-100');
-                jam_operasional.classList.add('bg-gray-100');
-                address.classList.add('bg-gray-100');
-                editBtn.classList.remove('hidden');
-                saveBtn.classList.add('hidden');
-                updateMap(address.value);
+            saveBtn.addEventListener('click', function() {
+                const formData = new FormData(document.getElementById('profileForm'));
+                
+                fetch('/merchant/profile/update', {
+                    method: 'POST',
+                    headers: {
+                        'X-CSRF-TOKEN': document.querySelector('input[name="_token"]').value,
+                        'Accept': 'application/json',
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(Object.fromEntries(formData))
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if(data.success) {
+                        inputs.forEach(input => {
+                            input.disabled = true;
+                            input.classList.add('bg-gray-100');
+                            input.classList.remove('bg-white');
+                        });
+                        editBtn.classList.remove('hidden');
+                        saveBtn.classList.add('hidden');
+                        alert('Profile berhasil diupdate!');
+                    } else {
+                        alert('Gagal update profile. Silakan coba lagi.');
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    alert('Terjadi kesalahan. Silakan coba lagi.');
+                });
             });
-
-            function updateMap(address) {
-                let map = document.getElementById('map');
-                let encodedAddress = encodeURIComponent(address);
-                map.innerHTML = `<iframe src="https://www.google.com/maps?q=${encodedAddress}&output=embed" class="w-full h-full rounded-md" frameborder="0"></iframe>`;
-            }
-            updateMap(address.value);
         });
     </script>
 </body>
