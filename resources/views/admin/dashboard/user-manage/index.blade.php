@@ -64,16 +64,16 @@
         </div>
 
         {{-- Content --}}
-        <div class="content flex-1 h-full p-4 overflow-y-scroll">
+        <div class="content flex-1 h-full p-2 md:p-4 overflow-y-scroll">
             {{-- Header --}}
-            <div class="sticky top-0 z-10 mb-4">
+            <div class="sticky top-0 z-10 mb-2 md:mb-4">
                 @include('admin.components.header')
             </div>
             
             {{-- Main Content --}}
-            <div class="flex gap-3">
+            <div class="flex flex-col lg:flex-row gap-2 md:gap-3">
                 {{-- Left Section (Tengah) --}}
-                <div class="w-3/4 flex flex-col gap-4">
+                <div class="w-full lg:w-3/4 flex flex-col gap-2 md:gap-4">
                     {{-- Card 3 Total --}}
                     @include('admin.components.card3UserManage', [
                         'totalUsers' => $totalUsers,
@@ -87,7 +87,7 @@
                 </div>
 
                 {{-- Right Section (Kanan) --}}
-                <div class="w-1/4">
+                <div class="w-full lg:w-1/4">
                     {{-- Card Berita dan Update --}}
                     @include('admin.components.cardBeritaUpdate')
                     {{-- Rating dan Ulasan --}}

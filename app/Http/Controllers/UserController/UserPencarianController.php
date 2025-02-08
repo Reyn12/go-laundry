@@ -4,6 +4,7 @@ namespace App\Http\Controllers\UserController;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use App\Models\layananLaundry;
 
 class UserPencarianController extends Controller
 {
@@ -21,25 +22,57 @@ class UserPencarianController extends Controller
             })
             ->select(
                 'id as merchant_id', 
-                'nama_laundry as title',
+                'nama_laundry',
                 'deskripsi as description',
                 DB::raw('5.0 as rating'), 
                 DB::raw('125 as reviews'), 
-                'alamat_laundry as location',
+                'alamat_laundry',
+                'latitude',
+                'longitude',
                 DB::raw('"https://via.placeholder.com/150" as image') 
             )
             ->get();
 
+        // Tambah data price_range dan layanan untuk setiap merchant
+        foreach ($results as $result) {
+            // Ambil price range
+            $priceRange = $this->getMerchantPriceRange($result->merchant_id);
+            $result->price_range = $priceRange;
+
+            // Ambil layanan
+            $layananLaundries = LayananLaundry::where('merchant_id', $result->merchant_id)->get();
+            $result->layananLaundries = $layananLaundries;
+        }
+
         // Kirim data ke view
-        return view('user.pencarian.index', compact('results'));
+        return view('user.pencarian.index', ['results' => $results, 'merchants' => $results]);
     }
 
     public function getLayanan($merchantId)
     {
         $layanan = DB::table('layanan_laundries')
             ->where('merchant_id', $merchantId)
+            ->select(
+                'kategori_layanan',
+                'nama_layanan',
+                DB::raw("CONCAT(kategori_layanan, ' ', nama_layanan) as display_name"),
+                'waktu_pengerjaan',
+                'harga_per_unit',
+                'satuan'
+            )
             ->get();
             
         return response()->json($layanan);
+    }
+
+    public function getMerchantPriceRange($merchantId) {
+        $priceRange = LayananLaundry::where('merchant_id', $merchantId)
+            ->selectRaw('MIN(harga_per_unit) as min_price, MAX(harga_per_unit) as max_price')
+            ->first();
+            
+        return [
+            'min' => $priceRange->min_price,
+            'max' => $priceRange->max_price
+        ];
     }
 }

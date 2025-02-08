@@ -6,6 +6,7 @@
     <title>Laundry Merchant Signup</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/lucide/0.263.1/lucide.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Lato:wght@400;700&display=swap" rel="stylesheet">
     <style>
         body {
@@ -35,8 +36,5 @@
     </div>
     {{-- Script Validasi dan Popup --}}
     @include('merchant.components.scriptPopupRegisterMerchant')
-    <script>
-        lucide.createIcons();
-    </script>
 </body>
 </html>

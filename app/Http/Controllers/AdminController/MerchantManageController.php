@@ -6,15 +6,25 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\Merchant;
+use Illuminate\Support\Facades\Log;
 
 class MerchantManageController extends Controller
 {
     public function index()
     {
+        $merchants = Merchant::latest()
+            ->paginate(6);
+
+        Log::info('Merchant Data:', [
+            'count' => $merchants->count(),
+            'data' => $merchants->items()
+        ]);
+
         return view('admin.dashboard.merchant-manage.index', [
             'mainTitle' => 'Merchant Management',
             'subTitle' => 'All Merchant',
-            'title' => 'Merchant Management'  // untuk kompatibilitas
+            'title' => 'Merchant Management',
+            'merchants' => $merchants
         ]);
     }
 
@@ -53,12 +63,21 @@ class MerchantManageController extends Controller
 
     public function all()
     {
+        $merchants = Merchant::latest()
+            ->paginate(6);
+
+        Log::info('Merchant Data (All):', [
+            'count' => $merchants->count(),
+            'data' => $merchants->items()
+        ]);
+
         return view('admin.dashboard.merchant-manage.index', [
             'mainTitle' => 'Merchant Management',
             'subTitle' => 'All Merchant',
-            'title' => 'Merchant Management'  // untuk kompatibilitas
+            'title' => 'Merchant Management',
+            'merchants' => $merchants
         ]);
-    }
+    } 
 
     public function pending()
     {
