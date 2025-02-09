@@ -27,7 +27,6 @@
 <table class="w-full border-collapse border border-gray-300">
     <thead>
         <tr class="bg-gray-200">
-            <th class="border px-4 py-2">ID</th>
             <th class="border px-4 py-2">Nama Laundry</th>
             <th class="border px-4 py-2">Alamat Pengambilan</th>
             <th class="border px-4 py-2">Alamat Pengiriman</th>
@@ -39,7 +38,6 @@
     <tbody id="riwayatTable">
         @foreach($riwayatPesanan->where('customer_id', auth()->user()->id) as $pesanan)
         <tr class="border">
-            <td class="border px-4 py-2">{{ $pesanan->id }}</td>
             <td class="border px-4 py-2">
                 @php
                     $namaLaundry = [

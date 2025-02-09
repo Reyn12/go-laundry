@@ -113,6 +113,7 @@ Route::prefix('user')->group(function () {
 
     //Pencarian Route
     Route::get('/pencarian', [UserPencarianController::class, 'index'])->name('user.pencarian');
+    Route::get('/search', [UserPencarianController::class, 'search'])->name('user.search');
 
     //Riwayat Route
     Route::get('/riwayat', [UserRiwayatController::class, 'index'])->name('user.riwayat');
