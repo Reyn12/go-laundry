@@ -32,28 +32,6 @@
                             </span>
                             <input type="search" class="pl-10 pr-4 py-2 w-64 rounded-full bg-gray-100 focus:outline-none" placeholder="Search">
                         </div>
-
-                        {{-- Theme Toggle --}}
-                        <div class="theme-toggle flex items-center bg-gray-100 rounded-full p-1 space-x-3">
-                            <button class="p-1 rounded-full bg-white">
-                                <svg class="w-5 h-5 text-yellow-500" fill="currentColor" viewBox="0 0 20 20">
-                                    <path fill-rule="evenodd" d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z"></path>
-                                </svg>
-                            </button>
-                            <button class="p-1">
-                                <svg class="w-5 h-5 text-gray-500" fill="currentColor" viewBox="0 0 20 20">
-                                    <path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path>
-                                </svg>
-                            </button>
-                        </div>
-
-                        <!-- Profile -->
-                        <div class="flex items-center space-x-3">
-                            <div class="w-8 h-8 rounded-full bg-gray-200 overflow-hidden">
-                                <img src="{{ asset('images/icons/iconProfile.svg') }}" alt="Profile" class="w-full h-full object-cover">
-                            </div>
-                            <span class="font-medium">{{ Auth::user()->name }}</span>
-                        </div>
                     </div>
                 </div>
             </div>
@@ -73,8 +51,8 @@
                                 <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Nama Pelanggan</th>
                                 <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Layanan</th>
                                 <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Total Harga</th>
-                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Catatan</th>
                                 <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Aksi</th>
                             </tr>
                         </thead>
                         <tbody class="divide-y divide-gray-200">
@@ -84,20 +62,27 @@
                                 <td class="px-6 py-4 whitespace-nowrap">{{ $p->user->nama_lengkap  }}</td>
                                 <td class="px-6 py-4 whitespace-nowrap">{{ $p->layanan->nama_layanan }}</td>
                                 <td class="px-6 py-4 whitespace-nowrap">Rp {{ number_format($p->total_harga, 0, ',', '.') }}</td>
-                                <td class="px-6 py-4 whitespace-nowrap">{{ $p->catatan ?? '-' }}</td>
                                 <td class="px-6 py-4 whitespace-nowrap">
-                                    <button 
-                                        class="px-4 py-2 rounded-full text-white font-semibold 
+                                    <span class="px-4 py-2 rounded-full text-white font-semibold 
                                         {{ $p->status === 'menunggu' ? 'bg-yellow-500' : 
                                            ($p->status === 'proses' ? 'bg-blue-500' : 
-                                           ($p->status === 'selesai' ? 'bg-green-500' : 'bg-red-500')) }}"
-                                        onclick="cycleStatus(this, {{ $p->id }})"
-                                    >
+                                           ($p->status === 'selesai' ? 'bg-green-500' : 'bg-red-500')) }}">
                                         {{ ucfirst($p->status) }}
-                                    </button>
-                                    <button class="px-4 py-2 ml-2 rounded-full text-white font-semibold bg-red-500" onclick="cancelOrder({{ $p->id }})">
-                                        Cancel
-                                    </button>
+                                    </span>
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <div class="flex space-x-2">
+                                        <img src="{{ asset('images/updatex.png') }}" 
+                                             alt="Update Status" 
+                                             class="w-6 h-6 cursor-pointer mr-6" 
+                                             onclick="cycleStatus(this, {{ $p->id }})"
+                                             title="Update Status">
+                                        <img src="{{ asset('images/cancelx.png') }}" 
+                                             alt="Cancel Order" 
+                                             class="w-6 h-6 cursor-pointer" 
+                                             onclick="cancelOrder({{ $p->id }})"
+                                             title="Cancel Order">
+                                    </div>
                                 </td>
                             </tr>
                             @endforeach
@@ -113,16 +98,29 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
         function cycleStatus(button, pesananId) {
-            const currentText = button.textContent.trim().toLowerCase();
-            let newStatus;
+            // Ambil status dari td sebelumnya (kolom status)
+            const statusCell = button.closest('tr').querySelector('td:nth-child(5) span');
+            const currentStatus = statusCell.textContent.trim().toLowerCase();
 
+            // Cek jika status sudah selesai
+            if (currentStatus === 'selesai') {
+                Swal.fire({
+                    title: 'Tidak bisa diubah',
+                    text: 'Status pesanan sudah selesai tidak bisa diubah lagi',
+                    icon: 'warning',
+                    confirmButtonText: 'OK'
+                });
+                return;
+            }
+
+            let newStatus;
             // Menentukan status berikutnya
-            if (currentText === 'menunggu') {
+            if (currentStatus === 'menunggu') {
                 newStatus = 'proses';
-            } else if (currentText === 'proses') {
+            } else if (currentStatus === 'proses') {
                 newStatus = 'selesai';
             } else {
-                newStatus = 'menunggu';
+                return; // Jika status bukan menunggu atau proses, tidak lakukan apa-apa
             }
 
             // Konfirmasi menggunakan Sweet Alert
@@ -175,6 +173,7 @@
         }
 
         function cancelOrder(pesananId) {
+            // Konfirmasi menggunakan Sweet Alert
             Swal.fire({
                 title: 'Konfirmasi Pembatalan',
                 text: 'Apakah Anda yakin ingin membatalkan pesanan ini?',
@@ -186,6 +185,7 @@
                 cancelButtonText: 'Tidak'
             }).then((result) => {
                 if (result.isConfirmed) {
+                    // Kirim request ke server
                     $.ajax({
                         url: `/merchant/pesanan/${pesananId}/cancel`,
                         method: 'POST',
@@ -193,9 +193,10 @@
                             'X-CSRF-TOKEN': '{{ csrf_token() }}'
                         },
                         success: function(response) {
+                            // Tampilkan pesan sukses
                             Swal.fire({
                                 title: 'Berhasil!',
-                                text: 'Pesanan berhasil dibatalkan',
+                                text: response.message,
                                 icon: 'success',
                                 timer: 1500,
                                 showConfirmButton: false
@@ -204,13 +205,14 @@
                             });
                         },
                         error: function(xhr) {
+                            // Tampilkan pesan error
+                            const response = xhr.responseJSON;
                             Swal.fire({
                                 title: 'Error!',
-                                text: 'Gagal membatalkan pesanan',
+                                text: response?.message || 'Gagal membatalkan pesanan',
                                 icon: 'error',
                                 confirmButtonText: 'OK'
                             });
-                            console.error(xhr.responseText);
                         }
                     });
                 }

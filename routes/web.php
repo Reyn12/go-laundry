@@ -197,15 +197,19 @@ Route::post('/merchant/profile/update', [ProfileMerchantController::class, 'upda
      Route::post('/layanan', [KelolaLayananMerchantController::class, 'store'])->name('merchant.layanan.store');
      Route::get('/layanan/{id}', [KelolaLayananMerchantController::class, 'show'])->name('merchant.layanan.show');
      Route::put('/layanan/{id}', [KelolaLayananMerchantController::class, 'update'])->name('merchant.layanan.update');
+     Route::delete('/layanan/{id}', [KelolaLayananMerchantController::class, 'destroy'])->name('merchant.layanan.destroy');
 
      //ManajemenPemesanan Route
      Route::get('/manajemenpemesanan', [ManajemenPemesananMerchantController::class, 'index'])->name('merchant.manajemenpemesanan');
      Route::get('/pesanan', [ManajemenPemesananMerchantController::class, 'index'])->name('merchant.pesanan');
      Route::post('/pesanan/{id}/status', [ManajemenPemesananMerchantController::class, 'updateStatus'])->name('merchant.pesanan.updateStatus');
-    
+     Route::post('/pesanan/{id}/cancel', [ManajemenPemesananMerchantController::class, 'cancel'])->name('merchant.pesanan.cancel');
+
+
      //Ulasan dan Pendapatan Route
      Route::get('/ulasan', [UlasanMerchantController::class, 'index'])->name('merchant.ulasan');
 
       //Penarikan Saldo Route
       Route::get('/penarikansaldo', [PenarikanSaldoMerchantController::class, 'index'])->name('merchant.penarikansaldo');
+      Route::post('/penarikansaldo/store', [PenarikanSaldoMerchantController::class, 'store'])->name('merchant.penarikansaldo.store');
 });

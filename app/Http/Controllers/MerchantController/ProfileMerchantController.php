@@ -18,7 +18,8 @@ class ProfileMerchantController extends Controller
 
         // Ambil data pesanan yang sudah selesai (history)
         $historyPesanan = $merchant->pesanan()
-            ->where('status', 'Selesai')
+            ->with('layanan')  // Eager load relasi layanan
+            ->whereIn('status', ['menunggu', 'proses', 'selesai', 'dibatalkan'])
             ->orderBy('created_at', 'desc')
             ->paginate(10); // 10 pesanan per halaman
 
@@ -41,8 +42,18 @@ class ProfileMerchantController extends Controller
         $user = auth()->user();
         $merchant = Merchant::where('user_id', $user->id)->first();
 
-        $merchant->update($request->only(['name', 'email', 'no_hp']));
+        $validatedData = $request->validate([
+            'no_hp' => 'required|string|max:15',
+            'email' => 'required|email',
+            'jam_operasional' => 'required|string',
+            'alamat' => 'required|string'
+        ]);
 
-        return redirect()->route('merchant.profile.index')->with('success', 'Profile updated successfully.');
+        $merchant->update($validatedData);
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Profile berhasil diupdate'
+        ]);
     }
 }

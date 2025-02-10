@@ -40,42 +40,120 @@ class DashboardMerchantController extends Controller
 
         // Get today's statistics
         $today = Carbon::today();
+        $startOfWeek = Carbon::now()->startOfWeek();
+        $endOfWeek = Carbon::now()->endOfWeek();
         
-        // Get merchant's layanan IDs
-        try {
-            $layananIds = $merchant->layananLaundry()->pluck('id');
-            Log::info('Layanan IDs:', ['layanan_ids' => $layananIds]);
+        // Get orders through layanan_laundries
+        $todayOrders = Pesanan::where('merchant_id', $merchant->id)
+                              ->whereDate('created_at', $today);
+
+        // Debug: Tampilkan pesanan hari ini
+        Log::info('Today orders:', ['orders' => $todayOrders->get()->toArray()]);
+
+        // Hitung pendapatan dengan mempertimbangkan pesanan yang dibatalkan
+        $todayIncome = Pesanan::where('merchant_id', $merchant->id)
+                             ->whereDate('created_at', $today)
+                             ->where(function($query) {
+                                 $query->where('status', '!=', 'dibatalkan')
+                                     ->orWhereNull('status');
+                             })
+                             ->sum('total_harga');
+
+        // Hitung total semua pesanan (tidak dibatasi hari ini)
+        $totalOrders = Pesanan::where('merchant_id', $merchant->id)->count();
+                
+        // Hitung total layanan khusus untuk merchant yang login
+        $totalLayanan = LayananLaundry::where('merchant_id', $merchant->id)->count();
+
+        // Debug: Tampilkan statistik
+        Log::info('Statistics:', [
+            'today_income' => $todayIncome,
+            'total_orders' => $totalOrders,
+            'total_layanan' => $totalLayanan,
+            'merchant_id' => $merchant->id
+        ]);
+
+        // Ganti order selesai dengan jumlah layanan yang tersedia
+        $pendingOrders = $todayOrders->where('status', 'menunggu')->count();
+
+        // Debug: Tampilkan statistik
+        Log::info('Statistics:', [
+            'today_income' => $todayIncome,
+            'total_orders' => $totalOrders,
+            'total_layanan' => $totalLayanan,
+            'pending_orders' => $pendingOrders
+        ]);
+
+        // Hitung pelanggan baru hari ini
+        $newCustomers = Pesanan::where('merchant_id', $merchant->id)
+                            ->whereDate('created_at', $today)
+                            ->distinct('customer_id')
+                            ->count('customer_id');
+
+        // Data untuk grafik mingguan
+        $weeklyOrders = [];
+        $weeklyEarnings = [];
+        for ($i = 0; $i < 7; $i++) {
+            $date = $startOfWeek->copy()->addDays($i);
             
-            // Get orders through layanan_laundries
-            $todayOrders = Pesanan::whereIn('layanan_id', $layananIds)
-                                ->whereDate('created_at', $today);
-            
-            $todayIncome = $todayOrders->sum('total_harga');
-            $totalOrders = $todayOrders->count();
-            $completedOrders = $todayOrders->where('status', 'selesai')->count();
-            $pendingOrders = $todayOrders->where('status', 'menunggu')->count();
+            // Data pesanan
+            $count = Pesanan::where('merchant_id', $merchant->id)
+                           ->whereDate('created_at', $date)
+                           ->count();
+            $weeklyOrders[] = [
+                'x' => $date->format('l'),
+                'y' => $count
+            ];
 
-            Log::info('Dashboard statistics:', [
-                'today_income' => $todayIncome,
-                'total_orders' => $totalOrders,
-                'completed_orders' => $completedOrders,
-                'pending_orders' => $pendingOrders
-            ]);
-
-            return view('merchant.dashboard.index', [
-                'merchant' => $merchant,
-                'todayIncome' => $todayIncome,
-                'totalOrders' => $totalOrders,
-                'completedOrders' => $completedOrders,
-                'pendingOrders' => $pendingOrders
-            ]);
-
-        } catch (\Exception $e) {
-            Log::error('Error in dashboard:', [
-                'error' => $e->getMessage(),
-                'merchant_id' => $merchant->id
-            ]);
-            return back()->with('error', 'Terjadi kesalahan saat mengambil data dashboard');
+            // Data pendapatan (mempertimbangkan pesanan yang dibatalkan)
+            $earnings = Pesanan::where('merchant_id', $merchant->id)
+                             ->whereDate('created_at', $date)
+                             ->where(function($query) {
+                                 $query->where('status', '!=', 'dibatalkan')
+                                     ->orWhereNull('status');
+                             })
+                             ->sum('total_harga');
+            $weeklyEarnings[] = [
+                'x' => $date->format('l'),
+                'y' => (int)$earnings
+            ];
         }
+
+        // Ambil ulasan terbaru - cek dulu apakah kolom rating ada
+        try {
+            $latestReviews = Pesanan::where('merchant_id', $merchant->id)
+                                  ->where('rating', '>', 0)
+                                  ->with('user:id,nama_lengkap')
+                                  ->orderBy('created_at', 'desc')
+                                  ->take(5)
+                                  ->get(['id', 'customer_id', 'rating', 'ulasan', 'created_at']);
+        } catch (\Exception $e) {
+            Log::warning('Rating column might not exist:', ['error' => $e->getMessage()]);
+            $latestReviews = collect([]); // Empty collection if column doesn't exist
+        }
+
+        Log::info('Dashboard statistics:', [
+            'today_income' => $todayIncome,
+            'total_orders' => $totalOrders,
+            'total_layanan' => $totalLayanan,
+            'pending_orders' => $pendingOrders,
+            'new_customers' => $newCustomers,
+            'weekly_orders' => $weeklyOrders,
+            'weekly_earnings' => $weeklyEarnings,
+            'latest_reviews' => $latestReviews
+        ]);
+
+        return view('merchant.dashboard.index', [
+            'merchant' => $merchant,
+            'todayIncome' => $todayIncome,
+            'totalOrders' => $totalOrders,
+            'totalLayanan' => $totalLayanan,
+            'pendingOrders' => $pendingOrders,
+            'newCustomers' => $newCustomers,
+            'weeklyOrders' => json_encode($weeklyOrders),
+            'weeklyEarnings' => json_encode($weeklyEarnings),
+            'latestReviews' => $latestReviews
+        ]);
+
     }
 }

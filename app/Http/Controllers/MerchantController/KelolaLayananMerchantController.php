@@ -125,6 +125,7 @@ class KelolaLayananMerchantController extends Controller
     public function update(Request $request, $id)
     {
         try {
+            // Cek apakah user adalah merchant
             $merchant = Merchant::where('user_id', Auth::id())->first();
             if (!$merchant) {
                 return response()->json([
@@ -133,9 +134,10 @@ class KelolaLayananMerchantController extends Controller
                 ], 403);
             }
 
-            $layanan = LayananLaundry::where('merchant_id', $merchant->id)
-                                   ->where('id', $id)
-                                   ->first();
+            // Cari layanan
+            $layanan = LayananLaundry::where('id', $id)
+                                    ->where('merchant_id', $merchant->id)
+                                    ->first();
 
             if (!$layanan) {
                 return response()->json([
@@ -146,15 +148,23 @@ class KelolaLayananMerchantController extends Controller
 
             // Validasi input
             $validated = $request->validate([
+                'kategori_layanan' => 'required|string|max:255',
+                'nama_layanan' => 'required|string|max:255',
                 'harga_per_unit' => 'required|numeric|min:0',
+                'satuan' => 'required|string|in:KG,PCS',
                 'waktu_pengerjaan' => 'required|string',
                 'deskripsi' => 'nullable|string',
             ]);
 
-            // Update data
+            // Update layanan
+            $layanan->kategori_layanan = $validated['kategori_layanan'];
+            $layanan->nama_layanan = $validated['nama_layanan'];
             $layanan->harga_per_unit = $validated['harga_per_unit'];
+            $layanan->satuan = $validated['satuan'];
             $layanan->waktu_pengerjaan = $validated['waktu_pengerjaan'];
             $layanan->deskripsi = $validated['deskripsi'] ?? '';
+
+            // Simpan perubahan
             $layanan->save();
 
             return response()->json([
@@ -173,6 +183,45 @@ class KelolaLayananMerchantController extends Controller
             return response()->json([
                 'status' => 'error',
                 'message' => 'Terjadi kesalahan saat mengupdate layanan: ' . $e->getMessage()
+            ], 500);
+        }
+    }
+
+    public function destroy($id)
+    {
+        try {
+            // Cek apakah user adalah merchant
+            $merchant = Merchant::where('user_id', Auth::id())->first();
+            if (!$merchant) {
+                return response()->json([
+                    'status' => 'error',
+                    'message' => 'Akun anda bukan merchant'
+                ], 403);
+            }
+
+            // Cari dan hapus layanan
+            $layanan = LayananLaundry::where('id', $id)
+                                    ->where('merchant_id', $merchant->id)
+                                    ->first();
+
+            if (!$layanan) {
+                return response()->json([
+                    'status' => 'error',
+                    'message' => 'Layanan tidak ditemukan'
+                ], 404);
+            }
+
+            $layanan->delete();
+
+            return response()->json([
+                'status' => 'success',
+                'message' => 'Layanan berhasil dihapus'
+            ]);
+
+        } catch (\Exception $e) {
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Terjadi kesalahan saat menghapus layanan: ' . $e->getMessage()
             ], 500);
         }
     }

@@ -42,17 +42,51 @@ class ManajemenPemesananMerchantController extends Controller
             return response()->json(['error' => 'Unauthorized'], 403);
         }
 
+        // Simpan status lama untuk pengecekan
+        $oldStatus = $pesanan->status;
+
         // Simpan status dalam lowercase
         $pesanan->status = strtolower($request->status);
-        $pesanan->save();
+        
+        // Jika status berubah menjadi selesai, update saldo merchant
+        if ($pesanan->status === 'selesai' && $oldStatus !== 'selesai') {
+            $merchant = Auth::user()->merchant;
+            $merchant->saldo = $merchant->saldo + $pesanan->total_harga;
+            $merchant->save();
+        }
 
-        // Trigger event untuk notifikasi ke user jika diperlukan
-        // event(new PesananStatusUpdated($pesanan));
+        $pesanan->save();
 
         return response()->json([
             'success' => true, 
             'status' => $pesanan->status,
             'message' => 'Status pesanan berhasil diperbarui'
+        ]);
+    }
+
+    public function cancel($id)
+    {
+        $pesanan = Pesanan::findOrFail($id);
+        
+        // Pastikan merchant hanya bisa membatalkan pesanan miliknya
+        if ($pesanan->merchant_id !== Auth::user()->merchant->id) {
+            return response()->json(['error' => 'Unauthorized'], 403);
+        }
+
+        // Cek apakah pesanan sudah selesai
+        if ($pesanan->status === 'selesai') {
+            return response()->json([
+                'success' => false,
+                'message' => 'Pesanan yang sudah selesai tidak bisa dibatalkan'
+            ], 400);
+        }
+
+        $pesanan->status = 'dibatalkan';
+        $pesanan->save();
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Pesanan berhasil dibatalkan'
         ]);
     }
 }

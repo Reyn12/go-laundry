@@ -77,18 +77,12 @@
                                 <td class="px-6 py-4">
                                     <div class="flex space-x-2">
                                         <button onclick="editService('{{ $item->id }}')" 
-                                                class="bg-blue-500 hover:bg-blue-600 text-white px-3 py-1 rounded-md text-sm flex items-center">
-                                            <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/>
-                                            </svg>
-                                            Update
+                                                class="p-2 hover:bg-gray-100 rounded-full">
+                                            <img src="{{ asset('images/updatex.png') }}" alt="Update" class="w-5 h-5">
                                         </button>
-                                        <button onclick="deleteService('{{ $item->id }}')"
-                                                class="bg-red-500 hover:bg-red-600 text-white px-3 py-1 rounded-md text-sm flex items-center">
-                                            <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/>
-                                            </svg>
-                                            Hapus
+                                        <button onclick="deleteService('{{ $item->id }}')" 
+                                                class="p-2 hover:bg-gray-100 rounded-full">
+                                            <img src="{{ asset('images/delete.png') }}" alt="Delete" class="w-5 h-5">
                                         </button>
                                     </div>
                                 </td>
@@ -165,49 +159,6 @@
         </div>
     </div>
 
-    <!-- Modal Update Layanan -->
-    <div id="updateModal" class="fixed inset-0 bg-gray-600 bg-opacity-50 hidden overflow-y-auto h-full w-full mt-20">
-        <div class="relative top-20 mx-auto p-5 border w-96 shadow-lg rounded-md bg-white">
-            <div class="mt-3">
-                <h3 class="text-lg leading-6 font-medium text-gray-900">Update Layanan</h3>
-                <form id="updateForm" class="mt-4">
-                    @csrf
-                    <input type="hidden" id="updateLayananId" name="id">
-
-                    <div class="mb-4">
-                        <label class="block text-gray-700 text-sm font-bold mb-2" for="updateHargaPerUnit">
-                            Harga
-                        </label>
-                        <input type="number" id="updateHargaPerUnit" name="harga_per_unit" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" required>
-                    </div>
-
-                    <div class="mb-4">
-                        <label class="block text-gray-700 text-sm font-bold mb-2" for="updateWaktuPengerjaan">
-                            Waktu Pengerjaan
-                        </label>
-                        <input type="text" id="updateWaktuPengerjaan" name="waktu_pengerjaan" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" required>
-                    </div>
-
-                    <div class="mb-4">
-                        <label class="block text-gray-700 text-sm font-bold mb-2" for="updateDeskripsi">
-                            Deskripsi
-                        </label>
-                        <textarea id="updateDeskripsi" name="deskripsi" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"></textarea>
-                    </div>
-
-                    <div class="flex justify-end space-x-2">
-                        <button type="button" class="bg-gray-500 hover:bg-gray-600 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" onclick="closeUpdateModal()">
-                            Batal
-                        </button>
-                        <button type="submit" class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
-                            Simpan Perubahan
-                        </button>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
-
     <script>
         function addService() {
             document.getElementById('modalTitle').textContent = 'Tambah Layanan Baru';
@@ -216,72 +167,87 @@
             document.getElementById('serviceModal').classList.remove('hidden');
         }
 
-        document.getElementById('serviceForm').addEventListener('submit', async function(e) {
-            e.preventDefault();
-
-            const data = {
-                kategori_layanan: document.getElementById('kategoriLayanan').value,
-                nama_layanan: document.getElementById('namaLayanan').value,
-                harga_per_unit: document.getElementById('hargaPerUnit').value,
-                satuan: document.getElementById('satuan').value,
-                waktu_pengerjaan: document.getElementById('waktuPengerjaan').value,
-                deskripsi: document.getElementById('deskripsi').value
-            };
-
-            try {
-                const response = await fetch('{{ route("merchant.layanan.store") }}', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content,
-                        'Accept': 'application/json'
-                    },
-                    credentials: 'same-origin',
-                    body: JSON.stringify(data)
+        function editService(id) {
+            fetch(`{{ url('/merchant/layanan') }}/${id}`)
+                .then(response => response.json())
+                .then(data => {
+                    document.getElementById('serviceId').value = data.id;
+                    document.getElementById('kategoriLayanan').value = data.kategori_layanan;
+                    document.getElementById('namaLayanan').value = data.nama_layanan;
+                    document.getElementById('hargaPerUnit').value = data.harga_per_unit;
+                    document.getElementById('satuan').value = data.satuan;
+                    document.getElementById('waktuPengerjaan').value = data.waktu_pengerjaan;
+                    document.getElementById('deskripsi').value = data.deskripsi;
+                    document.getElementById('modalTitle').textContent = 'Edit Layanan';
+                    document.getElementById('serviceModal').classList.remove('hidden');
                 });
+        }
 
-                const result = await response.json();
+        document.getElementById('serviceForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const formData = new FormData(this);
+            const serviceId = document.getElementById('serviceId').value;
+            const url = serviceId ? `{{ url('/merchant/layanan') }}/${serviceId}` : '{{ url('/merchant/layanan') }}';
+            const method = serviceId ? 'PUT' : 'POST';
 
-                if (response.ok && result.status === 'success') {
+            // Convert FormData to object
+            const data = {};
+            formData.forEach((value, key) => {
+                data[key] = value;
+            });
+
+            // Add _method field for PUT requests
+            if (method === 'PUT') {
+                data._method = 'PUT';
+            }
+
+            fetch(url, {
+                method: 'POST', // Always use POST, Laravel will handle method spoofing
+                headers: {
+                    'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content,
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json'
+                },
+                body: JSON.stringify(data)
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success || data.status === 'success') {
                     Swal.fire({
                         icon: 'success',
                         title: 'Berhasil!',
-                        text: 'Layanan berhasil ditambahkan',
+                        text: serviceId ? 'Layanan berhasil diperbarui' : 'Layanan berhasil ditambahkan',
                         showConfirmButton: false,
                         timer: 1500
                     }).then(() => {
-                        window.location.reload();
+                        location.reload();
                     });
                 } else {
-                    let errorMessage = result.message || 'Terjadi kesalahan saat menyimpan data';
-                    if (result.errors) {
-                        errorMessage = Object.values(result.errors).flat().join('\n');
-                    }
-                    throw new Error(errorMessage);
+                    throw new Error(data.message || 'Terjadi kesalahan');
                 }
-            } catch (error) {
+            })
+            .catch(error => {
                 console.error('Error:', error);
                 Swal.fire({
                     icon: 'error',
                     title: 'Oops...',
-                    text: 'Terjadi kesalahan: ' + error.message
+                    text: error.message || 'Terjadi kesalahan. Silakan coba lagi.',
                 });
-            }
+            });
         });
 
         function deleteService(id) {
             Swal.fire({
-                title: 'Apakah anda yakin?',
+                title: 'Apakah kamu yakin?',
                 text: "Data layanan akan dihapus permanen!",
                 icon: 'warning',
                 showCancelButton: true,
-                confirmButtonColor: '#3085d6',
-                cancelButtonColor: '#d33',
+                confirmButtonColor: '#d33',
+                cancelButtonColor: '#3085d6',
                 confirmButtonText: 'Ya, hapus!',
                 cancelButtonText: 'Batal'
             }).then((result) => {
                 if (result.isConfirmed) {
-                    // Lanjutkan dengan proses delete
                     fetch(`/merchant/layanan/${id}`, {
                         method: 'DELETE',
                         headers: {
@@ -290,14 +256,20 @@
                     })
                     .then(response => response.json())
                     .then(data => {
-                        if(data.status === 'success') {
+                        if (data.status === 'success') {
                             Swal.fire(
                                 'Terhapus!',
                                 'Layanan berhasil dihapus.',
                                 'success'
                             ).then(() => {
-                                window.location.reload();
+                                location.reload();
                             });
+                        } else {
+                            Swal.fire(
+                                'Error!',
+                                data.message,
+                                'error'
+                            );
                         }
                     })
                     .catch(error => {
@@ -315,64 +287,6 @@
             document.getElementById('serviceModal').classList.add('hidden');
             document.getElementById('serviceForm').reset();
         }
-
-        function editService(id) {
-            fetch(`{{ url('/merchant/layanan') }}/${id}`)
-                .then(response => response.json())
-                .then(data => {
-                    document.getElementById('updateLayananId').value = id;
-                    document.getElementById('updateHargaPerUnit').value = data.harga_per_unit;
-                    document.getElementById('updateWaktuPengerjaan').value = data.waktu_pengerjaan;
-                    document.getElementById('updateDeskripsi').value = data.deskripsi || '';
-                    document.getElementById('updateModal').classList.remove('hidden');
-                })
-                .catch(error => {
-                    console.error('Error:', error);
-                    alert('Terjadi kesalahan saat mengambil data layanan');
-                });
-        }
-
-        function closeUpdateModal() {
-            document.getElementById('updateModal').classList.add('hidden');
-            document.getElementById('updateForm').reset();
-        }
-
-        document.getElementById('updateForm').addEventListener('submit', async function(e) {
-            e.preventDefault();
-            
-            const id = document.getElementById('updateLayananId').value;
-            const formData = new FormData(this);
-            const data = {};
-            formData.forEach((value, key) => {
-                if (key !== '_token' && key !== 'id') { // Exclude CSRF token and ID
-                    data[key] = value;
-                }
-            });
-
-            try {
-                const response = await fetch(`{{ url('/merchant/layanan') }}/${id}`, {
-                    method: 'PUT',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content,
-                        'Accept': 'application/json'
-                    },
-                    body: JSON.stringify(data)
-                });
-
-                const result = await response.json();
-
-                if (response.ok && result.status === 'success') {
-                    alert('Layanan berhasil diupdate!');
-                    window.location.reload();
-                } else {
-                    throw new Error(result.message || 'Terjadi kesalahan saat mengupdate data');
-                }
-            } catch (error) {
-                console.error('Error:', error);
-                alert('Terjadi kesalahan: ' + error.message);
-            }
-        });
     </script>
 </body>
 </html>
