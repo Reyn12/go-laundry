@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class PenarikanSaldo extends Model
 {
     protected $table = 'penarikan_saldo';
-    
+
     protected $fillable = [
         'merchant_id',
         'bank',
@@ -15,7 +15,7 @@ class PenarikanSaldo extends Model
         'amount',
         'status'
     ];
-
+    // s
     public function merchant()
     {
         return $this->belongsTo(Merchant::class);
