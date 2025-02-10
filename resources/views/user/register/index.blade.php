@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+    <title>Laundry Service Signup</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/lucide/0.263.1/lucide.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Lato:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Lato', sans-serif;
+        }
+        .bg-primary {
+            background-color: #0039C9;
+        }
+
+        .text-primary {
+            color: #0039C9;
+        }
+        .modal-content {
+            border-radius: 15px;
+            border: none;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+        .modal-header {
+            border-bottom: 1px solid #eee;
+            padding: 1.5rem;
+        }
+        .modal-body {
+            padding: 1.5rem;
+        }
+        .modal-footer {
+            border-top: 1px solid #eee;
+            padding: 1rem 1.5rem;
+        }
+        .btn-primary {
+            background-color: #0039C9;
+            border: none;
+        }
+        .btn-primary:hover {
+            background-color: #002d9e;
+        }
+        .btn-secondary {
+            background-color: #e2e8f0;
+            color: #1a202c;
+            border: none;
+        }
+        .btn-secondary:hover {
+            background-color: #cbd5e0;
+            color: #1a202c;
+        }
+    </style>
+    {{-- Styles Untuk Register User --}}
+    @include('user.components.registerUserStyles')
+</head>
+<body>
+    <div class="flex min-h-screen">
+        <!-- Left Side - Enhanced Blue Section -->
+        @include('user.components.leftSectionRegisterUser')
+        <!-- Right Side - Form Section -->
+        @include('user.components.rightSectionRegisterUser')
+                <!-- Form section -->
+                @include('user.components.formRegisterUser')
+                <!-- Popup Overlay -->
+                @include('user.components.popupRegisterUser')
+            </div>
+        </div>
+    </div>
+
+    {{-- Load jQuery dan SweetAlert dulu sebelum script kita --}}
+    {{-- Script Validasi dan Popup --}}
+    @include('user.components.scriptPopupRegisterUser')
+    <script>
+        lucide.createIcons();
+    </script>
+</body>
+</html>
