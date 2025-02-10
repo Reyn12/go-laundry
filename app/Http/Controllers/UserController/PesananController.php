@@ -11,6 +11,7 @@ class PesananController extends Controller
         $request->validate([
             'customer_id' => 'required|exists:users,id',
             'layanan_id' => 'required|exists:layanan_laundries,id',
+            'merchant_id' => 'required|exists:merchants,id',
             'status' => 'required|in:menunggu,proses,selesai,dibatalkan',
             'alamat_pengambilan' => 'required|string|max:255',
             'alamat_pengiriman' => 'required|string|max:255',
@@ -23,6 +24,7 @@ class PesananController extends Controller
         $pesanan = Pesanan::create([
             'customer_id' => $request->customer_id,
             'layanan_id' => $request->layanan_id,
+            'merchant_id' => $request->merchant_id,
             'status' => $request->status,
             'alamat_pengambilan' => $request->alamat_pengambilan,
             'alamat_pengiriman' => $request->alamat_pengiriman,

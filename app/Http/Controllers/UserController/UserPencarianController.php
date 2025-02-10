@@ -75,4 +75,37 @@ class UserPencarianController extends Controller
             'max' => $priceRange->max_price
         ];
     }
+    public function search(Request $request)
+    {
+        $keyword = $request->input('q');
+    
+        $results = Laundry::where('nama_laundry', 'LIKE', "%{$keyword}%")
+            ->with(['layananLaundries'])
+            ->get();
+    
+        return response()->json($results);
+    }
+    public function pencarian(Request $request)
+{
+    $query = Laundry::query()->with('layananLaundries');
+
+    // Filter berdasarkan lokasi jika ada
+    if ($request->has('location') && $request->location == '1') {
+        $query->orderBy('distance', 'asc');
+    }
+
+    // Sorting berdasarkan harga
+    if ($request->has('orderBy')) {
+        if ($request->orderBy == 'low') {
+            $query->orderBy('harga_per_unit', 'asc');
+        } elseif ($request->orderBy == 'high') {
+            $query->orderBy('harga_per_unit', 'desc');
+        }
+    }
+
+    $results = $query->get();
+
+    return view('user.pencarian', compact('results'));
+}
+
 }
