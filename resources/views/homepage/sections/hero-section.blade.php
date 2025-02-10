@@ -8,7 +8,7 @@
     <div class="container mx-auto relative z-10">
         <div class="flex flex-col lg:flex-row items-center justify-between gap-5 md:gap-10">
             <!-- Bagian Kiri - Text Content -->
-            <div class="flex-1 z-10 text-center lg:text-left">
+            <div class="flex-1 z-10 text-center lg:text-left md:ml-4">
                 <h1 class="text-3xl md:text-4xl lg:text-5xl font-bold mb-4 md:mb-5 space-y-6" data-aos="fade-right" data-aos-delay="200">
                     <span class="text-white block mb-8">GO-LAUNDRY</span>
                     <div class="space-y-2">
