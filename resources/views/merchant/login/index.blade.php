@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Merchant Laundry - Login</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 <body class="bg-gray-100">
     <div class="flex h-screen">
@@ -72,7 +73,7 @@
                     </button>
                 </form>
                 <div class="text-center mt-4">
-                    <button class="w-full bg-gray-100 text-gray-600 py-2 px-4 rounded-md flex items-center justify-center space-x-2 hover:bg-gray-200">
+                    <button onclick="showFeatureNotAvailable()" class="w-full bg-gray-100 text-gray-600 py-2 px-4 rounded-md flex items-center justify-center space-x-2 hover:bg-gray-200">
                         <img src="{{ asset('images/icons/iconGoogle.svg') }}" alt="Google" class="w-5 h-5">
                         <span>Sign In with Google</span>
                     </button>
@@ -83,5 +84,15 @@
             </div>
         </div>
     </div>
+    <script>
+    function showFeatureNotAvailable() {
+        Swal.fire({
+            title: 'Fitur Belum Tersedia',
+            icon: 'info',
+            confirmButtonText: 'OK',
+            confirmButtonColor: '#3085d6'
+        });
+    }
+</script>
 </body>
 </html>

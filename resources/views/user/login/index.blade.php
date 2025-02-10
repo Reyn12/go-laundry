@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Go Laundry Login</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 <body class="bg-blue-900 m-0">
     <div class="flex items-center justify-center h-screen">
@@ -45,7 +46,7 @@
                         <a href="#" class="text-blue-600 hover:underline">Lupa Password</a>
                     </div>
                     <div class="text-center mt-3">
-                        <button type="button" class="w-full bg-gray-100 text-gray-700 font-medium py-2 px-4 rounded flex items-center justify-center hover:bg-gray-200 transition-colors">
+                        <button type="button" onclick="showFeatureNotAvailable()" class="w-full bg-gray-100 text-gray-700 font-medium py-2 px-4 rounded flex items-center justify-center hover:bg-gray-200 transition-colors">
                             <img src="https://img.icons8.com/color/48/000000/google-logo.png" width="20" class="mr-2">Sign In with Google
                         </button>
                     </div>
@@ -60,6 +61,16 @@
     <script src="{{ asset('plugins/jquery/jquery.min.js') }}"></script>
     <script src="{{ asset('plugins/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
     <script src="{{ asset('dist/js/adminlte.min.js') }}"></script>
+    <script>
+        function showFeatureNotAvailable() {
+            Swal.fire({
+                title: 'Fitur Belum Tersedia',
+                icon: 'info',
+                confirmButtonText: 'OK',
+                confirmButtonColor: '#3085d6'
+            });
+        }
+    </script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
     @if ($message = Session::get('success'))
